@@ -1,7 +1,16 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
-import { Button, Card, Divider, Drawer, Form, Input, Typography } from "antd";
+import {
+  Button,
+  Card,
+  Divider,
+  Drawer,
+  Form,
+  Input,
+  Select,
+  Typography,
+} from "antd";
 import Swal from "sweetalert2";
 import Cookies from "universal-cookie";
 import "../assets/css/auth.css";
@@ -18,6 +27,7 @@ const initialValues = {
   password: "",
   username: "",
   phoneNumber: "",
+  role: "",
 };
 
 const inputStyle = {
@@ -104,30 +114,36 @@ function Auth() {
     setValues((prevValues) => ({ ...prevValues, [name]: value }));
   };
 
+  const role = [
+    { value: "patient", label: "Person Seeking Care" },
+    { value: "doctor", label: "Healthcare Professional" },
+  ];
+
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      const res = await axios.post(
-        `${isSignUp ? "users/sign-up" : "users/sign-in"}`,
-        {
-          ...values,
-        }
-      );
-      const { success, token, user } = res.data;
-      if (success) {
-        Swal.fire({
-          icon: "success",
-          title: isSignUp ? "Account Created Successfully" : "Login successful",
-        });
+      // console.log(values);
+      // const res = await axios.post(
+      //   `${isSignUp ? "users/sign-up" : "users/sign-in"}`,
+      //   {
+      //     ...values,
+      //   }
+      // );
+      // const { success, token, user } = res.data;
+      // if (success) {
+      //   Swal.fire({
+      //     icon: "success",
+      //     title: isSignUp ? "Account Created Successfully" : "Login successful",
+      //   });
 
-        if (!isSignUp) {
-          cookies.set("token", token);
-          cookies.set("userId", user._id);
-          cookies.set("username", user.username);
-        }
+      //   if (!isSignUp) {
+      //     cookies.set("token", token);
+      //     cookies.set("userId", user._id);
+      //     cookies.set("username", user.username);
+      //   }
 
-        window.location.reload();
-      }
+      //   window.location.reload();
+      // }
     } catch (error) {
       console.log(error);
       const errorMessage =
@@ -401,6 +417,32 @@ function Auth() {
                           }
                           style={inputStyle}
                         />
+                      </Form.Item>
+                      <Form.Item
+                        label={<span style={labelStyle}>Role</span>}
+                        name="role"
+                        rules={[
+                          { required: true, message: "This field is required" },
+                        ]}
+                      >
+                        <Select
+                          style={{
+                            backgroundColor: "#fff",
+                            border: "1px solid #ccc",
+                            height: 40,
+                            fontSize: 14,
+                            color: "#333",
+                            fontFamily: "Roboto",
+                            borderRadius: 8,
+                          }}
+                          onChange={(value) => handleChange("role", value)}
+                        >
+                          {role.map((r) => (
+                            <Select.Option value={r.value}>
+                              {r.label}
+                            </Select.Option>
+                          ))}
+                        </Select>
                       </Form.Item>
                     </div>
                     <div
