@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import {
   Button,
@@ -16,6 +16,8 @@ import Cookies from "universal-cookie";
 import "../assets/css/auth.css";
 import ChangePassword from "../components/changePassword";
 import logo from "../assets/icons/logo.png";
+import { UserContext } from "../App";
+import { useNavigate } from "react-router-dom";
 
 const cookies = new Cookies();
 const { Title, Text } = Typography;
@@ -86,11 +88,13 @@ const labelStyle = {
 
 function Auth() {
   const [form] = Form.useForm();
+  const navigate = useNavigate();
   const [values, setValues] = useState(initialValues);
   const [isSignUp, setSignUp] = useState(false);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const { setUser } = useContext(UserContext);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -123,27 +127,31 @@ function Auth() {
     setLoading(true);
     try {
       // console.log(values);
-      // const res = await axios.post(
-      //   `${isSignUp ? "users/sign-up" : "users/sign-in"}`,
-      //   {
-      //     ...values,
-      //   }
-      // );
-      // const { success, token, user } = res.data;
-      // if (success) {
-      //   Swal.fire({
-      //     icon: "success",
-      //     title: isSignUp ? "Account Created Successfully" : "Login successful",
-      //   });
+      const payload = isSignUp
+        ? values
+        : { email: values.email, password: values.password };
+      const res = await axios.post(
+        `${isSignUp ? "sign-up" : "sign-in"}`,
+        payload
+      );
+      const { success, token, user } = res.data;
+      if (success) {
+        Swal.fire({
+          icon: "success",
+          title: isSignUp
+            ? "Your account has been created successfully!"
+            : "Login successful!",
+        });
 
-      //   if (!isSignUp) {
-      //     cookies.set("token", token);
-      //     cookies.set("userId", user._id);
-      //     cookies.set("username", user.username);
-      //   }
+        if (isSignUp) {
+          setSignUp(false);
+          return;
+        }
 
-      //   window.location.reload();
-      // }
+        localStorage.setItem("token", token);
+        setUser(user);
+        navigate("/");
+      }
     } catch (error) {
       console.log(error);
       const errorMessage =
