@@ -1,0 +1,256 @@
+import React, { useState } from "react";
+import {
+  Avatar,
+  Button,
+  Divider,
+  FloatButton,
+  Layout,
+  Menu,
+  Tag,
+  theme,
+  Switch,
+} from "antd";
+import {
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  PoweroffOutlined,
+  RobotOutlined,
+  UploadOutlined,
+  UserOutlined,
+  VideoCameraOutlined,
+} from "@ant-design/icons";
+import { Link, Outlet, useLocation } from "react-router-dom";
+import logo from "../assets/icons/logo.png";
+
+const { Header, Sider, Content } = Layout;
+function Navbar() {
+  const location = useLocation();
+  const [collapsed, setCollapsed] = useState(false);
+  const [current, setCurrent] = useState(location.pathname);
+  const [isDarkMode, setIsDarkMode] = useState(true);
+
+  const {
+    token: { colorBgContainer, borderRadiusLG },
+  } = theme.useToken();
+
+  const navItems = [
+    { label: "Dashboard", path: "/dashboard", icon: UserOutlined },
+    { label: "Diary", path: "/diary", icon: VideoCameraOutlined },
+    { label: "Appointments", path: "/appointments", icon: VideoCameraOutlined },
+  ];
+
+  const menuItems = [
+    { key: "1", icon: <UserOutlined />, label: "Profile", path: "/profile" },
+    {
+      key: "2",
+      icon: <VideoCameraOutlined />,
+      label: "Resources",
+      path: "/resources",
+    },
+    { key: "3", icon: <UploadOutlined />, label: "Uploads", path: "/uploads" },
+  ];
+
+  const handleClick = (e) => {
+    setCurrent(e.key);
+  };
+  return (
+    <>
+      <FloatButton
+        description=""
+        tooltip={collapsed ? "Open" : "Collapse"}
+        type="primary"
+        icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+        onClick={() => setCollapsed((prev) => !prev)}
+        style={{
+          left: 24,
+          bottom: 24,
+          right: "auto",
+          fontSize: "16px",
+          position: "fixed",
+          zIndex: 1000,
+        }}
+      />
+      <FloatButton
+        icon={<RobotOutlined />}
+        tooltip="Ask EndoAI"
+        type="default"
+
+        // onClick={() => setShowAssistantModal(true)}
+      />
+      <Layout>
+        <Sider
+          trigger={null}
+          collapsible
+          collapsed={collapsed}
+          breakpoint="md"
+          onBreakpoint={(broken) => setCollapsed(broken)}
+          width={300}
+        >
+          <div style={{ margin: "5px 1px" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "column",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <img
+                  src={logo}
+                  alt="logo"
+                  style={{
+                    width: collapsed ? "65px" : "85px",
+                    height: collapsed ? "65px" : "85px",
+                    borderRadius: "50%",
+                    border: "2px solid #2f3c92",
+                    padding: "8px",
+                    background: "whitesmoke",
+                  }}
+                />
+              </div>
+              <div
+                style={{
+                  display: collapsed ? "none" : "flex",
+                  justifyContent: "center",
+                  fontSize: "3rem",
+                }}
+              >
+                <h4
+                  style={{
+                    color: "white",
+                    margin: "auto",
+                    fontFamily: "Raleway",
+                  }}
+                >
+                  EndoCare
+                </h4>
+              </div>
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                color: "whitesmoke",
+                fontFamily: "Raleway",
+                marginTop: 6,
+              }}
+            >
+              <span> {collapsed ? "JD" : "John Doe"}</span>
+            </div>
+            <Divider
+              dashed
+              style={{ borderColor: "whitesmoke", color: "whitesmoke" }}
+            ></Divider>
+            <Menu
+              theme={isDarkMode ? "dark" : "light"}
+              mode="inline"
+              selectedKeys={[current]}
+              onClick={handleClick}
+              inlineCollapsed={collapsed}
+              style={{
+                fontFamily: "Roboto",
+                border: "none",
+              }}
+              items={navItems.map(({ key, icon, label, path }) => ({
+                key: path || key,
+                icon: React.createElement(icon, {
+                  style: {
+                    fontSize: "1.6rem",
+                    color: isDarkMode ? "whitesmoke" : "#333",
+                  },
+                }),
+                label: (
+                  <Link
+                    to={path}
+                    style={{
+                      fontSize: "17px",
+                      color: isDarkMode ? "whitesmoke" : "#333",
+                    }}
+                  >
+                    {label}
+                  </Link>
+                ),
+                style: {
+                  textAlign: "left",
+                  margin: "12px 0",
+                },
+              }))}
+            />
+          </div>
+        </Sider>{" "}
+        <Layout>
+          <Header
+            style={{
+              padding: 0,
+              background: colorBgContainer,
+            }}
+          >
+            <Menu
+              theme={isDarkMode ? "dark" : "light"}
+              mode="horizontal"
+              selectedKeys={[current]}
+              onClick={handleClick}
+              style={{
+                justifyContent: "right",
+                fontWeight: "light",
+                fontFamily: "Raleway",
+              }}
+            >
+              {menuItems.map((item) => (
+                <Menu.Item key={item.path || item.key} icon={item.icon}>
+                  <Link
+                    to={item.path}
+                    style={{
+                      textDecoration: "none",
+                    }}
+                  >
+                    {item.label}
+                  </Link>
+                </Menu.Item>
+              ))}
+              <Menu.Item>
+                <div>
+                  <Button type="primary" icon={<PoweroffOutlined />} />
+                </div>
+              </Menu.Item>
+            </Menu>
+            {/* <div>
+                <Switch
+                  checked={isDarkMode}
+                  onChange={() => {
+                    setIsDarkMode((prev) => !prev);
+                    document.body.setAttribute(
+                      "data-theme",
+                      !isDarkMode ? "dark" : "light"
+                    );
+                  }}
+                  checkedChildren="🌙"
+                  unCheckedChildren="☀️"
+                />
+              </div> */}
+          </Header>
+
+          <Content
+            style={{
+              margin: "12px 8px",
+              padding: 24,
+              minHeight: "100vh",
+              background: colorBgContainer,
+              borderRadius: borderRadiusLG,
+            }}
+          >
+            <Outlet />
+          </Content>
+        </Layout>
+      </Layout>
+    </>
+  );
+}
+
+export default Navbar;
