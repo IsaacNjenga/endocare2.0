@@ -27,8 +27,16 @@ function FetchUserDetails() {
         }
       } catch (error) {
         console.log(error);
-        const errorMessage = error.message;
-        Swal.fire({ icon: "warning", title: "Error", text: errorMessage });
+        const errorMessage =
+          error.response && error.response.data && error.response.data.error
+            ? error.response.data.error
+            : "An unexpected error occurred. Please try again later.";
+
+        Swal.fire({
+          icon: "warning",
+          title: "Error",
+          text: errorMessage,
+        });
       } finally {
         setUserDataLoading(false);
       }

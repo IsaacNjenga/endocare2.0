@@ -1,15 +1,13 @@
 import React, { useState } from "react";
-import { Card, Form, Input, Typography, Row, Col, Divider, Select } from "antd";
+import { Card, Typography, Button, Descriptions, Divider } from "antd";
+import UpdatePersonalInfoModal from "./updatePersonalInfoModal";
+import { EditOutlined } from "@ant-design/icons";
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 const labelStyle = {
   fontFamily: "Raleway",
   fontWeight: 500,
-};
-
-const inputStyle = {
-  fontFamily: "Roboto",
 };
 
 const sectionStyle = {
@@ -17,145 +15,125 @@ const sectionStyle = {
   padding: "1.5rem",
   backgroundColor: "#fafafa",
   borderRadius: "12px",
+  fontFamily: "Raleway",
 };
 
-const initialValues = {
-  firstName: "John",
-  middleName: "J",
-  lastName: "Jameson",
-  dob: "12/12/2001",
-  gender: "Male",
-  phoneNumber: "0740900061",
-  email: "email@email.com",
-  address: "270-2442",
-  emergencyName: "Jane Doe",
-  emergencyPhoneNumber: "0789099963",
-  emergencyEmail: "email2@Email.com",
+const contentStyle = {
+  fontFamily: "Roboto",
 };
 
 function PersonalInfo({ user }) {
-  const [values, setValues] = useState(initialValues);
-  const [form] = Form.useForm();
+  const [loading, setLoading] = useState(false);
+  const [openPersonalInfoModal, setOpenPersonalInfoModal] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
+
+  const updateInfo = () => {
+    setOpenPersonalInfoModal(true);
+    setLoading(true);
+    setModalContent(user);
+    setTimeout(() => {
+      setLoading(false);
+    }, 100);
+  };
+
   return (
     <div style={{ fontFamily: "Roboto", padding: "1rem" }}>
-      <Title level={3} style={{ fontFamily: "Raleway", marginBottom: "1rem" }}>
-        Personal Information
-      </Title>
-
-      <Card style={sectionStyle} title="Basic Details">
-        <Form layout="vertical" form={form} initialValues={values}>
-          <Row gutter={16}>
-            <Col xs={24} md={8}>
-              <Form.Item
-                label={<span style={labelStyle}>First Name</span>}
-                name="firstName"
-              >
-                <Input style={inputStyle} value={values.firstName} />
-              </Form.Item>
-            </Col>
-            <Col xs={24} md={8}>
-              <Form.Item
-                label={<span style={labelStyle}>Middle Name</span>}
-                name="middleName"
-              >
-                <Input style={inputStyle} value={values.middleName} />
-              </Form.Item>
-            </Col>
-            <Col xs={24} md={8}>
-              <Form.Item
-                label={<span style={labelStyle}>Last Name</span>}
-                name="lastName"
-              >
-                <Input style={inputStyle} value={values.lastName} />
-              </Form.Item>
-            </Col>
-          </Row>
-
-          <Row gutter={16}>
-            <Col xs={24} md={8}>
-              <Form.Item
-                label={<span style={labelStyle}>Date of Birth</span>}
-                name="dob"
-              >
-                <Input type="date" style={inputStyle} value={values.dob} />
-              </Form.Item>
-            </Col>
-            <Col xs={24} md={8}>
-              <Form.Item
-                label={<span style={labelStyle}>Gender</span>}
-                name="gender"
-              >
-                <Input style={inputStyle} value={values.gender} />
-              </Form.Item>
-            </Col>
-          </Row>
-        </Form>
-      </Card>
-      <Card style={sectionStyle} title="Contact Information">
-        <Form layout="vertical" form={form} initialValues={values}>
-          <Row gutter={16}>
-            <Col xs={24} md={12}>
-              <Form.Item
-                label={<span style={labelStyle}>Phone Number</span>}
-                name="phoneNumber"
-                extra="We'll use this to reach you directly"
-              >
-                <Input style={inputStyle} value={values.phoneNumber} />
-              </Form.Item>
-            </Col>
-            <Col xs={24} md={12}>
-              <Form.Item
-                label={<span style={labelStyle}>Email Address</span>}
-                name="email"
-                extra="Used for system notifications"
-              >
-                <Input style={inputStyle} value={values.email} />
-              </Form.Item>
-            </Col>
-          </Row>
-
-          <Form.Item
-            label={<span style={labelStyle}>Physical Address</span>}
-            name="address"
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <div>
+          <Title
+            level={3}
+            style={{ fontFamily: "Raleway", marginBottom: "1rem" }}
           >
-            <Input.TextArea
-              rows={2}
-              style={inputStyle}
-              value={values.address}
-            />
-          </Form.Item>
-        </Form>
+            <u>Personal Information</u>
+          </Title>
+        </div>
+        <div>
+          <Button
+            type="primary"
+            icon={<EditOutlined />}
+            block
+            title="Update your information"
+            style={{ padding: "12px 15px" }}
+            onClick={updateInfo}
+          />
+        </div>
+      </div>
+      <Card style={sectionStyle} title={<Divider>Basic Details</Divider>}>
+        <Descriptions column={1} bordered size="small">
+          <Descriptions.Item label={<span style={labelStyle}>First Name</span>}>
+            <span style={contentStyle}>{user?.firstName || "—"}</span>
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={<span style={labelStyle}>Middle Name</span>}
+          >
+            <span style={contentStyle}>{user?.middleName || "—"}</span>
+          </Descriptions.Item>
+          <Descriptions.Item label={<span style={labelStyle}>Last Name</span>}>
+            <span style={contentStyle}>{user?.lastName || "—"}</span>
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={<span style={labelStyle}>Date of Birth</span>}
+          >
+            <span style={contentStyle}>{user?.dob || "—"}</span>
+          </Descriptions.Item>
+          <Descriptions.Item label={<span style={labelStyle}>Gender</span>}>
+            <span style={contentStyle}>{user?.gender || ""}</span>
+          </Descriptions.Item>
+        </Descriptions>
       </Card>
-      <Card style={sectionStyle} title="Emergency Contact">
-        <Form layout="vertical" initialValues={values} form={form}>
-          <Row gutter={16}>
-            <Col xs={24} md={8}>
-              <Form.Item
-                label={<span style={labelStyle}>Full Name</span>}
-                name="emergencyName"
-              >
-                <Input style={inputStyle} value={values.emergencyName} />
-              </Form.Item>
-            </Col>
-            <Col xs={24} md={8}>
-              <Form.Item
-                label={<span style={labelStyle}>Phone Number</span>}
-                name="emergencyPhoneNumber"
-              >
-                <Input style={inputStyle} value={values.emergencyPhoneNumber} />
-              </Form.Item>
-            </Col>
-            <Col xs={24} md={8}>
-              <Form.Item
-                label={<span style={labelStyle}>Email Address</span>}
-                name="emergencyEmail"
-              >
-                <Input style={inputStyle} value={values.emergencyEmail} />
-              </Form.Item>
-            </Col>
-          </Row>
-        </Form>
+
+      <Card style={sectionStyle} title={<Divider>Contact Information</Divider>}>
+        <Descriptions column={1} bordered size="small">
+          <Descriptions.Item
+            label={<span style={labelStyle}>Phone Number</span>}
+          >
+            <span style={contentStyle}>{user?.phoneNumber || "—"}</span>
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={<span style={labelStyle}>Email Address</span>}
+          >
+            <span style={contentStyle}>{user?.email || "—"}</span>
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={<span style={labelStyle}>Physical Address</span>}
+          >
+            <span style={contentStyle}>{user?.address || "—"}</span>
+          </Descriptions.Item>
+        </Descriptions>
       </Card>
+      <Card style={sectionStyle} title={<Divider>Emergency Contact</Divider>}>
+        <Descriptions column={1} bordered size="small">
+          <Descriptions.Item label={<span style={labelStyle}>Full Name</span>}>
+            <span style={contentStyle}>{user?.emergencyName || "—"}</span>
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={<span style={labelStyle}>Phone Number</span>}
+          >
+            <span style={contentStyle}>
+              {user?.emergencyPhoneNumber || "—"}
+            </span>
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={<span style={labelStyle}>Email Address</span>}
+          >
+            <span style={contentStyle}>{user?.emergencyEmail || "—"}</span>
+          </Descriptions.Item>
+        </Descriptions>
+      </Card>
+      
+      <UpdatePersonalInfoModal
+        loading={loading}
+        openPersonalInfoModal={openPersonalInfoModal}
+        setOpenPersonalInfoModal={setOpenPersonalInfoModal}
+        modalContent={modalContent}
+      />
     </div>
   );
 }

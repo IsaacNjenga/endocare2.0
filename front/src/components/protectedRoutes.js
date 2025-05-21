@@ -1,4 +1,3 @@
-import React from "react";
 import { jwtDecode } from "jwt-decode";
 import Swal from "sweetalert2";
 import Cookies from "universal-cookie";

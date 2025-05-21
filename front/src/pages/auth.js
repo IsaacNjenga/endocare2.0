@@ -15,7 +15,6 @@ import Swal from "sweetalert2";
 import "../assets/css/auth.css";
 import ChangePassword from "../components/changePassword";
 import logo from "../assets/icons/logo.png";
-import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 
 const cookies = new Cookies();
@@ -88,7 +87,6 @@ const labelStyle = {
 
 function Auth() {
   const [form] = Form.useForm();
-  const navigate = useNavigate();
   const [values, setValues] = useState(initialValues);
   const [isSignUp, setSignUp] = useState(false);
   const [loading, setLoading] = useState(false);
