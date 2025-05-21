@@ -1,16 +1,23 @@
 import React, { useState } from "react";
 import { Card, Typography, Button, Descriptions, Divider } from "antd";
-import UpdatePersonalInfoModal from "./updatePersonalInfoModal";
 import { EditOutlined } from "@ant-design/icons";
+import UpdatePersonalInfoModal from "./updatePersonalInfoModal";
 
 const { Title } = Typography;
 
 const labelStyle = {
   fontFamily: "Raleway",
   fontWeight: 500,
+  fontSize: "1rem",
 };
 
-const sectionStyle = {
+const contentStyle = {
+  fontFamily: "Roboto",
+  lineHeight: 1.6,
+  fontSize: "1rem",
+};
+
+const sectionCardStyle = {
   marginBottom: "2rem",
   padding: "1.5rem",
   backgroundColor: "#fafafa",
@@ -18,8 +25,14 @@ const sectionStyle = {
   fontFamily: "Raleway",
 };
 
-const contentStyle = {
-  fontFamily: "Roboto",
+const sectionHeaderStyle = {
+  padding: "6px 16px",
+  borderRadius: "30px",
+  background: "#eef2ff",
+  fontFamily: "Raleway",
+  fontWeight: 600,
+  fontSize: 22,
+  color: "#4f46e5",
 };
 
 function PersonalInfo({ user }) {
@@ -27,45 +40,44 @@ function PersonalInfo({ user }) {
   const [openPersonalInfoModal, setOpenPersonalInfoModal] = useState(false);
   const [modalContent, setModalContent] = useState(null);
 
-  const updateInfo = () => {
+  const handleEdit = () => {
     setOpenPersonalInfoModal(true);
-    setLoading(true);
     setModalContent(user);
-    setTimeout(() => {
-      setLoading(false);
-    }, 100);
+    setLoading(true);
+    setTimeout(() => setLoading(false), 100);
   };
 
   return (
     <div style={{ fontFamily: "Roboto", padding: "1rem" }}>
+      {/* Header */}
       <div
         style={{
           display: "flex",
-          flexDirection: "row",
           justifyContent: "space-between",
           alignItems: "center",
+          marginBottom: "1rem",
         }}
       >
-        <div>
-          <Title
-            level={3}
-            style={{ fontFamily: "Raleway", marginBottom: "1rem" }}
-          >
-            <u>Personal Information</u>
-          </Title>
-        </div>
-        <div>
-          <Button
-            type="primary"
-            icon={<EditOutlined />}
-            block
-            title="Update your information"
-            style={{ padding: "12px 15px" }}
-            onClick={updateInfo}
-          />
-        </div>
+        <Title level={3} style={{ fontFamily: "Raleway" }}>
+          <u>Personal Information</u>
+        </Title>
+        <Button
+          type="primary"
+          icon={<EditOutlined />}
+          onClick={handleEdit}
+          style={{ padding: "12px 15px" }}
+          title="Update your information"
+          aria-label="Edit personal information"
+        >
+          Edit
+        </Button>
       </div>
-      <Card style={sectionStyle} title={<Divider>Basic Details</Divider>}>
+
+      {/* Sections */}
+      <Card style={sectionCardStyle}>
+        <Divider style={{ borderColor: "#4f46e5" }}>
+          <div style={sectionHeaderStyle}>Basic Details</div>
+        </Divider>
         <Descriptions column={1} bordered size="small">
           <Descriptions.Item label={<span style={labelStyle}>First Name</span>}>
             <span style={contentStyle}>{user?.firstName || "—"}</span>
@@ -84,12 +96,15 @@ function PersonalInfo({ user }) {
             <span style={contentStyle}>{user?.dob || "—"}</span>
           </Descriptions.Item>
           <Descriptions.Item label={<span style={labelStyle}>Gender</span>}>
-            <span style={contentStyle}>{user?.gender || ""}</span>
+            <span style={contentStyle}>{user?.gender || "—"}</span>
           </Descriptions.Item>
         </Descriptions>
       </Card>
 
-      <Card style={sectionStyle} title={<Divider>Contact Information</Divider>}>
+      <Card style={sectionCardStyle}>
+        <Divider style={{ borderColor: "#4f46e5" }}>
+          <div style={sectionHeaderStyle}>Contact Information</div>
+        </Divider>
         <Descriptions column={1} bordered size="small">
           <Descriptions.Item
             label={<span style={labelStyle}>Phone Number</span>}
@@ -108,7 +123,11 @@ function PersonalInfo({ user }) {
           </Descriptions.Item>
         </Descriptions>
       </Card>
-      <Card style={sectionStyle} title={<Divider>Emergency Contact</Divider>}>
+
+      <Card style={sectionCardStyle}>
+        <Divider style={{ borderColor: "#4f46e5" }}>
+          <div style={sectionHeaderStyle}>Emergency Contact Info</div>
+        </Divider>
         <Descriptions column={1} bordered size="small">
           <Descriptions.Item label={<span style={labelStyle}>Full Name</span>}>
             <span style={contentStyle}>{user?.emergencyName || "—"}</span>
@@ -127,7 +146,8 @@ function PersonalInfo({ user }) {
           </Descriptions.Item>
         </Descriptions>
       </Card>
-      
+
+      {/* Modal */}
       <UpdatePersonalInfoModal
         loading={loading}
         openPersonalInfoModal={openPersonalInfoModal}

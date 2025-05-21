@@ -15,7 +15,7 @@ function UpdatePersonalInfoModal({
         open={openPersonalInfoModal}
         onCancel={() => setOpenPersonalInfoModal(false)}
         confirmLoading={loading}
-        width={850}
+        width={950}
         style={{ maxWidth: "95vw" }}
       >
         <UpdatePersonalInfo
