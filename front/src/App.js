@@ -9,53 +9,54 @@ import Appointments from "./pages/appointments";
 import Resources from "./pages/resources";
 import Auth from "./pages/auth";
 import ProtectedRoutes from "./components/protectedRoutes";
+import Profile from "./pages/Profile/profile";
+import Cookies from "universal-cookie";
 
+const cookies = new Cookies();
 export const UserContext = createContext();
 
 axios.defaults.baseURL = "http://localhost:3001/EndoCare";
 axios.defaults.withCredentials = true;
 
+const authToken = cookies.get("token");
 function App() {
   const [user, setUser] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      axios
-        .get("verify", { headers: { Authorization: `Bearer ${token}` } })
-        .then((res) => {
-          if (res.data.success) {
-            setUser(res.data.user);
-            setIsAuthenticated(true);
-          }
-        })
-        .catch((err) => {
-          console.warn("Error during user verification", err);
-        });
+    const activeUser = cookies.get("user");
+    if (activeUser) {
+      setUser(activeUser);
     }
   }, []);
+
+  if (!authToken) {
+    return <Auth />;
+  }
+
   return (
     <>
       <UserContext.Provider
-        value={{ user, setUser, isAuthenticated, setIsAuthenticated }}
+        value={{
+          user,
+          setUser,
+        }}
       >
         <Routes>
-          <Route path="/" element={<Navbar />}>
+          <Route
+            path="/"
+            element={
+              <ProtectedRoutes>
+                <Navbar />
+              </ProtectedRoutes>
+            }
+          >
             <Route index element={<Home />} />
             <Route path="diary" element={<Diary />} />
-            <Route
-              path="dashboard"
-              element={
-                <ProtectedRoutes>
-                  <Dashboard />
-                </ProtectedRoutes>
-              }
-            />
+            <Route path="dashboard" element={<Dashboard />} />
             <Route path="appointments" element={<Appointments />} />
             <Route path="resources" element={<Resources />} />
+            <Route path="profile" element={<Profile />} />
           </Route>
-          <Route path="auth" element={<Auth />} />
         </Routes>
       </UserContext.Provider>
     </>

@@ -1,10 +1,11 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import Swal from "sweetalert2";
+import Cookies from "universal-cookie";
 
+const cookies = new Cookies();
 function ProtectedRoutes({ children }) {
-  const token = localStorage.getItem("token");
+  const token = cookies.get("token");
 
   if (token) {
     try {
@@ -12,7 +13,7 @@ function ProtectedRoutes({ children }) {
       const isExpired = decoded.exp * 1000 < Date.now();
 
       if (isExpired) {
-        localStorage.removeItem("token");
+        cookies.remove("token");
 
         Swal.fire({
           icon: "warning",
@@ -21,12 +22,13 @@ function ProtectedRoutes({ children }) {
           confirmButtonColor: "#2e3c8e",
           confirmButtonText: "OK",
         });
-        return <Navigate to="/auth" replace />;
+        window.location.reload();
+        // <Navigate to="/auth" replace />;
       }
       return children;
     } catch (error) {
       console.error("Invalid token:", error);
-      localStorage.removeItem("token");
+      cookies.remove("token");
       Swal.fire({
         icon: "warning",
         title: "Session Expired",
@@ -34,10 +36,12 @@ function ProtectedRoutes({ children }) {
         confirmButtonColor: "#2e3c8e",
         confirmButtonText: "OK",
       });
-      return <Navigate to="/auth" replace />;
+
+      window.location.reload();
+      // <Navigate to="/auth" replace />;
     }
   }
-  return <Navigate to="/auth" replace />;
+  return;
 }
 
 export default ProtectedRoutes;

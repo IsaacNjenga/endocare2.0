@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Avatar,
   Button,
@@ -19,15 +19,21 @@ import {
   UserOutlined,
   VideoCameraOutlined,
 } from "@ant-design/icons";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import logo from "../assets/icons/logo.png";
+import Swal from "sweetalert2";
+import { UserContext } from "../App";
+import Cookies from "universal-cookie";
 
+const cookies = new Cookies();
 const { Header, Sider, Content } = Layout;
 function Navbar() {
   const location = useLocation();
+  const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const [current, setCurrent] = useState(location.pathname);
   const [isDarkMode, setIsDarkMode] = useState(true);
+  const { setUser } = useContext(UserContext);
 
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -52,6 +58,29 @@ function Navbar() {
 
   const handleClick = (e) => {
     setCurrent(e.key);
+  };
+
+  const handleLogout = async () => {
+    Swal.fire({
+      icon: "warning",
+      title: "Logging out",
+      text: "Are you sure you want to logout?",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const allCookies = cookies.getAll();
+        for (const cookieName in allCookies) {
+          if (allCookies.hasOwnProperty(cookieName)) {
+            cookies.remove(cookieName);
+          }
+        }
+        setUser(null);
+      }
+      window.location.reload();
+    });
   };
   return (
     <>
@@ -216,7 +245,11 @@ function Navbar() {
               ))}
               <Menu.Item>
                 <div>
-                  <Button type="primary" icon={<PoweroffOutlined />} />
+                  <Button
+                    type="primary"
+                    icon={<PoweroffOutlined />}
+                    onClick={handleLogout}
+                  />
                 </div>
               </Menu.Item>
             </Menu>

@@ -1,27 +1,45 @@
 import UserModel from "../models/Users.js";
-import bcrypt from "bcryptjs";
-import dotenv from "dotenv";
 
-dotenv.config();
-
-const updateUser = () => {
+const updateUser = async (req, res) => {
+  const { id } = req.query;
+  if (!id) {
+    return res.status(404).json({ message: "No ID specified" });
+  }
   try {
+    const userUpdate = await UserModel.findByIdAndUpdate(
+      { _id: id },
+      { $set: req.body },
+      { new: true }
+    );
+    return res.status(201).json({ success: true });
   } catch (error) {
     console.log("Error updating user:", user);
     res.status(500).json({ success: false, error: error.message });
   }
 };
 
-const fetchUser = () => {
+const fetchUser = async (req, res) => {
+  const { id } = req.query;
+  if (!id) {
+    return res.status(404).json({ message: "No ID specified" });
+  }
   try {
+    const userDetails = await UserModel.findById({ _id: id });
+    return res.status(200).json({ success: true, userDetails });
   } catch (error) {
     console.log("Error fetching user:", user);
     res.status(500).json({ success: false, error: error.message });
   }
 };
 
-const deleteUser = () => {
+const deleteUser = async (req, res) => {
+  const { id } = req.query;
+  if (!id) {
+    return res.status(404).json({ message: "No ID specified" });
+  }
   try {
+    await UserModel.findByIdAndDelete({ _id: id });
+    return res.status(200).json({ success: true });
   } catch (error) {
     console.log("Error deleting user:", user);
     res.status(500).json({ success: false, error: error.message });

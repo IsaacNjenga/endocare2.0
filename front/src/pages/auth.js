@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import {
   Button,
@@ -12,14 +12,14 @@ import {
   Typography,
 } from "antd";
 import Swal from "sweetalert2";
-import Cookies from "universal-cookie";
 import "../assets/css/auth.css";
 import ChangePassword from "../components/changePassword";
 import logo from "../assets/icons/logo.png";
-import { UserContext } from "../App";
 import { useNavigate } from "react-router-dom";
+import Cookies from "universal-cookie";
 
 const cookies = new Cookies();
+
 const { Title, Text } = Typography;
 
 const initialValues = {
@@ -94,7 +94,6 @@ function Auth() {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-  const { setUser } = useContext(UserContext);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -148,9 +147,9 @@ function Auth() {
           return;
         }
 
-        localStorage.setItem("token", token);
-        setUser(user);
-        navigate("/");
+        cookies.set("token", token);
+        cookies.set("user", user);
+        window.location.reload();
       }
     } catch (error) {
       console.log(error);
