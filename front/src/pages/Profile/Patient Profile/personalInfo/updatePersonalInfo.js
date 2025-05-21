@@ -144,6 +144,11 @@ function UpdatePersonalInfo({ modalContent, setOpenPersonalInfoModal }) {
                       { value: "Male", label: "Male" },
                       { value: "Female", label: "Female" },
                     ]}
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "5px",
+                    }}
                   />
                 </Form.Item>
               </Col>

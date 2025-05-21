@@ -1,7 +1,7 @@
 import React from "react";
 import { Tabs } from "antd";
 import UserAccount from "./userAccount";
-import PersonalInfo from "./personalInfo";
+import PersonalInfo from "./personalInfo/personalInfo";
 import MedicalInfo from "./medicalInfo";
 import AIInsight from "./AIInsight";
 import Reports from "./reports";
@@ -16,17 +16,18 @@ import {
 } from "@ant-design/icons";
 
 const iconStyle = {
-  fontSize: "1.5rem",
+  fontSize: "1.54rem",
   color: "#2e3c8e",
 };
 
 const labelStyle = {
   display: "flex",
   alignItems: "center",
-  gap: "10px",
+  gap: "6px",
   fontFamily: "Raleway",
-  fontWeight: 600,
-  fontSize: "1rem",
+  fontWeight: 520,
+  fontSize: "1.1rem",
+  margin: "10px 0px",
 };
 
 const PatientProfile = ({ user }) => {
@@ -72,7 +73,7 @@ const PatientProfile = ({ user }) => {
   return (
     <div
       style={{
-        padding: "2rem",
+        padding: "0.5rem",
         backgroundColor: "#f9f9f9",
         borderRadius: "12px",
       }}
@@ -89,7 +90,7 @@ const PatientProfile = ({ user }) => {
             </div>
           ),
           key: String(item.key),
-          children: <div style={{ padding: "1rem" }}>{item.childPage}</div>,
+          children: <div>{item.childPage}</div>,
         }))}
       />
     </div>

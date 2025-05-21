@@ -48,7 +48,7 @@ function PersonalInfo({ user }) {
   };
 
   return (
-    <div style={{ fontFamily: "Roboto", padding: "1rem" }}>
+    <div style={{ fontFamily: "Roboto", padding: "0.7rem" }}>
       {/* Header */}
       <div
         style={{
@@ -58,7 +58,7 @@ function PersonalInfo({ user }) {
           marginBottom: "1rem",
         }}
       >
-        <Title level={3} style={{ fontFamily: "Raleway" }}>
+        <Title level={2} style={{ fontFamily: "Raleway" }}>
           <u>Personal Information</u>
         </Title>
         <Button

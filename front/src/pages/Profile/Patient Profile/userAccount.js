@@ -4,7 +4,6 @@ function UserAccount({ user }) {
   return (
     <div>
       UserAccount
-      <p>{user.role}</p>
     </div>
   );
 }
