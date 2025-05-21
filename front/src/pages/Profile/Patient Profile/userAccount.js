@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
 
-function UserAccount() {
+function UserAccount({ user }) {
   return (
-    <div>UserAccount</div>
-  )
+    <div>
+      UserAccount
+      <p>{user.role}</p>
+    </div>
+  );
 }
 
-export default UserAccount
+export default UserAccount;
