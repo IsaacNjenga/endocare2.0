@@ -1,6 +1,6 @@
 import React from "react";
 import { Tabs } from "antd";
-import UserAccount from "./userAccount";
+import UserAccount from "./userAccount/userAccount";
 import PersonalInfo from "./personalInfo/personalInfo";
 import MedicalInfo from "./medicalInfo";
 import AIInsight from "./AIInsight";
@@ -20,7 +20,7 @@ const iconStyle = {
   color: "#2e3c8e",
 };
 
-const labelStyle = {
+const tabLabelStyle = {
   display: "flex",
   alignItems: "center",
   gap: "6px",
@@ -30,42 +30,120 @@ const labelStyle = {
   margin: "10px 0px",
 };
 
+const labelStyle = {
+  fontFamily: "Raleway",
+  fontWeight: 500,
+  fontSize: "1rem",
+};
+
+const contentStyle = {
+  fontFamily: "Roboto",
+  lineHeight: 1.6,
+  fontSize: "1rem",
+};
+
+const sectionCardStyle = {
+  marginBottom: "2rem",
+  padding: "1.5rem",
+  backgroundColor: "#fafafa",
+  borderRadius: "12px",
+  fontFamily: "Raleway",
+};
+
+const sectionHeaderStyle = {
+  padding: "6px 16px",
+  borderRadius: "30px",
+  background: "#eef2ff",
+  fontFamily: "Raleway",
+  fontWeight: 600,
+  fontSize: 22,
+  color: "#4f46e5",
+};
+
 const PatientProfile = ({ user }) => {
   const tabItems = [
     {
       key: 1,
       name: "Account & Privacy",
-      childPage: <UserAccount user={user} />,
+      childPage: (
+        <UserAccount
+          user={user}
+          labelStyle={labelStyle}
+          contentStyle={contentStyle}
+          sectionCardStyle={sectionCardStyle}
+          sectionHeaderStyle={sectionHeaderStyle}
+        />
+      ),
       icon: <LockOutlined style={iconStyle} />,
     },
     {
       key: 2,
       name: "Personal Information",
-      childPage: <PersonalInfo user={user} />,
+      childPage: (
+        <PersonalInfo
+          user={user}
+          labelStyle={labelStyle}
+          contentStyle={contentStyle}
+          sectionCardStyle={sectionCardStyle}
+          sectionHeaderStyle={sectionHeaderStyle}
+        />
+      ),
       icon: <UserOutlined style={iconStyle} />,
     },
     {
       key: 3,
       name: "Medical Information",
-      childPage: <MedicalInfo />,
+      childPage: (
+        <MedicalInfo
+          user={user}
+          labelStyle={labelStyle}
+          contentStyle={contentStyle}
+          sectionCardStyle={sectionCardStyle}
+          sectionHeaderStyle={sectionHeaderStyle}
+        />
+      ),
       icon: <InfoCircleOutlined style={iconStyle} />,
     },
     {
       key: 4,
       name: "AI Recommendations",
-      childPage: <AIInsight />,
+      childPage: (
+        <AIInsight
+          user={user}
+          labelStyle={labelStyle}
+          contentStyle={contentStyle}
+          sectionCardStyle={sectionCardStyle}
+          sectionHeaderStyle={sectionHeaderStyle}
+        />
+      ),
       icon: <RobotOutlined style={iconStyle} />,
     },
     {
       key: 5,
       name: "Document & Reports",
-      childPage: <Reports />,
+      childPage: (
+        <Reports
+          user={user}
+          labelStyle={labelStyle}
+          contentStyle={contentStyle}
+          sectionCardStyle={sectionCardStyle}
+          sectionHeaderStyle={sectionHeaderStyle}
+        />
+      ),
       icon: <BarChartOutlined style={iconStyle} />,
     },
     {
       key: 6,
       name: "Health Diary / Logs",
-      childPage: <Logs />,
+      childPage: (
+        <Logs
+          user={user}
+          labelStyle={labelStyle}
+          contentStyle={contentStyle}
+          sectionCardStyle={sectionCardStyle}
+          sectionHeaderStyle={sectionHeaderStyle}
+        />
+      ),
       icon: <FileDoneOutlined style={iconStyle} />,
     },
   ];
@@ -84,7 +162,7 @@ const PatientProfile = ({ user }) => {
         style={{ minHeight: "500px" }}
         items={tabItems.map((item) => ({
           label: (
-            <div style={labelStyle}>
+            <div style={tabLabelStyle}>
               {item.icon}
               <span>{item.name}</span>
             </div>

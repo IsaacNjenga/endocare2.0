@@ -144,7 +144,6 @@ function Auth() {
           setSignUp(false);
           return;
         }
-
         cookies.set("token", token);
         cookies.set("user", user);
         window.location.reload();

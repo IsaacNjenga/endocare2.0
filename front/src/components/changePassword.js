@@ -22,42 +22,6 @@ const labelStyle = {
   fontFamily: "Raleway",
 };
 
-// const passwordStrengthChecks = [
-//   {
-//     label: "At least 8 characters",
-//     test: (pwd) => pwd.length >= 8,
-//   },
-//   {
-//     label: "One uppercase letter",
-//     test: (pwd) => /[A-Z]/.test(pwd),
-//   },
-//   {
-//     label: "One lowercase letter",
-//     test: (pwd) => /[a-z]/.test(pwd),
-//   },
-//   {
-//     label: "One number",
-//     test: (pwd) => /\d/.test(pwd),
-//   },
-//   {
-//     label: "One symbol (@$!%*?&...)",
-//     test: (pwd) => /[@$!%*?&#^()[\]{}]/.test(pwd),
-//   },
-// ];
-
-// const renderPasswordFeedback = (password) => (
-//   <div style={{ marginTop: 8 }}>
-//     {passwordStrengthChecks.map(({ label, test }) => (
-//       <div
-//         key={label}
-//         style={{ fontSize: 13, color: test(password) ? "green" : "red" }}
-//       >
-//         {test(password) ? "✔️" : "❌"} {label}
-//       </div>
-//     ))}
-//   </div>
-// );
-
 function ChangePassword({ setOpen }) {
   const [loading, setLoading] = useState(false);
   const [otpLoading, setOtpLoading] = useState(false);
@@ -66,7 +30,6 @@ function ChangePassword({ setOpen }) {
   const [timeLeft, setTimeLeft] = useState(0);
   const [values, setValues] = useState({
     otp: "",
-    username: "",
     newPassword: "",
     email: "",
   });
@@ -85,7 +48,7 @@ function ChangePassword({ setOpen }) {
     setOtpLoading(true);
     try {
       const emailBody = { to: values.email };
-      const res = await axios.post("auth/otp-request", emailBody);
+      const res = await axios.post("otp-request", emailBody);
       if (res.data.success) {
         setOtpSent(true);
         setTimeLeft(120);
@@ -110,7 +73,7 @@ function ChangePassword({ setOpen }) {
 
   const verifyOtp = async () => {
     try {
-      const res = await axios.post("auth/verify-otp", {
+      const res = await axios.post("verify-otp", {
         email: values.email,
         otp: values.otp,
       });
@@ -149,14 +112,14 @@ function ChangePassword({ setOpen }) {
     }
     setLoading(true);
     try {
-      await axios.post("auth/password-change", {
-        username: values.username,
+      await axios.post("password-change", {
+        email: values.email,
         newPassword: values.newPassword,
       });
       Swal.fire({
         icon: "success",
         title: "Password Successfully Changed!",
-        text: "Proceed to Login",
+        text: "",
       });
     } catch (error) {
       console.log(error);
@@ -263,8 +226,8 @@ function ChangePassword({ setOpen }) {
             </span>
           )}
           <Form.Item
-            label={<span style={labelStyle}>Username</span>}
-            name="username"
+            label={<span style={labelStyle}>Email Address</span>}
+            name="email"
             rules={[
               {
                 required: true,
@@ -273,7 +236,7 @@ function ChangePassword({ setOpen }) {
             ]}
           >
             <Input
-              onChange={(e) => handleChange("username", e.target.value)}
+              onChange={(e) => handleChange("email", e.target.value)}
               disabled={otpVerified ? false : true}
               style={inputStyle}
             />

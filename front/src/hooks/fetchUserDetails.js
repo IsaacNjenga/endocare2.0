@@ -1,27 +1,21 @@
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import { UserContext } from "../App";
 
-function FetchUserDetails() {
+function FetchUserDetails(userId) {
   const [userData, setUserData] = useState([]);
   const [userDataLoading, setUserDataLoading] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
-  const { user } = useContext(UserContext);
-  const userId = user._id;
 
   useEffect(() => {
     const fetchUserData = async () => {
       setUserDataLoading(true);
-      if (!id) {
+      if (!userId) {
         console.warn("No ID specified");
         return;
       }
       try {
-        const token = localStorage.getItem("token");
-        const res = await axios.get(`fetch-user?id=${userId}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await axios.get(`fetch-user?id=${userId}`);
         if (res.data.success) {
           setUserData(res.data.userDetails);
         }
@@ -42,7 +36,7 @@ function FetchUserDetails() {
       }
     };
     fetchUserData();
-  }, [refreshKey]);
+  }, [refreshKey, userId]);
 
   return {
     userData,

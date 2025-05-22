@@ -2,18 +2,20 @@ import React, { useContext } from "react";
 import { UserContext } from "../../App";
 import PatientProfile from "./Patient Profile/patientProfile";
 import DoctorProfile from "./Doctor Profile/doctorProfile";
+import FetchUserDetails from "../../hooks/fetchUserDetails";
 
 function Profile() {
   const { user } = useContext(UserContext);
-
-  if (!user) return <div>User is unauthorized</div>;
+  const userId = user?._id;
+  const { userData, userDataLoading } = FetchUserDetails(userId);
 
   const userRole = user?.role;
-
+  if (userDataLoading) return <div>Loading...</div>;
+  
   return (
     <>
       {userRole === "patient" ? (
-        <PatientProfile user={user} />
+        <PatientProfile user={userData} />
       ) : userRole === "doctor" ? (
         <DoctorProfile user={user} />
       ) : (

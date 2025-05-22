@@ -56,6 +56,8 @@ const loginUser = async (req, res) => {
         phoneNumber: userExists.phoneNumber,
         role: userExists.role,
         id: userExists._id,
+        // avatar: userExists.avatar,
+        // avatarId: userExists.avatarId,
       },
       process.env.JWT_SECRET,
       { expiresIn: "20m" }

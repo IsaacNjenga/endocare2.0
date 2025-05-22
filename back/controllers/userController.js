@@ -18,13 +18,29 @@ const updateUser = async (req, res) => {
   }
 };
 
+const updateAvatar = async (req, res) => {
+  const { id } = req.query;
+  try {
+    await UserModel.findByIdAndUpdate(
+      { _id: id },
+      { $set: req.body },
+      { new: true }
+    );
+    return res.status(201).json({ success: true });
+  } catch (error) {
+    console.log("Error updating user:", user);
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+
 const fetchUser = async (req, res) => {
   const { id } = req.query;
   if (!id) {
     return res.status(404).json({ message: "No ID specified" });
   }
   try {
-    const userDetails = await UserModel.findById({ _id: id });
+    const user = await UserModel.findById({ _id: id });
+    const userDetails = { ...user._doc, password: undefined };
     return res.status(200).json({ success: true, userDetails });
   } catch (error) {
     console.log("Error fetching user:", user);
@@ -46,4 +62,4 @@ const deleteUser = async (req, res) => {
   }
 };
 
-export { updateUser, fetchUser, deleteUser };
+export { updateUser, fetchUser, deleteUser, updateAvatar };
