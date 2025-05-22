@@ -38,14 +38,6 @@ const patientSchema = new mongoose.Schema(
       },
     ],
 
-    immunizations: [
-      {
-        vaccine: { type: String },
-        dateAdministered: { type: Date },
-        administeredBy: { type: String },
-      },
-    ],
-
     familyMedicalHistory: [
       {
         relation: { type: String }, // e.g., "Mother", "Father"
