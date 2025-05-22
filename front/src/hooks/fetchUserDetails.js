@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
-function FetchUserDetails(userId) {
+function useFetchUserDetails(userId) {
   const [userData, setUserData] = useState([]);
   const [userDataLoading, setUserDataLoading] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
@@ -20,12 +20,9 @@ function FetchUserDetails(userId) {
           setUserData(res.data.userDetails);
         }
       } catch (error) {
-        console.log(error);
         const errorMessage =
-          error.response && error.response.data && error.response.data.error
-            ? error.response.data.error
-            : "An unexpected error occurred. Please try again later.";
-
+          error.response?.data?.error ??
+          "An unexpected error occurred. Please try again later.";
         Swal.fire({
           icon: "warning",
           title: "Error",
@@ -45,4 +42,4 @@ function FetchUserDetails(userId) {
   };
 }
 
-export default FetchUserDetails;
+export default useFetchUserDetails;

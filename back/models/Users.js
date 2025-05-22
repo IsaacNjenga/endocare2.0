@@ -18,6 +18,12 @@ const userSchema = new mongoose.Schema(
     avatar: { type: String },
     avatarId: { type: String },
     gender: { type: String },
+    // emergencyContact: {
+    //   name: { type: String },
+    //   phoneNumber: { type: String },
+    //   email: { type: String },
+    //   relationship: { type: String },
+    // },
   },
   { collection: "users", timestamps: true }
 );

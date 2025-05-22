@@ -6,6 +6,7 @@ function UpdatePersonalInfoModal({
   openPersonalInfoModal,
   setOpenPersonalInfoModal,
   loading,
+  refresh,
   modalContent,
 }) {
   return (
@@ -21,6 +22,7 @@ function UpdatePersonalInfoModal({
         <UpdatePersonalInfo
           modalContent={modalContent}
           setOpenPersonalInfoModal={setOpenPersonalInfoModal}
+          refresh={refresh}
         />
       </Modal>
     </>

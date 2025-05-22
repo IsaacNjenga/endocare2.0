@@ -18,6 +18,7 @@ function UserAccount({
   contentStyle,
   sectionCardStyle,
   sectionHeaderStyle,
+  refresh,
 }) {
   const [open, setOpen] = useState(null);
   const handleEdit = () => {};

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Card, Form, Input, Row, Col, Button, Radio } from "antd";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 const labelStyle = {
   fontFamily: "Raleway",
@@ -33,7 +34,11 @@ const initialValues = {
   emergencyEmail: "",
 };
 
-function UpdatePersonalInfo({ modalContent, setOpenPersonalInfoModal }) {
+function UpdatePersonalInfo({
+  modalContent,
+  setOpenPersonalInfoModal,
+  refresh,
+}) {
   const [form] = Form.useForm();
   const [values, setValues] = useState(initialValues);
   const [loading, setLoading] = useState(false);
@@ -44,7 +49,7 @@ function UpdatePersonalInfo({ modalContent, setOpenPersonalInfoModal }) {
         firstName: modalContent.firstName ? modalContent.firstName : "",
         middleName: modalContent.middleName ? modalContent.middleName : "",
         lastName: modalContent.lastName ? modalContent.lastName : "",
-        dob: modalContent.dob ? modalContent.dob : "2001-12-21",
+        dob: modalContent.dob ? modalContent.dob : "",
         gender: modalContent.gender ? modalContent.gender : "",
         phoneNumber: modalContent.phoneNumber ? modalContent.phoneNumber : "",
         email: modalContent.email ? modalContent.email : "",
@@ -56,7 +61,7 @@ function UpdatePersonalInfo({ modalContent, setOpenPersonalInfoModal }) {
           ? modalContent.emergencyPhoneNumber
           : "",
         emergencyEmail: modalContent.emergencyEmail
-          ? modalContent.emegerncyEmail
+          ? modalContent.emergencyEmail
           : "",
       };
       setValues(newValues);
@@ -68,7 +73,19 @@ function UpdatePersonalInfo({ modalContent, setOpenPersonalInfoModal }) {
     setLoading(true);
     try {
       const allValues = await form.validateFields();
-      console.log(allValues);
+      // console.log(allValues);
+      const res = await axios.put(
+        `update-user?id=${modalContent._id}`,
+        allValues
+      );
+      if (res.data.success) {
+        Swal.fire({
+          icon: "success",
+          title: "Success!",
+          text: "Your profile has been updated successfully",
+        });
+      }
+      refresh();
     } catch (error) {
       console.log(error);
       const errorMessage =

@@ -11,7 +11,7 @@ import {
 } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import UpdatePersonalInfoModal from "./updatePersonalInfoModal";
-import UpdateAvatar from "../userAccount/updateAvatar";
+import UpdateAvatar from "./updateAvatar";
 
 const { Title } = Typography;
 
@@ -20,6 +20,7 @@ function PersonalInfo({
   labelStyle,
   contentStyle,
   sectionCardStyle,
+  refresh,
   sectionHeaderStyle,
 }) {
   const [loading, setLoading] = useState(false);
@@ -195,6 +196,7 @@ function PersonalInfo({
         openPersonalInfoModal={openPersonalInfoModal}
         setOpenPersonalInfoModal={setOpenPersonalInfoModal}
         modalContent={modalContent}
+        refresh={refresh}
       />
       <UpdateAvatar
         loading={loading}
@@ -202,6 +204,7 @@ function PersonalInfo({
         setOpenAvatarModal={setOpenAvatarModal}
         modalContent={modalContent}
         setLoading={setLoading}
+        refresh={refresh}
       />
     </div>
   );

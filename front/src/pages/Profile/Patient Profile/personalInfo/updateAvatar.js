@@ -2,7 +2,6 @@ import { Button, Modal } from "antd";
 import React, { useState } from "react";
 import ImageUploads from "../../../../components/imageUploads.js";
 import Swal from "sweetalert2";
-import FetchUserDetails from "../../../../hooks/fetchUserDetails.js";
 import axios from "axios";
 
 function UpdateAvatar({
@@ -10,13 +9,13 @@ function UpdateAvatar({
   openAvatarModal,
   setOpenAvatarModal,
   modalContent,
+  refresh,
   setLoading,
 }) {
   const [imageUploading, setImageUploading] = useState(false);
   const [imageUrls, setImageUrls] = useState([]);
   const [imagePublicIds, setImagePublicIds] = useState([]);
   const [deleteAvatar, setDeleteAvatar] = useState(false);
-  const { refresh } = FetchUserDetails();
 
   React.useEffect(() => {
     if (modalContent) {

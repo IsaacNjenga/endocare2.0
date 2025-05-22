@@ -2,7 +2,7 @@ import React from "react";
 import { Tabs } from "antd";
 import UserAccount from "./userAccount/userAccount";
 import PersonalInfo from "./personalInfo/personalInfo";
-import MedicalInfo from "./medicalInfo";
+import MedicalInfo from "./medicalInfo/medicalInfo";
 import AIInsight from "./AIInsight";
 import Reports from "./reports";
 import Logs from "./logs";
@@ -60,7 +60,7 @@ const sectionHeaderStyle = {
   color: "#4f46e5",
 };
 
-const PatientProfile = ({ user }) => {
+const PatientProfile = ({ user, refresh, userDataLoading }) => {
   const tabItems = [
     {
       key: 1,
@@ -72,6 +72,7 @@ const PatientProfile = ({ user }) => {
           contentStyle={contentStyle}
           sectionCardStyle={sectionCardStyle}
           sectionHeaderStyle={sectionHeaderStyle}
+          refresh={refresh}
         />
       ),
       icon: <LockOutlined style={iconStyle} />,
@@ -86,6 +87,7 @@ const PatientProfile = ({ user }) => {
           contentStyle={contentStyle}
           sectionCardStyle={sectionCardStyle}
           sectionHeaderStyle={sectionHeaderStyle}
+          refresh={refresh}
         />
       ),
       icon: <UserOutlined style={iconStyle} />,
@@ -100,6 +102,7 @@ const PatientProfile = ({ user }) => {
           contentStyle={contentStyle}
           sectionCardStyle={sectionCardStyle}
           sectionHeaderStyle={sectionHeaderStyle}
+          refresh={refresh}
         />
       ),
       icon: <InfoCircleOutlined style={iconStyle} />,
@@ -113,6 +116,7 @@ const PatientProfile = ({ user }) => {
           labelStyle={labelStyle}
           contentStyle={contentStyle}
           sectionCardStyle={sectionCardStyle}
+          refresh={refresh}
           sectionHeaderStyle={sectionHeaderStyle}
         />
       ),
@@ -128,6 +132,7 @@ const PatientProfile = ({ user }) => {
           contentStyle={contentStyle}
           sectionCardStyle={sectionCardStyle}
           sectionHeaderStyle={sectionHeaderStyle}
+          refresh={refresh}
         />
       ),
       icon: <BarChartOutlined style={iconStyle} />,
@@ -142,11 +147,14 @@ const PatientProfile = ({ user }) => {
           contentStyle={contentStyle}
           sectionCardStyle={sectionCardStyle}
           sectionHeaderStyle={sectionHeaderStyle}
+          refresh={refresh}
         />
       ),
       icon: <FileDoneOutlined style={iconStyle} />,
     },
   ];
+
+  if (userDataLoading) return <div>Loading...</div>;
 
   return (
     <div

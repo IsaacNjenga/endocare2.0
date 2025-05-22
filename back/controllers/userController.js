@@ -13,7 +13,7 @@ const updateUser = async (req, res) => {
     );
     return res.status(201).json({ success: true });
   } catch (error) {
-    console.log("Error updating user:", user);
+    console.log("Error updating user:", error);
     res.status(500).json({ success: false, error: error.message });
   }
 };
@@ -28,7 +28,7 @@ const updateAvatar = async (req, res) => {
     );
     return res.status(201).json({ success: true });
   } catch (error) {
-    console.log("Error updating user:", user);
+    console.log("Error updating user:", error);
     res.status(500).json({ success: false, error: error.message });
   }
 };
@@ -43,7 +43,7 @@ const fetchUser = async (req, res) => {
     const userDetails = { ...user._doc, password: undefined };
     return res.status(200).json({ success: true, userDetails });
   } catch (error) {
-    console.log("Error fetching user:", user);
+    console.log("Error fetching user:", error);
     res.status(500).json({ success: false, error: error.message });
   }
 };
@@ -57,7 +57,7 @@ const deleteUser = async (req, res) => {
     await UserModel.findByIdAndDelete({ _id: id });
     return res.status(200).json({ success: true });
   } catch (error) {
-    console.log("Error deleting user:", user);
+    console.log("Error deleting user:", error);
     res.status(500).json({ success: false, error: error.message });
   }
 };
