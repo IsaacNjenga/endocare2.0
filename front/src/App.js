@@ -11,6 +11,7 @@ import Auth from "./pages/auth";
 import ProtectedRoutes from "./components/protectedRoutes";
 import Profile from "./pages/Profile/profile";
 import Cookies from "universal-cookie";
+import CreateMedicalInfo from "./pages/Profile/Patient Profile/medicalInfo/createMedicalInfo";
 
 const cookies = new Cookies();
 export const UserContext = createContext();
@@ -56,6 +57,10 @@ function App() {
             <Route path="appointments" element={<Appointments />} />
             <Route path="resources" element={<Resources />} />
             <Route path="profile" element={<Profile />} />
+            <Route
+              path="profile/create-medical-info"
+              element={<CreateMedicalInfo />}
+            />
           </Route>
         </Routes>
       </UserContext.Provider>
