@@ -60,7 +60,7 @@ const loginUser = async (req, res) => {
         // avatarId: userExists.avatarId,
       },
       process.env.JWT_SECRET,
-      { expiresIn: "20m" }
+      { expiresIn: "59m" }
     );
 
     const user = { ...userExists._doc, password: undefined };

@@ -621,3 +621,84 @@ export const endocrineIllnesses = [
     },
   },
 ];
+
+export const bloodTypes = [
+  { value: "A+", label: "A+" },
+  { value: "A-", label: "A-" },
+  { value: "B+", label: "B+" },
+  { value: "B-", label: "B-" },
+  { value: "AB+", label: "AB+" },
+  { value: "AB-", label: "AB-" },
+  { value: "O+", label: "O+" },
+  { value: "O-", label: "O-" },
+];
+
+export const onGoingValues = [
+  { value: true, label: "Yes" },
+  { value: false, label: "No" },
+];
+
+export const endocrineDiseases = [
+  { value: "Type 1 Diabetes", label: "Type 1 Diabetes" },
+  { value: "Type 2 Diabetes", label: "Type 2 Diabetes" },
+];
+
+export const familyTree = [
+  { value: "Grandfather", label: "Grandfather" },
+  { value: "Grandmother", label: "Grandmother" },
+  { value: "Father", label: "Father" },
+  { value: "Mother", label: "Mother" },
+];
+
+export const dietDescriptions = [
+  { value: "Unhealthy", label: "Unhealthy" },
+  { value: "Poor", label: "Poor" },
+  { value: "Inadequate", label: "Inadequate" },
+  { value: "Imbalanced", label: "Imbalanced" },
+  { value: "Suboptimal", label: "Suboptimal" },
+  { value: "Moderate", label: "Moderate" },
+  { value: "Acceptable", label: "Acceptable" },
+  { value: "Balanced", label: "Balanced" },
+  { value: "Nutrient-rich", label: "Nutrient-rich" },
+  { value: "Wholesome", label: "Wholesome" },
+  { value: "Healthy", label: "Healthy" },
+  { value: "Optimal", label: "Optimal" },
+  { value: "Exceptional", label: "Exceptional" },
+  { value: "Superb", label: "Superb" },
+  { value: "Exemplary", label: "Exemplary" },
+];
+
+export const alcoholUseDescriptions = [
+  { value: "Excessive", label: "Excessive" },
+  { value: "Heavy", label: "Heavy" },
+  { value: "Moderate", label: "Moderate" },
+  { value: "Occasional", label: "Occasional" },
+  { value: "Responsible", label: "Responsible" },
+  { value: "Controlled", label: "Controlled" },
+  { value: "Minimal", label: "Minimal" },
+  { value: "Abstinent", label: "Abstinent" },
+];
+
+export const exerciseFrequencyDescriptions = [
+  { value: "Sedentary", label: "Sedentary" },
+  { value: "Rare", label: "Rare" },
+  { value: "Infrequent", label: "Infrequent" },
+  { value: "Occasional", label: "Occasional" },
+  { value: "Sometimes", label: "Sometimes" },
+  { value: "Regular", label: "Regular" },
+  { value: "Frequent", label: "Frequent" },
+  { value: "Consistent", label: "Consistent" },
+  { value: "Active", label: "Active" },
+  { value: "Very Active", label: "Very Active" },
+];
+
+export const smokingDescriptions = [
+  { value: "Heavy Smoker", label: "Heavy Smoker" },
+  { value: "Regular Smoker", label: "Regular Smoker" },
+  { value: "Occasional Smoker", label: "Occasional Smoker" },
+  { value: "Social Smoker", label: "Social Smoker" },
+  { value: "Light Smoker", label: "Light Smoker" },
+  { value: "Former Smoker", label: "Former Smoker" },
+  { value: "Non-Smoker", label: "Non-Smoker" },
+  { value: "Abstinent", label: "Abstinent" },
+];

@@ -84,9 +84,9 @@ function MedicalInfo({
   //     },
   //   ],
   //   medicalProcedures: [
-  //     { procedureName: "surgery", date: "2001-03-03", notes: "bla bla bla" },
-  //     { procedureName: "surgery", date: "2001-03-03", notes: "bla bla bla" },
-  //     { procedureName: "surgery", date: "2001-03-03", notes: "bla bla bla" },
+  //     { procedureName: "surgery", dateOfProcedure: "2001-03-03", notes: "bla bla bla" },
+  //     { procedureName: "surgery", dateOfProcedure: "2001-03-03", notes: "bla bla bla" },
+  //     { procedureName: "surgery", dateOfProcedure: "2001-03-03", notes: "bla bla bla" },
   //   ],
   //   familyMedicalHistory: [
   //     { relation: "Papa", condition: "sick", notes: "very sicc" },
@@ -204,7 +204,7 @@ function MedicalInfo({
                 <span style={contentStyle}>{procedure.procedureName}</span>
               </Descriptions.Item>
               <Descriptions.Item label={<span style={labelStyle}>Date</span>}>
-                <span style={contentStyle}>{procedure.date}</span>
+                <span style={contentStyle}>{procedure.dateOfProcedure}</span>
               </Descriptions.Item>
             </Descriptions>
 
