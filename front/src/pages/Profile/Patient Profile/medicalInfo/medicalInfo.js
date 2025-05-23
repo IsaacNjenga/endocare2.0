@@ -7,9 +7,11 @@ import {
   Tag,
   List,
   Space,
+  Collapse,
 } from "antd";
 
 const { Title, Text } = Typography;
+const { Panel } = Collapse;
 
 function MedicalInfo({
   labelStyle,
@@ -106,7 +108,7 @@ function MedicalInfo({
   const renderListAsTags = (items) => (
     <Space wrap>
       {items.map((item, idx) => (
-        <Tag key={idx} color="blue">
+        <Tag key={idx} color="red">
           {item}
         </Tag>
       ))}
@@ -131,6 +133,85 @@ function MedicalInfo({
     />
   );
 
+  const MedicalProceduresSection = ({
+    procedures,
+    labelStyle,
+    contentStyle,
+    sectionHeaderStyle,
+  }) => {
+    return (
+      <>
+        <Title level={4} style={sectionHeaderStyle}>
+          Medical Procedures
+        </Title>{" "}
+        {procedures.map((procedure, index) => (
+          <Card
+            key={index}
+            type="inner"
+            style={{ marginBottom: "1rem", borderRadius: "10px" }}
+          >
+            <Descriptions size="small" column={2}>
+              <Descriptions.Item
+                label={<span style={labelStyle}>Procedure</span>}
+              >
+                <span style={contentStyle}>{procedure.procedureName}</span>
+              </Descriptions.Item>
+              <Descriptions.Item label={<span style={labelStyle}>Date</span>}>
+                <span style={contentStyle}>{procedure.date}</span>
+              </Descriptions.Item>
+            </Descriptions>
+
+            <Collapse style={{ marginTop: "1rem" }}>
+              <Panel header="View Notes" key="1">
+                <p style={contentStyle}>{procedure.notes}</p>
+              </Panel>
+            </Collapse>
+          </Card>
+        ))}
+      </>
+    );
+  };
+
+  const FamilyMedicalHistorySection = ({
+    medicalHistory,
+    labelStyle,
+    contentStyle,
+    sectionHeaderStyle,
+  }) => {
+    return (
+      <>
+        <Title level={4} style={sectionHeaderStyle}>
+          Family Medical History
+        </Title>
+        {medicalHistory.map((history, index) => (
+          <Card
+            key={index}
+            type="inner"
+            style={{ marginBottom: "1rem", borderRadius: "10px" }}
+          >
+            <Descriptions size="small" column={2}>
+              <Descriptions.Item
+                label={<span style={labelStyle}>Relation</span>}
+              >
+                <span style={contentStyle}>{history.relation}</span>
+              </Descriptions.Item>
+              <Descriptions.Item
+                label={<span style={labelStyle}>Condition</span>}
+              >
+                <span style={contentStyle}>{history.condition}</span>
+              </Descriptions.Item>
+            </Descriptions>
+
+            <Collapse style={{ marginTop: "1rem" }}>
+              <Panel header="View Notes" key="1">
+                <p style={contentStyle}>{history.notes}</p>
+              </Panel>
+            </Collapse>
+          </Card>
+        ))}
+      </>
+    );
+  };
   return (
     <div style={{ fontFamily: "Roboto", padding: "0.7rem" }}>
       <Title level={2} style={{ ...sectionHeaderStyle }}>
@@ -188,25 +269,21 @@ function MedicalInfo({
 
       <Divider />
 
-      <Title level={4} style={sectionHeaderStyle}>
-        Medical Procedures
-      </Title>
-      {renderObjectList(values.medicalProcedures, [
-        { key: "procedureName", label: "Procedure" },
-        { key: "date", label: "Date" },
-        { key: "notes", label: "Notes" },
-      ])}
+      <MedicalProceduresSection
+        procedures={values.medicalProcedures}
+        labelStyle={labelStyle}
+        contentStyle={contentStyle}
+        sectionHeaderStyle={sectionHeaderStyle}
+      />
 
       <Divider />
 
-      <Title level={4} style={sectionHeaderStyle}>
-        Family Medical History
-      </Title>
-      {renderObjectList(values.familyMedicalHistory, [
-        { key: "relation", label: "Relation" },
-        { key: "condition", label: "Condition" },
-        { key: "notes", label: "Notes" },
-      ])}
+      <FamilyMedicalHistorySection
+        medicalHistory={values.familyMedicalHistory}
+        labelStyle={labelStyle}
+        contentStyle={contentStyle}
+        sectionHeaderStyle={sectionHeaderStyle}
+      />
 
       <Divider />
 
