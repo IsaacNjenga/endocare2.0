@@ -59,14 +59,14 @@ const patientSchema = new mongoose.Schema(
 
     lifestyle: [
       {
-        smoking: { type: Boolean, default: false },
-        alcoholUse: { type: Boolean, default: false },
+        smoking: { type: String, default: false },
+        alcoholUse: { type: String, default: false },
         exerciseFrequency: { type: String }, // e.g., "Daily", "Weekly"
         dietDescription: { type: String },
       },
     ],
 
-    assignedPhysician: { type: mongoose.Schema.Types.ObjectId, ref: "users" }, // Better to reference a physician object
+    //assignedPhysician: { type: mongoose.Schema.Types.ObjectId, ref: "users" }, // Better to reference a physician object
 
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
   },

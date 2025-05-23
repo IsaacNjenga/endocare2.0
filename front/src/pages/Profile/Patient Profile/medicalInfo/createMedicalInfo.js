@@ -1,6 +1,6 @@
 import { CloseOutlined } from "@ant-design/icons";
 import { Button, Card, Col, Form, Input, Row, Select, DatePicker } from "antd";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import dayjs from "dayjs";
@@ -14,6 +14,8 @@ import {
   exerciseFrequencyDescriptions,
   smokingDescriptions,
 } from "../../../../assets/data/data";
+import { UserContext } from "../../../../App";
+import axios from "axios";
 
 const { TextArea } = Input;
 const { RangePicker } = DatePicker;
@@ -68,18 +70,25 @@ function CreateMedicalInfo() {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const { user } = useContext(UserContext);
 
   const handleSubmit = async () => {
+    setLoading(true);
     try {
       const values = await form.validateFields();
-      console.log(values);
-      Swal.fire({ icon: "success", title: "Submitted!" });
+      const allValues = { ...values, createdBy: user._id };
+      //   console.log(allValues);
+      const res = await axios.post("create-patient-details", allValues);
+      if (res.data.success) {
+        Swal.fire({ icon: "success", title: "Submitted!" });
+      }
     } catch (error) {
       const errorMessage =
         error?.response?.data?.error || "An unexpected error occurred.";
       Swal.fire({ icon: "error", title: "Error", text: errorMessage });
     } finally {
       setLoading(false);
+      form.resetFields();
     }
   };
 

@@ -1,11 +1,12 @@
 import PatientModel from "../models/Patient.js";
+import mongoose from "mongoose";
 
 const createPatientDetails = async (req, res) => {
   try {
     const newPatient = new PatientModel({ ...req.body });
     const result = await newPatient.save();
 
-    return res.status(200).json({ success: true, ...result._doc });
+    return res.status(201).json({ success: true, ...result._doc });
   } catch (error) {
     console.log("Error creating patient information", error);
     return res.status(500).json({ error: error.message });
@@ -18,8 +19,9 @@ const fetchPatientDetails = async (req, res) => {
     return res.status(404).json({ error: "No ID Specified" });
   }
   try {
-    const patientData = await PatientModel.find({ createdBy: id });
-    return res.status(201).json({ success: true, patientData });
+    const objectId = new mongoose.Types.ObjectId(id);
+    const patientData = await PatientModel.find({ createdBy: objectId });
+    return res.status(200).json({ success: true, patientData });
   } catch (error) {
     console.log("Error creating patient information", error);
     return res.status(500).json({ error: error.message });
@@ -35,7 +37,17 @@ const fetchPatientsDetails = async (req, res) => {
 };
 
 const updatePatientDetails = async (req, res) => {
+  const { id } = req.query;
+  if (!id) {
+    return res.status(404).json({ error: "No ID Specified" });
+  }
   try {
+    const objectId = new mongoose.Types.ObjectId(id);
+    const updatedPatientLog = await PatientModel.findByIdAndUpdate(
+      { _id: objectId },
+      { $set: req.body },
+      { new: true }
+    );
   } catch (error) {
     console.log("Error creating patient information", error);
     return res.status(500).json({ error: error.message });
