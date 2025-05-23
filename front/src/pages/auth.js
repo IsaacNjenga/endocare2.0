@@ -123,7 +123,6 @@ function Auth() {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      // console.log(values);
       const payload = isSignUp
         ? values
         : { email: values.email, password: values.password };

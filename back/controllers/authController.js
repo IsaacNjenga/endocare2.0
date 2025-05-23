@@ -39,10 +39,10 @@ const loginUser = async (req, res) => {
     const { password, email } = req.body;
     const userExists = await UserModel.findOne({ email });
     if (!userExists) {
-      return res.json(400).json({ error: `User under ${email} not found` });
+      return res.status(400).json({ error: `User under '${email}' not found` });
     }
 
-    const match = bcrypt.compare(password, userExists.password);
+    const match = await bcrypt.compare(password, userExists.password);
     if (!match) {
       return res.status(400).json({ error: "Incorrect password. Try Again" });
     }

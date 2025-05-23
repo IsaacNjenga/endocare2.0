@@ -13,6 +13,13 @@ import {
 } from "../controllers/userController.js";
 import { deleteImage } from "../controllers/cloudinaryController.js";
 import { verifyOtp, otpRequest } from "../controllers/otpController.js";
+import {
+  createPatientDetails,
+  deletePatientDetails,
+  fetchPatientDetails,
+  fetchPatientsDetails,
+  updatePatientDetails,
+} from "../controllers/patientController.js";
 
 const router = express.Router();
 
@@ -33,5 +40,12 @@ router.post("/delete-image", deleteImage);
 //mail routes
 router.post("/otp-request", otpRequest);
 router.post("/verify-otp", verifyOtp);
+
+//patient routes
+router.post("/create-patient-details", createPatientDetails);
+router.get("/get-patient-details", fetchPatientDetails);
+router.get("/get-patients-details", fetchPatientsDetails);
+router.put("/update-patient-details", updatePatientDetails);
+router.delete("/delete-patient-details", deletePatientDetails);
 
 export { router as Router };
