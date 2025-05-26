@@ -9,7 +9,7 @@ import {
   FamilyMedicalHistory,
   MedicalProcedures,
 } from "../../../../components/MedicalFormComponents";
-//import axios from "axios";
+import axios from "axios";
 import Swal from "sweetalert2";
 
 function UpdateMedicalInfoModal({
@@ -19,6 +19,7 @@ function UpdateMedicalInfoModal({
   modalContent,
   sectionName,
   user,
+  patientRefresh,
 }) {
   const [form] = Form.useForm();
   const [updateLoading, setLoading] = useState(false);
@@ -29,10 +30,15 @@ function UpdateMedicalInfoModal({
       const values = await form.validateFields();
       const allValues = { ...values, createdBy: user._id };
       console.log(allValues);
-      // const res = await axios.put("update-patient-details", allValues);
-      // if (res.data.success) {
-      //   Swal.fire({ icon: "success", title: "Updated successfully!" });
-      // }
+      const res = await axios.put(
+        `update-patient-details?id=${user._id}`,
+        allValues
+      );
+      if (res.data.success) {
+        Swal.fire({ icon: "success", title: "Updated successfully!" });
+        patientRefresh();
+        setOpenMedicalInfoModal(false);
+      }
     } catch (error) {
       const errorMessage =
         error?.response?.data?.error || "An unexpected error occurred.";
@@ -73,11 +79,6 @@ function UpdateMedicalInfoModal({
         return <p>Select a section to update.</p>;
     }
   };
-
-  console.log("sectionName:", sectionName);
-  console.log("initialValues:", {
-    [toCamelCase(sectionName)]: modalContent ? [modalContent] : [{}],
-  });
 
   return (
     <Modal

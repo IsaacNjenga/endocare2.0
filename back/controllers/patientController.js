@@ -23,7 +23,7 @@ const fetchPatientDetails = async (req, res) => {
     const patientData = await PatientModel.find({ createdBy: objectId });
     return res.status(200).json({ success: true, patientData });
   } catch (error) {
-    console.log("Error creating patient information", error);
+    console.log("Error fetching patient information", error);
     return res.status(500).json({ error: error.message });
   }
 };
@@ -31,7 +31,7 @@ const fetchPatientDetails = async (req, res) => {
 const fetchPatientsDetails = async (req, res) => {
   try {
   } catch (error) {
-    console.log("Error creating patient information", error);
+    console.log("Error fetching patient information", error);
     return res.status(500).json({ error: error.message });
   }
 };
@@ -43,13 +43,17 @@ const updatePatientDetails = async (req, res) => {
   }
   try {
     const objectId = new mongoose.Types.ObjectId(id);
-    const updatedPatientLog = await PatientModel.findByIdAndUpdate(
-      { _id: objectId },
+    const updatedPatientLog = await PatientModel.findOneAndUpdate(
+      { createdBy: objectId },
       { $set: req.body },
       { new: true }
     );
+    if (!updatedPatientLog) {
+      return res.status(404).json({ error: "Patient record not found" });
+    }
+    return res.status(201).json({ success: true, data: updatedPatientLog });
   } catch (error) {
-    console.log("Error creating patient information", error);
+    console.log("Error updating patient information", error);
     return res.status(500).json({ error: error.message });
   }
 };
@@ -57,7 +61,7 @@ const updatePatientDetails = async (req, res) => {
 const deletePatientDetails = async (req, res) => {
   try {
   } catch (error) {
-    console.log("Error creating patient information", error);
+    console.log("Error deleting patient information", error);
     return res.status(500).json({ error: error.message });
   }
 };
