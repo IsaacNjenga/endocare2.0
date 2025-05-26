@@ -14,6 +14,8 @@ import {
 import UpdateMedicalInfoModal from "./updateMedicalInfoModal";
 import { EditOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { format } from "date-fns";
+
 const { Title, Text } = Typography;
 const { Panel } = Collapse;
 
@@ -160,6 +162,173 @@ function MedicalInfo({
     </>
   );
 
+  const CurrentMedicationSection = ({
+    medications,
+    labelStyle,
+    contentStyle,
+    sectionHeaderStyle,
+  }) => {
+    return (
+      <>
+        <Title level={4} style={sectionHeaderStyle}>
+          Current Medication
+        </Title>{" "}
+        {medications ? (
+          medications?.map((medication, index) => (
+            <Card
+              key={index}
+              type="inner"
+              style={{ marginBottom: "1rem", borderRadius: "10px" }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "right",
+                  margin: "5px 0px",
+                }}
+              >
+                <Tooltip title="Edit this section">
+                  <Button
+                    type="primary"
+                    icon={<EditOutlined />}
+                    onClick={() => handleUpdate(medication)}
+                  />
+                </Tooltip>
+              </div>
+              <Descriptions size="small" column={2}>
+                <Descriptions.Item
+                  label={<span style={labelStyle}>Medication Name</span>}
+                >
+                  <span style={contentStyle}>{medication.name}</span>
+                </Descriptions.Item>
+                <Descriptions.Item
+                  label={<span style={labelStyle}>Assigned Dosage</span>}
+                >
+                  <span style={contentStyle}>{medication.dosage}</span>
+                </Descriptions.Item>
+                <Descriptions.Item
+                  label={<span style={labelStyle}>Frequency</span>}
+                >
+                  <span style={contentStyle}>{medication.frequency}</span>
+                </Descriptions.Item>
+                <Descriptions.Item label={<span style={labelStyle}>Date</span>}>
+                  <span style={contentStyle}>
+                    {format(new Date(medication.startDate), "yyyy-MM-dd")}
+                  </span>
+                </Descriptions.Item>
+                <Descriptions.Item
+                  label={<span style={labelStyle}>Ongoing</span>}
+                >
+                  <span style={contentStyle}>
+                    {medication.isOngoing === "true" ? "Yes" : "No"}
+                  </span>
+                </Descriptions.Item>
+              </Descriptions>
+            </Card>
+          ))
+        ) : (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "right",
+              margin: "5px 0px",
+            }}
+          >
+            <Tooltip title="Edit this section">
+              <Button
+                type="primary"
+                icon={<EditOutlined />}
+                onClick={() => handleUpdate(medications)}
+              />
+            </Tooltip>
+          </div>
+        )}
+      </>
+    );
+  };
+
+  const TreatmentHistorySection = ({
+    treatmentHistory,
+    labelStyle,
+    contentStyle,
+    sectionHeaderStyle,
+  }) => {
+    return (
+      <>
+        <Title level={4} style={sectionHeaderStyle}>
+          Treatment History
+        </Title>{" "}
+        {treatmentHistory ? (
+          treatmentHistory?.map((history, index) => (
+            <Card
+              key={index}
+              type="inner"
+              style={{ marginBottom: "1rem", borderRadius: "10px" }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "right",
+                  margin: "5px 0px",
+                }}
+              >
+                <Tooltip title="Edit this section">
+                  <Button
+                    type="primary"
+                    icon={<EditOutlined />}
+                    onClick={() => handleUpdate(history)}
+                  />
+                </Tooltip>
+              </div>
+              <Descriptions size="small" column={2}>
+                <Descriptions.Item
+                  label={<span style={labelStyle}>Condition</span>}
+                >
+                  <span style={contentStyle}>{history.condition}</span>
+                </Descriptions.Item>
+                <Descriptions.Item
+                  label={<span style={labelStyle}>Date of Diagnosis</span>}
+                >
+                  <span style={contentStyle}>
+                    {format(new Date(history.diagnosisDate), "yyyy-MM-dd")}
+                  </span>
+                </Descriptions.Item>
+                <Descriptions.Item
+                  label={<span style={labelStyle}>Description</span>}
+                >
+                  <span style={contentStyle}>
+                    {history.treatmentDescription}
+                  </span>
+                </Descriptions.Item>
+                <Descriptions.Item
+                  label={<span style={labelStyle}>Outcome</span>}
+                >
+                  <span style={contentStyle}>{history.outcome}</span>
+                </Descriptions.Item>
+              </Descriptions>
+            </Card>
+          ))
+        ) : (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "right",
+              margin: "5px 0px",
+            }}
+          >
+            <Tooltip title="Edit this section">
+              <Button
+                type="primary"
+                icon={<EditOutlined />}
+                onClick={() => handleUpdate(treatmentHistory)}
+              />
+            </Tooltip>
+          </div>
+        )}
+      </>
+    );
+  };
+
   const MedicalProceduresSection = ({
     procedures,
     labelStyle,
@@ -171,7 +340,7 @@ function MedicalInfo({
         <Title level={4} style={sectionHeaderStyle}>
           Medical Procedures
         </Title>{" "}
-        {procedures.length > 0 ? (
+        {procedures ? (
           procedures?.map((procedure, index) => (
             <Card
               key={index}
@@ -288,6 +457,58 @@ function MedicalInfo({
     );
   };
 
+  const PreviousProvidersSection = ({
+    previousProviders,
+    labelStyle,
+    contentStyle,
+    sectionHeaderStyle,
+  }) => {
+    return (
+      <>
+        <Title level={4} style={sectionHeaderStyle}>
+          Family Medical History
+        </Title>
+        {previousProviders?.map((provider, index) => (
+          <Card
+            key={index}
+            type="inner"
+            style={{ marginBottom: "1rem", borderRadius: "10px" }}
+          >
+            {" "}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "right",
+                margin: "5px 0px",
+              }}
+            >
+              <Tooltip title="Edit this section">
+                <Button
+                  type="primary"
+                  icon={<EditOutlined />}
+                  onClick={() => handleUpdate(provider)}
+                />
+              </Tooltip>
+            </div>
+            <Descriptions size="small" column={1}>
+              <Descriptions.Item label={<span style={labelStyle}>Name</span>}>
+                <span style={contentStyle}>{provider.name}</span>
+              </Descriptions.Item>
+              <Descriptions.Item
+                label={<span style={labelStyle}>Contact Information</span>}
+              >
+                <span style={contentStyle}>{provider.contactInfo}</span>
+              </Descriptions.Item>{" "}
+              <Descriptions.Item label={<span style={labelStyle}>Period</span>}>
+                <span style={contentStyle}>{provider.period}</span>
+              </Descriptions.Item>
+            </Descriptions>
+          </Card>
+        ))}
+      </>
+    );
+  };
+
   const handleUpdate = (info) => {
     setOpenMedicalInfoModal(true);
     setModalContent(info);
@@ -360,29 +581,19 @@ function MedicalInfo({
 
             <Divider />
 
-            <Title level={4} style={sectionHeaderStyle}>
-              Current Medications
-            </Title>
-            {renderObjectList(values?.currentMedications, [
-              { key: "name", label: "Name" },
-              { key: "dosage", label: "Dosage" },
-              { key: "frequency", label: "Frequency" },
-              { key: "startDate", label: "Start Date" },
-              { key: "isOngoing", label: "Ongoing" },
-            ])}
-
+            <CurrentMedicationSection
+              medications={values?.currentMedications}
+              labelStyle={labelStyle}
+              contentStyle={contentStyle}
+              sectionHeaderStyle={sectionHeaderStyle}
+            />
             <Divider />
-
-            <Title level={4} style={sectionHeaderStyle}>
-              Treatment History
-            </Title>
-            {renderObjectList(values?.treatmentHistory, [
-              { key: "condition", label: "Condition" },
-              { key: "diagnosisDate", label: "Diagnosis Date" },
-              { key: "treatmentDescription", label: "Description" },
-              { key: "outcome", label: "Outcome" },
-            ])}
-
+            <TreatmentHistorySection
+              treatmentHistory={values?.treatmentHistory}
+              labelStyle={labelStyle}
+              contentStyle={contentStyle}
+              sectionHeaderStyle={sectionHeaderStyle}
+            />
             <Divider />
 
             <MedicalProceduresSection
@@ -403,14 +614,12 @@ function MedicalInfo({
 
             <Divider />
 
-            <Title level={4} style={sectionHeaderStyle}>
-              Previous Healthcare Providers
-            </Title>
-            {renderObjectList(values?.previousHealthcareProviders, [
-              { key: "name", label: "Name" },
-              { key: "contactInfo", label: "Contact" },
-              { key: "period", label: "Period" },
-            ])}
+            <PreviousProvidersSection
+              previousProviders={values?.previousHealthcareProviders}
+              labelStyle={labelStyle}
+              contentStyle={contentStyle}
+              sectionHeaderStyle={sectionHeaderStyle}
+            />
 
             <Divider />
 
