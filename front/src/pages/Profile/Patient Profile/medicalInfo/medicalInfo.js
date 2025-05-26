@@ -5,7 +5,6 @@ import {
   Typography,
   Divider,
   Tag,
-  List,
   Space,
   Collapse,
   Tooltip,
@@ -16,7 +15,7 @@ import { EditOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 const { Panel } = Collapse;
 
 function MedicalInfo({
@@ -127,40 +126,64 @@ function MedicalInfo({
     </Space>
   );
 
-  const renderObjectList = (data, fields) => (
-    <>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "right",
-          margin: "5px 0px",
-        }}
-      >
-        <Tooltip title="Edit this section">
-          <Button
-            type="primary"
-            icon={<EditOutlined />}
-            onClick={() => handleUpdate(data)}
-          />
-        </Tooltip>
-      </div>
-      <List
-        size="small"
-        bordered
-        dataSource={data}
-        renderItem={(item) => (
-          <List.Item>
-            {fields.map((f, i) => (
-              <div key={i} style={{ marginRight: 20 }}>
-                <Text strong>{f.label}:</Text>{" "}
-                <span style={contentStyle}>{item[f.key] || "—"}</span>
+  const PatientInformationSection = ({
+    patientInfo,
+    labelStyle,
+    contentStyle,
+    sectionHeaderStyle,
+  }) => {
+    return (
+      <>
+        <Title level={2} style={sectionHeaderStyle}>
+          <u>Medical Information</u>
+        </Title>
+
+        <Card style={sectionCardStyle}>
+          {patientInfo?.map((info) => (
+            <>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "right",
+                  margin: "5px 0px",
+                }}
+              >
+                <Tooltip title="Edit this section">
+                  <Button
+                    type="primary"
+                    icon={<EditOutlined />}
+                    onClick={() => handleUpdate(info)}
+                  />
+                </Tooltip>
               </div>
-            ))}
-          </List.Item>
-        )}
-      />
-    </>
-  );
+              <Descriptions column={2} bordered size="samll">
+                <Descriptions.Item
+                  label={<span style={labelStyle}>Diagnosis</span>}
+                >
+                  <span style={contentStyle}>{info.diagnosis}</span>
+                </Descriptions.Item>
+                <Descriptions.Item
+                  label={<span style={labelStyle}>Chronic Conditions</span>}
+                >
+                  {renderListAsTags(info.chronicConditions)}
+                </Descriptions.Item>
+                <Descriptions.Item
+                  label={<span style={labelStyle}>Allergies</span>}
+                >
+                  {renderListAsTags(info.allergies)}
+                </Descriptions.Item>
+                <Descriptions.Item
+                  label={<span style={labelStyle}>Blood Type</span>}
+                >
+                  <span style={contentStyle}>{info.bloodType}</span>
+                </Descriptions.Item>
+              </Descriptions>
+            </>
+          ))}
+        </Card>
+      </>
+    );
+  };
 
   const CurrentMedicationSection = ({
     medications,
@@ -509,6 +532,67 @@ function MedicalInfo({
     );
   };
 
+  const LifestyleSection = ({
+    lifestyles,
+    labelStyle,
+    contentStyle,
+    sectionHeaderStyle,
+  }) => {
+    return (
+      <>
+        <Title level={4} style={sectionHeaderStyle}>
+          Lifestyle
+        </Title>
+        {lifestyles?.map((lifestyle) => (
+          <>
+            {" "}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "right",
+                margin: "5px 0px",
+              }}
+            >
+              <Tooltip title="Edit this section">
+                <Button
+                  type="primary"
+                  icon={<EditOutlined />}
+                  onClick={() => handleUpdate(lifestyle)}
+                />
+              </Tooltip>
+            </div>
+            <Descriptions column={2} bordered size="small">
+              <Descriptions.Item
+                label={<span style={labelStyle}>Smoking</span>}
+              >
+                <span style={contentStyle}>
+                  {lifestyle.smoking ? "Yes" : "No"}
+                </span>
+              </Descriptions.Item>
+              <Descriptions.Item
+                label={<span style={labelStyle}>Alcohol Use</span>}
+              >
+                <span style={contentStyle}>
+                  {lifestyle.alcoholUse ? "Yes" : "No"}
+                </span>
+              </Descriptions.Item>
+              <Descriptions.Item
+                label={<span style={labelStyle}>Exercise Frequency</span>}
+              >
+                <span style={contentStyle}>{lifestyle.exerciseFrequency}</span>
+              </Descriptions.Item>
+              <Descriptions.Item
+                label={<span style={labelStyle}>Diet Description</span>}
+              >
+                <span style={contentStyle}>{lifestyle.dietDescription}</span>
+              </Descriptions.Item>
+            </Descriptions>
+          </>
+        ))}
+      </>
+    );
+  };
+
   const handleUpdate = (info) => {
     setOpenMedicalInfoModal(true);
     setModalContent(info);
@@ -523,64 +607,14 @@ function MedicalInfo({
     <>
       {values.length !== 0 ? (
         <>
-          <div style={{ fontFamily: "Roboto", padding: "0.7rem" }}>
-            <Title level={2} style={{ ...sectionHeaderStyle }}>
-              <u>Medical Information</u>
-            </Title>
-
-            <Card style={sectionCardStyle}>
-              {values?.patientInformation?.map((info) => (
-                <>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "right",
-                      margin: "5px 0px",
-                    }}
-                  >
-                    <Tooltip title="Edit this section">
-                      <Button
-                        type="primary"
-                        icon={<EditOutlined />}
-                        onClick={() => handleUpdate(info)}
-                      />
-                    </Tooltip>
-                  </div>
-                  <Descriptions column={2} bordered size="samll">
-                    <Descriptions.Item
-                      label={<span style={labelStyle}>Diagnosis</span>}
-                    >
-                      <span style={contentStyle}>{info.diagnosis}</span>
-                    </Descriptions.Item>
-                    <Descriptions.Item
-                      label={<span style={labelStyle}>Chronic Conditions</span>}
-                    >
-                      {renderListAsTags(info.chronicConditions)}
-                    </Descriptions.Item>
-                    <Descriptions.Item
-                      label={<span style={labelStyle}>Allergies</span>}
-                    >
-                      {renderListAsTags(info.allergies)}
-                    </Descriptions.Item>
-                    <Descriptions.Item
-                      label={<span style={labelStyle}>Blood Type</span>}
-                    >
-                      <span style={contentStyle}>{info.bloodType}</span>
-                    </Descriptions.Item>
-                    <Descriptions.Item
-                      label={<span style={labelStyle}>Assigned Physician</span>}
-                    >
-                      <span style={contentStyle}>
-                        {values?.assignedPhysician}
-                      </span>
-                    </Descriptions.Item>
-                  </Descriptions>
-                </>
-              ))}
-            </Card>
-
+          <div style={{ fontFamily: "Roboto", padding: "0.5rem" }}>
+            <PatientInformationSection
+              patientInfo={values?.patientInformation}
+              labelStyle={labelStyle}
+              contentStyle={contentStyle}
+              sectionHeaderStyle={sectionHeaderStyle}
+            />
             <Divider />
-
             <CurrentMedicationSection
               medications={values?.currentMedications}
               labelStyle={labelStyle}
@@ -595,88 +629,35 @@ function MedicalInfo({
               sectionHeaderStyle={sectionHeaderStyle}
             />
             <Divider />
-
             <MedicalProceduresSection
               procedures={values?.medicalProcedures}
               labelStyle={labelStyle}
               contentStyle={contentStyle}
               sectionHeaderStyle={sectionHeaderStyle}
             />
-
             <Divider />
-
             <FamilyMedicalHistorySection
               medicalHistory={values?.familyMedicalHistory}
               labelStyle={labelStyle}
               contentStyle={contentStyle}
               sectionHeaderStyle={sectionHeaderStyle}
             />
-
             <Divider />
-
             <PreviousProvidersSection
               previousProviders={values?.previousHealthcareProviders}
               labelStyle={labelStyle}
               contentStyle={contentStyle}
               sectionHeaderStyle={sectionHeaderStyle}
             />
-
             <Divider />
-
-            <Title level={4} style={sectionHeaderStyle}>
-              Lifestyle
-            </Title>
-            {values?.lifestyle?.map((lifestyle) => (
-              <>
-                {" "}
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "right",
-                    margin: "5px 0px",
-                  }}
-                >
-                  <Tooltip title="Edit this section">
-                    <Button
-                      type="primary"
-                      icon={<EditOutlined />}
-                      onClick={() => handleUpdate(lifestyle)}
-                    />
-                  </Tooltip>
-                </div>
-                <Descriptions column={2} bordered size="small">
-                  <Descriptions.Item
-                    label={<span style={labelStyle}>Smoking</span>}
-                  >
-                    <span style={contentStyle}>
-                      {lifestyle.smoking ? "Yes" : "No"}
-                    </span>
-                  </Descriptions.Item>
-                  <Descriptions.Item
-                    label={<span style={labelStyle}>Alcohol Use</span>}
-                  >
-                    <span style={contentStyle}>
-                      {lifestyle.alcoholUse ? "Yes" : "No"}
-                    </span>
-                  </Descriptions.Item>
-                  <Descriptions.Item
-                    label={<span style={labelStyle}>Exercise Frequency</span>}
-                  >
-                    <span style={contentStyle}>
-                      {lifestyle.exerciseFrequency}
-                    </span>
-                  </Descriptions.Item>
-                  <Descriptions.Item
-                    label={<span style={labelStyle}>Diet Description</span>}
-                  >
-                    <span style={contentStyle}>
-                      {lifestyle.dietDescription}
-                    </span>
-                  </Descriptions.Item>
-                </Descriptions>
-              </>
-            ))}
+            <LifestyleSection
+              lifestyles={values?.lifestyle}
+              labelStyle={labelStyle}
+              contentStyle={contentStyle}
+              sectionHeaderStyle={sectionHeaderStyle}
+            />
           </div>
+
           <UpdateMedicalInfoModal
             openMedicalInfoModal={openMedicalInfoModal}
             setOpenMedicalInfoModal={setOpenMedicalInfoModal}
@@ -706,3 +687,38 @@ function MedicalInfo({
   );
 }
 export default MedicalInfo;
+
+// const renderObjectList = (data, fields) => (
+//   <>
+//     <div
+//       style={{
+//         display: "flex",
+//         justifyContent: "right",
+//         margin: "5px 0px",
+//       }}
+//     >
+//       <Tooltip title="Edit this section">
+//         <Button
+//           type="primary"
+//           icon={<EditOutlined />}
+//           onClick={() => handleUpdate(data)}
+//         />
+//       </Tooltip>
+//     </div>
+//     <List
+//       size="small"
+//       bordered
+//       dataSource={data}
+//       renderItem={(item) => (
+//         <List.Item>
+//           {fields.map((f, i) => (
+//             <div key={i} style={{ marginRight: 20 }}>
+//               <Text strong>{f.label}:</Text>{" "}
+//               <span style={contentStyle}>{item[f.key] || "—"}</span>
+//             </div>
+//           ))}
+//         </List.Item>
+//       )}
+//     />
+//   </>
+// );
