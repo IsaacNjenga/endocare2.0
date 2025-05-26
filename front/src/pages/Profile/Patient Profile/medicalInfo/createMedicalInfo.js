@@ -9,7 +9,7 @@ import {
   CurrentMedications,
   TreatmentHistory,
   Lifestyle,
-  PreviousHealthcareProvider,
+  PreviousHealthcareProviders,
   FamilyMedicalHistory,
   MedicalProcedures,
 } from "../../../../components/MedicalFormComponents";
@@ -101,7 +101,7 @@ function CreateMedicalInfo() {
         <TreatmentHistory />
         <MedicalProcedures />
         <FamilyMedicalHistory />
-        <PreviousHealthcareProvider />
+        <PreviousHealthcareProviders />
         <Lifestyle />
 
         {/* <Card title="Assigned Physician" style={{ marginTop: 20 }}>

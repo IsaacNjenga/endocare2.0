@@ -527,7 +527,7 @@ function MedicalInfo({
                   icon={<EditOutlined />}
                   onClick={() => {
                     handleUpdate(provider);
-                    setSectionName("PreviousHealthcareProvider");
+                    setSectionName("PreviousHealthcareProviders");
                   }}
                 />
               </Tooltip>

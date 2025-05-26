@@ -334,11 +334,11 @@ export const FamilyMedicalHistory = () => {
   );
 };
 
-export const PreviousHealthcareProvider = () => {
+export const PreviousHealthcareProviders = () => {
   return (
     <Card
-      title="Previous Healthcare Provider"
-      key="previousHealthcareProvider"
+      title="Previous Healthcare Providers"
+      key="previousHealthcareProviders"
       style={{ marginTop: 20 }}
     >
       <Form.List name="previousHealthcareProviders">

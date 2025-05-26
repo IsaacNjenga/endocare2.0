@@ -5,7 +5,7 @@ import {
   CurrentMedications,
   TreatmentHistory,
   Lifestyle,
-  PreviousHealthcareProvider,
+  PreviousHealthcareProviders,
   FamilyMedicalHistory,
   MedicalProcedures,
 } from "../../../../components/MedicalFormComponents";
@@ -69,8 +69,8 @@ function UpdateMedicalInfoModal({
         return <TreatmentHistory />;
       case "Lifestyle":
         return <Lifestyle />;
-      case "PreviousHealthcareProvider":
-        return <PreviousHealthcareProvider />;
+      case "PreviousHealthcareProviders":
+        return <PreviousHealthcareProviders />;
       case "FamilyMedicalHistory":
         return <FamilyMedicalHistory />;
       case "MedicalProcedures":
