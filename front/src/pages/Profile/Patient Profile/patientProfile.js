@@ -60,7 +60,14 @@ const sectionHeaderStyle = {
   color: "#4f46e5",
 };
 
-const PatientProfile = ({ user, refresh, userDataLoading }) => {
+const PatientProfile = ({
+  user,
+  refresh,
+  userDataLoading,
+  patientData,
+  patientRefresh,
+  patientDataLoading,
+}) => {
   const tabItems = [
     {
       key: 1,
@@ -102,7 +109,9 @@ const PatientProfile = ({ user, refresh, userDataLoading }) => {
           contentStyle={contentStyle}
           sectionCardStyle={sectionCardStyle}
           sectionHeaderStyle={sectionHeaderStyle}
-          refresh={refresh}
+          patientData={patientData}
+          patientRefresh={patientRefresh}
+          patientDataLoading={patientDataLoading}
         />
       ),
       icon: <InfoCircleOutlined style={iconStyle} />,

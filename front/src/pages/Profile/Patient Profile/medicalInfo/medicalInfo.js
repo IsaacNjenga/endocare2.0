@@ -22,6 +22,10 @@ function MedicalInfo({
   contentStyle,
   sectionCardStyle,
   sectionHeaderStyle,
+  patientData,
+  patientRefresh,
+  patientDataLoading,
+  user,
 }) {
   const navigate = useNavigate();
   // const values = {
@@ -34,6 +38,7 @@ function MedicalInfo({
   //     },
   //   ],
   //   currentMedications: [
+  //
   //     {
   //       name: "pills",
   //       dosage: "alot",
@@ -41,27 +46,7 @@ function MedicalInfo({
   //       isOngoing: true,
   //       startDate: "2001-02-12",
   //     },
-  //     {
-  //       name: "pills",
-  //       dosage: "alot",
-  //       frequency: "1x2",
-  //       isOngoing: true,
-  //       startDate: "2001-02-12",
-  //     },
-  //     {
-  //       name: "pills",
-  //       dosage: "alot",
-  //       frequency: "1x2",
-  //       isOngoing: true,
-  //       startDate: "2001-02-12",
-  //     },
-  //     {
-  //       name: "pills",
-  //       dosage: "alot",
-  //       frequency: "1x2",
-  //       isOngoing: true,
-  //       startDate: "2001-02-12",
-  //     },
+  //
   //   ],
   //   treatmentHistory: [
   //     {
@@ -115,10 +100,20 @@ function MedicalInfo({
   //   ],
   //   assignedPhysician: "Dr.John",
   // };
-  const values = {};
+
   const [openMedicalInfoModal, setOpenMedicalInfoModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [modalContent, setModalContent] = useState(null);
+  const [values, setValues] = useState({});
+
+  React.useEffect(() => {
+    if (patientData) {
+      const newValues = Object.values(patientData)
+        .map((value) => ({ ...value }))
+        .reduce((acc, value) => [...acc, value]);
+      setValues(newValues);
+    }
+  }, [user, patientData]);
 
   const renderListAsTags = (items) => (
     <Space wrap>
@@ -176,45 +171,63 @@ function MedicalInfo({
         <Title level={4} style={sectionHeaderStyle}>
           Medical Procedures
         </Title>{" "}
-        {procedures.map((procedure, index) => (
-          <Card
-            key={index}
-            type="inner"
-            style={{ marginBottom: "1rem", borderRadius: "10px" }}
-          >
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "right",
-                margin: "5px 0px",
-              }}
+        {procedures.length > 0 ? (
+          procedures?.map((procedure, index) => (
+            <Card
+              key={index}
+              type="inner"
+              style={{ marginBottom: "1rem", borderRadius: "10px" }}
             >
-              <Tooltip title="Edit this section">
-                <Button
-                  type="primary"
-                  icon={<EditOutlined />}
-                  onClick={() => handleUpdate(procedure)}
-                />
-              </Tooltip>
-            </div>
-            <Descriptions size="small" column={2}>
-              <Descriptions.Item
-                label={<span style={labelStyle}>Procedure</span>}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "right",
+                  margin: "5px 0px",
+                }}
               >
-                <span style={contentStyle}>{procedure.procedureName}</span>
-              </Descriptions.Item>
-              <Descriptions.Item label={<span style={labelStyle}>Date</span>}>
-                <span style={contentStyle}>{procedure.dateOfProcedure}</span>
-              </Descriptions.Item>
-            </Descriptions>
+                <Tooltip title="Edit this section">
+                  <Button
+                    type="primary"
+                    icon={<EditOutlined />}
+                    onClick={() => handleUpdate(procedure)}
+                  />
+                </Tooltip>
+              </div>
+              <Descriptions size="small" column={2}>
+                <Descriptions.Item
+                  label={<span style={labelStyle}>Procedure</span>}
+                >
+                  <span style={contentStyle}>{procedure.procedureName}</span>
+                </Descriptions.Item>
+                <Descriptions.Item label={<span style={labelStyle}>Date</span>}>
+                  <span style={contentStyle}>{procedure.dateOfProcedure}</span>
+                </Descriptions.Item>
+              </Descriptions>
 
-            <Collapse style={{ marginTop: "1rem" }}>
-              <Panel header="View Notes" key="1">
-                <p style={contentStyle}>{procedure.notes}</p>
-              </Panel>
-            </Collapse>
-          </Card>
-        ))}
+              <Collapse style={{ marginTop: "1rem" }}>
+                <Panel header="View Notes" key="1">
+                  <p style={contentStyle}>{procedure.notes}</p>
+                </Panel>
+              </Collapse>
+            </Card>
+          ))
+        ) : (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "right",
+              margin: "5px 0px",
+            }}
+          >
+            <Tooltip title="Edit this section">
+              <Button
+                type="primary"
+                icon={<EditOutlined />}
+                onClick={() => handleUpdate(procedures)}
+              />
+            </Tooltip>
+          </div>
+        )}
       </>
     );
   };
@@ -230,7 +243,7 @@ function MedicalInfo({
         <Title level={4} style={sectionHeaderStyle}>
           Family Medical History
         </Title>
-        {medicalHistory.map((history, index) => (
+        {medicalHistory?.map((history, index) => (
           <Card
             key={index}
             type="inner"
@@ -282,9 +295,12 @@ function MedicalInfo({
     setTimeout(() => setLoading(false), 100);
   };
 
+  if (patientDataLoading) {
+    return <div>Loading...</div>;
+  }
   return (
     <>
-      {values.length > 0 ? (
+      {values.length !== 0 ? (
         <>
           <div style={{ fontFamily: "Roboto", padding: "0.7rem" }}>
             <Title level={2} style={{ ...sectionHeaderStyle }}>
@@ -292,7 +308,7 @@ function MedicalInfo({
             </Title>
 
             <Card style={sectionCardStyle}>
-              {values?.patientInformation.map((info) => (
+              {values?.patientInformation?.map((info) => (
                 <>
                   <div
                     style={{
@@ -401,7 +417,7 @@ function MedicalInfo({
             <Title level={4} style={sectionHeaderStyle}>
               Lifestyle
             </Title>
-            {values?.lifestyle.map((lifestyle) => (
+            {values?.lifestyle?.map((lifestyle) => (
               <>
                 {" "}
                 <div
@@ -457,6 +473,7 @@ function MedicalInfo({
             setOpenMedicalInfoModal={setOpenMedicalInfoModal}
             loading={loading}
             modalContent={modalContent}
+            patientRefresh={patientRefresh}
           />
         </>
       ) : (

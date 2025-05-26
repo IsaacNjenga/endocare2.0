@@ -3,11 +3,14 @@ import { UserContext } from "../../App";
 import PatientProfile from "./Patient Profile/patientProfile";
 import DoctorProfile from "./Doctor Profile/doctorProfile";
 import useFetchUserDetails from "../../hooks/fetchUserDetails";
+import useFetchPatientData from "../../hooks/fetchPatientData";
 
 function Profile() {
   const { user } = useContext(UserContext);
   const userId = user?._id;
   const { userData, userDataLoading, refresh } = useFetchUserDetails(userId);
+  const { patientData, patientDataLoading, patientRefresh } =
+    useFetchPatientData(userId);
 
   const userRole = user?.role;
   if (userDataLoading) return <div>Loading...</div>;
@@ -19,6 +22,9 @@ function Profile() {
           user={userData}
           refresh={refresh}
           userDataLoading={userDataLoading}
+          patientData={patientData}
+          patientDataLoading={patientDataLoading}
+          patientRefresh={patientRefresh}
         />
       ) : userRole === "doctor" ? (
         <DoctorProfile
