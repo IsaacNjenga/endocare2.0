@@ -19,6 +19,7 @@ import {
   fetchPatientDetails,
   fetchPatientsDetails,
   updatePatientDetails,
+  deletePatientDetail,
 } from "../controllers/patientController.js";
 
 const router = express.Router();
@@ -47,5 +48,6 @@ router.get("/get-patient-details", fetchPatientDetails);
 router.get("/get-patients-details", fetchPatientsDetails);
 router.put("/update-patient-details", updatePatientDetails);
 router.delete("/delete-patient-details", deletePatientDetails);
+router.delete("/delete-detail", deletePatientDetail);
 
 export { router as Router };

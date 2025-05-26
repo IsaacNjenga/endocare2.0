@@ -58,6 +58,35 @@ const updatePatientDetails = async (req, res) => {
   }
 };
 
+const deletePatientDetail = async (req, res) => {
+  const { section, id, userId } = req.query;
+  if (!id) {
+    return res.status(400).json({ error: error.message });
+  }
+  if (!userId) {
+    return res.status(400).json({ error: error.message });
+  }
+  try {
+    const deleteDetail = await PatientModel.findOneAndUpdate(
+      { createdBy: userId },
+      {
+        $pull: {
+          [section]: { _id: id },
+        },
+      },
+      { new: true }
+    );
+
+    if (!deleteDetail) {
+      return res.status(404).json({ error: "Patient detail not found" });
+    }
+    return res.status(200).json({ success: true, data: deleteDetail });
+  } catch (error) {
+    console.log("Error deleting patient information", error);
+    return res.status(500).json({ error: error.message });
+  }
+};
+
 const deletePatientDetails = async (req, res) => {
   try {
   } catch (error) {
@@ -72,4 +101,5 @@ export {
   fetchPatientsDetails,
   updatePatientDetails,
   deletePatientDetails,
+  deletePatientDetail,
 };
