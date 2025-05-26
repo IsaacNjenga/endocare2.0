@@ -106,6 +106,7 @@ function MedicalInfo({
   const [loading, setLoading] = useState(false);
   const [modalContent, setModalContent] = useState(null);
   const [values, setValues] = useState({});
+  const [sectionName, setSectionName] = useState("");
 
   React.useEffect(() => {
     if (patientData) {
@@ -152,7 +153,10 @@ function MedicalInfo({
                   <Button
                     type="primary"
                     icon={<EditOutlined />}
-                    onClick={() => handleUpdate(info)}
+                    onClick={() => {
+                      handleUpdate(info);
+                      setSectionName("PatientInformation");
+                    }}
                   />
                 </Tooltip>
               </div>
@@ -214,7 +218,10 @@ function MedicalInfo({
                   <Button
                     type="primary"
                     icon={<EditOutlined />}
-                    onClick={() => handleUpdate(medication)}
+                    onClick={() => {
+                      handleUpdate(medication);
+                      setSectionName("CurrentMedications");
+                    }}
                   />
                 </Tooltip>
               </div>
@@ -299,7 +306,10 @@ function MedicalInfo({
                   <Button
                     type="primary"
                     icon={<EditOutlined />}
-                    onClick={() => handleUpdate(history)}
+                    onClick={() => {
+                      handleUpdate(history);
+                      setSectionName("TreatmentHistory");
+                    }}
                   />
                 </Tooltip>
               </div>
@@ -381,7 +391,10 @@ function MedicalInfo({
                   <Button
                     type="primary"
                     icon={<EditOutlined />}
-                    onClick={() => handleUpdate(procedure)}
+                    onClick={() => {
+                      handleUpdate(procedure);
+                      setSectionName("MedicalProcedures");
+                    }}
                   />
                 </Tooltip>
               </div>
@@ -453,7 +466,10 @@ function MedicalInfo({
                 <Button
                   type="primary"
                   icon={<EditOutlined />}
-                  onClick={() => handleUpdate(history)}
+                  onClick={() => {
+                    handleUpdate(history);
+                    setSectionName("FamilyMedicalHistory");
+                  }}
                 />
               </Tooltip>
             </div>
@@ -489,7 +505,7 @@ function MedicalInfo({
     return (
       <>
         <Title level={4} style={sectionHeaderStyle}>
-          Family Medical History
+          Previous Healthcare Providers
         </Title>
         {previousProviders?.map((provider, index) => (
           <Card
@@ -509,7 +525,10 @@ function MedicalInfo({
                 <Button
                   type="primary"
                   icon={<EditOutlined />}
-                  onClick={() => handleUpdate(provider)}
+                  onClick={() => {
+                    handleUpdate(provider);
+                    setSectionName("PreviousHealthcareProvider");
+                  }}
                 />
               </Tooltip>
             </div>
@@ -557,7 +576,10 @@ function MedicalInfo({
                 <Button
                   type="primary"
                   icon={<EditOutlined />}
-                  onClick={() => handleUpdate(lifestyle)}
+                  onClick={() => {
+                    handleUpdate(lifestyle);
+                    setSectionName("Lifestyle");
+                  }}
                 />
               </Tooltip>
             </div>
@@ -664,6 +686,8 @@ function MedicalInfo({
             loading={loading}
             modalContent={modalContent}
             patientRefresh={patientRefresh}
+            sectionName={sectionName}
+            user={user}
           />
         </>
       ) : (

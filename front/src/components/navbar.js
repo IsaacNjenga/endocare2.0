@@ -21,7 +21,7 @@ function Navbar() {
   const location = useLocation();
   const [collapsed, setCollapsed] = useState(false);
   const [current, setCurrent] = useState(location.pathname);
-  const { setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -158,7 +158,11 @@ function Navbar() {
                 marginTop: 6,
               }}
             >
-              <span> {collapsed ? "JD" : "John Doe"}</span>
+              <span>
+                {collapsed
+                  ? `${user?.firstName.charAt(0)}${user?.lastName.charAt(0)}`
+                  : `${user?.firstName} ${user?.lastName}`}
+              </span>
             </div>
             <Divider
               dashed
