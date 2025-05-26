@@ -250,6 +250,7 @@ function MedicalInfo({
                   display: "flex",
                   justifyContent: "right",
                   margin: "5px 0px",
+                  gap: "10px",
                 }}
               >
                 <Tooltip title="Edit this section">
@@ -259,6 +260,16 @@ function MedicalInfo({
                     onClick={() => {
                       handleUpdate(medication);
                       setSectionName("CurrentMedications");
+                    }}
+                  />
+                </Tooltip>{" "}
+                <Tooltip title="Delete this section">
+                  <Button
+                    danger
+                    icon={<DeleteOutlined />}
+                    onClick={() => {
+                      handleDelete(medication);
+                      setSectionName("currentMedications");
                     }}
                   />
                 </Tooltip>
@@ -341,6 +352,7 @@ function MedicalInfo({
                   display: "flex",
                   justifyContent: "right",
                   margin: "5px 0px",
+                  gap: "10px",
                 }}
               >
                 <Tooltip title="Edit this section">
@@ -350,6 +362,16 @@ function MedicalInfo({
                     onClick={() => {
                       handleUpdate(history);
                       setSectionName("TreatmentHistory");
+                    }}
+                  />
+                </Tooltip>{" "}
+                <Tooltip title="Delete this section">
+                  <Button
+                    danger
+                    icon={<DeleteOutlined />}
+                    onClick={() => {
+                      handleDelete(history);
+                      setSectionName("treatmentHistory");
                     }}
                   />
                 </Tooltip>
@@ -429,6 +451,7 @@ function MedicalInfo({
                   display: "flex",
                   justifyContent: "right",
                   margin: "5px 0px",
+                  gap: "10px",
                 }}
               >
                 <Tooltip title="Edit this section">
@@ -438,6 +461,16 @@ function MedicalInfo({
                     onClick={() => {
                       handleUpdate(procedure);
                       setSectionName("MedicalProcedures");
+                    }}
+                  />
+                </Tooltip>{" "}
+                <Tooltip title="Delete this section">
+                  <Button
+                    danger
+                    icon={<DeleteOutlined />}
+                    onClick={() => {
+                      handleDelete(procedure);
+                      setSectionName("medicalProcedures");
                     }}
                   />
                 </Tooltip>
@@ -510,6 +543,7 @@ function MedicalInfo({
                   display: "flex",
                   justifyContent: "right",
                   margin: "5px 0px",
+                  gap: "10px",
                 }}
               >
                 <Tooltip title="Edit this section">
@@ -519,6 +553,16 @@ function MedicalInfo({
                     onClick={() => {
                       handleUpdate(history);
                       setSectionName("FamilyMedicalHistory");
+                    }}
+                  />
+                </Tooltip>{" "}
+                <Tooltip title="Delete this section">
+                  <Button
+                    danger
+                    icon={<DeleteOutlined />}
+                    onClick={() => {
+                      handleDelete(history);
+                      setSectionName("familyMedicalHistory");
                     }}
                   />
                 </Tooltip>
@@ -590,6 +634,7 @@ function MedicalInfo({
                   display: "flex",
                   justifyContent: "right",
                   margin: "5px 0px",
+                  gap: "10px",
                 }}
               >
                 <Tooltip title="Edit this section">
@@ -599,6 +644,16 @@ function MedicalInfo({
                     onClick={() => {
                       handleUpdate(provider);
                       setSectionName("PreviousHealthcareProviders");
+                    }}
+                  />
+                </Tooltip>{" "}
+                <Tooltip title="Delete this section">
+                  <Button
+                    danger
+                    icon={<DeleteOutlined />}
+                    onClick={() => {
+                      handleDelete(provider);
+                      setSectionName("previousHealthcareProviders");
                     }}
                   />
                 </Tooltip>
@@ -664,6 +719,7 @@ function MedicalInfo({
                   display: "flex",
                   justifyContent: "right",
                   margin: "5px 0px",
+                  gap: "10px",
                 }}
               >
                 <Tooltip title="Edit this section">
@@ -673,6 +729,16 @@ function MedicalInfo({
                     onClick={() => {
                       handleUpdate(lifestyle);
                       setSectionName("Lifestyle");
+                    }}
+                  />
+                </Tooltip>{" "}
+                <Tooltip title="Delete this section">
+                  <Button
+                    danger
+                    icon={<DeleteOutlined />}
+                    onClick={() => {
+                      handleDelete(lifestyle);
+                      setSectionName("lifestyle");
                     }}
                   />
                 </Tooltip>
@@ -756,6 +822,9 @@ function MedicalInfo({
           );
           if (res.data.success) {
             patientRefresh();
+            setTimeout(() => {
+              setSectionName("");
+            }, 100);
           }
         } catch (error) {
           console.log(error);

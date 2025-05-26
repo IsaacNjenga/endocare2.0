@@ -60,11 +60,17 @@ const updatePatientDetails = async (req, res) => {
 
 const deletePatientDetail = async (req, res) => {
   const { section, id, userId } = req.query;
+  console.log(section);
   if (!id) {
-    return res.status(400).json({ error: error.message });
+    return res.status(400).json({ error: "ID is not specified. Try again" });
+  }
+  if (!section) {
+    return res.status(400).json({ error: "Section is not. Try again" });
   }
   if (!userId) {
-    return res.status(400).json({ error: error.message });
+    return res
+      .status(400)
+      .json({ error: "User ID is not specified. Try again" });
   }
   try {
     const deleteDetail = await PatientModel.findOneAndUpdate(
