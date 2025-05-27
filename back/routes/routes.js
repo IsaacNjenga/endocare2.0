@@ -21,6 +21,7 @@ import {
   updatePatientDetails,
   deletePatientDetail,
 } from "../controllers/patientController.js";
+import { chatWithCohere } from "../controllers/chatbotController.js";
 
 const router = express.Router();
 
@@ -49,5 +50,8 @@ router.get("/get-patients-details", fetchPatientsDetails);
 router.put("/update-patient-details", updatePatientDetails);
 router.delete("/delete-patient-details", deletePatientDetails);
 router.delete("/delete-detail", deletePatientDetail);
+
+//chatbot route
+router.post("/endo-ai", chatWithCohere);
 
 export { router as Router };

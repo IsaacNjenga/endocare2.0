@@ -93,6 +93,7 @@ function UpdateMedicalInfoModal({
         form={form}
         layout="vertical"
         onFinish={handleSubmit}
+        onValuesChange={(changed, all) => console.log("Form Values:", all)}
         initialValues={{
           [toCamelCase(sectionName)]: modalContent ? [modalContent] : [{}],
         }}

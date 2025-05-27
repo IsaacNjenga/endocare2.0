@@ -14,6 +14,8 @@ import logo from "../assets/icons/logo.png";
 import Swal from "sweetalert2";
 import { UserContext } from "../App";
 import Cookies from "universal-cookie";
+import ChatBot from "./chatBot";
+import axios from "axios";
 
 const cookies = new Cookies();
 const { Header, Sider, Content } = Layout;
@@ -22,6 +24,41 @@ function Navbar() {
   const [collapsed, setCollapsed] = useState(false);
   const [current, setCurrent] = useState(location.pathname);
   const { user, setUser } = useContext(UserContext);
+  const [loading, setLoading] = useState(false);
+  const [openBot, setOpenBot] = useState(false);
+  const [input, setInput] = useState("");
+  const [messages, setMessages] = useState([
+    { role: "system", content: "Ask me anything..." },
+  ]);
+
+  const assistantModel = () => {
+    setOpenBot((prev) => !prev);
+  };
+
+  const sendMessage = async () => {
+    if (!input.trim()) return;
+    setLoading(true);
+    const newMessages = [...messages, { role: "user", content: input }];
+    setMessages(newMessages);
+    setInput("");
+
+    try {
+      const res = await axios.post("endo-ai", {
+        messages: newMessages,
+      });
+      setMessages([
+        ...newMessages,
+        { role: "assistant", content: res.data.reply },
+      ]);
+    } catch (err) {
+      setMessages([
+        ...newMessages,
+        { role: "assistant", content: "Something went wrong." },
+      ]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -91,9 +128,19 @@ function Navbar() {
         icon={<RobotOutlined />}
         tooltip="Ask EndoAI"
         type="default"
-
-        // onClick={() => setShowAssistantModal(true)}
+        onClick={assistantModel}
       />
+      {openBot && (
+        <ChatBot
+          messages={messages}
+          input={input}
+          setInput={setInput}
+          sendMessage={sendMessage}
+          loading={loading}
+          setOpenBot={setOpenBot}
+        />
+      )}
+
       <Layout>
         <Sider
           trigger={null}
