@@ -25,6 +25,7 @@ import {
   mealType,
   medicationType,
   moodAfter,
+  moodsOptions,
   severityTypes,
 } from "../assets/data/data";
 import dayjs from "dayjs";
@@ -839,7 +840,152 @@ export const SymptomsLog = () => {
   );
 };
 
-export const MoodsLog = () => {};
+export const MoodsLog = () => {
+  return (
+    <Card
+      title={<span style={sectionHeaderStyle}>Mood Today</span>}
+      style={{
+        padding: 5,
+        margin: 20,
+        marginBottom: 20,
+        background: "linear-gradient(to right, #eef2ff 30%, #eae9e7 100%)",
+      }}
+    >
+      <Form.List name="moodsLog">
+        {(fields, { add, remove }) => {
+          if (fields.length === 0) add();
+
+          return (
+            <>
+              {fields.map(({ key, name }) => (
+                <div
+                  key={key}
+                  style={{
+                    marginBottom: 10,
+                    padding: 12,
+                    border: "1px solid rgba(0,0,0,0)",
+                    borderRadius: 8,
+                  }}
+                >
+                  <div style={{ textAlign: "right", marginBottom: 2 }}>
+                    <Button
+                      type="text"
+                      danger
+                      icon={<CloseOutlined />}
+                      onClick={() => remove(name)}
+                      aria-label="Remove log"
+                    />
+                  </div>
+
+                  <Row gutter={20}>
+                    <Col span={12}>
+                      <Form.Item
+                        name={[name, "severity"]}
+                        label={<span style={labelStyle}>Overall Mood </span>}
+                      >
+                        <Select style={inputStyle} options={moodsOptions} />
+                      </Form.Item>
+                    </Col>
+
+                    <Col span={12}>
+                      <Form.Item
+                        name={[name, "intensityLevel"]}
+                        label={<span style={labelStyle}>Intensity</span>}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "12px",
+                            padding: "8px 0",
+                          }}
+                        >
+                          <FrownOutlined
+                            style={{ fontSize: "1.4rem", color: "red" }}
+                          />
+                          <Form.Item name={[name, "intensityLevel"]} noStyle>
+                            <Slider min={1} max={10} style={{ flex: 1 }} />
+                          </Form.Item>
+                          <SmileOutlined
+                            style={{ fontSize: "1.4rem", color: "green" }}
+                          />
+                        </div>
+                      </Form.Item>
+                    </Col>
+
+                    <Col span={12}>
+                      <Form.Item
+                        name={[name, "timeOfMood"]}
+                        label={<span style={labelStyle}>Time of Mood</span>}
+                        getValueFromEvent={(time) =>
+                          time ? dayjs(time).format("HH:mm") : undefined
+                        }
+                        getValueProps={(value) => ({
+                          value: value ? dayjs(value, "HH:mm") : null,
+                        })}
+                      >
+                        <TimePicker format="HH:mm" style={inputStyle} />
+                      </Form.Item>
+                    </Col>
+
+                    <Col span={12}>
+                      <Form.Item
+                        name={[name, "trigger"]}
+                        label={<span style={labelStyle}>Trigger</span>}
+                        extra="This can help identify patterns"
+                      >
+                        <Select
+                          mode="tags"
+                          tokenSeparators={[","]}
+                          placeholder="E.g. Lack of sleep, Caffeine, Social event"
+                          style={inputStyle}
+                        />
+                      </Form.Item>
+                    </Col>
+
+                    <Col span={24}>
+                      <Form.Item
+                        name={[name, "notes"]}
+                        label={<span style={labelStyle}>Notes</span>}
+                      >
+                        <Input.TextArea rows={3} style={inputStyle} />
+                      </Form.Item>
+                    </Col>
+
+                    <Col span={24}>
+                      <Form.Item
+                        name={[name, "reliefMeasures"]}
+                        label={<span style={labelStyle}>Measures Taken</span>}
+                      >
+                        <Input.TextArea
+                          rows={2}
+                          placeholder="E.g. Took a walk, Journalled..."
+                          style={inputStyle}
+                        />
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                  <Divider />
+                </div>
+              ))}
+
+              <Form.Item>
+                <Button
+                  type="dashed"
+                  onClick={() => add()}
+                  icon={<PlusOutlined />}
+                  block
+                >
+                  Add an entry
+                </Button>
+              </Form.Item>
+            </>
+          );
+        }}
+      </Form.List>
+    </Card>
+  );
+};
 
 function DiaryFormComponents() {
   return <div>DiaryFormComponents</div>;

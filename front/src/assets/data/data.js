@@ -1,3 +1,5 @@
+import { FrownFilled, FrownOutlined, SmileOutlined } from "@ant-design/icons";
+
 export const endocrineIllnesses = [
   {
     name: "Adrenal Fatigue",
@@ -783,4 +785,50 @@ export const severityTypes = [
   { value: "Intense", label: "Intense" },
   { value: "Persistent", label: "Persistent" },
   { value: "Unbearable", label: "Unbearable" },
+];
+
+export const moodsOptions = [
+  {
+    label: (
+      <span style={{ fontSize: "1.4rem", color: "green" }}>
+        <SmileOutlined />
+      </span>
+    ),
+    title: (
+      <span style={{ fontSize: "1.4rem", color: "green" }}>
+        <SmileOutlined />
+      </span>
+    ),
+    options: [
+      { value: "Happy", label: "Happy" },
+      { value: "Excited", label: "Excited" },
+      { value: "Optimistic", label: "Optimistic" },
+      { value: "Relaxed", label: "Relaxed" },
+      { value: "Hopeful", label: "Hopeful" },
+      { value: "Motivated", label: "Motivated" },
+    ],
+  },
+  {
+    label: (
+      <span style={{ fontSize: "1.4rem", color: "red" }}>
+        <FrownOutlined />
+      </span>
+    ),
+    title: (
+      <span style={{ fontSize: "1.4rem", color: "red" }}>
+        <FrownOutlined />
+      </span>
+    ),
+    options: [
+      { value: "Sad", label: "Sad" },
+      { value: "Angry", label: "Angry" },
+      { value: "Anxious", label: "Anxious" },
+      { value: "Frustrated", label: "Frustrated" },
+      { value: "Bored", label: "Bored" },
+      { value: "Lonely", label: "Lonely" },
+      { value: "Disappointed", label: "Disappointed" },
+      { value: "Stressed", label: "Stressed" },
+      { value: "Fatigued", label: "Fatigued" },
+    ],
+  },
 ];
