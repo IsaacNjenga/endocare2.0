@@ -1,4 +1,9 @@
-import { CloseOutlined, PlusOutlined } from "@ant-design/icons";
+import {
+  CloseOutlined,
+  FrownOutlined,
+  PlusOutlined,
+  SmileOutlined,
+} from "@ant-design/icons";
 import {
   Card,
   Col,
@@ -9,14 +14,40 @@ import {
   Select,
   TimePicker,
   Divider,
+  Slider,
 } from "antd";
 import React from "react";
-import { mealExperience, mealType } from "../assets/data/data";
+import { mealExperience, mealType, moodAfter } from "../assets/data/data";
 import dayjs from "dayjs";
 
-export const MealLogs = () => {
+const sectionHeaderStyle = {
+  fontFamily: "Raleway",
+  background: "#eef2ff",
+  padding: "6px 16px",
+  borderRadius: "30px",
+  fontWeight: 600,
+  fontSize: 22,
+  color: "#4f46e5",
+};
+
+const labelStyle = {
+  fontFamily: "Roboto",
+  lineHeight: 1.6,
+  fontWeight: 500,
+  fontSize: "1rem",
+};
+
+export const MealsLog = () => {
   return (
-    <Card title="Meals Log" style={{ marginBottom: 24 }}>
+    <Card
+      title={<span style={sectionHeaderStyle}>Meals Log</span>}
+      style={{
+        padding: 5,
+        margin:20,
+        marginBottom: 20,
+        background: "linear-gradient(to right, #eef2ff 30%, #eae9e7 100%)",
+      }}
+    >
       <Form.List name="mealLogs">
         {(fields, { add, remove }) => {
           if (fields.length === 0) add();
@@ -27,13 +58,13 @@ export const MealLogs = () => {
                 <div
                   key={key}
                   style={{
-                    marginBottom: 24,
+                    marginBottom: 10,
                     padding: 12,
-                    border: "1px solid #f0f0f0",
+                    border: "1px solid rgba(0,0,0,0)",
                     borderRadius: 8,
                   }}
                 >
-                  <div style={{ textAlign: "right", marginBottom: 8 }}>
+                  <div style={{ textAlign: "right", marginBottom: 2 }}>
                     <Button
                       type="text"
                       danger
@@ -43,9 +74,12 @@ export const MealLogs = () => {
                     />
                   </div>
 
-                  <Row gutter={16}>
+                  <Row gutter={20}>
                     <Col span={12}>
-                      <Form.Item name={[name, "meal"]} label="Meal">
+                      <Form.Item
+                        name={[name, "meal"]}
+                        label={<span style={labelStyle}>Meal description</span>}
+                      >
                         <Input placeholder="E.g. Chicken Salad" />
                       </Form.Item>
                     </Col>
@@ -65,7 +99,7 @@ export const MealLogs = () => {
                     <Col span={12}>
                       <Form.Item
                         name={[name, "timeOfMeal"]}
-                        label="Time"
+                        label="Time of meal"
                         getValueFromEvent={(time) =>
                           time ? dayjs(time).format("HH:mm") : undefined
                         }
@@ -94,9 +128,47 @@ export const MealLogs = () => {
                         </Select>
                       </Form.Item>
                     </Col>
+                    <Col span={12}>
+                      <Form.Item
+                        name={[name, "cravingLevel"]}
+                        label="Craving Levels"
+                        extra="How much did you crave it?"
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "12px",
+                            padding: "8px 0",
+                          }}
+                        >
+                          <FrownOutlined
+                            style={{ fontSize: "1.4rem", color: "red" }}
+                          />
+                          <Form.Item name={[name, "cravingLevel"]} noStyle>
+                            <Slider min={1} max={10} style={{ flex: 1 }} />
+                          </Form.Item>
+                          <SmileOutlined
+                            style={{ fontSize: "1.4rem", color: "green" }}
+                          />
+                        </div>
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item
+                        name={[name, "moodAfter"]}
+                        label="Mood after meal"
+                      >
+                        <Select placeholder="">
+                          {moodAfter.map((mood) => (
+                            <Select.Option value={mood.value}>
+                              {mood.label}
+                            </Select.Option>
+                          ))}
+                        </Select>
+                      </Form.Item>
+                    </Col>
                   </Row>
-
-                  <Divider />
                 </div>
               ))}
 
@@ -107,7 +179,7 @@ export const MealLogs = () => {
                   icon={<PlusOutlined />}
                   block
                 >
-                  Add Meal/Snack Log
+                  Add a Meal entry
                 </Button>
               </Form.Item>
             </>
@@ -117,6 +189,23 @@ export const MealLogs = () => {
     </Card>
   );
 };
+
+export const MedicationsLog = () => {};
+
+export const BloodSugarLevelsLog = () => {};
+
+export const PhysicalActivityLog = () => {};
+
+export const SymptomsLog = () => {};
+
+export const MoodsLog = () => {};
+
+//medications taken
+//blood sugra levels
+//physical activity
+//symptoms and physical ailments
+//mood tofday
+//stress management
 function DiaryFormComponents() {
   return <div>DiaryFormComponents</div>;
 }

@@ -724,3 +724,15 @@ export const mealExperience = [
   { value: "Leftover - Not finished", label: "Leftover - Not finished" },
   { value: "Uneaten - Not touched", label: "Uneaten - Not touched" },
 ];
+
+export const moodAfter = [
+  { value: "Happy", label: "Happy" },
+  { value: "Content", label: "Content" },
+  { value: "Refreshed", label: "Refreshed" },
+  { value: "Stressed", label: "Stressed" },
+  { value: "Overwhelmed", label: "Overwhelmed" },
+  { value: "Indifferent", label: "Indifferent" },
+  { value: "Energetic", label: "Energetic" },
+  { value: "Lethargic", label: "Lethargic/Sluggish" },
+  { value: "Anxious", label: "Anxious" },
+];
