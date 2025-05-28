@@ -702,3 +702,25 @@ export const smokingDescriptions = [
   { value: "Non-Smoker", label: "Non-Smoker" },
   { value: "Abstinent", label: "Abstinent" },
 ];
+
+export const mealType = [
+  { value: "Breakfast", label: "Breakfast" },
+  { value: "Brunch", label: "Brunch" },
+  { value: "Lunch", label: "Lunch" },
+  { value: "Afternoon Snack", label: "Afternoon Snack" },
+  { value: "Evening Snack", label: "Evening Snack" },
+  { value: "Dinner", label: "Dinner" },
+  { value: "Late-Night Snack", label: "Late-Night Snack" },
+];
+
+export const mealExperience = [
+  { value: "Stuffed - Excessively full", label: "Stuffed - Excessively full" },
+  { value: "Satiated - Fully satisfied", label: "Satiated - Fully satisfied" },
+  { value: "Full - Feeling complete", label: "Full - Feeling complete" },
+  {
+    value: "Unsatisfied - Feeling Incomplete",
+    label: "Unsatisfied - Feeling Incomplete",
+  },
+  { value: "Leftover - Not finished", label: "Leftover - Not finished" },
+  { value: "Uneaten - Not touched", label: "Uneaten - Not touched" },
+];

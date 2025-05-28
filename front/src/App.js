@@ -12,6 +12,7 @@ import ProtectedRoutes from "./components/protectedRoutes";
 import Profile from "./pages/Profile/profile";
 import Cookies from "universal-cookie";
 import CreateMedicalInfo from "./pages/Profile/Patient Profile/medicalInfo/createMedicalInfo";
+import CreateEntry from "./pages/Diary/createEntry";
 
 const cookies = new Cookies();
 export const UserContext = createContext();
@@ -61,6 +62,7 @@ function App() {
               path="profile/create-medical-info"
               element={<CreateMedicalInfo />}
             />
+            <Route path="diary/create-entry" element={<CreateEntry />} />
           </Route>
         </Routes>
       </UserContext.Provider>

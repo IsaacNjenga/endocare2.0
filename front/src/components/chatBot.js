@@ -33,24 +33,6 @@ const renderMessageContent = (msg) => (
   />
 );
 
-// const messages = [
-//   { role: "EndoAI", content: "Hello, how can I help you?" },
-//   { role: "user", content: "What's Type 2 Diabetes?" },
-//   { role: "EndoAI", content: "Type 2 Diabetes is a chronic condition that..." },
-//   { role: "EndoAI", content: "Hello, how can I help you?" },
-//   { role: "user", content: "What's Type 2 Diabetes?" },
-//   { role: "EndoAI", content: "Type 2 Diabetes is a chronic condition that..." },
-//   { role: "EndoAI", content: "Hello, how can I help you?" },
-//   { role: "user", content: "What's Type 2 Diabetes?" },
-//   { role: "EndoAI", content: "Type 2 Diabetes is a chronic condition that..." },
-//   { role: "EndoAI", content: "Hello, how can I help you?" },
-//   { role: "user", content: "What's Type 2 Diabetes?" },
-//   { role: "EndoAI", content: "Type 2 Diabetes is a chronic condition that..." },
-//   { role: "EndoAI", content: "Hello, how can I help you?" },
-//   { role: "user", content: "What's Type 2 Diabetes?" },
-//   { role: "EndoAI", content: "Type 2 Diabetes is a chronic condition that..." },
-// ];
-
 function ChatBot({
   input,
   setInput,
