@@ -1,7 +1,7 @@
 import { Button, Form } from "antd";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { MealsLog } from "../../components/diaryFormComponents";
+import { MealsLog, MedicationsLog } from "../../components/diaryFormComponents";
 // import UserContext from "../../App.js";
 
 function CreateEntry() {
@@ -28,7 +28,8 @@ function CreateEntry() {
       <Button onClick={() => navigate("/diary")}>Cancel</Button>
       <div>
         <Form form={form} layout="vertical" onFinish={handleSubmit}>
-          <MealsLog />
+          {/* <MealsLog /> */}
+          <MedicationsLog />
           <Button type="primary" htmlType="submit" loading={loading}>
             Submit
           </Button>

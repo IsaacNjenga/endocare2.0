@@ -736,3 +736,15 @@ export const moodAfter = [
   { value: "Lethargic", label: "Lethargic/Sluggish" },
   { value: "Anxious", label: "Anxious" },
 ];
+
+export const medicationType = [
+  { value: "Analgesics", label: "Analgesics (Pain Relievers)" },
+  { value: "Antibiotics", label: "Antibiotics (Infection Fighters)" },
+  { value: "Antihistamines", label: "Antihistamines (Allergy Relief)" },
+  { value: "Antidepressants", label: "Antidepressants (Mood Stabilizers)" },
+  { value: "Anti Inflammatories", label: "Anti-Inflammatory Drugs" },
+  { value: "Antipsychotics", label: "Antipsychotics" },
+  { value: "Antivirals", label: "Antivirals" },
+  { value: "Muscle Relaxants", label: "Muscle Relaxants" },
+  { value: "Sedatives", label: "Sedatives" },
+];
