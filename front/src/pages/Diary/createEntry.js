@@ -1,7 +1,13 @@
 import { Button, Form } from "antd";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { MealsLog, MedicationsLog } from "../../components/diaryFormComponents";
+import {
+//   BloodSugarLevelsLog,
+//   MealsLog,
+//   MedicationsLog,
+//   PhysicalActivityLog,
+  SymptomsLog,
+} from "../../components/diaryFormComponents";
 // import UserContext from "../../App.js";
 
 function CreateEntry() {
@@ -29,7 +35,10 @@ function CreateEntry() {
       <div>
         <Form form={form} layout="vertical" onFinish={handleSubmit}>
           {/* <MealsLog /> */}
-          <MedicationsLog />
+          {/* <MedicationsLog /> */}
+          {/* <BloodSugarLevelsLog /> */}
+          {/* <PhysicalActivityLog /> */}
+          <SymptomsLog />
           <Button type="primary" htmlType="submit" loading={loading}>
             Submit
           </Button>

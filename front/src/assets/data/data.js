@@ -748,3 +748,39 @@ export const medicationType = [
   { value: "Muscle Relaxants", label: "Muscle Relaxants" },
   { value: "Sedatives", label: "Sedatives" },
 ];
+
+export const exerciseType = [
+  { value: "Cardio", label: "Cardiovascular Exercises" },
+  { value: "Strength Training", label: "Strength Training" },
+  { value: "Flexibility Exercises", label: "Flexibility Exercises" },
+  { value: "Aerobics", label: "Aerobics" },
+  { value: "Yoga", label: "Yoga" },
+  {
+    value: "High-Intensity Interval Training",
+    label: "High-Intensity Interval Training (HIIT)",
+  },
+  { value: "sports", label: "Sports" },
+];
+
+export const exerciseExperiences = [
+  { value: "Intense", label: "Intense" },
+  { value: "Challenging", label: "Challenging" },
+  { value: "Energizing", label: "Energizing" },
+  { value: "Rewarding", label: "Rewarding" },
+  { value: "Effective", label: "Effective" },
+  { value: "Fun", label: "Fun" },
+  { value: "Dynamic", label: "Dynamic" },
+  { value: "Moderate", label: "Moderate" },
+  { value: "Balanced", label: "Balanced" },
+  { value: "Invigorating", label: "Invigorating" },
+];
+
+export const severityTypes = [
+  { value: "Mild", label: "Mild" },
+  { value: "Manageable", label: "Manageable" },
+  { value: "Moderate", label: "Moderate" },
+  { value: "Severe", label: "Severe" },
+  { value: "Intense", label: "Intense" },
+  { value: "Persistent", label: "Persistent" },
+  { value: "Unbearable", label: "Unbearable" },
+];
