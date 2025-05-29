@@ -498,7 +498,7 @@ export const BloodSugarLevelsLog = () => {
                     </Col>
                     <Col span={12}>
                       <Form.Item
-                        name={[name, "meal"]}
+                        name={[name, "sugarLevel"]}
                         label={
                           <span style={labelStyle}>Blood Sugar Level</span>
                         }
