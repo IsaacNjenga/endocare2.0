@@ -1,4 +1,4 @@
-import { Button, Form, Steps } from "antd";
+import { Button, Divider, Form, Steps, Typography } from "antd";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -10,14 +10,13 @@ import {
   SymptomsLog,
 } from "../../components/diaryFormComponents";
 import Swal from "sweetalert2";
-// import UserContext from "../../App.js";
+import { format } from "date-fns";
 
 const { Step } = Steps;
 
 function CreateEntry() {
   const navigate = useNavigate();
   const [form] = Form.useForm();
-  //   const { user } = useContext(UserContext);
   const [current, setCurrent] = useState(0);
   const [loading, setLoading] = useState(false);
 
@@ -35,7 +34,7 @@ function CreateEntry() {
       content: <BloodSugarLevelsLog />,
     },
     {
-      title: "Physical Activity",
+      title: "Phys. Activity",
       content: <PhysicalActivityLog />,
     },
     {
@@ -69,7 +68,6 @@ function CreateEntry() {
     setLoading(true);
     try {
       const values = form.getFieldsValue();
-      //   const allValues = { ...values, createdBy: user._id };
       console.log(values);
     } catch (error) {
       console.log(error);
@@ -80,18 +78,42 @@ function CreateEntry() {
 
   return (
     <>
-      <Button onClick={() => navigate("/diary")}>Cancel</Button>
-      <div>
+      <div style={{ margin: "5px 12px" }}>
+        <Typography.Title
+          style={{
+            fontFamily: "Raleway",
+            display: "flex",
+            justifyContent: "right",
+            marginBottom: 24,
+          }}
+        >
+          {format(new Date(), "EEEE, do MMMM yyyy")}
+        </Typography.Title>
+        <Divider style={{ borderColor: "#00152a" }} dashed size="large" />
         <Form form={form} layout="vertical" onFinish={handleSubmit}>
-          <Steps current={current} style={{ marginBottom: 24 }}>
+          <Steps current={current} style={{ margin: "45px 1px" }}>
             {steps.map((item) => (
               <Step key={item.title} title={item.title} />
             ))}
           </Steps>
 
-          <div>{steps[current].content}</div>
+          {steps.map((step, index) => (
+            <div
+              key={step.title}
+              style={{ display: index === current ? "block" : "none" }}
+            >
+              {step.content}
+            </div>
+          ))}
 
-          <div style={{ marginTop: 24 }}>
+          <div
+            style={{
+              margin: "10px 10px",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+            }}
+          >
             {current > 0 && (
               <Button style={{ marginRight: 8 }} onClick={prev}>
                 Previous
@@ -108,7 +130,18 @@ function CreateEntry() {
               </Button>
             )}
           </div>
-        </Form>
+        </Form>{" "}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "right",
+            alignItems: "center",
+          }}
+        >
+          <Button danger onClick={() => navigate("/diary")}>
+            Cancel
+          </Button>
+        </div>
       </div>
     </>
   );

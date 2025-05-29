@@ -262,7 +262,7 @@ export const MedicationsLog = () => {
                   <Row gutter={20}>
                     <Col span={10}>
                       <Form.Item
-                        name={[name, "meal"]}
+                        name={[name, "medicationName"]}
                         label={<span style={labelStyle}>Medication Name</span>}
                       >
                         <Input placeholder="" style={inputStyle} />
@@ -573,6 +573,7 @@ export const BloodSugarLevelsLog = () => {
     </Card>
   );
 };
+
 export const PhysicalActivityLog = () => {
   return (
     <Card
@@ -851,7 +852,7 @@ export const MoodsLog = () => {
         background: "linear-gradient(to right, #eef2ff 30%, #eae9e7 100%)",
       }}
     >
-      <Form.List name="moodsLog">
+      <Form.List name="moodLogs">
         {(fields, { add, remove }) => {
           if (fields.length === 0) add();
 

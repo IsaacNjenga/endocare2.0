@@ -1,4 +1,4 @@
-import { FrownFilled, FrownOutlined, SmileOutlined } from "@ant-design/icons";
+import {  FrownOutlined, SmileOutlined } from "@ant-design/icons";
 
 export const endocrineIllnesses = [
   {
