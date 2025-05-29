@@ -614,7 +614,7 @@ export const PhysicalActivityLog = () => {
                   <Row gutter={20}>
                     <Col span={12}>
                       <Form.Item
-                        name={[name, "meal"]}
+                        name={[name, "activity"]}
                         label={
                           <span style={labelStyle}>Activity Description</span>
                         }
@@ -625,7 +625,7 @@ export const PhysicalActivityLog = () => {
 
                     <Col span={12}>
                       <Form.Item
-                        name={[name, "mealType"]}
+                        name={[name, "activityType"]}
                         label={<span style={labelStyle}>Type Of Activity</span>}
                       >
                         <Select placeholder="Select type" style={inputStyle}>
@@ -881,7 +881,7 @@ export const MoodsLog = () => {
                   <Row gutter={20}>
                     <Col span={12}>
                       <Form.Item
-                        name={[name, "severity"]}
+                        name={[name, "overallMood"]}
                         label={<span style={labelStyle}>Overall Mood </span>}
                       >
                         <Select style={inputStyle} options={moodsOptions} />

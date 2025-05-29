@@ -32,7 +32,7 @@ const colStyle = { margin: "15px 0px" };
 
 const iconStyle = {
   width: "75px",
-  height: "75px",
+  heightt: "75px",
   padding: "7px",
   borderRadius: "50%",
   marginRight: "7px",
@@ -142,15 +142,15 @@ const diaryValues = {
   ],
   physicalActivityLogs: [
     {
-      meal: "headache",
-      mealType: "Strength Training",
+      activity: "Running",
+      activityType: "Cardio Training",
       durationOfActivity: "07:00 - 14:00",
       moodAfter: "Content",
       activityExperience: "Challenging",
     },
     {
-      meal: "headache",
-      mealType: "Strength Training",
+      activity: "Strength Training",
+      activityType: "Strength Training",
       durationOfActivity: "07:00 - 14:00",
       moodAfter: "Content",
       activityExperience: "Challenging",
@@ -170,7 +170,7 @@ const diaryValues = {
   ],
   moodLogs: [
     {
-      severity: "Excited",
+      overallMood: "Excited",
       intensityLevel: 4,
       trigger: ["qr", "qqr"],
       timeOfMood: "11:22",
@@ -178,7 +178,7 @@ const diaryValues = {
       reliefMeasures: "walk",
     },
     {
-      severity: "Excited",
+      overallMood: "Excited",
       intensityLevel: 4,
       trigger: ["qr", "qqr"],
       timeOfMood: "11:22",
@@ -186,7 +186,7 @@ const diaryValues = {
       reliefMeasures: "walk",
     },
     {
-      severity: "Excited",
+      overallMood: "Excited",
       intensityLevel: 4,
       trigger: ["qr", "qqr"],
       timeOfMood: "11:22",
@@ -194,7 +194,7 @@ const diaryValues = {
       reliefMeasures: "walk",
     },
     {
-      severity: "Excited",
+      overallMood: "Excited",
       intensityLevel: 4,
       trigger: ["qr", "qqr"],
       timeOfMood: "11:22",
@@ -216,7 +216,7 @@ const MealsEntry = ({ diaryLoading, content = [] }) => {
       style={{
         borderRadius: 12,
         boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
-        height: "100%",
+        heightt: "100%",
       }}
     >
       <Title level={4} style={{ marginBottom: 2 }}>
@@ -301,7 +301,7 @@ const MedicationsEntry = ({ diaryLoading, content = [] }) => {
       style={{
         borderRadius: 12,
         boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
-        heigh: "100%",
+        height: "100%",
       }}
     >
       <Title level={4} style={{ marginBottom: 2 }}>
@@ -402,7 +402,7 @@ const BloodSugarEntry = ({ diaryLoading, content = [] }) => {
       style={{
         borderRadius: 12,
         boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
-        heigh: "100%",
+        height: "100%",
       }}
     >
       <Title level={4} style={{ marginBottom: 2 }}>
@@ -480,7 +480,7 @@ const BloodSugarEntry = ({ diaryLoading, content = [] }) => {
 
 const PhysicalActivityEntry = ({ diaryLoading, content = [] }) => {
   const [currentIndex, setCurrentIndex] = useState(1);
-  const currentEntry = content[currentIndex - 1];
+  const currentContent = content[currentIndex - 1];
 
   return (
     <Card
@@ -490,64 +490,47 @@ const PhysicalActivityEntry = ({ diaryLoading, content = [] }) => {
       style={{
         borderRadius: 12,
         boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
-        heigh: "100%",
+        height: "100%",
       }}
     >
       <Title level={4} style={{ marginBottom: 2 }}>
         <div style={{ display: "flex", alignItems: "center" }}>
           <img src={pActivityIcon} alt="meal_icon" style={iconStyle} />
-          <span style={titleStyle}>Blood Sugar Level Logs</span>
+          <span style={titleStyle}>Physical Activity Logs</span>
         </div>
       </Title>
       <Divider />
-      <Descriptions column={1} bordered size="medium">
-        <Descriptions.Item
-          label="Context of Test"
-          style={descriptionLabelStyle}
-        >
+      <Descriptions column={1} bordered size="large">
+        <Descriptions.Item label="Activity" style={descriptionLabelStyle}>
           <Text strong style={descriptionStyle}>
-            {currentEntry?.context || "N/A"}
+            {currentContent?.activity || "N/A"}
           </Text>
         </Descriptions.Item>
-        <Descriptions.Item
-          label="Blood Sugar Level"
-          style={descriptionLabelStyle}
-        >
+        <Descriptions.Item label="Activity Type" style={descriptionLabelStyle}>
           <Text style={descriptionStyle}>
-            {currentEntry?.sugarLevel || "N/A"}
-            {currentEntry?.unit}
+            {currentContent?.activityType || "N/A"}
           </Text>
         </Descriptions.Item>
 
-        <Descriptions.Item label="Time Taken" style={descriptionLabelStyle}>
+        <Descriptions.Item label="Duration" style={descriptionLabelStyle}>
           <ClockCircleOutlined style={{ marginRight: 6 }} />
           <Text style={descriptionStyle}>
             {" "}
-            {currentEntry?.timeOfTest || "N/A"}
+            {currentContent?.durationOfActivity || "N/A"}
           </Text>
         </Descriptions.Item>
         <Descriptions.Item
-          label="Activity Before Test"
+          label="Overall Experience"
           style={descriptionLabelStyle}
         >
           <Text style={descriptionStyle}>
-            {currentEntry?.activityBefore || "N/A"}
+            {currentContent?.activityExperience || "N/A"}
           </Text>
         </Descriptions.Item>
-        <Descriptions.Item
-          label="Symptoms Experienced"
-          style={descriptionLabelStyle}
-        >
+        <Descriptions.Item label="Mood After" style={descriptionLabelStyle}>
           <Text style={descriptionStyle}>
-            {currentEntry?.symptoms || "N/A"}
+            {currentContent?.moodAfter || "N/A"}
           </Text>
-        </Descriptions.Item>
-
-        <Descriptions.Item
-          label="Additional Notes"
-          style={descriptionLabelStyle}
-        >
-          <Text style={descriptionStyle}> {currentEntry?.notes || "N/A"}</Text>
         </Descriptions.Item>
       </Descriptions>
       {content.length > 1 && (
@@ -578,64 +561,37 @@ const SymptomsEntry = ({ diaryLoading, content = [] }) => {
       style={{
         borderRadius: 12,
         boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
-        heigh: "100%",
+        height: "100%",
       }}
     >
       <Title level={4} style={{ marginBottom: 2 }}>
         <div style={{ display: "flex", alignItems: "center" }}>
           <img src={symptomsIcon} alt="meal_icon" style={iconStyle} />
-          <span style={titleStyle}>Blood Sugar Level Logs</span>
+          <span style={titleStyle}>Symptoms Logs</span>
         </div>
       </Title>
       <Divider />
       <Descriptions column={1} bordered size="medium">
-        <Descriptions.Item
-          label="Context of Test"
-          style={descriptionLabelStyle}
-        >
+        <Descriptions.Item label="Symptoms" style={descriptionLabelStyle}>
           <Text strong style={descriptionStyle}>
-            {currentEntry?.context || "N/A"}
-          </Text>
-        </Descriptions.Item>
-        <Descriptions.Item
-          label="Blood Sugar Level"
-          style={descriptionLabelStyle}
-        >
-          <Text style={descriptionStyle}>
-            {currentEntry?.sugarLevel || "N/A"}
-            {currentEntry?.unit}
-          </Text>
-        </Descriptions.Item>
-
-        <Descriptions.Item label="Time Taken" style={descriptionLabelStyle}>
-          <ClockCircleOutlined style={{ marginRight: 6 }} />
-          <Text style={descriptionStyle}>
-            {" "}
-            {currentEntry?.timeOfTest || "N/A"}
-          </Text>
-        </Descriptions.Item>
-        <Descriptions.Item
-          label="Activity Before Test"
-          style={descriptionLabelStyle}
-        >
-          <Text style={descriptionStyle}>
-            {currentEntry?.activityBefore || "N/A"}
-          </Text>
-        </Descriptions.Item>
-        <Descriptions.Item
-          label="Symptoms Experienced"
-          style={descriptionLabelStyle}
-        >
-          <Text style={descriptionStyle}>
             {currentEntry?.symptoms || "N/A"}
           </Text>
         </Descriptions.Item>
+        <Descriptions.Item label="Severity" style={descriptionLabelStyle}>
+          <Text style={descriptionStyle}>
+            {currentEntry?.severity || "N/A"}
+          </Text>
+        </Descriptions.Item>
 
         <Descriptions.Item
-          label="Additional Notes"
+          label="Relief Measures Taken"
           style={descriptionLabelStyle}
         >
-          <Text style={descriptionStyle}> {currentEntry?.notes || "N/A"}</Text>
+          <ClockCircleOutlined style={{ marginRight: 6 }} />
+          <Text style={descriptionStyle}>
+            {" "}
+            {currentEntry?.reliefMeasures || "N/A"}
+          </Text>
         </Descriptions.Item>
       </Descriptions>
       {content.length > 1 && (
@@ -666,56 +622,48 @@ const MoodsEntry = ({ diaryLoading, content = [] }) => {
       style={{
         borderRadius: 12,
         boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
-        heigh: "100%",
+        height: "100%",
       }}
     >
       <Title level={4} style={{ marginBottom: 2 }}>
         <div style={{ display: "flex", alignItems: "center" }}>
           <img src={moodsIcon} alt="meal_icon" style={iconStyle} />
-          <span style={titleStyle}>Blood Sugar Level Logs</span>
+          <span style={titleStyle}>Moods & Feelings Logs</span>
         </div>
       </Title>
       <Divider />
       <Descriptions column={1} bordered size="medium">
-        <Descriptions.Item
-          label="Context of Test"
-          style={descriptionLabelStyle}
-        >
+        <Descriptions.Item label="Overall Mood" style={descriptionLabelStyle}>
           <Text strong style={descriptionStyle}>
-            {currentEntry?.context || "N/A"}
-          </Text>
-        </Descriptions.Item>
-        <Descriptions.Item
-          label="Blood Sugar Level"
-          style={descriptionLabelStyle}
-        >
-          <Text style={descriptionStyle}>
-            {currentEntry?.sugarLevel || "N/A"}
-            {currentEntry?.unit}
+            {currentEntry?.overallMood || "N/A"}
           </Text>
         </Descriptions.Item>
 
-        <Descriptions.Item label="Time Taken" style={descriptionLabelStyle}>
-          <ClockCircleOutlined style={{ marginRight: 6 }} />
-          <Text style={descriptionStyle}>
-            {" "}
-            {currentEntry?.timeOfTest || "N/A"}
-          </Text>
-        </Descriptions.Item>
         <Descriptions.Item
-          label="Activity Before Test"
+          label="Intensity Level"
           style={descriptionLabelStyle}
         >
           <Text style={descriptionStyle}>
-            {currentEntry?.activityBefore || "N/A"}
+            {currentEntry?.intesityLevel || "N/A"}
           </Text>
         </Descriptions.Item>
+
+        <Descriptions.Item label="Triggers" style={descriptionLabelStyle}>
+          <Text style={descriptionStyle}>{currentEntry?.trigger || "N/A"}</Text>
+        </Descriptions.Item>
+
+        <Descriptions.Item label="Time" style={descriptionLabelStyle}>
+          <Text style={descriptionStyle}>
+            {currentEntry?.timeOfMood || "N/A"}
+          </Text>
+        </Descriptions.Item>
+
         <Descriptions.Item
-          label="Symptoms Experienced"
+          label="Relief Measures"
           style={descriptionLabelStyle}
         >
           <Text style={descriptionStyle}>
-            {currentEntry?.symptoms || "N/A"}
+            {currentEntry?.reliefMeasures || "N/A"}
           </Text>
         </Descriptions.Item>
 
