@@ -164,7 +164,7 @@ function DiaryContent() {
   return (
     <div>
       <Typography.Title level={2}>Diary for {date}</Typography.Title>
-      <div style={{ margin: "10px 12px", display: "none" }}>
+      <div style={{ margin: "10px 12px" }}>
         <Row gutter={24}>
           {diaryForDate?.mealLogs.map((meal, idx) => (
             <Col span={12} style={colStyle} key={idx}>
