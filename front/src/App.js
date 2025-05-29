@@ -13,6 +13,7 @@ import Profile from "./pages/Profile/profile";
 import Cookies from "universal-cookie";
 import CreateMedicalInfo from "./pages/Profile/Patient Profile/medicalInfo/createMedicalInfo";
 import CreateEntry from "./pages/Diary/createEntry";
+import DiaryContent from "./components/diaryContent";
 
 const cookies = new Cookies();
 export const UserContext = createContext();
@@ -63,6 +64,7 @@ function App() {
               element={<CreateMedicalInfo />}
             />
             <Route path="diary/create-entry" element={<CreateEntry />} />
+            <Route path="diary/date/:date" element={<DiaryContent />} />
           </Route>
         </Routes>
       </UserContext.Provider>
