@@ -60,7 +60,6 @@ export const MealsEntry = ({ diaryLoading, content = [] }) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const currentMeal = content[currentIndex - 1];
 
-
   return (
     <Card
       hoverable
@@ -69,7 +68,8 @@ export const MealsEntry = ({ diaryLoading, content = [] }) => {
       style={{
         borderRadius: 12,
         boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
-        heightt: "100%",
+        height: "100%",
+        marginBottom: 24,
       }}
     >
       <Title level={4} style={{ marginBottom: 2 }}>

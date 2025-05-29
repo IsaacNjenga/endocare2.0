@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Col, Row, Typography } from "antd";
+import { Col, Divider, Row, Typography, Button } from "antd";
 import {
   MealsEntry,
   MedicationsEntry,
@@ -8,7 +8,8 @@ import {
   SymptomsEntry,
   MoodsEntry,
 } from "./diaryPageComponents";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { format } from "date-fns";
 
 const diaryValues = {
   "2025-05-29": {
@@ -158,58 +159,70 @@ const colStyle = { margin: "15px 0px" };
 
 function DiaryContent() {
   const { date } = useParams();
+  const navigate = useNavigate();
   const diaryForDate = diaryValues[date];
   const [diaryLoading, setDiaryLoading] = useState(false);
 
   return (
     <div>
-      <Typography.Title level={2}>Diary for {date}</Typography.Title>
+      {" "}
+      <Button danger onClick={() => navigate("/diary")}>
+        Back
+      </Button>
+      <Typography.Title
+        style={{
+          fontFamily: "Raleway",
+          display: "flex",
+          justifyContent: "right",
+          marginBottom: 24,
+        }}
+      >
+        {format(new Date(date), "EEEE, do MMMM yyyy")}
+      </Typography.Title>
+      <Divider style={{ borderColor: "#00152a" }} dashed size="large" />
       <div style={{ margin: "10px 12px" }}>
         <Row gutter={24}>
-          {diaryForDate?.mealLogs.map((meal, idx) => (
-            <Col span={12} style={colStyle} key={idx}>
-              <MealsEntry diaryLoading={diaryLoading} content={[meal]} />
-            </Col>
-          ))}
+          <Col span={12} style={colStyle}>
+            <MealsEntry
+              diaryLoading={diaryLoading}
+              content={diaryForDate?.mealLogs}
+            />
+          </Col>
 
-          {diaryForDate?.medicationsLogs.map((medication, idx) => (
-            <Col span={12} style={colStyle} key={idx}>
-              <MedicationsEntry
-                diaryLoading={diaryLoading}
-                content={[medication]}
-              />
-            </Col>
-          ))}
+          <Col span={12} style={colStyle}>
+            <MedicationsEntry
+              diaryLoading={diaryLoading}
+              content={diaryForDate?.medicationsLogs}
+            />
+          </Col>
 
-          {diaryForDate?.bloodSugarLogs.map((bloodSugar, idx) => (
-            <Col span={12} style={colStyle} key={idx}>
-              <BloodSugarEntry
-                diaryLoading={diaryLoading}
-                content={[bloodSugar]}
-              />
-            </Col>
-          ))}
+          <Col span={12} style={colStyle}>
+            <BloodSugarEntry
+              diaryLoading={diaryLoading}
+              content={diaryForDate?.bloodSugarLogs}
+            />
+          </Col>
 
-          {diaryForDate?.physicalActivityLogs.map((physical, idx) => (
-            <Col span={12} style={colStyle} key={idx}>
-              <PhysicalActivityEntry
-                diaryLoading={diaryLoading}
-                content={[physical]}
-              />
-            </Col>
-          ))}
+          <Col span={12} style={colStyle}>
+            <PhysicalActivityEntry
+              diaryLoading={diaryLoading}
+              content={diaryForDate?.physicalActivityLogs}
+            />
+          </Col>
 
-          {diaryForDate?.symptomsLogs.map((symptoms, idx) => (
-            <Col span={12} style={colStyle} key={idx}>
-              <SymptomsEntry diaryLoading={diaryLoading} content={[symptoms]} />
-            </Col>
-          ))}
+          <Col span={12} style={colStyle}>
+            <SymptomsEntry
+              diaryLoading={diaryLoading}
+              content={diaryForDate?.symptomsLogs}
+            />
+          </Col>
 
-          {diaryForDate?.moodLogs.map((mood, idx) => (
-            <Col span={12} style={colStyle} key={idx}>
-              <MoodsEntry diaryLoading={diaryLoading} content={[mood]} />
-            </Col>
-          ))}
+          <Col span={12} style={colStyle}>
+            <MoodsEntry
+              diaryLoading={diaryLoading}
+              content={diaryForDate?.moodLogs}
+            />
+          </Col>
         </Row>
       </div>
     </div>

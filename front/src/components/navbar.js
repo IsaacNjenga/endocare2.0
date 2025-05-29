@@ -313,8 +313,9 @@ function Navbar() {
               margin: "10px 10px",
               padding: 0,
               minHeight: "100vh",
-              background: colorBgContainer,
+              //background: colorBgContainer,
               borderRadius: borderRadiusLG,
+              background: "whitesmoke",
             }}
           >
             <Outlet />

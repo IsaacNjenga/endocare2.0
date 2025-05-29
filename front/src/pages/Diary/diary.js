@@ -2,11 +2,9 @@ import React, { useState } from "react";
 import { Button, Typography, Divider, Calendar } from "antd";
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
-import dayjs from "dayjs";
 
 function Diary() {
   const navigate = useNavigate();
-  const [selectedDate, setSelectedDate] = useState(dayjs(new Date()));
   const [value, setValue] = useState(null);
 
   const onSelect = (date) => {
@@ -31,7 +29,6 @@ function Diary() {
       </Typography.Title>
       <Divider style={{ borderColor: "#00152a" }} dashed size="large" />
 
-      <p>{selectedDate?.format("YYYY-MM-DD")}</p>
       <Calendar value={value} onSelect={onSelect} />
     </>
   );
