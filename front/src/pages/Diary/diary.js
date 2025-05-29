@@ -40,6 +40,7 @@ const titleStyle = {
   letterSpacing: "1px",
   fontFamily: "Raleway",
   color: "#3c3b39",
+  textDecoration: "underline",
 };
 
 const descriptionStyle = { fontFamily: "Roboto" };
@@ -58,8 +59,24 @@ const actions = [
 const diaryValues = {
   mealLogs: [
     {
-      meal: "kamande",
+      meal: "Eggs and Bacon",
       mealType: "Lunch",
+      mealExperience: "Satiated - Fully satisfied",
+      timeOfMeal: "11:20",
+      moodAfter: "Overwhelmed",
+      cravingLevel: 5,
+    },
+    {
+      meal: "Eggs and Ugali",
+      mealType: "Dinner",
+      mealExperience: "Satiated - Fully satisfied",
+      timeOfMeal: "11:20 pm",
+      moodAfter: "Overwhelmed",
+      cravingLevel: 5,
+    },
+    {
+      meal: "Milk",
+      mealType: "Breakfast",
       mealExperience: "Satiated - Fully satisfied",
       timeOfMeal: "11:20",
       moodAfter: "Overwhelmed",
@@ -117,7 +134,10 @@ const diaryValues = {
   ],
 };
 
-const MealsEntry = ({ diaryLoading, content }) => {
+const MealsEntry = ({ diaryLoading, content = [] }) => {
+  const [currentIndex, setCurrentIndex] = useState(1);
+  const currentMeal = content[currentIndex - 1];
+
   return (
     <Card
       hoverable
@@ -132,16 +152,15 @@ const MealsEntry = ({ diaryLoading, content }) => {
         </div>
       </Title>
       <Divider />
-
       <Descriptions column={1} bordered size="medium">
         <Descriptions.Item label="Meal Name" style={descriptionLabelStyle}>
           <Text strong style={descriptionStyle}>
-            {content.meal || "N/A"}
+            {currentMeal?.meal || "N/A"}
           </Text>
         </Descriptions.Item>
 
         <Descriptions.Item label="Meal Type" style={descriptionLabelStyle}>
-          <Text style={descriptionStyle}>{content.mealType || "N/A"}</Text>
+          <Text style={descriptionStyle}>{currentMeal?.mealType || "N/A"}</Text>
         </Descriptions.Item>
 
         <Descriptions.Item
@@ -149,13 +168,16 @@ const MealsEntry = ({ diaryLoading, content }) => {
           style={descriptionLabelStyle}
         >
           <Text style={descriptionStyle}>
-            {content.mealExperience || "N/A"}
+            {currentMeal?.mealExperience || "N/A"}
           </Text>
         </Descriptions.Item>
 
         <Descriptions.Item label="Time of Meal" style={descriptionLabelStyle}>
           <ClockCircleOutlined style={{ marginRight: 6 }} />
-          <Text style={descriptionStyle}> {content.timeOfMeal || "N/A"}</Text>
+          <Text style={descriptionStyle}>
+            {" "}
+            {currentMeal?.timeOfMeal || "N/A"}
+          </Text>
         </Descriptions.Item>
 
         <Descriptions.Item
@@ -163,16 +185,32 @@ const MealsEntry = ({ diaryLoading, content }) => {
           style={descriptionLabelStyle}
         >
           <SmileOutlined style={{ marginRight: 6, color: "green" }} />
-          <Text style={descriptionStyle}> {content.moodAfter || "N/A"}</Text>
+          <Text style={descriptionStyle}>
+            {" "}
+            {currentMeal?.moodAfter || "N/A"}
+          </Text>
         </Descriptions.Item>
 
         <Descriptions.Item label="Craving Level" style={descriptionLabelStyle}>
           <FireOutlined style={{ marginRight: 6, color: "red" }} />
-          <Text style={descriptionStyle}> {content.cravingLevel || 0}/10</Text>
+          <Text style={descriptionStyle}>
+            {" "}
+            {currentMeal?.cravingLevel || 0}/10
+          </Text>
         </Descriptions.Item>
       </Descriptions>
-
-      <Pagination align="center" />
+      {content.length > 1 && (
+        <div style={{ textAlign: "center", marginTop: 16 }}>
+          <Pagination
+            align="center"
+            current={currentIndex}
+            pageSize={1}
+            total={content.length}
+            onChange={(page) => setCurrentIndex(page)}
+            size="small"
+          />
+        </div>
+      )}
     </Card>
   );
 };
@@ -236,10 +274,12 @@ function Diary() {
       <div style={{ margin: "10px 12px" }}>
         <Row gutter={20}>
           <Col span={12} style={colStyle}>
-            {diaryValues.mealLogs.map((meal) => (
-              <MealsEntry diaryLoading={diaryLoading} content={meal} />
-            ))}
+            <MealsEntry
+              diaryLoading={diaryLoading}
+              content={diaryValues.mealLogs}
+            />
           </Col>
+
           <Col span={12} style={colStyle}>
             {diaryValues.medicationsLogs.map((medication) => (
               <MedicationsEntry
