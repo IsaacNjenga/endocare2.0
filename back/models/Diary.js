@@ -61,7 +61,7 @@ const diarySchema = new mongoose.Schema(
         reliefMeasures: { type: String },
       },
     ],
-    diaryDate: { type: String },
+    entryDate: { type: String },
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
   },
   { collection: "diary", timestamps: true }

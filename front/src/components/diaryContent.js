@@ -10,157 +10,16 @@ import {
 } from "./diaryPageComponents";
 import { useNavigate, useParams } from "react-router-dom";
 import { format } from "date-fns";
-
-const diaryValues = {
-  "2025-05-29": {
-    mealLogs: [
-      {
-        meal: "Eggs and Bacon",
-        mealType: "Lunch",
-        mealExperience: "Satiated - Fully satisfied",
-        timeOfMeal: "11:20",
-        moodAfter: "Overwhelmed",
-        cravingLevel: 5,
-      },
-      {
-        meal: "Eggs and Ugali",
-        mealType: "Dinner",
-        mealExperience: "Satiated - Fully satisfied",
-        timeOfMeal: "11:20 pm",
-        moodAfter: "Overwhelmed",
-        cravingLevel: 5,
-      },
-      {
-        meal: "Milk",
-        mealType: "Breakfast",
-        mealExperience: "Satiated - Fully satisfied",
-        timeOfMeal: "11:20",
-        moodAfter: "Overwhelmed",
-        cravingLevel: 5,
-      },
-    ],
-    medicationsLogs: [
-      {
-        medicationName: "panadol",
-        medicationType: "Antihistamines",
-        dosage: "500mg",
-        timeOfMedication: "11:21",
-        route: "Topical (Skin)",
-        purpose: "Pain Relief",
-        sideEffects: "None",
-        compliance: "yes",
-      },
-      {
-        medicationName: "Mara Moja",
-        medicationType: "Pain Killer",
-        dosage: "2 tablets",
-        timeOfMedication: "10:20",
-        route: "Oral",
-        purpose: "Pain Relief",
-        sideEffects: "None",
-        compliance: "yes",
-      },
-    ],
-    bloodSugarLogs: [
-      {
-        context: "before Meal",
-        timeOfTest: "11:21",
-        sugarLevel: "35",
-        unit: "mmol/L",
-        activityBefore: "light",
-        symptoms: "headache",
-        notes: "gsgg",
-      },
-      {
-        context: "before Meal",
-        timeOfTest: "11:21",
-        sugarLevel: "35",
-        unit: "mmol/L",
-        activityBefore: "light",
-        symptoms: "headache",
-        notes: "gsgg",
-      },
-      {
-        context: "before Meal",
-        timeOfTest: "11:21",
-        sugarLevel: "35",
-        unit: "mmol/L",
-        activityBefore: "light",
-        symptoms: "headache",
-        notes: "gsgg",
-      },
-    ],
-    physicalActivityLogs: [
-      {
-        activity: "Running",
-        activityType: "Cardio Training",
-        durationOfActivity: "07:00 - 14:00",
-        moodAfter: "Content",
-        activityExperience: "Challenging",
-      },
-      {
-        activity: "Strength Training",
-        activityType: "Strength Training",
-        durationOfActivity: "07:00 - 14:00",
-        moodAfter: "Content",
-        activityExperience: "Challenging",
-      },
-    ],
-    symptomsLogs: [
-      {
-        symptoms: ["Dizziness", "Headaches", "Stomach Upset"],
-        severity: "Manageable",
-        reliefMeasures: "qeqe",
-      },
-      {
-        symptoms: ["Dizziness"],
-        severity: "Manageable",
-        reliefMeasures: "qeqe",
-      },
-    ],
-    moodLogs: [
-      {
-        overallMood: "Excited",
-        intensityLevel: 4,
-        trigger: ["qr", "qqr"],
-        timeOfMood: "11:22",
-        notes: "qqe",
-        reliefMeasures: "walk",
-      },
-      {
-        overallMood: "Excited",
-        intensityLevel: 4,
-        trigger: ["qr", "qqr"],
-        timeOfMood: "11:22",
-        notes: "qqe",
-        reliefMeasures: "walk",
-      },
-      {
-        overallMood: "Excited",
-        intensityLevel: 4,
-        trigger: ["qr", "qqr"],
-        timeOfMood: "11:22",
-        notes: "qqe",
-        reliefMeasures: "walk",
-      },
-      {
-        overallMood: "Excited",
-        intensityLevel: 4,
-        trigger: ["qr", "qqr"],
-        timeOfMood: "11:22",
-        notes: "qqe",
-        reliefMeasures: "walk",
-      },
-    ],
-  },
-};
+import { diaryValues } from "../assets/data/data";
 
 const colStyle = { margin: "15px 0px" };
 
 function DiaryContent() {
   const { date } = useParams();
   const navigate = useNavigate();
-  const diaryForDate = diaryValues[date];
+  const diaryForDate = diaryValues.find(
+    (entry) => entry.entryDate === format(new Date(date), "yyyy-MM-dd")
+  );
   const [diaryLoading, setDiaryLoading] = useState(false);
 
   return (
@@ -177,7 +36,8 @@ function DiaryContent() {
           marginBottom: 24,
         }}
       >
-        {format(new Date(date), "EEEE, do MMMM yyyy")}
+        {format(new Date(date), "EEEE, do MMMM yyyy")}{" "}
+        {date === format(new Date(), "yyyy-MM-dd") ? `(Today)` : null}
       </Typography.Title>
       <Divider style={{ borderColor: "#00152a" }} dashed size="large" />
       <div style={{ margin: "10px 12px" }}>

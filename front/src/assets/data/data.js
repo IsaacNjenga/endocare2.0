@@ -1,4 +1,4 @@
-import {  FrownOutlined, SmileOutlined } from "@ant-design/icons";
+import { FrownOutlined, SmileOutlined } from "@ant-design/icons";
 
 export const endocrineIllnesses = [
   {
@@ -829,6 +829,261 @@ export const moodsOptions = [
       { value: "Disappointed", label: "Disappointed" },
       { value: "Stressed", label: "Stressed" },
       { value: "Fatigued", label: "Fatigued" },
+    ],
+  },
+];
+
+export const diaryValues = [
+  {
+    entryDate: "2025-05-29",
+    mealLogs: [
+      {
+        meal: "Milk",
+        mealType: "Breakfast",
+        mealExperience: "Satiated - Fully satisfied",
+        timeOfMeal: "11:20",
+        moodAfter: "Overwhelmed",
+        cravingLevel: 5,
+      },
+    ],
+    medicationsLogs: [
+      {
+        medicationName: "panadol",
+        medicationType: "Antihistamines",
+        dosage: "500mg",
+        timeOfMedication: "11:21",
+        route: "Topical (Skin)",
+        purpose: "Pain Relief",
+        sideEffects: "None",
+        compliance: "yes",
+      },
+    ],
+    bloodSugarLogs: [
+      {
+        context: "before Meal",
+        timeOfTest: "11:21",
+        sugarLevel: "35",
+        unit: "mmol/L",
+        activityBefore: "light",
+        symptoms: "headache",
+        notes: "gsgg",
+      },
+    ],
+    physicalActivityLogs: [
+      {
+        activity: "Strength Training",
+        activityType: "Strength Training",
+        durationOfActivity: "07:00 - 14:00",
+        moodAfter: "Content",
+        activityExperience: "Challenging",
+      },
+    ],
+    symptomsLogs: [
+      {
+        symptoms: ["Dizziness"],
+        severity: "Manageable",
+        reliefMeasures:
+          "Took a long looooooooooooooong long long long long long long long long long long long long long long walk longer than long long long",
+      },
+    ],
+    moodLogs: [
+      {
+        overallMood: "Excited",
+        intensityLevel: 4,
+        trigger: ["qr", "qqr"],
+        timeOfMood: "11:22",
+        notes: "qqe",
+        reliefMeasures: "walk",
+      },
+    ],
+  },
+  {
+    entryDate: "2025-05-30",
+    mealLogs: [
+      {
+        meal: "Milk",
+        mealType: "Breakfast",
+        mealExperience: "Satiated - Fully satisfied",
+        timeOfMeal: "11:20",
+        moodAfter: "Overwhelmed",
+        cravingLevel: 5,
+      },
+    ],
+    medicationsLogs: [
+      {
+        medicationName: "panadol",
+        medicationType: "Antihistamines",
+        dosage: "500mg",
+        timeOfMedication: "11:21",
+        route: "Topical (Skin)",
+        purpose: "Pain Relief",
+        sideEffects: "None",
+        compliance: "yes",
+      },
+    ],
+    bloodSugarLogs: [
+      {
+        context: "before Meal",
+        timeOfTest: "11:21",
+        sugarLevel: "35",
+        unit: "mmol/L",
+        activityBefore: "light",
+        symptoms: "headache",
+        notes: "gsgg",
+      },
+    ],
+    physicalActivityLogs: [
+      {
+        activity: "Strength Training",
+        activityType: "Strength Training",
+        durationOfActivity: "07:00 - 14:00",
+        moodAfter: "Content",
+        activityExperience: "Challenging",
+      },
+    ],
+    symptomsLogs: [
+      {
+        symptoms: ["Dizziness"],
+        severity: "Manageable",
+        reliefMeasures:
+          "Took a long looooooooooooooong long long long long long long long long long long long long long long walk longer than long long long",
+      },
+    ],
+    moodLogs: [
+      {
+        overallMood: "Excited",
+        intensityLevel: 4,
+        trigger: ["qr", "qqr"],
+        timeOfMood: "11:22",
+        notes: "qqe",
+        reliefMeasures: "walk",
+      },
+    ],
+  },
+  {
+    entryDate: "2025-05-27",
+    mealLogs: [
+      {
+        meal: "Milk",
+        mealType: "Breakfast",
+        mealExperience: "Satiated - Fully satisfied",
+        timeOfMeal: "11:20",
+        moodAfter: "Overwhelmed",
+        cravingLevel: 5,
+      },
+    ],
+    medicationsLogs: [
+      {
+        medicationName: "panadol",
+        medicationType: "Antihistamines",
+        dosage: "500mg",
+        timeOfMedication: "11:21",
+        route: "Topical (Skin)",
+        purpose: "Pain Relief",
+        sideEffects: "None",
+        compliance: "yes",
+      },
+    ],
+    bloodSugarLogs: [
+      {
+        context: "before Meal",
+        timeOfTest: "11:21",
+        sugarLevel: "35",
+        unit: "mmol/L",
+        activityBefore: "light",
+        symptoms: "headache",
+        notes: "gsgg",
+      },
+    ],
+    physicalActivityLogs: [
+      {
+        activity: "Strength Training",
+        activityType: "Strength Training",
+        durationOfActivity: "07:00 - 14:00",
+        moodAfter: "Content",
+        activityExperience: "Challenging",
+      },
+    ],
+    symptomsLogs: [
+      {
+        symptoms: ["Dizziness"],
+        severity: "Manageable",
+        reliefMeasures:
+          "Took a long looooooooooooooong long long long long long long long long long long long long long long walk longer than long long long",
+      },
+    ],
+    moodLogs: [
+      {
+        overallMood: "Excited",
+        intensityLevel: 4,
+        trigger: ["qr", "qqr"],
+        timeOfMood: "11:22",
+        notes: "qqe",
+        reliefMeasures: "walk",
+      },
+    ],
+  },
+  {
+    entryDate: "2025-05-28",
+    mealLogs: [
+      {
+        meal: "Milk",
+        mealType: "Breakfast",
+        mealExperience: "Satiated - Fully satisfied",
+        timeOfMeal: "11:20",
+        moodAfter: "Overwhelmed",
+        cravingLevel: 5,
+      },
+    ],
+    medicationsLogs: [
+      {
+        medicationName: "panadol",
+        medicationType: "Antihistamines",
+        dosage: "500mg",
+        timeOfMedication: "11:21",
+        route: "Topical (Skin)",
+        purpose: "Pain Relief",
+        sideEffects: "None",
+        compliance: "yes",
+      },
+    ],
+    bloodSugarLogs: [
+      {
+        context: "before Meal",
+        timeOfTest: "11:21",
+        sugarLevel: "35",
+        unit: "mmol/L",
+        activityBefore: "light",
+        symptoms: "headache",
+        notes: "gsgg",
+      },
+    ],
+    physicalActivityLogs: [
+      {
+        activity: "Strength Training",
+        activityType: "Strength Training",
+        durationOfActivity: "07:00 - 14:00",
+        moodAfter: "Content",
+        activityExperience: "Challenging",
+      },
+    ],
+    symptomsLogs: [
+      {
+        symptoms: ["Dizziness"],
+        severity: "Manageable",
+        reliefMeasures:
+          "Took a long looooooooooooooong long long long long long long long long long long long long long long walk longer than long long long",
+      },
+    ],
+    moodLogs: [
+      {
+        overallMood: "Excited",
+        intensityLevel: 4,
+        trigger: ["qr", "qqr"],
+        timeOfMood: "11:22",
+        notes: "qqe",
+        reliefMeasures: "walk",
+      },
     ],
   },
 ];
