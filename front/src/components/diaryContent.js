@@ -63,7 +63,7 @@ const diaryValues = {
     ],
     bloodSugarLogs: [
       {
-        context: "beforeMeal",
+        context: "before Meal",
         timeOfTest: "11:21",
         sugarLevel: "35",
         unit: "mmol/L",
@@ -72,7 +72,7 @@ const diaryValues = {
         notes: "gsgg",
       },
       {
-        context: "beforeMeal",
+        context: "before Meal",
         timeOfTest: "11:21",
         sugarLevel: "35",
         unit: "mmol/L",
@@ -81,7 +81,7 @@ const diaryValues = {
         notes: "gsgg",
       },
       {
-        context: "beforeMeal",
+        context: "before Meal",
         timeOfTest: "11:21",
         sugarLevel: "35",
         unit: "mmol/L",

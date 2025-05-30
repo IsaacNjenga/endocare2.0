@@ -460,14 +460,14 @@ export const BloodSugarLevelsLog = () => {
                         }
                       >
                         <Select placeholder="Select context" style={inputStyle}>
-                          <Select.Option value="fasting">Fasting</Select.Option>
-                          <Select.Option value="beforeMeal">
+                          <Select.Option value="Fasting">Fasting</Select.Option>
+                          <Select.Option value="Before Meal">
                             Before Meal
                           </Select.Option>
-                          <Select.Option value="afterMeal">
+                          <Select.Option value="After Meal">
                             After Meal
                           </Select.Option>
-                          <Select.Option value="random">Random</Select.Option>
+                          <Select.Option value="Random">Random</Select.Option>
                         </Select>
                       </Form.Item>
                     </Col>{" "}

@@ -1,6 +1,8 @@
 import React, { useContext, useState } from "react";
 import { Button, Divider, FloatButton, Layout, Menu, theme } from "antd";
 import {
+  BookOutlined,
+  CalendarOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   PoweroffOutlined,
@@ -66,8 +68,8 @@ function Navbar() {
 
   const navItems = [
     { label: "Dashboard", path: "/dashboard", icon: UserOutlined },
-    { label: "Diary", path: "/diary", icon: VideoCameraOutlined },
-    { label: "Appointments", path: "/appointments", icon: VideoCameraOutlined },
+    { label: "Diary", path: "/diary", icon: BookOutlined },
+    { label: "Appointments", path: "/appointments", icon: CalendarOutlined },
   ];
 
   const menuItems = [
