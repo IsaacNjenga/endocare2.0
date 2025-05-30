@@ -22,6 +22,13 @@ import {
   deletePatientDetail,
 } from "../controllers/patientController.js";
 import { chatWithCohere } from "../controllers/chatbotController.js";
+import {
+  fetchDiaryEntries,
+  createDiaryEntry,
+  fetchDiaryEntry,
+  updateDiaryEntry,
+  deleteDiaryEntry,
+} from "../controllers/diaryController.js";
 
 const router = express.Router();
 
@@ -54,4 +61,10 @@ router.delete("/delete-detail", deletePatientDetail);
 //chatbot route
 router.post("/endo-ai", chatWithCohere);
 
+//diary routes
+router.post("/create-diary-entry", createDiaryEntry);
+router.get("/fetch-diary-entry", fetchDiaryEntry);
+router.get("/fetch-diary-entries", fetchDiaryEntries);
+router.put("/update-diary-entry", updateDiaryEntry);
+router.delete("/delete-diary-entry", deleteDiaryEntry);
 export { router as Router };

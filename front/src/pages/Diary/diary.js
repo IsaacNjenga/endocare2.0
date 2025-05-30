@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Typography, Divider, Calendar, Tooltip } from "antd";
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
-import { diaryValues } from "../../assets/data/data";
+// import { diaryValues,data } from "../../assets/data/data";
+import useFetchDiaryData from "../../hooks/fetchDiaryData";
+import { UserContext } from "../../App";
 
 const markerStyle = {
   display: "inline-block",
@@ -14,6 +16,11 @@ const markerStyle = {
 function Diary() {
   const navigate = useNavigate();
   const [value, setValue] = useState(null);
+  const { user } = useContext(UserContext);
+  const userId = user?._id;
+  const { diary, diaryLoading } = useFetchDiaryData(userId);
+
+  console.log(diary);
 
   const onSelect = (date) => {
     setValue(date);
@@ -22,7 +29,7 @@ function Diary() {
 
   const dateCellRender = (value) => {
     const dateStr = value.format("YYYY-MM-DD");
-    const hasEntry = diaryValues.some((entry) => entry.entryDate === dateStr);
+    const hasEntry = diary?.some((entry) => entry.entryDate === dateStr);
     return (
       <div style={{ display: "flex", justifyContent: "center", marginTop: 18 }}>
         <Tooltip title={hasEntry ? "Click to view entry" : "Diary not filled"}>
@@ -39,6 +46,8 @@ function Diary() {
       </div>
     );
   };
+
+  if (diaryLoading) return <div>Loading...</div>;
 
   return (
     <>

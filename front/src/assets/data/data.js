@@ -1115,3 +1115,96 @@ export const diaryValues = [
     ],
   },
 ];
+
+export const data = [
+  {
+    _id: {
+      $oid: "6839a690f6127b3d3d59cb31",
+    },
+    mealLogs: [
+      {
+        meal: "Chicken Salad",
+        mealType: "Lunch",
+        mealExperience: "Satiated - Fully satisfied",
+        timeOfMeal: "13:00",
+        moodAfter: "Energetic",
+        cravingLevel: 7,
+        _id: {
+          $oid: "6839a690f6127b3d3d59cb32",
+        },
+      },
+      {
+        meal: "Rice and beans",
+        mealType: "Dinner",
+        mealExperience: "Full - Feeling complete",
+        timeOfMeal: "17:00",
+        moodAfter: "Lethargic",
+        cravingLevel: 5,
+        _id: {
+          $oid: "6839a690f6127b3d3d59cb33",
+        },
+      },
+    ],
+    bloodSugarLogs: [
+      {
+        context: "After Meal",
+        timeOfTest: "15:36",
+        sugarLevel: "70",
+        unit: "mg/dL",
+        activityBefore: "none",
+        symptoms: "Sweating",
+        notes: "None",
+        _id: {
+          $oid: "6839a690f6127b3d3d59cb34",
+        },
+      },
+    ],
+    physicalActivityLogs: [
+      {
+        activity: "Strength Training",
+        activityType: "Strength Training",
+        durationOfActivity: "07:00 - 09:00",
+        moodAfter: "Refreshed",
+        activityExperience: "Rewarding",
+        _id: {
+          $oid: "6839a690f6127b3d3d59cb35",
+        },
+      },
+    ],
+    symptomsLogs: [
+      {
+        symptoms: ["Dizziness"],
+        severity: "Manageable",
+        reliefMeasures: "Took a walk",
+        _id: {
+          $oid: "6839a690f6127b3d3d59cb36",
+        },
+      },
+    ],
+    moodLogs: [
+      {
+        overallMood: "Optimistic",
+        intensityLevel: 8,
+        trigger: ["Good food"],
+        timeOfMood: "15:37",
+        notes: "None",
+        reliefMeasures: "Took a walk",
+        _id: {
+          $oid: "6839a690f6127b3d3d59cb37",
+        },
+      },
+    ],
+    entryDate: "2025-05-30",
+    createdBy: {
+      $oid: "682c876f1581fd8adf71588e",
+    },
+    medicationLogs: [],
+    createdAt: {
+      $date: "2025-05-30T12:37:36.543Z",
+    },
+    updatedAt: {
+      $date: "2025-05-30T12:37:36.543Z",
+    },
+    __v: 0,
+  },
+];

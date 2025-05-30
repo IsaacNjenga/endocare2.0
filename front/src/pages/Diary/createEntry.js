@@ -1,5 +1,5 @@
-import { Button, Divider, Form, Steps, Typography } from "antd";
-import React, { useState } from "react";
+import { Button, Divider, Form, Input, Steps, Typography } from "antd";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   MoodsLog,
@@ -11,6 +11,8 @@ import {
 } from "../../components/diaryFormComponents";
 import Swal from "sweetalert2";
 import { format } from "date-fns";
+import axios from "axios";
+import { UserContext } from "../../App";
 
 const { Step } = Steps;
 
@@ -19,6 +21,7 @@ function CreateEntry() {
   const [form] = Form.useForm();
   const [current, setCurrent] = useState(0);
   const [loading, setLoading] = useState(false);
+  const { user } = useContext(UserContext);
 
   const steps = [
     {
@@ -68,11 +71,24 @@ function CreateEntry() {
     setLoading(true);
     try {
       const values = form.getFieldsValue();
-      console.log(values);
+      const allValues = { ...values, createdBy: user._id };
+      console.log(allValues);
+      const res = await axios.post("create-diary-entry", allValues);
+      if (res.data.success) {
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Your entry has been saved successfully",
+        });
+        setTimeout(() => {
+          navigate(`/diary/date/${format(new Date(), "yyyy-MM-dd")}`);
+        }, 2000);
+      }
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
+      form.resetFields();
     }
   };
 
@@ -96,6 +112,14 @@ function CreateEntry() {
               <Step key={item.title} title={item.title} />
             ))}
           </Steps>
+          <Form.Item
+            layout="horizontal"
+            label="Select the date"
+            name="entryDate"
+            rules={[{ required: true, message: "This field is required" }]}
+          >
+            <Input type="date" />
+          </Form.Item>
 
           {steps.map((step, index) => (
             <div
