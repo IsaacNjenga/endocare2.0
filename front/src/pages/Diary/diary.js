@@ -24,7 +24,7 @@ function Diary() {
     const dateStr = value.format("YYYY-MM-DD");
     const hasEntry = diaryValues.some((entry) => entry.entryDate === dateStr);
     return (
-      <div style={{ display: "flex", justifyContent: "center", marginTop: 4 }}>
+      <div style={{ display: "flex", justifyContent: "center", marginTop: 18 }}>
         <Tooltip title={hasEntry ? "Click to view entry" : "Diary not filled"}>
           <span
             style={{

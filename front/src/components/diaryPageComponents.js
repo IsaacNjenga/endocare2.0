@@ -52,15 +52,6 @@ const descriptionStyle = { fontFamily: "Roboto", fontSize: 15 };
 
 const descriptionLabelStyle = { fontFamily: "Raleway", fontWeight: 500 };
 
-const actions = [
-  <Tooltip title="Edit this entry" key="edit">
-    <Button type="primary" icon={<EditOutlined />} />
-  </Tooltip>,
-  <Tooltip title="Delete this entry" key="delete">
-    <Button danger icon={<DeleteOutlined />} />
-  </Tooltip>,
-];
-
 const renderListAsTags = (items, color) => (
   <Space wrap>
     {items.map((item, idx) => (
@@ -71,9 +62,39 @@ const renderListAsTags = (items, color) => (
   </Space>
 );
 
-export const MealsEntry = ({ diaryLoading, content = [] }) => {
+export const MealsEntry = ({
+  diaryLoading,
+  content = [],
+  setOpenDiaryModal,
+  setModalContent,
+  setLoading,
+}) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const currentMeal = content[currentIndex - 1];
+
+  const actions = [
+    <Tooltip title="Edit this entry" key="edit">
+      <Button
+        type="primary"
+        icon={<EditOutlined />}
+        onClick={() => {
+          handleUpdate(content);
+        }}
+      />
+    </Tooltip>,
+    <Tooltip title="Delete this entry" key="delete">
+      <Button danger icon={<DeleteOutlined />} />
+    </Tooltip>,
+  ];
+
+  const handleUpdate = (content) => {
+    setOpenDiaryModal(true);
+    setModalContent(content);
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 100);
+  };
 
   return (
     <Card
@@ -169,9 +190,39 @@ export const MealsEntry = ({ diaryLoading, content = [] }) => {
   );
 };
 
-export const MedicationsEntry = ({ diaryLoading, content = [] }) => {
+export const MedicationsEntry = ({
+  diaryLoading,
+  content = [],
+  setOpenDiaryModal,
+  setModalContent,
+  setLoading,
+}) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const currentMedication = content[currentIndex - 1];
+
+  const actions = [
+    <Tooltip title="Edit this entry" key="edit">
+      <Button
+        type="primary"
+        icon={<EditOutlined />}
+        onClick={() => {
+          handleUpdate(content);
+        }}
+      />
+    </Tooltip>,
+    <Tooltip title="Delete this entry" key="delete">
+      <Button danger icon={<DeleteOutlined />} />
+    </Tooltip>,
+  ];
+
+  const handleUpdate = (content) => {
+    setOpenDiaryModal(true);
+    setModalContent(content);
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 100);
+  };
 
   return (
     <Card
@@ -274,10 +325,39 @@ export const MedicationsEntry = ({ diaryLoading, content = [] }) => {
   );
 };
 
-export const BloodSugarEntry = ({ diaryLoading, content = [] }) => {
+export const BloodSugarEntry = ({
+  diaryLoading,
+  content = [],
+  setOpenDiaryModal,
+  setModalContent,
+  setLoading,
+}) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const currentEntry = content[currentIndex - 1];
 
+  const actions = [
+    <Tooltip title="Edit this entry" key="edit">
+      <Button
+        type="primary"
+        icon={<EditOutlined />}
+        onClick={() => {
+          handleUpdate(content);
+        }}
+      />
+    </Tooltip>,
+    <Tooltip title="Delete this entry" key="delete">
+      <Button danger icon={<DeleteOutlined />} />
+    </Tooltip>,
+  ];
+
+  const handleUpdate = (content) => {
+    setOpenDiaryModal(true);
+    setModalContent(content);
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 100);
+  };
   return (
     <Card
       hoverable
@@ -372,10 +452,39 @@ export const BloodSugarEntry = ({ diaryLoading, content = [] }) => {
   );
 };
 
-export const PhysicalActivityEntry = ({ diaryLoading, content = [] }) => {
+export const PhysicalActivityEntry = ({
+  diaryLoading,
+  content = [],
+  setOpenDiaryModal,
+  setModalContent,
+  setLoading,
+}) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const currentContent = content[currentIndex - 1];
 
+  const actions = [
+    <Tooltip title="Edit this entry" key="edit">
+      <Button
+        type="primary"
+        icon={<EditOutlined />}
+        onClick={() => {
+          handleUpdate(content);
+        }}
+      />
+    </Tooltip>,
+    <Tooltip title="Delete this entry" key="delete">
+      <Button danger icon={<DeleteOutlined />} />
+    </Tooltip>,
+  ];
+
+  const handleUpdate = (content) => {
+    setOpenDiaryModal(true);
+    setModalContent(content);
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 100);
+  };
   return (
     <Card
       hoverable
@@ -451,10 +560,39 @@ export const PhysicalActivityEntry = ({ diaryLoading, content = [] }) => {
   );
 };
 
-export const SymptomsEntry = ({ diaryLoading, content = [] }) => {
+export const SymptomsEntry = ({
+  diaryLoading,
+  content = [],
+  setOpenDiaryModal,
+  setModalContent,
+  setLoading,
+}) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const currentEntry = content[currentIndex - 1];
 
+  const actions = [
+    <Tooltip title="Edit this entry" key="edit">
+      <Button
+        type="primary"
+        icon={<EditOutlined />}
+        onClick={() => {
+          handleUpdate(content);
+        }}
+      />
+    </Tooltip>,
+    <Tooltip title="Delete this entry" key="delete">
+      <Button danger icon={<DeleteOutlined />} />
+    </Tooltip>,
+  ];
+
+  const handleUpdate = (content) => {
+    setOpenDiaryModal(true);
+    setModalContent(content);
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 100);
+  };
   return (
     <Card
       hoverable
@@ -516,10 +654,39 @@ export const SymptomsEntry = ({ diaryLoading, content = [] }) => {
   );
 };
 
-export const MoodsEntry = ({ diaryLoading, content = [] }) => {
+export const MoodsEntry = ({
+  diaryLoading,
+  content = [],
+  setOpenDiaryModal,
+  setModalContent,
+  setLoading,
+}) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const currentEntry = content[currentIndex - 1];
 
+  const actions = [
+    <Tooltip title="Edit this entry" key="edit">
+      <Button
+        type="primary"
+        icon={<EditOutlined />}
+        onClick={() => {
+          handleUpdate(content);
+        }}
+      />
+    </Tooltip>,
+    <Tooltip title="Delete this entry" key="delete">
+      <Button danger icon={<DeleteOutlined />} />
+    </Tooltip>,
+  ];
+
+  const handleUpdate = (content) => {
+    setOpenDiaryModal(true);
+    setModalContent(content);
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 100);
+  };
   return (
     <Card
       hoverable

@@ -917,7 +917,7 @@ function MedicalInfo({
         </>
       ) : (
         <>
-          <Space direction="vertical" size="middle" style={{ width: "100%" }}>
+          <Space direction="vertical" size="medium" style={{ width: "100%" }}>
             <Typography.Paragraph>
               Looks like your information is not updated.
             </Typography.Paragraph>
