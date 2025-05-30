@@ -22,6 +22,7 @@ function DiaryContent() {
   const [openDiaryModal, setOpenDiaryModal] = useState(false);
   const [modalContent, setModalContent] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [sectionName, setSectionName] = useState("");
 
   const diaryForDate = diaryValues.find(
     (entry) => entry.entryDate === format(new Date(date), "yyyy-MM-dd")
@@ -55,6 +56,7 @@ function DiaryContent() {
                 setOpenDiaryModal={setOpenDiaryModal}
                 setModalContent={setModalContent}
                 setLoading={setLoading}
+                setSectionName={setSectionName}
               />
             </Col>
 
@@ -65,6 +67,7 @@ function DiaryContent() {
                 setOpenDiaryModal={setOpenDiaryModal}
                 setModalContent={setModalContent}
                 setLoading={setLoading}
+                setSectionName={setSectionName}
               />
             </Col>
 
@@ -74,6 +77,7 @@ function DiaryContent() {
                 content={diaryForDate?.bloodSugarLogs}
                 setOpenDiaryModal={setOpenDiaryModal}
                 setModalContent={setModalContent}
+                setSectionName={setSectionName}
                 setLoading={setLoading}
               />
             </Col>
@@ -84,6 +88,7 @@ function DiaryContent() {
                 content={diaryForDate?.physicalActivityLogs}
                 setOpenDiaryModal={setOpenDiaryModal}
                 setModalContent={setModalContent}
+                setSectionName={setSectionName}
                 setLoading={setLoading}
               />
             </Col>
@@ -94,6 +99,7 @@ function DiaryContent() {
                 content={diaryForDate?.symptomsLogs}
                 setOpenDiaryModal={setOpenDiaryModal}
                 setModalContent={setModalContent}
+                setSectionName={setSectionName}
                 setLoading={setLoading}
               />
             </Col>
@@ -104,6 +110,7 @@ function DiaryContent() {
                 content={diaryForDate?.moodLogs}
                 setOpenDiaryModal={setOpenDiaryModal}
                 setModalContent={setModalContent}
+                setSectionName={setSectionName}
                 setLoading={setLoading}
               />
             </Col>
@@ -116,6 +123,7 @@ function DiaryContent() {
         setOpenDiaryModal={setOpenDiaryModal}
         modalContent={modalContent}
         loading={loading}
+        sectionName={sectionName}
       />
     </>
   );

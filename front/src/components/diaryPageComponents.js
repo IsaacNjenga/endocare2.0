@@ -68,6 +68,7 @@ export const MealsEntry = ({
   setOpenDiaryModal,
   setModalContent,
   setLoading,
+  setSectionName,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const currentMeal = content[currentIndex - 1];
@@ -79,6 +80,7 @@ export const MealsEntry = ({
         icon={<EditOutlined />}
         onClick={() => {
           handleUpdate(content);
+          setSectionName("mealLogs");
         }}
       />
     </Tooltip>,
@@ -196,6 +198,7 @@ export const MedicationsEntry = ({
   setOpenDiaryModal,
   setModalContent,
   setLoading,
+  setSectionName,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const currentMedication = content[currentIndex - 1];
@@ -207,6 +210,7 @@ export const MedicationsEntry = ({
         icon={<EditOutlined />}
         onClick={() => {
           handleUpdate(content);
+          setSectionName("medicationsLogs");
         }}
       />
     </Tooltip>,
@@ -331,6 +335,7 @@ export const BloodSugarEntry = ({
   setOpenDiaryModal,
   setModalContent,
   setLoading,
+  setSectionName,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const currentEntry = content[currentIndex - 1];
@@ -342,6 +347,7 @@ export const BloodSugarEntry = ({
         icon={<EditOutlined />}
         onClick={() => {
           handleUpdate(content);
+          setSectionName("bloodSugarLogs");
         }}
       />
     </Tooltip>,
@@ -458,6 +464,7 @@ export const PhysicalActivityEntry = ({
   setOpenDiaryModal,
   setModalContent,
   setLoading,
+  setSectionName,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const currentContent = content[currentIndex - 1];
@@ -469,6 +476,7 @@ export const PhysicalActivityEntry = ({
         icon={<EditOutlined />}
         onClick={() => {
           handleUpdate(content);
+          setSectionName("physicalActivityLogs");
         }}
       />
     </Tooltip>,
@@ -566,6 +574,7 @@ export const SymptomsEntry = ({
   setOpenDiaryModal,
   setModalContent,
   setLoading,
+  setSectionName,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const currentEntry = content[currentIndex - 1];
@@ -577,6 +586,7 @@ export const SymptomsEntry = ({
         icon={<EditOutlined />}
         onClick={() => {
           handleUpdate(content);
+          setSectionName("symptomsLogs");
         }}
       />
     </Tooltip>,
@@ -660,6 +670,7 @@ export const MoodsEntry = ({
   setOpenDiaryModal,
   setModalContent,
   setLoading,
+  setSectionName,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const currentEntry = content[currentIndex - 1];
@@ -671,6 +682,7 @@ export const MoodsEntry = ({
         icon={<EditOutlined />}
         onClick={() => {
           handleUpdate(content);
+          setSectionName("moodLogs");
         }}
       />
     </Tooltip>,

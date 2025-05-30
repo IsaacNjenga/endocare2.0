@@ -29,7 +29,7 @@ function UpdateMedicalInfoModal({
     try {
       const values = await form.validateFields();
       const allValues = { ...values, createdBy: user._id };
-      console.log(allValues);
+      // console.log(allValues);
       const res = await axios.put(
         `update-patient-details?id=${user._id}`,
         allValues
@@ -40,6 +40,7 @@ function UpdateMedicalInfoModal({
         setOpenMedicalInfoModal(false);
       }
     } catch (error) {
+      console.log(error);
       const errorMessage =
         error?.response?.data?.error || "An unexpected error occurred.";
       Swal.fire({ icon: "error", title: "Error", text: errorMessage });
@@ -85,7 +86,7 @@ function UpdateMedicalInfoModal({
       footer={null}
       open={openMedicalInfoModal}
       onCancel={() => setOpenMedicalInfoModal(false)}
-      width={750}
+      width={800}
       confirmLoading={loading}
       style={{ maxWidth: "95vw" }}
     >
@@ -93,7 +94,7 @@ function UpdateMedicalInfoModal({
         form={form}
         layout="vertical"
         onFinish={handleSubmit}
-        onValuesChange={(changed, all) => console.log("Form Values:", all)}
+        // onValuesChange={(changed, all) => console.log("Form Values:", all)}
         initialValues={{
           [toCamelCase(sectionName)]: modalContent ? [modalContent] : [{}],
         }}
