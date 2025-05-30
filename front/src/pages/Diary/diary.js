@@ -18,9 +18,8 @@ function Diary() {
   const [value, setValue] = useState(null);
   const { user } = useContext(UserContext);
   const userId = user?._id;
-  const { diary, diaryLoading } = useFetchDiaryData(userId);
+  const { diaryData, diaryLoading } = useFetchDiaryData(userId);
 
-  console.log(diary);
 
   const onSelect = (date) => {
     setValue(date);
@@ -29,7 +28,7 @@ function Diary() {
 
   const dateCellRender = (value) => {
     const dateStr = value.format("YYYY-MM-DD");
-    const hasEntry = diary?.some((entry) => entry.entryDate === dateStr);
+    const hasEntry = diaryData?.some((entry) => entry.entryDate === dateStr);
     return (
       <div style={{ display: "flex", justifyContent: "center", marginTop: 18 }}>
         <Tooltip title={hasEntry ? "Click to view entry" : "Diary not filled"}>
