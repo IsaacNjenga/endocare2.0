@@ -16,6 +16,8 @@ import {
   Divider,
   Collapse,
   Empty,
+  Space,
+  Tag,
 } from "antd";
 import mealIcon from "../assets/icons/meal.png";
 import medicationIcon from "../assets/icons/medication.png";
@@ -58,6 +60,16 @@ const actions = [
     <Button danger icon={<DeleteOutlined />} />
   </Tooltip>,
 ];
+
+const renderListAsTags = (items, color) => (
+  <Space wrap>
+    {items.map((item, idx) => (
+      <Tag key={idx} color={color} style={descriptionStyle}>
+        {item}
+      </Tag>
+    ))}
+  </Space>
+);
 
 export const MealsEntry = ({ diaryLoading, content = [] }) => {
   const [currentIndex, setCurrentIndex] = useState(1);
@@ -467,9 +479,10 @@ export const SymptomsEntry = ({ diaryLoading, content = [] }) => {
       ) : (
         <Descriptions column={1} bordered size="medium">
           <Descriptions.Item label="Symptoms" style={descriptionLabelStyle}>
-            <Text strong style={descriptionStyle}>
+            {/* <Text strong style={descriptionStyle}>
               {currentEntry?.symptoms || "N/A"}
-            </Text>
+            </Text> */}
+            {renderListAsTags(currentEntry?.symptoms, "red")}
           </Descriptions.Item>
           <Descriptions.Item label="Severity" style={descriptionLabelStyle}>
             <Text style={descriptionStyle}>
@@ -550,9 +563,7 @@ export const MoodsEntry = ({ diaryLoading, content = [] }) => {
             </Descriptions.Item>
 
             <Descriptions.Item label="Triggers" style={descriptionLabelStyle}>
-              <Text style={descriptionStyle}>
-                {currentEntry?.trigger || "N/A"}
-              </Text>
+              {renderListAsTags(currentEntry?.trigger, "orange")}
             </Descriptions.Item>
 
             <Descriptions.Item label="Time" style={descriptionLabelStyle}>

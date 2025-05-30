@@ -108,7 +108,7 @@ const diaryValues = {
     ],
     symptomsLogs: [
       {
-        symptoms: ["Dizziness"],
+        symptoms: ["Dizziness", "Headaches", "Stomach Upset"],
         severity: "Manageable",
         reliefMeasures: "qeqe",
       },
