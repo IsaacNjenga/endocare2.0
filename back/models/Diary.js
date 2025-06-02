@@ -12,7 +12,7 @@ const diarySchema = new mongoose.Schema(
         cravingLevel: { type: Number },
       },
     ],
-    medicationLogs: [
+    medicationsLogs: [
       {
         medicationName: { type: String },
         medicationType: { type: String },

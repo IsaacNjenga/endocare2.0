@@ -7,14 +7,14 @@ import {
   PhysicalActivityEntry,
   SymptomsEntry,
   MoodsEntry,
-} from "./diaryPageComponents";
+} from "../../components/diaryPageComponents";
 import { useNavigate, useParams } from "react-router-dom";
 import { format } from "date-fns";
 //import { diaryValues } from "../assets/data/data";
-import UpdateDiary from "../pages/Diary/updateDiary";
-import useFetchDiaryData from "../hooks/fetchDiaryData";
+import UpdateDiary from "./updateDiary";
+import useFetchDiaryData from "../../hooks/fetchDiaryData";
 import { useContext } from "react";
-import { UserContext } from "../App";
+import { UserContext } from "../../App";
 
 const colStyle = { margin: "15px 0px" };
 
@@ -27,12 +27,12 @@ function DiaryContent() {
   const [sectionName, setSectionName] = useState("");
   const { user } = useContext(UserContext);
   const userId = user?._id;
-  const { diaryData, diaryLoading } = useFetchDiaryData(userId);
+  const { diaryData, diaryLoading, diaryRefresh } = useFetchDiaryData(userId);
 
   const diaryForDate = diaryData.find(
     (entry) => entry.entryDate === format(new Date(date), "yyyy-MM-dd")
   );
-
+  const currentDiaryId = diaryForDate?._id;
   return (
     <>
       <div>
@@ -129,6 +129,8 @@ function DiaryContent() {
         modalContent={modalContent}
         loading={loading}
         sectionName={sectionName}
+        user={user}
+        currentDiaryId={currentDiaryId}diaryRefresh={diaryRefresh}
       />
     </>
   );

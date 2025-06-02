@@ -9,6 +9,7 @@ import {
   SymptomsLog,
 } from "../../components/diaryFormComponents";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 function UpdateDiary({
   openDiaryModal,
@@ -16,6 +17,9 @@ function UpdateDiary({
   loading,
   modalContent,
   sectionName,
+  user,
+  currentDiaryId,
+  diaryRefresh,
 }) {
   const [form] = Form.useForm();
   const [updateLoading, setLoading] = useState(false);
@@ -27,8 +31,20 @@ function UpdateDiary({
       const values = await form.validateFields();
       const fieldName = toCamelCase(sectionName);
       const payload = { [fieldName]: values[fieldName] };
-      //const allValues = { ...payload, createdBy: user._id };
-     // console.log(allValues);
+      const allValues = { ...payload, createdBy: user._id };
+      // console.log(allValues)
+      const res = await axios.put(
+        `update-diary-entry?id=${currentDiaryId}&userId=${user._id}`,
+        allValues
+      );
+      if (res.data.success) {
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Your entry has updated successfully",
+        });
+        diaryRefresh();
+      }
     } catch (error) {
       console.log(error);
       const errorMessage =

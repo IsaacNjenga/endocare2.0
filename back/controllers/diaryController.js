@@ -38,19 +38,21 @@ const fetchDiaryEntries = async (req, res) => {
 
 const updateDiaryEntry = async (req, res) => {
   const { id, userId } = req.query;
-  if (!id) {
-    return res.status(400).json({ error: "No ID specified" });
-  }
-  if (!userId) {
-    return res.status(400).json({ error: "No User ID specified" });
-  }
+  if (!id) return res.status(400).json({ error: "No ID specified" });
+  if (!userId) return res.status(400).json({ error: "No User ID specified" });
+
   try {
-    const updatedEntry = await DiaryModel(
-      { _id: id },
-      { createdBy: userId },
+    const objectId = new mongoose.Types.ObjectId(id);
+    const userObjectId = new mongoose.Types.ObjectId(userId);
+    const updatedEntry = await DiaryModel.findOneAndUpdate(
+      { _id: objectId, },
       { $set: req.body },
       { new: true }
     );
+    if (!updatedEntry) {
+      console.log("No matching entry found for update");
+      return res.status(404).json({ error: "Entry record not found" });
+    }
     return res.status(201).json({ success: true, updatedEntry });
   } catch (error) {
     console.log(error);
