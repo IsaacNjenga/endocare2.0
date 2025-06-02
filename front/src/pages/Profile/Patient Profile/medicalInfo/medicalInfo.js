@@ -100,10 +100,10 @@ function MedicalInfo({
     <>
       {values.length !== 0 ? (
         <>
-          {/* <p style={{ fontFamily: "Raleway" }}>
+          <p style={{ fontFamily: "Raleway" }}>
             Last Updated:{" "}
             {format(new Date(patientData[0]?.updatedAt), "yyyy-MM-dd, pp")}
-          </p> */}
+          </p>
           <div style={{ fontFamily: "Roboto", padding: "0.5rem" }}>
             <PatientInformationSection
               content={values[0]?.patientInformation}

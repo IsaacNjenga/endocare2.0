@@ -23,12 +23,15 @@ function UpdateMedicalInfoModal({
 }) {
   const [form] = Form.useForm();
   const [updateLoading, setLoading] = useState(false);
+  const toCamelCase = (str) => str.charAt(0).toLowerCase() + str.slice(1);
 
   const handleSubmit = async () => {
     setLoading(true);
     try {
       const values = await form.validateFields();
-      const allValues = { ...values, createdBy: user._id };
+      const fieldName = toCamelCase(sectionName);
+      const payload = { [fieldName]: values[fieldName] };
+      const allValues = { ...payload, createdBy: user._id };
       //console.log(allValues);
       const res = await axios.put(
         `update-patient-details?id=${user._id}`,

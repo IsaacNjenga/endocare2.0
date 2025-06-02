@@ -20,14 +20,14 @@ const patientSchema = new mongoose.Schema(
         dosage: { type: String },
         frequency: { type: String },
         isOngoing: { type: Boolean, default: false },
-        startDate: { type: Date },
+        startDate: { type: String },
       },
     ],
 
     treatmentHistory: [
       {
         condition: { type: String },
-        diagnosisDate: { type: Date },
+        diagnosisDate: { type: String },
         treatmentDescription: { type: String },
         outcome: { type: String },
       },
@@ -36,7 +36,7 @@ const patientSchema = new mongoose.Schema(
     medicalProcedures: [
       {
         procedureName: { type: String },
-        dateOfProcedure: { type: Date },
+        dateOfProcedure: { type: String },
         notes: { type: String },
       },
     ],
@@ -59,8 +59,8 @@ const patientSchema = new mongoose.Schema(
 
     lifestyle: [
       {
-        smoking: { type: String,  },
-        alcoholUse: { type: String, },
+        smoking: { type: String },
+        alcoholUse: { type: String },
         exerciseFrequency: { type: String }, // e.g., "Daily", "Weekly"
         dietDescription: { type: String },
       },

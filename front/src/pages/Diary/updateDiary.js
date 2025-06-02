@@ -19,12 +19,16 @@ function UpdateDiary({
 }) {
   const [form] = Form.useForm();
   const [updateLoading, setLoading] = useState(false);
+  const toCamelCase = (str) => str.charAt(0).toLowerCase() + str.slice(1);
 
   const handleSubmit = async () => {
     setLoading(true);
     try {
       const values = await form.validateFields();
-      console.log(values);
+      const fieldName = toCamelCase(sectionName);
+      const payload = { [fieldName]: values[fieldName] };
+      //const allValues = { ...payload, createdBy: user._id };
+     // console.log(allValues);
     } catch (error) {
       console.log(error);
       const errorMessage =
@@ -35,8 +39,6 @@ function UpdateDiary({
       setOpenDiaryModal(false);
     }
   };
-
-  // const toCamelCase = (str) => str.charAt(0).toLowerCase() + str.slice(1);
 
   useEffect(() => {
     if (openDiaryModal && modalContent && sectionName) {

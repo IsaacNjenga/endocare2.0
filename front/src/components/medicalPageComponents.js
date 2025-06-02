@@ -199,9 +199,9 @@ export const CurrentMedicationSection = ({
               </Descriptions.Item>
               <Descriptions.Item label={<span style={labelStyle}>Date</span>}>
                 <span style={contentStyle}>
-                  {/* {info.startDate
+                  {info.startDate
                     ? `${format(new Date(info.startDate), "yyyy-MM-dd")}`
-                    : null} */}
+                    : null}
                 </span>
               </Descriptions.Item>
               <Descriptions.Item
@@ -225,7 +225,6 @@ export const TreatmentHistorySection = ({
   handleDelete,
   handleUpdate,
 }) => {
-  console.log(content);
   return (
     <>
       <Title level={2} style={sectionHeaderStyle}>
@@ -284,7 +283,9 @@ export const TreatmentHistorySection = ({
                 label={<span style={labelStyle}>Date of Diagnosis</span>}
               >
                 <span style={contentStyle}>
-                  {/* {format(new Date(info?.diagnosisDate), "yyyy-MM-dd")} */}
+                  {info.diagnosisDate
+                    ? `${format(new Date(info.diagnosisDate), "yyyy-MM-dd")}`
+                    : null}
                 </span>
               </Descriptions.Item>
               <Descriptions.Item
@@ -367,8 +368,9 @@ export const MedicalProceduresSection = ({
               </Descriptions.Item>
               <Descriptions.Item label={<span style={labelStyle}>Date</span>}>
                 <span style={contentStyle}>
-                  {info.dateOfProcedure}
-                  {/* {format(new Date(content.dateOfProcedure), "yyyy-MM-dd")} */}
+                  {info.dateOfProcedure
+                    ? `${format(new Date(info.dateOfProcedure), "yyyy-MM-dd")}`
+                    : null}
                 </span>
               </Descriptions.Item>
             </Descriptions>
