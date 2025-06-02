@@ -493,6 +493,7 @@ export const PhysicalActivityEntry = ({
       setLoading(false);
     }, 100);
   };
+
   return (
     <Card
       hoverable

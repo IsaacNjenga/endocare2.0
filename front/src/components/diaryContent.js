@@ -10,21 +10,26 @@ import {
 } from "./diaryPageComponents";
 import { useNavigate, useParams } from "react-router-dom";
 import { format } from "date-fns";
-import { diaryValues } from "../assets/data/data";
+//import { diaryValues } from "../assets/data/data";
 import UpdateDiary from "../pages/Diary/updateDiary";
+import useFetchDiaryData from "../hooks/fetchDiaryData";
+import { useContext } from "react";
+import { UserContext } from "../App";
 
 const colStyle = { margin: "15px 0px" };
 
 function DiaryContent() {
   const { date } = useParams();
   const navigate = useNavigate();
-  const [diaryLoading, setDiaryLoading] = useState(false);
   const [openDiaryModal, setOpenDiaryModal] = useState(false);
   const [modalContent, setModalContent] = useState(null);
   const [loading, setLoading] = useState(false);
   const [sectionName, setSectionName] = useState("");
+  const { user } = useContext(UserContext);
+  const userId = user?._id;
+  const { diaryData, diaryLoading } = useFetchDiaryData(userId);
 
-  const diaryForDate = diaryValues.find(
+  const diaryForDate = diaryData.find(
     (entry) => entry.entryDate === format(new Date(date), "yyyy-MM-dd")
   );
 

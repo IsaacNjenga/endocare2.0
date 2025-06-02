@@ -15,11 +15,10 @@ const markerStyle = {
 };
 function Diary() {
   const navigate = useNavigate();
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState('');
   const { user } = useContext(UserContext);
   const userId = user?._id;
   const { diaryData, diaryLoading } = useFetchDiaryData(userId);
-
 
   const onSelect = (date) => {
     setValue(date);

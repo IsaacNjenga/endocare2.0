@@ -32,44 +32,63 @@ function UpdateDiary({
       Swal.fire({ icon: "error", title: "Error", text: errorMessage });
     } finally {
       setLoading(false);
-      form.resetFields();
+      setOpenDiaryModal(false);
     }
   };
 
-  const toCamelCase = (str) => str.charAt(0).toLowerCase() + str.slice(1);
+  // const toCamelCase = (str) => str.charAt(0).toLowerCase() + str.slice(1);
 
   useEffect(() => {
-    if (openDiaryModal && modalContent) {
-      const fieldName = toCamelCase(sectionName);
-      form.setFieldsValue({ [fieldName]: [modalContent] });
+    if (openDiaryModal && modalContent && sectionName) {
+      form.setFieldsValue({ [sectionName]: modalContent });
+      // console.log("Prefilling", sectionName, modalContent);
     }
-  }, [openDiaryModal, sectionName, modalContent, form]);
+  }, [openDiaryModal, modalContent, sectionName]);
 
-  const renderSectionForm = () => {
-    switch (sectionName) {
-      case "mealLogs":
-        return <MealsLog />;
-      case "medicationsLogs":
-        return <MedicationsLog />;
-      case "bloodSugarLogs":
-        return <BloodSugarLevelsLog />;
-      case "physicalActivityLogs":
-        return <PhysicalActivityLog />;
-      case "symptomsLogs":
-        return <SymptomsLog />;
-      case "moodLogs":
-        return <MoodsLog />;
-      default:
-        return <p>Section not selected</p>;
-    }
-  };
+  const renderSectionForm = () => (
+    <>
+      <div style={{ display: sectionName === "mealLogs" ? "block" : "none" }}>
+        <MealsLog />
+      </div>
+      <div
+        style={{
+          display: sectionName === "medicationsLogs" ? "block" : "none",
+        }}
+      >
+        <MedicationsLog />
+      </div>
+      <div
+        style={{ display: sectionName === "bloodSugarLogs" ? "block" : "none" }}
+      >
+        <BloodSugarLevelsLog />
+      </div>
+      <div
+        style={{
+          display: sectionName === "physicalActivityLogs" ? "block" : "none",
+        }}
+      >
+        <PhysicalActivityLog />
+      </div>
+      <div
+        style={{ display: sectionName === "symptomsLogs" ? "block" : "none" }}
+      >
+        <SymptomsLog />
+      </div>
+      <div style={{ display: sectionName === "moodLogs" ? "block" : "none" }}>
+        <MoodsLog />
+      </div>
+    </>
+  );
 
   return (
     <>
       <Modal
         footer={null}
         open={openDiaryModal}
-        onCancel={() => setOpenDiaryModal(false)}
+        onCancel={() => {
+          setOpenDiaryModal(false);
+          form.resetFields();
+        }}
         width={950}
         confirmLoading={loading}
         style={{ maxWidth: "95vw" }}
@@ -78,12 +97,13 @@ function UpdateDiary({
           form={form}
           layout="vertical"
           onFinish={handleSubmit}
-          initialValues={{
-            [toCamelCase(sectionName)]: modalContent ? [modalContent] : [{}],
-          }}
+          // initialValues={{
+          //   [toCamelCase(sectionName)]: modalContent ? [modalContent] : [{}],
+          // }}
           style={{ maxWidth: 950, margin: "2rem auto" }}
         >
           {renderSectionForm()}
+          <pre>{JSON.stringify(form.getFieldValue(), null, 2)}</pre>
           <div style={{ display: "flex", justifyContent: "center" }}>
             <Button
               type="primary"
