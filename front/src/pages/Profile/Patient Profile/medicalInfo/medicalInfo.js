@@ -100,10 +100,10 @@ function MedicalInfo({
     <>
       {values.length !== 0 ? (
         <>
-          <p style={{ fontFamily: "Raleway" }}>
+          {/* <p style={{ fontFamily: "Raleway" }}>
             Last Updated:{" "}
-            {format(new Date(patientData[0].updatedAt), "yyyy-MM-dd, pp")}
-          </p>
+            {format(new Date(patientData[0]?.updatedAt), "yyyy-MM-dd, pp")}
+          </p> */}
           <div style={{ fontFamily: "Roboto", padding: "0.5rem" }}>
             <PatientInformationSection
               content={values[0]?.patientInformation}
@@ -139,7 +139,7 @@ function MedicalInfo({
             />
             <Divider />
             <FamilyMedicalHistorySection
-              content={values[0]?.familyMedicalHistory}
+              content={values[0]?.familyHistory}
               handleDelete={handleDelete}
               setSectionName={setSectionName}
               setLoading={setLoading}
@@ -147,7 +147,7 @@ function MedicalInfo({
             />
             <Divider />
             <PreviousProvidersSection
-              content={values[0]?.previousHealthcareProviders}
+              content={values[0]?.previousProviders}
               handleDelete={handleDelete}
               setSectionName={setSectionName}
               setLoading={setLoading}
@@ -197,21 +197,7 @@ export default MedicalInfo;
 
 // const renderObjectList = (data, fields) => (
 //   <>
-//     <div
-//       style={{
-//         display: "flex",
-//         justifyContent: "right",
-//         margin: "5px 0px",
-//       }}
-//     >
-//       <Tooltip title="Edit this section">
-//         <Button
-//           type="primary"
-//           icon={<EditOutlined />}
-//           onClick={() => handleUpdate(data)}
-//         />
-//       </Tooltip>
-//     </div>
+//    
 //     <List
 //       size="small"
 //       bordered

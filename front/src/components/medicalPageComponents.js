@@ -157,58 +157,63 @@ export const CurrentMedicationSection = ({
       {content?.length === 0 ? (
         <Empty />
       ) : (
-        <Card
-          type="inner"
-          style={{ marginBottom: "1rem", borderRadius: "10px" }}
-        >
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "right",
-              margin: "5px 0px",
-              gap: "10px",
-            }}
+        content.map((info) => (
+          <Card
+            type="inner"
+            style={{ marginBottom: "1rem", borderRadius: "10px" }}
           >
-            <Tooltip title="Delete this section">
-              <Button
-                danger
-                icon={<DeleteOutlined />}
-                onClick={() => {
-                  handleDelete(content);
-                  setSectionName("currentMedications");
-                }}
-              />
-            </Tooltip>
-          </div>
-          <Descriptions size="small" column={2}>
-            <Descriptions.Item
-              label={<span style={labelStyle}>Medication Name</span>}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "right",
+                margin: "5px 0px",
+                gap: "10px",
+              }}
             >
-              <span style={contentStyle}>{content.name}</span>
-            </Descriptions.Item>
-            <Descriptions.Item
-              label={<span style={labelStyle}>Assigned Dosage</span>}
-            >
-              <span style={contentStyle}>{content.dosage}</span>
-            </Descriptions.Item>
-            <Descriptions.Item
-              label={<span style={labelStyle}>Frequency</span>}
-            >
-              <span style={contentStyle}>{content.frequency}</span>
-            </Descriptions.Item>
-            <Descriptions.Item label={<span style={labelStyle}>Date</span>}>
-              <span style={contentStyle}>
-                {content.startDate}
-                {/* {format(new Date(content?.startDate), "yyyy-MM-dd")} */}
-              </span>
-            </Descriptions.Item>
-            <Descriptions.Item label={<span style={labelStyle}>Ongoing</span>}>
-              <span style={contentStyle}>
-                {content.isOngoing === "true" ? "Yes" : "No"}
-              </span>
-            </Descriptions.Item>
-          </Descriptions>
-        </Card>
+              <Tooltip title="Delete this section">
+                <Button
+                  danger
+                  icon={<DeleteOutlined />}
+                  onClick={() => {
+                    handleDelete(content);
+                    setSectionName("currentMedications");
+                  }}
+                />
+              </Tooltip>
+            </div>
+            <Descriptions size="small" column={2}>
+              <Descriptions.Item
+                label={<span style={labelStyle}>Medication Name</span>}
+              >
+                <span style={contentStyle}>{info.name}</span>
+              </Descriptions.Item>
+              <Descriptions.Item
+                label={<span style={labelStyle}>Assigned Dosage</span>}
+              >
+                <span style={contentStyle}>{info.dosage}</span>
+              </Descriptions.Item>
+              <Descriptions.Item
+                label={<span style={labelStyle}>Frequency</span>}
+              >
+                <span style={contentStyle}>{info.frequency}</span>
+              </Descriptions.Item>
+              <Descriptions.Item label={<span style={labelStyle}>Date</span>}>
+                <span style={contentStyle}>
+                  {/* {info.startDate
+                    ? `${format(new Date(info.startDate), "yyyy-MM-dd")}`
+                    : null} */}
+                </span>
+              </Descriptions.Item>
+              <Descriptions.Item
+                label={<span style={labelStyle}>Ongoing</span>}
+              >
+                <span style={contentStyle}>
+                  {info.isOngoing === true ? "Yes" : "No"}
+                </span>
+              </Descriptions.Item>
+            </Descriptions>
+          </Card>
+        ))
       )}
     </>
   );
@@ -220,6 +225,7 @@ export const TreatmentHistorySection = ({
   handleDelete,
   handleUpdate,
 }) => {
+  console.log(content);
   return (
     <>
       <Title level={2} style={sectionHeaderStyle}>
@@ -244,53 +250,56 @@ export const TreatmentHistorySection = ({
       {content?.length === 0 ? (
         <Empty />
       ) : (
-        <Card
-          type="inner"
-          style={{ marginBottom: "1rem", borderRadius: "10px" }}
-        >
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "right",
-              margin: "5px 0px",
-              gap: "10px",
-            }}
+        content.map((info) => (
+          <Card
+            type="inner"
+            style={{ marginBottom: "1rem", borderRadius: "10px" }}
           >
-            <Tooltip title="Delete this section">
-              <Button
-                danger
-                icon={<DeleteOutlined />}
-                onClick={() => {
-                  handleDelete(content);
-                  setSectionName("treatmentHistory");
-                }}
-              />
-            </Tooltip>
-          </div>
-          <Descriptions size="small" column={2}>
-            <Descriptions.Item
-              label={<span style={labelStyle}>Condition</span>}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "right",
+                margin: "5px 0px",
+                gap: "10px",
+              }}
             >
-              <span style={contentStyle}>{content.condition}</span>
-            </Descriptions.Item>
-            <Descriptions.Item
-              label={<span style={labelStyle}>Date of Diagnosis</span>}
-            >
-              <span style={contentStyle}>
-                {content.diagnosisDate}
-                {/* {format(new Date(content?.diagnosisDate), "yyyy-MM-dd")} */}
-              </span>
-            </Descriptions.Item>
-            <Descriptions.Item
-              label={<span style={labelStyle}>Description</span>}
-            >
-              <span style={contentStyle}>{content.treatmentDescription}</span>
-            </Descriptions.Item>
-            <Descriptions.Item label={<span style={labelStyle}>Outcome</span>}>
-              <span style={contentStyle}>{content.outcome}</span>
-            </Descriptions.Item>
-          </Descriptions>
-        </Card>
+              <Tooltip title="Delete this section">
+                <Button
+                  danger
+                  icon={<DeleteOutlined />}
+                  onClick={() => {
+                    handleDelete(content);
+                    setSectionName("treatmentHistory");
+                  }}
+                />
+              </Tooltip>
+            </div>
+            <Descriptions size="small" column={2}>
+              <Descriptions.Item
+                label={<span style={labelStyle}>Condition</span>}
+              >
+                <span style={contentStyle}>{info.condition}</span>
+              </Descriptions.Item>
+              <Descriptions.Item
+                label={<span style={labelStyle}>Date of Diagnosis</span>}
+              >
+                <span style={contentStyle}>
+                  {/* {format(new Date(info?.diagnosisDate), "yyyy-MM-dd")} */}
+                </span>
+              </Descriptions.Item>
+              <Descriptions.Item
+                label={<span style={labelStyle}>Description</span>}
+              >
+                <span style={contentStyle}>{info.treatmentDescription}</span>
+              </Descriptions.Item>
+              <Descriptions.Item
+                label={<span style={labelStyle}>Outcome</span>}
+              >
+                <span style={contentStyle}>{info.outcome}</span>
+              </Descriptions.Item>
+            </Descriptions>
+          </Card>
+        ))
       )}
     </>
   );
@@ -326,49 +335,51 @@ export const MedicalProceduresSection = ({
       {content?.length === 0 ? (
         <Empty />
       ) : (
-        <Card
-          type="inner"
-          style={{ marginBottom: "1rem", borderRadius: "10px" }}
-        >
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "right",
-              margin: "5px 0px",
-              gap: "10px",
-            }}
+        content.map((info) => (
+          <Card
+            type="inner"
+            style={{ marginBottom: "1rem", borderRadius: "10px" }}
           >
-            <Tooltip title="Delete this section">
-              <Button
-                danger
-                icon={<DeleteOutlined />}
-                onClick={() => {
-                  handleDelete(content);
-                  setSectionName("medicalProcedures");
-                }}
-              />
-            </Tooltip>
-          </div>
-          <Descriptions size="small" column={2}>
-            <Descriptions.Item
-              label={<span style={labelStyle}>Procedure</span>}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "right",
+                margin: "5px 0px",
+                gap: "10px",
+              }}
             >
-              <span style={contentStyle}>{content.procedureName}</span>
-            </Descriptions.Item>
-            <Descriptions.Item label={<span style={labelStyle}>Date</span>}>
-              <span style={contentStyle}>
-                {content.dateOfProcedure}
-                {/* {format(new Date(content.dateOfProcedure), "yyyy-MM-dd")} */}
-              </span>
-            </Descriptions.Item>
-          </Descriptions>
+              <Tooltip title="Delete this section">
+                <Button
+                  danger
+                  icon={<DeleteOutlined />}
+                  onClick={() => {
+                    handleDelete(content);
+                    setSectionName("medicalProcedures");
+                  }}
+                />
+              </Tooltip>
+            </div>
+            <Descriptions size="small" column={2}>
+              <Descriptions.Item
+                label={<span style={labelStyle}>Procedure</span>}
+              >
+                <span style={contentStyle}>{info.procedureName}</span>
+              </Descriptions.Item>
+              <Descriptions.Item label={<span style={labelStyle}>Date</span>}>
+                <span style={contentStyle}>
+                  {info.dateOfProcedure}
+                  {/* {format(new Date(content.dateOfProcedure), "yyyy-MM-dd")} */}
+                </span>
+              </Descriptions.Item>
+            </Descriptions>
 
-          <Collapse style={{ marginTop: "1rem" }}>
-            <Panel header="View Notes" key="1">
-              <p style={contentStyle}>{content.notes}</p>
-            </Panel>
-          </Collapse>
-        </Card>
+            <Collapse style={{ marginTop: "1rem" }}>
+              <Panel header="View Notes" key="1">
+                <p style={contentStyle}>{info.notes}</p>
+              </Panel>
+            </Collapse>
+          </Card>
+        ))
       )}
     </>
   );
@@ -404,46 +415,50 @@ export const FamilyMedicalHistorySection = ({
       {content?.length === 0 ? (
         <Empty />
       ) : (
-        <Card
-          type="inner"
-          style={{ marginBottom: "1rem", borderRadius: "10px" }}
-        >
-          {" "}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "right",
-              margin: "5px 0px",
-              gap: "10px",
-            }}
+        content.map((info) => (
+          <Card
+            type="inner"
+            style={{ marginBottom: "1rem", borderRadius: "10px" }}
           >
-            <Tooltip title="Delete this section">
-              <Button
-                danger
-                icon={<DeleteOutlined />}
-                onClick={() => {
-                  handleDelete(content);
-                  setSectionName("familyHistory");
-                }}
-              />
-            </Tooltip>
-          </div>
-          <Descriptions size="small" column={2}>
-            <Descriptions.Item label={<span style={labelStyle}>Relation</span>}>
-              <span style={contentStyle}>{content.relation}</span>
-            </Descriptions.Item>
-            <Descriptions.Item
-              label={<span style={labelStyle}>Condition</span>}
+            {" "}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "right",
+                margin: "5px 0px",
+                gap: "10px",
+              }}
             >
-              <span style={contentStyle}>{content.condition}</span>
-            </Descriptions.Item>
-          </Descriptions>
-          <Collapse style={{ marginTop: "1rem" }}>
-            <Panel header="View Notes" key="1">
-              <p style={contentStyle}>{content.notes}</p>
-            </Panel>
-          </Collapse>
-        </Card>
+              <Tooltip title="Delete this section">
+                <Button
+                  danger
+                  icon={<DeleteOutlined />}
+                  onClick={() => {
+                    handleDelete(info);
+                    setSectionName("familyHistory");
+                  }}
+                />
+              </Tooltip>
+            </div>
+            <Descriptions size="small" column={2}>
+              <Descriptions.Item
+                label={<span style={labelStyle}>Relation</span>}
+              >
+                <span style={contentStyle}>{info.relation}</span>
+              </Descriptions.Item>
+              <Descriptions.Item
+                label={<span style={labelStyle}>Condition</span>}
+              >
+                <span style={contentStyle}>{info.condition}</span>
+              </Descriptions.Item>
+            </Descriptions>
+            <Collapse style={{ marginTop: "1rem" }}>
+              <Panel header="View Notes" key="1">
+                <p style={contentStyle}>{info.notes}</p>
+              </Panel>
+            </Collapse>
+          </Card>
+        ))
       )}
     </>
   );
@@ -479,44 +494,46 @@ export const PreviousProvidersSection = ({
       {content?.length === 0 ? (
         <Empty />
       ) : (
-        <Card
-          type="inner"
-          style={{ marginBottom: "1rem", borderRadius: "10px" }}
-        >
-          {" "}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "right",
-              margin: "5px 0px",
-              gap: "10px",
-            }}
+        content.map((info) => (
+          <Card
+            type="inner"
+            style={{ marginBottom: "1rem", borderRadius: "10px" }}
           >
-            <Tooltip title="Delete this section">
-              <Button
-                danger
-                icon={<DeleteOutlined />}
-                onClick={() => {
-                  handleDelete(content);
-                  setSectionName("previousProviders");
-                }}
-              />
-            </Tooltip>
-          </div>
-          <Descriptions size="small" column={1}>
-            <Descriptions.Item label={<span style={labelStyle}>Name</span>}>
-              <span style={contentStyle}>{content.name}</span>
-            </Descriptions.Item>
-            <Descriptions.Item
-              label={<span style={labelStyle}>Contact Information</span>}
+            {" "}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "right",
+                margin: "5px 0px",
+                gap: "10px",
+              }}
             >
-              <span style={contentStyle}>{content.contactInfo}</span>
-            </Descriptions.Item>{" "}
-            <Descriptions.Item label={<span style={labelStyle}>Period</span>}>
-              <span style={contentStyle}>{content.period}</span>
-            </Descriptions.Item>
-          </Descriptions>
-        </Card>
+              <Tooltip title="Delete this section">
+                <Button
+                  danger
+                  icon={<DeleteOutlined />}
+                  onClick={() => {
+                    handleDelete(content);
+                    setSectionName("previousProviders");
+                  }}
+                />
+              </Tooltip>
+            </div>
+            <Descriptions size="small" column={1}>
+              <Descriptions.Item label={<span style={labelStyle}>Name</span>}>
+                <span style={contentStyle}>{info.name}</span>
+              </Descriptions.Item>
+              <Descriptions.Item
+                label={<span style={labelStyle}>Contact Information</span>}
+              >
+                <span style={contentStyle}>{info.contactInfo}</span>
+              </Descriptions.Item>{" "}
+              <Descriptions.Item label={<span style={labelStyle}>Period</span>}>
+                <span style={contentStyle}>{info.period}</span>
+              </Descriptions.Item>
+            </Descriptions>
+          </Card>
+        ))
       )}
     </>
   );
@@ -552,50 +569,52 @@ export const LifestyleSection = ({
       {content?.length === 0 ? (
         <Empty />
       ) : (
-        <>
-          {" "}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "right",
-              margin: "5px 0px",
-              gap: "10px",
-            }}
-          >
-            <Tooltip title="Delete this section">
-              <Button
-                danger
-                icon={<DeleteOutlined />}
-                onClick={() => {
-                  handleDelete(content);
-                  setSectionName("lifestyle");
-                }}
-              />
-            </Tooltip>
-          </div>
-          <Descriptions column={2} bordered size="small">
-            <Descriptions.Item label={<span style={labelStyle}>Smoking</span>}>
-              <span style={contentStyle}>{content.smoking ? "Yes" : "No"}</span>
-            </Descriptions.Item>
-            <Descriptions.Item
-              label={<span style={labelStyle}>Alcohol Use</span>}
+        content.map((info) => (
+          <>
+            {" "}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "right",
+                margin: "5px 0px",
+                gap: "10px",
+              }}
             >
-              <span style={contentStyle}>
-                {content.alcoholUse ? "Yes" : "No"}
-              </span>
-            </Descriptions.Item>
-            <Descriptions.Item
-              label={<span style={labelStyle}>Exercise Frequency</span>}
-            >
-              <span style={contentStyle}>{content.exerciseFrequency}</span>
-            </Descriptions.Item>
-            <Descriptions.Item
-              label={<span style={labelStyle}>Diet Description</span>}
-            >
-              <span style={contentStyle}>{content.dietDescription}</span>
-            </Descriptions.Item>
-          </Descriptions>
-        </>
+              <Tooltip title="Delete this section">
+                <Button
+                  danger
+                  icon={<DeleteOutlined />}
+                  onClick={() => {
+                    handleDelete(content);
+                    setSectionName("lifestyle");
+                  }}
+                />
+              </Tooltip>
+            </div>
+            <Descriptions column={2} bordered size="small">
+              <Descriptions.Item
+                label={<span style={labelStyle}>Smoking</span>}
+              >
+                <span style={contentStyle}>{info.smoking}</span>
+              </Descriptions.Item>
+              <Descriptions.Item
+                label={<span style={labelStyle}>Alcohol Use</span>}
+              >
+                <span style={contentStyle}>{info.alcoholUse}</span>
+              </Descriptions.Item>
+              <Descriptions.Item
+                label={<span style={labelStyle}>Exercise Frequency</span>}
+              >
+                <span style={contentStyle}>{info.exerciseFrequency}</span>
+              </Descriptions.Item>
+              <Descriptions.Item
+                label={<span style={labelStyle}>Diet Description</span>}
+              >
+                <span style={contentStyle}>{info.dietDescription}</span>
+              </Descriptions.Item>
+            </Descriptions>
+          </>
+        ))
       )}
     </>
   );

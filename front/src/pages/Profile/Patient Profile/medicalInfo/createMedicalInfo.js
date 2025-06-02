@@ -83,6 +83,7 @@ function CreateMedicalInfo() {
     } finally {
       setLoading(false);
       form.resetFields();
+      navigate("/profile");
     }
   };
 

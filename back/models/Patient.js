@@ -41,7 +41,7 @@ const patientSchema = new mongoose.Schema(
       },
     ],
 
-    familyMedicalHistory: [
+    familyHistory: [
       {
         relation: { type: String }, // e.g., "Mother", "Father"
         condition: { type: String },
@@ -49,7 +49,7 @@ const patientSchema = new mongoose.Schema(
       },
     ],
 
-    previousHealthcareProviders: [
+    previousProviders: [
       {
         name: { type: String },
         contactInfo: { type: String },
@@ -59,8 +59,8 @@ const patientSchema = new mongoose.Schema(
 
     lifestyle: [
       {
-        smoking: { type: String, default: false },
-        alcoholUse: { type: String, default: false },
+        smoking: { type: String,  },
+        alcoholUse: { type: String, },
         exerciseFrequency: { type: String }, // e.g., "Daily", "Weekly"
         dietDescription: { type: String },
       },
@@ -68,7 +68,11 @@ const patientSchema = new mongoose.Schema(
 
     //assignedPhysician: { type: mongoose.Schema.Types.ObjectId, ref: "users" }, // Better to reference a physician object
 
-    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "users",
+      unique: true,
+    },
   },
   { collection: "patients", timestamps: true }
 );
