@@ -61,7 +61,7 @@ function UpdateDiary({
       form.setFieldsValue({ [sectionName]: modalContent });
       // console.log("Prefilling", sectionName, modalContent);
     }
-  }, [openDiaryModal, modalContent, sectionName]);
+  }, [openDiaryModal, modalContent, sectionName,form]);
 
   const renderSectionForm = () => (
     <>

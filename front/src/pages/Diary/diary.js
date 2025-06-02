@@ -5,24 +5,30 @@ import { format } from "date-fns";
 // import { diaryValues,data } from "../../assets/data/data";
 import useFetchDiaryData from "../../hooks/fetchDiaryData";
 import { UserContext } from "../../App";
+import dayjs from "dayjs";
 
 const markerStyle = {
   display: "inline-block",
-  width: 18,
-  height: 18,
+  width: 34,
+  height: 34,
   borderRadius: "50%",
   margin: "auto",
 };
 function Diary() {
   const navigate = useNavigate();
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(dayjs());
   const { user } = useContext(UserContext);
   const userId = user?._id;
   const { diaryData, diaryLoading } = useFetchDiaryData(userId);
 
   const onSelect = (date) => {
     setValue(date);
-    navigate(`/diary/date/${date.format("YYYY-MM-DD")}`);
+    // navigate(`/diary/date/${date.format("YYYY-MM-DD")}`);
+  };
+
+  const onPanelChange = (date, mode) => {
+    // console.log("Panel changed to:", date.format("YYYY-MM-DD"), "Mode:", mode);
+    setValue(date);
   };
 
   const dateCellRender = (value) => {
@@ -30,7 +36,7 @@ function Diary() {
     const hasEntry = diaryData?.some((entry) => entry.entryDate === dateStr);
     return (
       <div style={{ display: "flex", justifyContent: "center", marginTop: 18 }}>
-        <Tooltip title={hasEntry ? "Click to view entry" : "Diary not filled"}>
+        <Tooltip title={hasEntry ? "Click to view entry" : "Diary not filled, click to fill"}>
           <span
             style={{
               ...markerStyle,
@@ -38,6 +44,9 @@ function Diary() {
                 ? "#1677ff"
                 : "linear-gradient(to left, #e9e8e6 0%, #ddd1d1 100%)",
               border: hasEntry ? "" : "2px dashed grey",
+            }}
+            onClick={() => {
+              navigate(`/diary/date/${value.format("YYYY-MM-DD")}`);
             }}
           />
         </Tooltip>
@@ -64,7 +73,12 @@ function Diary() {
       </Typography.Title>
       <Divider style={{ borderColor: "#00152a" }} dashed size="large" />
 
-      <Calendar value={value} onSelect={onSelect} cellRender={dateCellRender} />
+      <Calendar
+        value={value}
+        onSelect={onSelect}
+        cellRender={dateCellRender}
+        onPanelChange={onPanelChange}
+      />
     </>
   );
 }
