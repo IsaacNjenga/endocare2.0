@@ -1,115 +1,27 @@
 import React, { useState } from "react";
-import {
-  Card,
-  Descriptions,
-  Typography,
-  Divider,
-  Tag,
-  Space,
-  Collapse,
-  Tooltip,
-  Button,
-  Empty,
-} from "antd";
+import { Typography, Divider, Tag, Space, Button } from "antd";
 import UpdateMedicalInfoModal from "./updateMedicalInfoModal";
-import {
-  DeleteOutlined,
-  EditOutlined,
-  PlusCircleOutlined,
-} from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 import Swal from "sweetalert2";
 import axios from "axios";
-import { PatientInformationSection } from "../../../../components/medicalPageComponents";
-
-const { Title } = Typography;
-const { Panel } = Collapse;
+import {
+  PatientInformationSection,
+  CurrentMedicationSection,
+  TreatmentHistorySection,
+  MedicalProceduresSection,
+  FamilyMedicalHistorySection,
+  PreviousProvidersSection,
+  LifestyleSection,
+} from "../../../../components/medicalPageComponents";
 
 function MedicalInfo({
-  labelStyle,
-  contentStyle,
-  sectionCardStyle,
-  sectionHeaderStyle,
   patientData,
   patientRefresh,
   patientDataLoading,
   user,
 }) {
   const navigate = useNavigate();
-  // const values = {
-  //   patientInformation: [
-  //     {
-  //       diagnosis: "sick",
-  //       chronicConditions: ["heart disease", "liver failure"],
-  //       allergies: ["milk", "eggs"],
-  //       bloodType: "A+",
-  //     },
-  //   ],
-  //   currentMedications: [
-  //
-  //     {
-  //       name: "pills",
-  //       dosage: "alot",
-  //       frequency: "1x2",
-  //       isOngoing: true,
-  //       startDate: "2001-02-12",
-  //     },
-  //
-  //   ],
-  //   treatmentHistory: [
-  //     {
-  //       condition: "big head",
-  //       diagnosisDate: "2001-01-01",
-  //       treatmentDescription: "sick",
-  //       outcome: "not bad",
-  //     },
-  //     {
-  //       condition: "big head",
-  //       diagnosisDate: "2001-01-01",
-  //       treatmentDescription: "sick",
-  //       outcome: "not bad",
-  //     },
-  //     {
-  //       condition: "big head",
-  //       diagnosisDate: "2001-01-01",
-  //       treatmentDescription: "sick",
-  //       outcome: "not bad",
-  //     },
-  //   ],
-  //   medicalProcedures: [
-  //     { procedureName: "surgery", dateOfProcedure: "2001-03-03", notes: "bla bla bla" },
-  //     { procedureName: "surgery", dateOfProcedure: "2001-03-03", notes: "bla bla bla" },
-  //     { procedureName: "surgery", dateOfProcedure: "2001-03-03", notes: "bla bla bla" },
-  //   ],
-  //   familyMedicalHistory: [
-  //     { relation: "Papa", condition: "sick", notes: "very sicc" },
-  //     { relation: "Papa", condition: "sick", notes: "very sicc" },
-  //     { relation: "Papa", condition: "sick", notes: "very sicc" },
-  //   ],
-  //   previousHealthcareProviders: [
-  //     {
-  //       name: "John Doe",
-  //       contactInfo: "email@email.com",
-  //       period: "2001-2003",
-  //     },
-  //     {
-  //       name: "John Doe",
-  //       contactInfo: "email@email.com",
-  //       period: "2001-2003",
-  //     },
-  //   ],
-  //   lifestyle: [
-  //     {
-  //       smoking: false,
-  //       alcoholUse: true,
-  //       exerciseFrequency: "daily",
-  //       dietDescription: "poor",
-  //     },
-  //   ],
-  //   assignedPhysician: "Dr.John",
-  // };
-
   const [openMedicalInfoModal, setOpenMedicalInfoModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [modalContent, setModalContent] = useState(null);
@@ -134,576 +46,6 @@ function MedicalInfo({
       ))}
     </Space>
   );
-
-  const CurrentMedicationSection = ({
-    medications,
-    labelStyle,
-    contentStyle,
-    sectionHeaderStyle,
-  }) => {
-    return (
-      <>
-        <Title level={4} style={sectionHeaderStyle}>
-          Current Medication
-        </Title>{" "}
-        {medications?.length !== 0 ? (
-          medications?.map((medication, index) => (
-            <Card
-              key={index}
-              type="inner"
-              style={{ marginBottom: "1rem", borderRadius: "10px" }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "right",
-                  margin: "5px 0px",
-                  gap: "10px",
-                }}
-              >
-                <Tooltip title="Edit this section">
-                  <Button
-                    type="primary"
-                    icon={<EditOutlined />}
-                    onClick={() => {
-                      handleUpdate(medication);
-                      setSectionName("CurrentMedications");
-                    }}
-                  />
-                </Tooltip>{" "}
-                <Tooltip title="Delete this section">
-                  <Button
-                    danger
-                    icon={<DeleteOutlined />}
-                    onClick={() => {
-                      handleDelete(medication);
-                      setSectionName("currentMedications");
-                    }}
-                  />
-                </Tooltip>
-              </div>
-              <Descriptions size="small" column={2}>
-                <Descriptions.Item
-                  label={<span style={labelStyle}>Medication Name</span>}
-                >
-                  <span style={contentStyle}>{medication.name}</span>
-                </Descriptions.Item>
-                <Descriptions.Item
-                  label={<span style={labelStyle}>Assigned Dosage</span>}
-                >
-                  <span style={contentStyle}>{medication.dosage}</span>
-                </Descriptions.Item>
-                <Descriptions.Item
-                  label={<span style={labelStyle}>Frequency</span>}
-                >
-                  <span style={contentStyle}>{medication.frequency}</span>
-                </Descriptions.Item>
-                <Descriptions.Item label={<span style={labelStyle}>Date</span>}>
-                  <span style={contentStyle}>
-                    {format(new Date(medication.startDate), "yyyy-MM-dd")}
-                  </span>
-                </Descriptions.Item>
-                <Descriptions.Item
-                  label={<span style={labelStyle}>Ongoing</span>}
-                >
-                  <span style={contentStyle}>
-                    {medication.isOngoing === "true" ? "Yes" : "No"}
-                  </span>
-                </Descriptions.Item>
-              </Descriptions>
-            </Card>
-          ))
-        ) : (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "right",
-              margin: "5px 0px",
-            }}
-          >
-            <Tooltip title="Edit this section">
-              <Button
-                type="primary"
-                icon={<PlusCircleOutlined />}
-                onClick={() => {
-                  handleUpdate(medications);
-                  setSectionName("CurrentMedications");
-                }}
-              />
-            </Tooltip>
-          </div>
-        )}
-      </>
-    );
-  };
-
-  const TreatmentHistorySection = ({
-    treatmentHistory,
-    labelStyle,
-    contentStyle,
-    sectionHeaderStyle,
-  }) => {
-    return (
-      <>
-        <Title level={4} style={sectionHeaderStyle}>
-          Treatment History
-        </Title>{" "}
-        {treatmentHistory?.length !== 0 ? (
-          treatmentHistory?.map((history, index) => (
-            <Card
-              key={index}
-              type="inner"
-              style={{ marginBottom: "1rem", borderRadius: "10px" }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "right",
-                  margin: "5px 0px",
-                  gap: "10px",
-                }}
-              >
-                <Tooltip title="Edit this section">
-                  <Button
-                    type="primary"
-                    icon={<EditOutlined />}
-                    onClick={() => {
-                      handleUpdate(history);
-                      setSectionName("TreatmentHistory");
-                    }}
-                  />
-                </Tooltip>{" "}
-                <Tooltip title="Delete this section">
-                  <Button
-                    danger
-                    icon={<DeleteOutlined />}
-                    onClick={() => {
-                      handleDelete(history);
-                      setSectionName("treatmentHistory");
-                    }}
-                  />
-                </Tooltip>
-              </div>
-              <Descriptions size="small" column={2}>
-                <Descriptions.Item
-                  label={<span style={labelStyle}>Condition</span>}
-                >
-                  <span style={contentStyle}>{history.condition}</span>
-                </Descriptions.Item>
-                <Descriptions.Item
-                  label={<span style={labelStyle}>Date of Diagnosis</span>}
-                >
-                  <span style={contentStyle}>
-                    {format(new Date(history.diagnosisDate), "yyyy-MM-dd")}
-                  </span>
-                </Descriptions.Item>
-                <Descriptions.Item
-                  label={<span style={labelStyle}>Description</span>}
-                >
-                  <span style={contentStyle}>
-                    {history.treatmentDescription}
-                  </span>
-                </Descriptions.Item>
-                <Descriptions.Item
-                  label={<span style={labelStyle}>Outcome</span>}
-                >
-                  <span style={contentStyle}>{history.outcome}</span>
-                </Descriptions.Item>
-              </Descriptions>
-            </Card>
-          ))
-        ) : (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "right",
-              margin: "5px 0px",
-            }}
-          >
-            <Tooltip title="Edit this section">
-              <Button
-                type="primary"
-                icon={<PlusCircleOutlined />}
-                onClick={() => {
-                  handleUpdate(treatmentHistory);
-                  setSectionName("TreatmentHistory");
-                }}
-              />
-            </Tooltip>
-          </div>
-        )}
-      </>
-    );
-  };
-
-  const MedicalProceduresSection = ({
-    procedures,
-    labelStyle,
-    contentStyle,
-    sectionHeaderStyle,
-  }) => {
-    return (
-      <>
-        <Title level={4} style={sectionHeaderStyle}>
-          Medical Procedures
-        </Title>{" "}
-        {procedures?.length !== 0 ? (
-          procedures?.map((procedure, index) => (
-            <Card
-              key={index}
-              type="inner"
-              style={{ marginBottom: "1rem", borderRadius: "10px" }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "right",
-                  margin: "5px 0px",
-                  gap: "10px",
-                }}
-              >
-                <Tooltip title="Edit this section">
-                  <Button
-                    type="primary"
-                    icon={<EditOutlined />}
-                    onClick={() => {
-                      handleUpdate(procedure);
-                      setSectionName("MedicalProcedures");
-                    }}
-                  />
-                </Tooltip>{" "}
-                <Tooltip title="Delete this section">
-                  <Button
-                    danger
-                    icon={<DeleteOutlined />}
-                    onClick={() => {
-                      handleDelete(procedure);
-                      setSectionName("medicalProcedures");
-                    }}
-                  />
-                </Tooltip>
-              </div>
-              <Descriptions size="small" column={2}>
-                <Descriptions.Item
-                  label={<span style={labelStyle}>Procedure</span>}
-                >
-                  <span style={contentStyle}>{procedure.procedureName}</span>
-                </Descriptions.Item>
-                <Descriptions.Item label={<span style={labelStyle}>Date</span>}>
-                  <span style={contentStyle}>
-                    {format(new Date(procedure.dateOfProcedure), "yyyy-MM-dd")}
-                  </span>
-                </Descriptions.Item>
-              </Descriptions>
-
-              <Collapse style={{ marginTop: "1rem" }}>
-                <Panel header="View Notes" key="1">
-                  <p style={contentStyle}>{procedure.notes}</p>
-                </Panel>
-              </Collapse>
-            </Card>
-          ))
-        ) : (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "right",
-              margin: "5px 0px",
-            }}
-          >
-            <Tooltip title="Edit this section">
-              <Button
-                type="primary"
-                icon={<PlusCircleOutlined />}
-                onClick={() => {
-                  handleUpdate(procedures);
-                  setSectionName("MedicalProcedures");
-                }}
-              />
-            </Tooltip>
-          </div>
-        )}
-      </>
-    );
-  };
-
-  const FamilyMedicalHistorySection = ({
-    medicalHistory,
-    labelStyle,
-    contentStyle,
-    sectionHeaderStyle,
-  }) => {
-    return (
-      <>
-        <Title level={4} style={sectionHeaderStyle}>
-          Family Medical History
-        </Title>
-        {medicalHistory?.length !== 0 ? (
-          medicalHistory?.map((history, index) => (
-            <Card
-              key={index}
-              type="inner"
-              style={{ marginBottom: "1rem", borderRadius: "10px" }}
-            >
-              {" "}
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "right",
-                  margin: "5px 0px",
-                  gap: "10px",
-                }}
-              >
-                <Tooltip title="Edit this section">
-                  <Button
-                    type="primary"
-                    icon={<EditOutlined />}
-                    onClick={() => {
-                      handleUpdate(history);
-                      setSectionName("FamilyMedicalHistory");
-                    }}
-                  />
-                </Tooltip>{" "}
-                <Tooltip title="Delete this section">
-                  <Button
-                    danger
-                    icon={<DeleteOutlined />}
-                    onClick={() => {
-                      handleDelete(history);
-                      setSectionName("familyMedicalHistory");
-                    }}
-                  />
-                </Tooltip>
-              </div>
-              <Descriptions size="small" column={2}>
-                <Descriptions.Item
-                  label={<span style={labelStyle}>Relation</span>}
-                >
-                  <span style={contentStyle}>{history.relation}</span>
-                </Descriptions.Item>
-                <Descriptions.Item
-                  label={<span style={labelStyle}>Condition</span>}
-                >
-                  <span style={contentStyle}>{history.condition}</span>
-                </Descriptions.Item>
-              </Descriptions>
-              <Collapse style={{ marginTop: "1rem" }}>
-                <Panel header="View Notes" key="1">
-                  <p style={contentStyle}>{history.notes}</p>
-                </Panel>
-              </Collapse>
-            </Card>
-          ))
-        ) : (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "right",
-              margin: "5px 0px",
-            }}
-          >
-            <Tooltip title="Edit this section">
-              <Button
-                type="primary"
-                icon={<PlusCircleOutlined />}
-                onClick={() => {
-                  handleUpdate(medicalHistory);
-                  setSectionName("MedicalHistory");
-                }}
-              />
-            </Tooltip>
-          </div>
-        )}
-      </>
-    );
-  };
-
-  const PreviousProvidersSection = ({
-    previousProviders,
-    labelStyle,
-    contentStyle,
-    sectionHeaderStyle,
-  }) => {
-    return (
-      <>
-        <Title level={4} style={sectionHeaderStyle}>
-          Previous Healthcare Providers
-        </Title>
-        {previousProviders?.length !== 0 ? (
-          previousProviders?.map((provider, index) => (
-            <Card
-              key={index}
-              type="inner"
-              style={{ marginBottom: "1rem", borderRadius: "10px" }}
-            >
-              {" "}
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "right",
-                  margin: "5px 0px",
-                  gap: "10px",
-                }}
-              >
-                <Tooltip title="Edit this section">
-                  <Button
-                    type="primary"
-                    icon={<EditOutlined />}
-                    onClick={() => {
-                      handleUpdate(provider);
-                      setSectionName("PreviousHealthcareProviders");
-                    }}
-                  />
-                </Tooltip>{" "}
-                <Tooltip title="Delete this section">
-                  <Button
-                    danger
-                    icon={<DeleteOutlined />}
-                    onClick={() => {
-                      handleDelete(provider);
-                      setSectionName("previousHealthcareProviders");
-                    }}
-                  />
-                </Tooltip>
-              </div>
-              <Descriptions size="small" column={1}>
-                <Descriptions.Item label={<span style={labelStyle}>Name</span>}>
-                  <span style={contentStyle}>{provider.name}</span>
-                </Descriptions.Item>
-                <Descriptions.Item
-                  label={<span style={labelStyle}>Contact Information</span>}
-                >
-                  <span style={contentStyle}>{provider.contactInfo}</span>
-                </Descriptions.Item>{" "}
-                <Descriptions.Item
-                  label={<span style={labelStyle}>Period</span>}
-                >
-                  <span style={contentStyle}>{provider.period}</span>
-                </Descriptions.Item>
-              </Descriptions>
-            </Card>
-          ))
-        ) : (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "right",
-              margin: "5px 0px",
-            }}
-          >
-            <Tooltip title="Edit this section">
-              <Button
-                type="primary"
-                icon={<PlusCircleOutlined />}
-                onClick={() => {
-                  handleUpdate(previousProviders);
-                  setSectionName("PreviousHealthcareProviders");
-                }}
-              />
-            </Tooltip>
-          </div>
-        )}
-      </>
-    );
-  };
-
-  const LifestyleSection = ({
-    lifestyles,
-    labelStyle,
-    contentStyle,
-    sectionHeaderStyle,
-  }) => {
-    return (
-      <>
-        <Title level={4} style={sectionHeaderStyle}>
-          Lifestyle
-        </Title>
-        {lifestyles?.length !== 0 ? (
-          lifestyles?.map((lifestyle) => (
-            <>
-              {" "}
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "right",
-                  margin: "5px 0px",
-                  gap: "10px",
-                }}
-              >
-                <Tooltip title="Edit this section">
-                  <Button
-                    type="primary"
-                    icon={<EditOutlined />}
-                    onClick={() => {
-                      handleUpdate(lifestyle);
-                      setSectionName("Lifestyle");
-                    }}
-                  />
-                </Tooltip>{" "}
-                <Tooltip title="Delete this section">
-                  <Button
-                    danger
-                    icon={<DeleteOutlined />}
-                    onClick={() => {
-                      handleDelete(lifestyle);
-                      setSectionName("lifestyle");
-                    }}
-                  />
-                </Tooltip>
-              </div>
-              <Descriptions column={2} bordered size="small">
-                <Descriptions.Item
-                  label={<span style={labelStyle}>Smoking</span>}
-                >
-                  <span style={contentStyle}>
-                    {lifestyle.smoking ? "Yes" : "No"}
-                  </span>
-                </Descriptions.Item>
-                <Descriptions.Item
-                  label={<span style={labelStyle}>Alcohol Use</span>}
-                >
-                  <span style={contentStyle}>
-                    {lifestyle.alcoholUse ? "Yes" : "No"}
-                  </span>
-                </Descriptions.Item>
-                <Descriptions.Item
-                  label={<span style={labelStyle}>Exercise Frequency</span>}
-                >
-                  <span style={contentStyle}>
-                    {lifestyle.exerciseFrequency}
-                  </span>
-                </Descriptions.Item>
-                <Descriptions.Item
-                  label={<span style={labelStyle}>Diet Description</span>}
-                >
-                  <span style={contentStyle}>{lifestyle.dietDescription}</span>
-                </Descriptions.Item>
-              </Descriptions>
-            </>
-          ))
-        ) : (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "right",
-              margin: "5px 0px",
-            }}
-          >
-            <Tooltip title="Edit this section">
-              <Button
-                type="primary"
-                icon={<PlusCircleOutlined />}
-                onClick={() => {
-                  handleUpdate(lifestyles);
-                  setSectionName("Lifestyle");
-                }}
-              />
-            </Tooltip>
-          </div>
-        )}
-      </>
-    );
-  };
 
   const handleUpdate = (info) => {
     setOpenMedicalInfoModal(true);
@@ -754,7 +96,6 @@ function MedicalInfo({
   if (patientDataLoading) {
     return <div>Loading...</div>;
   }
-
   return (
     <>
       {values.length !== 0 ? (
@@ -768,48 +109,57 @@ function MedicalInfo({
               content={values[0]?.patientInformation}
               renderListAsTags={renderListAsTags}
               handleDelete={handleDelete}
+              setSectionName={setSectionName}
+              setLoading={setLoading}
+              handleUpdate={handleUpdate}
             />
             <Divider />
             <CurrentMedicationSection
-              medications={values?.currentMedications}
-              labelStyle={labelStyle}
-              contentStyle={contentStyle}
-              sectionHeaderStyle={sectionHeaderStyle}
+              content={values[0]?.currentMedications}
+              handleDelete={handleDelete}
+              setSectionName={setSectionName}
+              setLoading={setLoading}
+              handleUpdate={handleUpdate}
             />
             <Divider />
             <TreatmentHistorySection
-              treatmentHistory={values?.treatmentHistory}
-              labelStyle={labelStyle}
-              contentStyle={contentStyle}
-              sectionHeaderStyle={sectionHeaderStyle}
+              content={values[0]?.treatmentHistory}
+              handleDelete={handleDelete}
+              setSectionName={setSectionName}
+              setLoading={setLoading}
+              handleUpdate={handleUpdate}
             />
             <Divider />
             <MedicalProceduresSection
-              procedures={values?.medicalProcedures}
-              labelStyle={labelStyle}
-              contentStyle={contentStyle}
-              sectionHeaderStyle={sectionHeaderStyle}
+              content={values[0]?.medicalProcedures}
+              handleDelete={handleDelete}
+              setSectionName={setSectionName}
+              setLoading={setLoading}
+              handleUpdate={handleUpdate}
             />
             <Divider />
             <FamilyMedicalHistorySection
-              medicalHistory={values?.familyMedicalHistory}
-              labelStyle={labelStyle}
-              contentStyle={contentStyle}
-              sectionHeaderStyle={sectionHeaderStyle}
+              content={values[0]?.familyMedicalHistory}
+              handleDelete={handleDelete}
+              setSectionName={setSectionName}
+              setLoading={setLoading}
+              handleUpdate={handleUpdate}
             />
             <Divider />
             <PreviousProvidersSection
-              previousProviders={values?.previousHealthcareProviders}
-              labelStyle={labelStyle}
-              contentStyle={contentStyle}
-              sectionHeaderStyle={sectionHeaderStyle}
+              content={values[0]?.previousHealthcareProviders}
+              handleDelete={handleDelete}
+              setSectionName={setSectionName}
+              setLoading={setLoading}
+              handleUpdate={handleUpdate}
             />
             <Divider />
             <LifestyleSection
-              lifestyles={values?.lifestyle}
-              labelStyle={labelStyle}
-              contentStyle={contentStyle}
-              sectionHeaderStyle={sectionHeaderStyle}
+              content={values[0]?.lifestyle}
+              handleDelete={handleDelete}
+              setSectionName={setSectionName}
+              setLoading={setLoading}
+              handleUpdate={handleUpdate}
             />
           </div>
 

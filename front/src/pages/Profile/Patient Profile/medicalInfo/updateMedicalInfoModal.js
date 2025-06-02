@@ -29,7 +29,7 @@ function UpdateMedicalInfoModal({
     try {
       const values = await form.validateFields();
       const allValues = { ...values, createdBy: user._id };
-      // console.log(allValues);
+      //console.log(allValues);
       const res = await axios.put(
         `update-patient-details?id=${user._id}`,
         allValues
@@ -46,47 +46,72 @@ function UpdateMedicalInfoModal({
       Swal.fire({ icon: "error", title: "Error", text: errorMessage });
     } finally {
       setLoading(false);
-      form.resetFields();
     }
   };
-  const toCamelCase = (str) => str.charAt(0).toLowerCase() + str.slice(1);
 
   useEffect(() => {
-    if (openMedicalInfoModal && modalContent) {
-      const fieldName = toCamelCase(sectionName);
-      form.setFieldsValue({
-        [fieldName]: [modalContent],
-      });
+    if (openMedicalInfoModal && modalContent && sectionName) {
+      form.setFieldsValue({ [sectionName]: modalContent });
     }
   }, [openMedicalInfoModal, modalContent, sectionName, form]);
 
-  const renderSectionForm = () => {
-    switch (sectionName) {
-      case "PatientInformation":
-        return <PatientInformation />;
-      case "CurrentMedications":
-        return <CurrentMedications />;
-      case "TreatmentHistory":
-        return <TreatmentHistory />;
-      case "Lifestyle":
-        return <Lifestyle />;
-      case "PreviousHealthcareProviders":
-        return <PreviousHealthcareProviders />;
-      case "FamilyMedicalHistory":
-        return <FamilyMedicalHistory />;
-      case "MedicalProcedures":
-        return <MedicalProcedures />;
-      default:
-        return <p>Select a section to update.</p>;
-    }
-  };
+  const renderSectionForm = () => (
+    <>
+      <div
+        style={{
+          display: sectionName === "patientInformation" ? "block" : "none",
+        }}
+      >
+        <PatientInformation />
+      </div>
+      <div
+        style={{
+          display: sectionName === "currentMedications" ? "block" : "none",
+        }}
+      >
+        <CurrentMedications />
+      </div>
+      <div
+        style={{
+          display: sectionName === "treatmentHistory" ? "block" : "none",
+        }}
+      >
+        <TreatmentHistory />
+      </div>
+      <div style={{ display: sectionName === "lifestyle" ? "block" : "none" }}>
+        <Lifestyle />
+      </div>
+      <div
+        style={{
+          display: sectionName === "previousProviders" ? "block" : "none",
+        }}
+      >
+        <PreviousHealthcareProviders />
+      </div>
+      <div
+        style={{ display: sectionName === "familyHistory" ? "block" : "none" }}
+      >
+        <FamilyMedicalHistory />
+      </div>
+      <div
+        style={{
+          display: sectionName === "medicalProcedures" ? "block" : "none",
+        }}
+      >
+        <MedicalProcedures />
+      </div>
+    </>
+  );
 
   return (
     <Modal
       footer={null}
       open={openMedicalInfoModal}
-      onCancel={() => setOpenMedicalInfoModal(false)}
-      width={800}
+      onCancel={() => {
+        setOpenMedicalInfoModal(false);
+        form.resetFields();
+      }}
+      width={950}
       confirmLoading={loading}
       style={{ maxWidth: "95vw" }}
     >
@@ -94,21 +119,19 @@ function UpdateMedicalInfoModal({
         form={form}
         layout="vertical"
         onFinish={handleSubmit}
-        // onValuesChange={(changed, all) => console.log("Form Values:", all)}
-        initialValues={{
-          [toCamelCase(sectionName)]: modalContent ? [modalContent] : [{}],
-        }}
-        style={{ maxWidth: 650, margin: "2rem auto" }}
+        style={{ maxWidth: 750, margin: "2rem auto" }}
       >
         {renderSectionForm()}
-        <Button
-          type="primary"
-          htmlType="submit"
-          loading={updateLoading}
-          style={{ marginTop: 20 }}
-        >
-          {updateLoading ? "Updating..." : "Update"}
-        </Button>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <Button
+            type="primary"
+            htmlType="submit"
+            loading={updateLoading}
+            style={{ marginTop: 20 }}
+          >
+            {updateLoading ? "Updating..." : "Update"}
+          </Button>
+        </div>
       </Form>
     </Modal>
   );

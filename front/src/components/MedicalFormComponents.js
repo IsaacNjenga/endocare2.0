@@ -101,58 +101,61 @@ export const CurrentMedications = () => {
   return (
     <Card title="Current Medications" style={{ marginTop: 20 }}>
       <Form.List name="currentMedications">
-        {(fields, { add, remove }) => (
-          <>
-            {fields.map(({ key, name }) => (
-              <Card key={key} size="small" style={{ marginBottom: 10 }}>
-                <div style={{ display: "flex", justifyContent: "right" }}>
-                  <Button
-                    type="text"
-                    danger
-                    icon={<CloseOutlined />}
-                    onClick={() => remove(name)}
-                  />
-                </div>
-                <Row gutter={16}>
-                  <Col span={12}>
-                    <Form.Item name={[name, "name"]} label="Medication Name">
-                      <Input />
-                    </Form.Item>
-                  </Col>
-                  <Col span={12}>
-                    <Form.Item name={[name, "dosage"]} label="Dosage">
-                      <Input />
-                    </Form.Item>
-                  </Col>
-                  <Col span={12}>
-                    <Form.Item name={[name, "frequency"]} label="Frequency">
-                      <Input />
-                    </Form.Item>
-                  </Col>
-                  <Col span={12}>
-                    <Form.Item name={[name, "isOngoing"]} label="Ongoing?">
-                      <Select>
-                        {onGoingValues.map((ongoing) => (
-                          <Select.Option value={ongoing.value}>
-                            {ongoing.label}
-                          </Select.Option>
-                        ))}
-                      </Select>
-                    </Form.Item>
-                  </Col>
-                  <Col span={24}>
-                    <Form.Item name={[name, "startDate"]} label="Start Date">
-                      <Input type="date" />
-                    </Form.Item>
-                  </Col>
-                </Row>
-              </Card>
-            ))}
-            <Button type="dashed" onClick={() => add()}>
-              + Add Medication
-            </Button>
-          </>
-        )}
+        {(fields, { add, remove }) => {
+          if (fields.length === 0) add();
+          return (
+            <>
+              {fields.map(({ key, name }) => (
+                <Card key={key} size="small" style={{ marginBottom: 10 }}>
+                  <div style={{ display: "flex", justifyContent: "right" }}>
+                    <Button
+                      type="text"
+                      danger
+                      icon={<CloseOutlined />}
+                      onClick={() => remove(name)}
+                    />
+                  </div>
+                  <Row gutter={16}>
+                    <Col span={12}>
+                      <Form.Item name={[name, "name"]} label="Medication Name">
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item name={[name, "dosage"]} label="Dosage">
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item name={[name, "frequency"]} label="Frequency">
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item name={[name, "isOngoing"]} label="Ongoing?">
+                        <Select>
+                          {onGoingValues.map((ongoing) => (
+                            <Select.Option value={ongoing.value}>
+                              {ongoing.label}
+                            </Select.Option>
+                          ))}
+                        </Select>
+                      </Form.Item>
+                    </Col>
+                    <Col span={24}>
+                      <Form.Item name={[name, "startDate"]} label="Start Date">
+                        <Input type="date" />
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                </Card>
+              ))}
+              <Button type="dashed" onClick={() => add()}>
+                + Add Medication
+              </Button>
+            </>
+          );
+        }}
       </Form.List>
     </Card>
   );
@@ -166,57 +169,60 @@ export const TreatmentHistory = () => {
       style={{ marginTop: 20 }}
     >
       <Form.List name="treatmentHistory">
-        {(fields, { add, remove }) => (
-          <>
-            {fields.map(({ key, name }) => (
-              <Card key={key} size="small" style={{ marginBottom: 10 }}>
-                {" "}
-                <div style={{ display: "flex", justifyContent: "right" }}>
-                  <Button
-                    type="text"
-                    danger
-                    icon={<CloseOutlined />}
-                    onClick={() => remove(name)}
-                  />
-                </div>
-                <Row gutter={16}>
-                  <Col span={12}>
-                    <Form.Item name={[name, "condition"]} label="Condition">
-                      <Input />
-                    </Form.Item>
-                  </Col>{" "}
-                  <Col span={12}>
-                    <Form.Item
-                      name={[name, "diagnosisDate"]}
-                      label="Date of Diagnosis"
-                    >
-                      <Input type="date" />
-                    </Form.Item>
-                  </Col>
-                  <Col span={12}>
-                    <Form.Item
-                      name={[name, "treatmentDescription"]}
-                      label="Description of treatment"
-                    >
-                      <Input />
-                    </Form.Item>
-                  </Col>
-                  <Col span={12}>
-                    <Form.Item
-                      name={[name, "outcome"]}
-                      label="Outcome of treatment"
-                    >
-                      <Input />
-                    </Form.Item>
-                  </Col>
-                </Row>
-              </Card>
-            ))}
-            <Button type="dashed" onClick={() => add()}>
-              + Add Treatment History
-            </Button>
-          </>
-        )}
+        {(fields, { add, remove }) => {
+          if (fields.length === 0) add();
+          return (
+            <>
+              {fields.map(({ key, name }) => (
+                <Card key={key} size="small" style={{ marginBottom: 10 }}>
+                  {" "}
+                  <div style={{ display: "flex", justifyContent: "right" }}>
+                    <Button
+                      type="text"
+                      danger
+                      icon={<CloseOutlined />}
+                      onClick={() => remove(name)}
+                    />
+                  </div>
+                  <Row gutter={16}>
+                    <Col span={12}>
+                      <Form.Item name={[name, "condition"]} label="Condition">
+                        <Input />
+                      </Form.Item>
+                    </Col>{" "}
+                    <Col span={12}>
+                      <Form.Item
+                        name={[name, "diagnosisDate"]}
+                        label="Date of Diagnosis"
+                      >
+                        <Input type="date" />
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item
+                        name={[name, "treatmentDescription"]}
+                        label="Description of treatment"
+                      >
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item
+                        name={[name, "outcome"]}
+                        label="Outcome of treatment"
+                      >
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                </Card>
+              ))}
+              <Button type="dashed" onClick={() => add()}>
+                + Add Treatment History
+              </Button>
+            </>
+          );
+        }}
       </Form.List>
     </Card>
   );
@@ -230,49 +236,55 @@ export const MedicalProcedures = () => {
       style={{ marginTop: 20 }}
     >
       <Form.List name="medicalProcedures">
-        {(fields, { add, remove }) => (
-          <>
-            {fields.map(({ key, name }) => (
-              <Card key={key} size="small" style={{ marginBottom: 10 }}>
-                {" "}
-                <div style={{ display: "flex", justifyContent: "right" }}>
-                  <Button
-                    type="text"
-                    danger
-                    icon={<CloseOutlined />}
-                    onClick={() => remove(name)}
-                  />
-                </div>
-                <Row gutter={16}>
-                  <Col span={12}>
-                    <Form.Item
-                      name={[name, "procedureName"]}
-                      label="Name of procedure"
-                    >
-                      <Input />
-                    </Form.Item>
-                  </Col>{" "}
-                  <Col span={12}>
-                    <Form.Item
-                      name={[name, "dateOfProcedure"]}
-                      label="Date of Procedure"
-                    >
-                      <Input type="date" />
-                    </Form.Item>
-                  </Col>
-                  <Col span={24}>
-                    <Form.Item name={[name, "notes"]} label="Additional Notes">
-                      <TextArea rows={3} />
-                    </Form.Item>
-                  </Col>
-                </Row>
-              </Card>
-            ))}
-            <Button type="dashed" onClick={() => add()}>
-              + Add Procedure
-            </Button>
-          </>
-        )}
+        {(fields, { add, remove }) => {
+          if (fields.length === 0) add();
+          return (
+            <>
+              {fields.map(({ key, name }) => (
+                <Card key={key} size="small" style={{ marginBottom: 10 }}>
+                  {" "}
+                  <div style={{ display: "flex", justifyContent: "right" }}>
+                    <Button
+                      type="text"
+                      danger
+                      icon={<CloseOutlined />}
+                      onClick={() => remove(name)}
+                    />
+                  </div>
+                  <Row gutter={16}>
+                    <Col span={12}>
+                      <Form.Item
+                        name={[name, "procedureName"]}
+                        label="Name of procedure"
+                      >
+                        <Input />
+                      </Form.Item>
+                    </Col>{" "}
+                    <Col span={12}>
+                      <Form.Item
+                        name={[name, "dateOfProcedure"]}
+                        label="Date of Procedure"
+                      >
+                        <Input type="date" />
+                      </Form.Item>
+                    </Col>
+                    <Col span={24}>
+                      <Form.Item
+                        name={[name, "notes"]}
+                        label="Additional Notes"
+                      >
+                        <TextArea rows={3} />
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                </Card>
+              ))}
+              <Button type="dashed" onClick={() => add()}>
+                + Add Procedure
+              </Button>
+            </>
+          );
+        }}
       </Form.List>
     </Card>
   );
@@ -282,53 +294,59 @@ export const FamilyMedicalHistory = () => {
   return (
     <Card
       title="Family Medical History"
-      key="familyMedicalHistory"
+      key="familyHistory"
       style={{ marginTop: 20 }}
     >
-      <Form.List name="familyMedicalHistory">
-        {(fields, { add, remove }) => (
-          <>
-            {fields.map(({ key, name }) => (
-              <Card key={key} size="small" style={{ marginBottom: 10 }}>
-                {" "}
-                <div style={{ display: "flex", justifyContent: "right" }}>
-                  <Button
-                    type="text"
-                    danger
-                    icon={<CloseOutlined />}
-                    onClick={() => remove(name)}
-                  />
-                </div>
-                <Row gutter={16}>
-                  <Col span={12}>
-                    <Form.Item name={[name, "relation"]} label="Relation">
-                      <Select>
-                        {familyTree.map((tree) => (
-                          <Select.Option value={tree.value}>
-                            {tree.label}
-                          </Select.Option>
-                        ))}
-                      </Select>
-                    </Form.Item>
-                  </Col>{" "}
-                  <Col span={12}>
-                    <Form.Item name={[name, "condition"]} label="Condition">
-                      <Input />
-                    </Form.Item>
-                  </Col>
-                  <Col span={24}>
-                    <Form.Item name={[name, "notes"]} label="Additional Notes">
-                      <TextArea rows={3} />
-                    </Form.Item>
-                  </Col>
-                </Row>
-              </Card>
-            ))}
-            <Button type="dashed" onClick={() => add()}>
-              + Add Medical History
-            </Button>
-          </>
-        )}
+      <Form.List name="familyHistory">
+        {(fields, { add, remove }) => {
+          if (fields.length === 0) add();
+          return (
+            <>
+              {fields.map(({ key, name }) => (
+                <Card key={key} size="small" style={{ marginBottom: 10 }}>
+                  {" "}
+                  <div style={{ display: "flex", justifyContent: "right" }}>
+                    <Button
+                      type="text"
+                      danger
+                      icon={<CloseOutlined />}
+                      onClick={() => remove(name)}
+                    />
+                  </div>
+                  <Row gutter={16}>
+                    <Col span={12}>
+                      <Form.Item name={[name, "relation"]} label="Relation">
+                        <Select>
+                          {familyTree.map((tree) => (
+                            <Select.Option value={tree.value}>
+                              {tree.label}
+                            </Select.Option>
+                          ))}
+                        </Select>
+                      </Form.Item>
+                    </Col>{" "}
+                    <Col span={12}>
+                      <Form.Item name={[name, "condition"]} label="Condition">
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                    <Col span={24}>
+                      <Form.Item
+                        name={[name, "notes"]}
+                        label="Additional Notes"
+                      >
+                        <TextArea rows={3} />
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                </Card>
+              ))}
+              <Button type="dashed" onClick={() => add()}>
+                + Add Medical History
+              </Button>
+            </>
+          );
+        }}
       </Form.List>
     </Card>
   );
@@ -338,73 +356,76 @@ export const PreviousHealthcareProviders = () => {
   return (
     <Card
       title="Previous Healthcare Providers"
-      key="previousHealthcareProviders"
+      key="previousProviders"
       style={{ marginTop: 20 }}
     >
-      <Form.List name="previousHealthcareProviders">
-        {(fields, { add, remove }) => (
-          <>
-            {fields.map(({ key, name }) => (
-              <Card key={key} size="small" style={{ marginBottom: 10 }}>
-                {" "}
-                <div style={{ display: "flex", justifyContent: "right" }}>
-                  <Button
-                    type="text"
-                    danger
-                    icon={<CloseOutlined />}
-                    onClick={() => remove(name)}
-                  />
-                </div>
-                <Row gutter={16}>
-                  <Col span={12}>
-                    <Form.Item name={[name, "name"]} label="Name">
-                      <Input />
-                    </Form.Item>
-                  </Col>{" "}
-                  <Col span={12}>
-                    <Form.Item
-                      name={[name, "contactInfo"]}
-                      label="Contact Information"
-                    >
-                      <Input />
-                    </Form.Item>
-                  </Col>
-                  <Col span={12}>
-                    <Form.Item
-                      name={[name, "period"]}
-                      label="Period"
-                      getValueFromEvent={(dates) => {
-                        if (!dates || dates.length !== 2) return "";
-                        const formattedStart = dayjs(dates[0]).format(
-                          "YYYY-MM-DD"
-                        );
-                        const formattedEnd = dayjs(dates[1]).format(
-                          "YYYY-MM-DD"
-                        );
-                        return `${formattedStart} - ${formattedEnd}`;
-                      }}
-                      getValueProps={(value) => {
-                        if (!value || typeof value !== "string") return {};
-                        const parts = value.split(" - ");
-                        if (parts.length === 2) {
-                          return {
-                            value: [dayjs(parts[0]), dayjs(parts[1])],
-                          };
-                        }
-                        return {};
-                      }}
-                    >
-                      <RangePicker />
-                    </Form.Item>
-                  </Col>
-                </Row>
-              </Card>
-            ))}
-            <Button type="dashed" onClick={() => add()}>
-              + Add Previous Provider
-            </Button>
-          </>
-        )}
+      <Form.List name="previousProviders">
+        {(fields, { add, remove }) => {
+          if (fields.length === 0) add();
+          return (
+            <>
+              {fields.map(({ key, name }) => (
+                <Card key={key} size="small" style={{ marginBottom: 10 }}>
+                  {" "}
+                  <div style={{ display: "flex", justifyContent: "right" }}>
+                    <Button
+                      type="text"
+                      danger
+                      icon={<CloseOutlined />}
+                      onClick={() => remove(name)}
+                    />
+                  </div>
+                  <Row gutter={16}>
+                    <Col span={12}>
+                      <Form.Item name={[name, "name"]} label="Name">
+                        <Input />
+                      </Form.Item>
+                    </Col>{" "}
+                    <Col span={12}>
+                      <Form.Item
+                        name={[name, "contactInfo"]}
+                        label="Contact Information"
+                      >
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item
+                        name={[name, "period"]}
+                        label="Period"
+                        getValueFromEvent={(dates) => {
+                          if (!dates || dates.length !== 2) return "";
+                          const formattedStart = dayjs(dates[0]).format(
+                            "YYYY-MM-DD"
+                          );
+                          const formattedEnd = dayjs(dates[1]).format(
+                            "YYYY-MM-DD"
+                          );
+                          return `${formattedStart} - ${formattedEnd}`;
+                        }}
+                        getValueProps={(value) => {
+                          if (!value || typeof value !== "string") return {};
+                          const parts = value.split(" - ");
+                          if (parts.length === 2) {
+                            return {
+                              value: [dayjs(parts[0]), dayjs(parts[1])],
+                            };
+                          }
+                          return {};
+                        }}
+                      >
+                        <RangePicker />
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                </Card>
+              ))}
+              <Button type="dashed" onClick={() => add()}>
+                + Add Previous Provider
+              </Button>
+            </>
+          );
+        }}
       </Form.List>
     </Card>
   );
@@ -414,66 +435,72 @@ export const Lifestyle = () => {
   return (
     <Card title="Lifestyle" key="lifestyle" style={{ marginTop: 20 }}>
       <Form.List name="lifestyle">
-        {(fields) => (
-          <>
-            {fields.map(({ key, name }) => (
-              <Card key={key} size="small" style={{ marginBottom: 10 }}>
-                <Row gutter={16}>
-                  <Col span={12}>
-                    <Form.Item name={[name, "smoking"]} label="Smoking">
-                      <Select>
-                        {smokingDescriptions.map((description) => (
-                          <Select.Option value={description.value}>
-                            {description.label}
-                          </Select.Option>
-                        ))}
-                      </Select>
-                    </Form.Item>
-                  </Col>{" "}
-                  <Col span={12}>
-                    <Form.Item name={[name, "alcoholUse"]} label="Alcohol Use">
-                      <Select>
-                        {alcoholUseDescriptions.map((description) => (
-                          <Select.Option value={description.value}>
-                            {description.label}
-                          </Select.Option>
-                        ))}
-                      </Select>
-                    </Form.Item>
-                  </Col>
-                  <Col span={12}>
-                    <Form.Item
-                      name={[name, "exerciseFrequency"]}
-                      label="Exercise Frequency"
-                    >
-                      <Select>
-                        {exerciseFrequencyDescriptions.map((description) => (
-                          <Select.Option value={description.value}>
-                            {description.label}
-                          </Select.Option>
-                        ))}
-                      </Select>
-                    </Form.Item>
-                  </Col>{" "}
-                  <Col span={12}>
-                    <Form.Item
-                      name={[name, "dietDescription"]}
-                      label="Diet Description"
-                    >
-                      <Select>
-                        {dietDescriptions.map((description) => (
-                          <Select.Option value={description.value}>
-                            {description.label}
-                          </Select.Option>
-                        ))}
-                      </Select>
-                    </Form.Item>
-                  </Col>
-                </Row>
-              </Card>
-            ))}
-          </>
-        )}
+        {(fields, { add }) => {
+          if (fields.length === 0) add();
+          return (
+            <>
+              {fields.map(({ key, name }) => (
+                <Card key={key} size="small" style={{ marginBottom: 10 }}>
+                  <Row gutter={16}>
+                    <Col span={12}>
+                      <Form.Item name={[name, "smoking"]} label="Smoking">
+                        <Select>
+                          {smokingDescriptions.map((description) => (
+                            <Select.Option value={description.value}>
+                              {description.label}
+                            </Select.Option>
+                          ))}
+                        </Select>
+                      </Form.Item>
+                    </Col>{" "}
+                    <Col span={12}>
+                      <Form.Item
+                        name={[name, "alcoholUse"]}
+                        label="Alcohol Use"
+                      >
+                        <Select>
+                          {alcoholUseDescriptions.map((description) => (
+                            <Select.Option value={description.value}>
+                              {description.label}
+                            </Select.Option>
+                          ))}
+                        </Select>
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item
+                        name={[name, "exerciseFrequency"]}
+                        label="Exercise Frequency"
+                      >
+                        <Select>
+                          {exerciseFrequencyDescriptions.map((description) => (
+                            <Select.Option value={description.value}>
+                              {description.label}
+                            </Select.Option>
+                          ))}
+                        </Select>
+                      </Form.Item>
+                    </Col>{" "}
+                    <Col span={12}>
+                      <Form.Item
+                        name={[name, "dietDescription"]}
+                        label="Diet Description"
+                      >
+                        <Select>
+                          {dietDescriptions.map((description) => (
+                            <Select.Option value={description.value}>
+                              {description.label}
+                            </Select.Option>
+                          ))}
+                        </Select>
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                </Card>
+              ))}
+            </>
+          );
+        }}
       </Form.List>
     </Card>
   );
