@@ -9,6 +9,7 @@ import {
   Collapse,
   Tooltip,
   Button,
+  Empty,
 } from "antd";
 import UpdateMedicalInfoModal from "./updateMedicalInfoModal";
 import {
@@ -20,6 +21,7 @@ import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { PatientInformationSection } from "../../../../components/medicalPageComponents";
 
 const { Title } = Typography;
 const { Panel } = Collapse;
@@ -118,7 +120,7 @@ function MedicalInfo({
     if (patientData) {
       const newValues = Object.values(patientData)
         .map((value) => ({ ...value }))
-        .reduce((acc, value) => [...acc, value]);
+        .reduce((acc, value) => [...acc, value], []);
       setValues(newValues);
     }
   }, [user, patientData]);
@@ -132,100 +134,6 @@ function MedicalInfo({
       ))}
     </Space>
   );
-
-  const PatientInformationSection = ({
-    patientInfo,
-    labelStyle,
-    contentStyle,
-    sectionHeaderStyle,
-  }) => {
-    return (
-      <>
-        <Title level={2} style={sectionHeaderStyle}>
-          <u>Medical Information</u>
-        </Title>
-
-        <Card style={sectionCardStyle}>
-          {patientInfo?.length !== 0 ? (
-            patientInfo?.map((info) => (
-              <>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "right",
-                    margin: "5px 0px",
-                    gap: "10px",
-                  }}
-                >
-                  <Tooltip title="Edit this section">
-                    <Button
-                      type="primary"
-                      icon={<EditOutlined />}
-                      onClick={() => {
-                        handleUpdate(info);
-                        setSectionName("PatientInformation");
-                      }}
-                    />
-                  </Tooltip>
-                  <Tooltip title="Delete this section">
-                    <Button
-                      danger
-                      icon={<DeleteOutlined />}
-                      onClick={() => {
-                        handleDelete(info);
-                        setSectionName("patientInformation");
-                      }}
-                    />
-                  </Tooltip>
-                </div>
-                <Descriptions column={2} bordered size="samll">
-                  <Descriptions.Item
-                    label={<span style={labelStyle}>Diagnosis</span>}
-                  >
-                    <span style={contentStyle}>{info.diagnosis}</span>
-                  </Descriptions.Item>
-                  <Descriptions.Item
-                    label={<span style={labelStyle}>Chronic Conditions</span>}
-                  >
-                    {renderListAsTags(info.chronicConditions)}
-                  </Descriptions.Item>
-                  <Descriptions.Item
-                    label={<span style={labelStyle}>Allergies</span>}
-                  >
-                    {renderListAsTags(info.allergies)}
-                  </Descriptions.Item>
-                  <Descriptions.Item
-                    label={<span style={labelStyle}>Blood Type</span>}
-                  >
-                    <span style={contentStyle}>{info.bloodType}</span>
-                  </Descriptions.Item>
-                </Descriptions>
-              </>
-            ))
-          ) : (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "right",
-                margin: "5px 0px",
-              }}
-            >
-              <Tooltip title="Edit this section">
-                <Button
-                  type="primary"
-                  icon={<PlusCircleOutlined />}
-                  onClick={() => {
-                    handleUpdate(patientInfo);
-                    setSectionName("PatientInformation");
-                  }}
-                />
-              </Tooltip>
-            </div>
-          )}
-        </Card>
-      </>
-    );
-  };
 
   const CurrentMedicationSection = ({
     medications,
@@ -846,6 +754,7 @@ function MedicalInfo({
   if (patientDataLoading) {
     return <div>Loading...</div>;
   }
+
   return (
     <>
       {values.length !== 0 ? (
@@ -856,10 +765,9 @@ function MedicalInfo({
           </p>
           <div style={{ fontFamily: "Roboto", padding: "0.5rem" }}>
             <PatientInformationSection
-              patientInfo={values?.patientInformation}
-              labelStyle={labelStyle}
-              contentStyle={contentStyle}
-              sectionHeaderStyle={sectionHeaderStyle}
+              content={values[0]?.patientInformation}
+              renderListAsTags={renderListAsTags}
+              handleDelete={handleDelete}
             />
             <Divider />
             <CurrentMedicationSection

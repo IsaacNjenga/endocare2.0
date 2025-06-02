@@ -103,7 +103,6 @@ function UpdateDiary({
           style={{ maxWidth: 950, margin: "2rem auto" }}
         >
           {renderSectionForm()}
-          <pre>{JSON.stringify(form.getFieldValue(), null, 2)}</pre>
           <div style={{ display: "flex", justifyContent: "center" }}>
             <Button
               type="primary"
