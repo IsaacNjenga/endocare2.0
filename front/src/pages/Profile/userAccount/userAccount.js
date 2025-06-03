@@ -36,14 +36,14 @@ function UserAccount({
         <Title level={2} style={{ fontFamily: "Raleway" }}>
           <u>User Account & Privacy</u>
         </Title>
-        <Tooltip title="Edit your information">
+        {/* <Tooltip title="Edit your information">
           <Button
             type="primary"
             icon={<EditOutlined />}
             onClick={handleEdit}
             style={{ padding: "12px 15px" }}
           />
-        </Tooltip>
+        </Tooltip> */}
       </div>
       <Card style={sectionCardStyle}>
         <Divider style={{ borderColor: "#4f46e5" }}>

@@ -7,8 +7,9 @@ import {
   Tooltip,
   Tag,
 } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import { EditOutlined } from "@ant-design/icons";
+import UpdateInfoModal from "./updateInfoModal";
 
 const { Title } = Typography;
 
@@ -28,7 +29,7 @@ const profeshDetails = {
     residency: "AAR Hospital, Kiambu, Kenya",
     certification: "Certified in Internal Medicine",
   },
-  languagesSpoken: ["English", "Swahili", "French"],
+  languagesSpoken: ["English", "Swahili"],
   practiceLicenseExpiry: "2027-08-31",
 };
 
@@ -37,14 +38,24 @@ function ProfessionalInfo({
   sectionHeaderStyle,
   contentStyle,
   labelStyle,
+  user,
 }) {
-  const handleEdit = () => {
-    // trigger modal or route to edit form
+  const [modalContent, setModalContent] = useState(null);
+  const [openUpdateModal, setOpenUpdateModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleEdit = (content) => {
+    setOpenUpdateModal(true);
+    setLoading(true);
+    setModalContent(content);
+    setTimeout(() => {
+      setLoading(false);
+    }, 100);
   };
 
   const renderTags = (list) =>
     list?.map((item) => (
-      <Tag key={item} color="green">
+      <Tag key={item} color="green" style={contentStyle}>
         {item}
       </Tag>
     )) || "—";
@@ -66,7 +77,9 @@ function ProfessionalInfo({
           <Button
             type="primary"
             icon={<EditOutlined />}
-            onClick={handleEdit}
+            onClick={() => {
+              handleEdit(profeshDetails);
+            }}
             style={{ padding: "10px 16px" }}
           />
         </Tooltip>
@@ -96,7 +109,7 @@ function ProfessionalInfo({
           contentStyle={contentStyle}
         >
           <Descriptions.Item label="Medical License Number">
-            {profeshDetails.medicalLicenseNumber}
+            {profeshDetails.medicalLicenseNumber || ""}
           </Descriptions.Item>
 
           <Descriptions.Item label="Specialties">
@@ -133,6 +146,13 @@ function ProfessionalInfo({
           </Descriptions.Item>
         </Descriptions>
       </Card>
+      <UpdateInfoModal
+        user={user}
+        setOpenUpdateModal={setOpenUpdateModal}
+        loading={loading}
+        openUpdateModal={openUpdateModal}
+        modalContent={modalContent}
+      />
     </div>
   );
 }
