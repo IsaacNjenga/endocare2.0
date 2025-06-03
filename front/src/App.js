@@ -5,7 +5,7 @@ import Navbar from "./components/navbar";
 import Home from "./pages/home.js";
 import Diary from "./pages/Diary/diary";
 import Dashboard from "./pages/dashboard.js";
-import Appointments from "./pages/appointments";
+import Appointments from "./pages/Appointments/appointments";
 import Resources from "./pages/resources";
 import Auth from "./pages/auth";
 import ProtectedRoutes from "./components/protectedRoutes";
@@ -14,6 +14,7 @@ import Cookies from "universal-cookie";
 import CreateMedicalInfo from "./pages/Profile/Patient Profile/medicalInfo/createMedicalInfo";
 import CreateEntry from "./pages/Diary/createEntry";
 import DiaryContent from "./pages/Diary/diaryContent";
+import CreateAppointment from "./pages/Appointments/createAppointment";
 
 const cookies = new Cookies();
 export const UserContext = createContext();
@@ -65,6 +66,10 @@ function App() {
             />
             <Route path="diary/create-entry" element={<CreateEntry />} />
             <Route path="diary/date/:date" element={<DiaryContent />} />
+            <Route
+              path="appointments/create-appointment"
+              element={<CreateAppointment />}
+            />
           </Route>
         </Routes>
       </UserContext.Provider>

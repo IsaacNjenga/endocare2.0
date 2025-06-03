@@ -11,6 +11,7 @@ import {
   message,
 } from "antd";
 import dayjs from "dayjs";
+import { useNavigate } from "react-router-dom";
 
 const sectionHeaderStyle = {
   padding: "6px 16px",
@@ -52,7 +53,8 @@ const afternoonHours = [
   { label: "4:00 PM", value: "4:00 PM" },
 ];
 
-function Appointments() {
+function CreateAppointment() {
+  const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
 
@@ -88,6 +90,14 @@ function Appointments() {
 
   return (
     <Card style={{ maxWidth: 800, margin: "auto", marginTop: 32, padding: 24 }}>
+      <Button
+        danger
+        onClick={() => {
+          navigate("/appointments");
+        }}
+      >
+        Cancel
+      </Button>
       <Typography.Title level={3} style={sectionCardStyle}>
         Schedule Your Appointment
       </Typography.Title>
@@ -173,4 +183,4 @@ function Appointments() {
   );
 }
 
-export default Appointments;
+export default CreateAppointment;
