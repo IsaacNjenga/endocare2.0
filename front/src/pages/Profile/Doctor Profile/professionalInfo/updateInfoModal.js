@@ -17,10 +17,14 @@ function UpdateInfoModal({
         setOpenUpdateModal(false);
       }}
       confirmLoading={loading}
-      width={950}
+      width={1050}
       style={{ maxWidth: "95vw" }}
     >
-      <UpdateInfo modalContent={modalContent} user={user} />
+      <UpdateInfo
+        modalContent={modalContent}
+        user={user}
+        setOpenUpdateModal={setOpenUpdateModal}
+      />
     </Modal>
   );
 }

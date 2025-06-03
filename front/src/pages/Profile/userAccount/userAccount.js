@@ -1,14 +1,5 @@
 import React, { useState } from "react";
-import {
-  Card,
-  Typography,
-  Button,
-  Descriptions,
-  Divider,
-  Drawer,
-  Tooltip,
-} from "antd";
-import { EditOutlined } from "@ant-design/icons";
+import { Card, Typography, Button, Descriptions, Divider, Drawer } from "antd";
 import ChangePassword from "../../../components/changePassword";
 
 const { Title } = Typography;
@@ -21,7 +12,7 @@ function UserAccount({
   refresh,
 }) {
   const [open, setOpen] = useState(null);
-  const handleEdit = () => {};
+  // const handleEdit = () => {};
 
   return (
     <div style={{ fontFamily: "Roboto", padding: "0.7rem" }}>
