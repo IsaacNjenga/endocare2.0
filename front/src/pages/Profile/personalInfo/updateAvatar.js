@@ -1,6 +1,6 @@
 import { Button, Modal } from "antd";
 import React, { useState } from "react";
-import ImageUploads from "../../../../components/imageUploads.js";
+import ImageUploads from "../../../components/imageUploads.js";
 import Swal from "sweetalert2";
 import axios from "axios";
 

@@ -74,9 +74,13 @@ function PersonalInfo({
 
         <div style={{ display: "flex", alignItems: "flex-start", gap: 24 }}>
           <div style={{ position: "relative", width: 150, height: 150 }}>
-            {user.avatar ? (
+            {user?.avatar ? (
               <Image
-                src={user.avatar}
+                src={
+                  user.avatar
+                    ? user.avatar
+                    : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALAAAACUCAMAAAAEVFNMAAAAMFBMVEVHR0cAAABKSko5OTlCQkI+Pj4pKSkJCQkuLi4REREdHR0mJiYWFhYNDQ0aGho2NjamPXOMAAAD7UlEQVR4nO2cW5OkIAyFMYIX8PL//+3aOva2rtpCwoGt8XuZmnk6RYWcGJJR6uHh4eHh4eHh4XdByw+tP3/LFlK6HJvK2QnnqnE0WlG2okmVje3q4pN+cI3OUTIpMq7dil2ph0lzaoE7SJfdodhVc2VykkxqtFdyZ8kuH8lkvsp90Va55Izqjtz5lMcMFJO5DN4dGdy+sfXQWxQ2sWJqvORO9GkV3w7fv9RlQsUBeqczTqfYOx5+zjhRRvaP3/cZJ4ljKkP1FsWgE+jVPvl3T4UXrBxDb1GUaLk0svQWBVqw6pmCK+y9o6AM/ElvoIINV29ROKhg3o2bqZH3zviVaMcgjzjY4zbg3EMPIoIbVKLgmPInLUywwJWbQWU24prGCiomtJDewmL0ssuINx0mT/BteQVkz8QphLeMEMFKwuYWGoheLScY8+FhpLIaqJyg8rhtHYJFpInfLRig95cLhoSEZJaAeLP+z9La/2ccSq6WwFgz3XrkugPoVSm8L7ynBdXDAm2fhQGid0JKMKohKBbEsGaV0EddjdIrZR0O1yKW6aQAO8Qi9Q+oK7Egce1An8wLAu1A7FsdsRuu6GEPtttBI/gFt18FfyBnVsXgZzrF/bSDB4TiVZkt9lVxVRyejFONg4Uqhj0f7Ql8/kqmd1Ic8j2aYriDoxjzpXyOZ6WZwfhl45OPh5RTdivXo84bqgTTVEfcPOQ2h+OdIWO/S24zGMV9Q6p015K7Jp+J8h9MdS65KzMJ3g1ExnX9XnXdZ7gU8WYKjbFytmv7uu/7brCumc42W7kr2mgzo1XGez0PD/9A9ApYbcqJKX71zx9yReuycduqorXutU+XH6TNWHUnttHazDLbZBeNve4X150rc5E8OcWNumfS3FZZ2J32qd4dfO59B+nG84vOQlvCe7nkuef1orbpiswysBmYZj+NdPizTN/gUzONrAd9fFxwX7167OXzWgI9weEiOSQ5HDCgwoK8Gj0XdKAmhdjscFGPiPpCalx/BnD1RPVG72yT3Cw5SLG43siKpfLDhnj9bblliA3x9sjFZr92tJHKesGByx1xtk8Y5eRXbISgkJtePEI+VUgt0J0QYTtUbgD3EPHxnwiOsUX4NVdwSv8M2aAQG3A+p5XUG8fidghmCrEN0EsEh2qi37gFsQ2JeJ68RawKiupxnwg5tEQT4iYyRww7YKnhO1AEvxCJ4rhVzw4BgxZcYb4Bfy9bbifmHuwJMflGxDXsioL1351C4Davxvh15RaueYAjgr3sI/S/W3zgxQQ0CS/w3A5oyyusrgp/ucQf3vArXi/PnhOEMGv5PW576oyaUU8kCOHiW2L7A5K5MpdSqqdDAAAAAElFTkSuQmCC"
+                }
                 alt="avatar"
                 style={{
                   width: 150,
@@ -94,8 +98,8 @@ function PersonalInfo({
                 }}
                 size="large"
               >
-                {user.firstName?.charAt(0)}
-                {user.lastName?.charAt(0)}
+                {user?.firstName?.charAt(0)}
+                {user?.lastName?.charAt(0)}
               </Avatar>
             )}
             <Tooltip title="Edit your avatar">
@@ -117,7 +121,7 @@ function PersonalInfo({
           </div>
 
           {/* Descriptions */}
-          <Descriptions column={1} bordered size="small" style={{ flex: 1 }}>
+          <Descriptions column={1} bordered size="large" style={{ flex: 1 }}>
             <Descriptions.Item
               label={<span style={labelStyle}>First Name</span>}
             >

@@ -1,7 +1,7 @@
 import React from "react";
 import { Tabs } from "antd";
-import UserAccount from "./userAccount/userAccount";
-import PersonalInfo from "./personalInfo/personalInfo";
+import UserAccount from "../userAccount/userAccount";
+import PersonalInfo from "../personalInfo/personalInfo";
 import MedicalInfo from "./medicalInfo/medicalInfo";
 import AIInsight from "./AIInsight";
 import Reports from "./reports";

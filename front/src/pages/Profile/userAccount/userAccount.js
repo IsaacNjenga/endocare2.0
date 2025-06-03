@@ -9,7 +9,7 @@ import {
   Tooltip,
 } from "antd";
 import { EditOutlined } from "@ant-design/icons";
-import ChangePassword from "../../../../components/changePassword";
+import ChangePassword from "../../../components/changePassword";
 
 const { Title } = Typography;
 function UserAccount({
