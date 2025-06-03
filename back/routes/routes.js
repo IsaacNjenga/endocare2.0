@@ -29,6 +29,11 @@ import {
   updateDiaryEntry,
   deleteDiaryEntry,
 } from "../controllers/diaryController.js";
+import {deleteDoctor, 
+  createDoctor,
+  fetchDoctor,
+  updateDoctor,
+} from "../controllers/doctorController.js";
 
 const router = express.Router();
 
@@ -57,6 +62,13 @@ router.get("/get-patients-details", fetchPatientsDetails);
 router.put("/update-patient-details", updatePatientDetails);
 router.delete("/delete-patient-details", deletePatientDetails);
 router.delete("/delete-detail", deletePatientDetail);
+
+//doctor routes
+router.post("/create-doctor-details", createDoctor);
+router.get("/get-doctor-details", fetchDoctor);
+//router.get("/");
+router.put("/update-doctor-details", updateDoctor);
+router.delete("/delete-details", deleteDoctor);
 
 //chatbot route
 router.post("/endo-ai", chatWithCohere);
