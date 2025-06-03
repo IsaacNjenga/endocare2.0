@@ -1,5 +1,7 @@
 import { Button, Card, Col, Form, Input, InputNumber, Row, Select } from "antd";
+import axios from "axios";
 import React, { useState } from "react";
+import Swal from "sweetalert2";
 
 const labelStyle = {
   fontFamily: "Raleway",
@@ -36,6 +38,7 @@ function UpdateInfo({ user, modalContent, setOpenUpdateModal, refresh }) {
       form.setFieldsValue(modalContent);
     }
   }, [form, modalContent]);
+  console.log(modalContent._id);
 
   const handleSubmit = async () => {
     setUpdateLoading(true);
@@ -43,9 +46,27 @@ function UpdateInfo({ user, modalContent, setOpenUpdateModal, refresh }) {
       const values = await form.validateFields();
       const allValues = { ...values, createdBy: user._id };
       console.log(allValues);
-      //refresh()
+      const res = await axios.put(
+        `update-doctor-details?id=${modalContent._id}`
+      );
+      if (res.data.success) {
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Your information has been saved!",
+        });
+        refresh();
+      }
     } catch (error) {
       console.log(error);
+      const errorMessage =
+        error.response?.data?.error ??
+        "An unexpected error occurred. Please try again later.";
+      Swal.fire({
+        icon: "warning",
+        title: "Error",
+        text: errorMessage,
+      });
     } finally {
       setUpdateLoading(false);
     }

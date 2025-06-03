@@ -26,9 +26,9 @@ const fetchDoctor = async (req, res) => {
 };
 
 const updateDoctor = async (req, res) => {
-  const { id, userId } = req.query;
+  const { id } = req.query;
   if (!id) return res.status(400).json({ error: "No ID specified" });
-  if (!userId) return res.status(400).json({ error: "No User ID specified" });
+  //if (!userId) return res.status(400).json({ error: "No User ID specified" });
 
   try {
     const objectId = new mongoose.Types.ObjectId(id);
