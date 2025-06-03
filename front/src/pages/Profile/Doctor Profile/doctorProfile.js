@@ -9,6 +9,7 @@ import React from "react";
 import UserAccount from "../userAccount/userAccount";
 import PersonalInfo from "../personalInfo/personalInfo";
 import ProfessionalInfo from "./professionalInfo/professionalInfo";
+import PracticeInfo from "./practiceInfo/practiceInfo";
 
 const iconStyle = {
   fontSize: "1.54rem",
@@ -105,7 +106,16 @@ function DoctorProfile({ user, refresh, userDataLoading }) {
     {
       key: 4,
       name: "Practice Information",
-      childPage: <div>Practice</div>,
+      childPage: (
+        <PracticeInfo
+          user={user}
+          labelStyle={labelStyle}
+          contentStyle={contentStyle}
+          sectionCardStyle={sectionCardStyle}
+          sectionHeaderStyle={sectionHeaderStyle}
+          refresh={refresh}
+        />
+      ),
       icon: <BookOutlined style={iconStyle} />,
     },
   ];
