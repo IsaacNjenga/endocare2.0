@@ -1,4 +1,4 @@
-import { Button, Card, Col, Form, Input, Row, Select } from "antd";
+import { Button, Card, Col, Form, Input, InputNumber, Row, Select } from "antd";
 import axios from "axios";
 import React, { useState } from "react";
 import Swal from "sweetalert2";
@@ -28,32 +28,17 @@ const sectionHeaderStyle = {
   fontSize: 22,
   color: "#4f46e5",
 };
-
-function UpdatePracticeInfo({
-  modalContent,
-  user,
-  setOpenUpdateModal,
-  refresh,
-}) {
+function CreateInfo({ user, refresh }) {
   const [form] = Form.useForm();
-  const [updateLoading, setUpdateLoading] = useState(false);
-
-  React.useEffect(() => {
-    if (modalContent) {
-      form.setFieldsValue(modalContent);
-    }
-  }, [modalContent, form]);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
-    setUpdateLoading(true);
+    setLoading(true);
     try {
-      const values = form.validateFields();
+      const values = await form.validateFields();
       const allValues = { ...values, createdBy: user._id };
       console.log(allValues);
-      const res = await axios.put(
-        `update-doctor-details?id=${modalContent._id}`,
-        allValues
-      );
+      const res = await axios.post(`create-doctor-details`, allValues);
       if (res.data.success) {
         Swal.fire({
           icon: "success",
@@ -73,7 +58,7 @@ function UpdatePracticeInfo({
         text: errorMessage,
       });
     } finally {
-      setUpdateLoading(false);
+      setLoading(false);
     }
   };
 
@@ -87,47 +72,60 @@ function UpdatePracticeInfo({
         background: "linear-gradient(to left, #eef2f3 50%, #eae9e7 100%)",
       }}
     >
-      <Form
-        onFinish={handleSubmit}
-        form={form}
-        initialValues={modalContent}
-        layout="vertical"
-      >
-        <Row gutter={20}>
+      <Form onFinish={handleSubmit} form={form} layout="vertical">
+        <Row gutter={[20, 20]}>
           <Col span={12}>
             <Form.Item
-              label={<span style={labelStyle}>Name of Practice</span>}
-              name="practiceName"
+              label={<span style={labelStyle}>Medical License Number</span>}
+              name="medicalLicenseNumber"
             >
               <Input style={inputStyle} />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              label={<span style={labelStyle}>Address</span>}
-              name="practiceAddress"
-            >
-              <Input style={inputStyle} />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              label={<span style={labelStyle}>Office Hours</span>}
-              name="officeHours"
-            >
-              <Select mode="tags" tokenSeparators={[","]} />
             </Form.Item>
           </Col>{" "}
           <Col span={12}>
             <Form.Item
-              label={<span style={labelStyle}>Services Offered</span>}
-              name="servicesOffered"
+              label={<span style={labelStyle}>License Expiry</span>}
+              name="practiceLicenseExpiry"
             >
-              <Select mode="tags" tokenSeparators={[","]} />
+              <Input type="date" style={inputStyle} />
             </Form.Item>
-          </Col>{" "}
+          </Col>
           <Col span={24}>
-            <Form.List name="contactInformation">
+            <Form.Item
+              label={<span style={labelStyle}>Specialty</span>}
+              name="specialty"
+              extra="Separate with commas or press 'Enter'"
+            >
+              <Select mode="tags" tokenSeparators={[","]} style={inputStyle} />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              label={<span style={labelStyle}>Current Hospital/Clinic</span>}
+              name="currentHospital"
+            >
+              <Input style={inputStyle} />
+            </Form.Item>
+          </Col>{" "}
+          <Col span={12}>
+            <Form.Item
+              label={<span style={labelStyle}>Years of experience</span>}
+              name="yearsOfExperience"
+            >
+              <InputNumber style={inputStyle} />
+            </Form.Item>
+          </Col>
+          <Col span={24}>
+            <Form.Item
+              label={<span style={labelStyle}>Board Certifications</span>}
+              name="boardCertifications"
+              extra="Separate with commas or press 'Enter'"
+            >
+              <Select mode="tags" tokenSeparators={[","]} />
+            </Form.Item>
+          </Col>
+          <Col span={24}>
+            <Form.List name="education">
               {(fields, { add }) => {
                 if (fields.length === 0) add();
                 return (
@@ -137,30 +135,42 @@ function UpdatePracticeInfo({
                         <Row gutter={20}>
                           <Col span={12}>
                             <Form.Item
+                              name={[name, "bachelorsDegree"]}
                               label={
-                                <span style={labelStyle}>Office Phone</span>
+                                <span style={labelStyle}>
+                                  Bachelor's Degree
+                                </span>
                               }
-                              name={[name, "officePhone"]}
                             >
-                              <Input style={inputStyle} />
+                              <Input />
                             </Form.Item>
                           </Col>
                           <Col span={12}>
                             <Form.Item
+                              name={[name, "medicalSchool"]}
                               label={
-                                <span style={labelStyle}>Office Email</span>
+                                <span style={labelStyle}>Medical School</span>
                               }
-                              name={[name, "officeEmail"]}
                             >
-                              <Input style={inputStyle} />
+                              <Input />
                             </Form.Item>
                           </Col>
                           <Col span={12}>
                             <Form.Item
-                              label={<span style={labelStyle}>Website</span>}
-                              name={[name, "website"]}
+                              name={[name, "residency"]}
+                              label={<span style={labelStyle}>Residency</span>}
                             >
-                              <Input style={inputStyle} />
+                              <Input />
+                            </Form.Item>
+                          </Col>
+                          <Col span={12}>
+                            <Form.Item
+                              name={[name, "certification"]}
+                              label={
+                                <span style={labelStyle}>Certification</span>
+                              }
+                            >
+                              <Input />
                             </Form.Item>
                           </Col>
                         </Row>
@@ -171,19 +181,20 @@ function UpdatePracticeInfo({
               }}
             </Form.List>
           </Col>
-          <Col span={12}>
+          <Col span={18}>
             <Form.Item
-              label={<span style={labelStyle}>Accepted Insurance Plans</span>}
-              name="acceptedInsurancePlans"
+              label={<span style={labelStyle}>Languages</span>}
+              name="languagesSpoken"
+              extra="Separate with commas or press 'Enter'"
             >
-              <Select mode="tags" tokenSeparators={[","]} />
+              <Select mode="tags" tokenSeparators={[","]} style={inputStyle} />
             </Form.Item>
           </Col>
         </Row>
         <div>
           <Form.Item>
-            <Button type="primary" htmlType="submit" loading={updateLoading}>
-              {updateLoading ? "Updating..." : "Update"}
+            <Button type="primary" htmlType="submit" loading={loading}>
+              {loading ? "Submitting..." : "Submit"}
             </Button>
           </Form.Item>
         </div>
@@ -192,4 +203,4 @@ function UpdatePracticeInfo({
   );
 }
 
-export default UpdatePracticeInfo;
+export default CreateInfo;

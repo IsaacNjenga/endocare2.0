@@ -10,30 +10,9 @@ import {
 import React, { useState } from "react";
 import { EditOutlined } from "@ant-design/icons";
 import UpdateInfoModal from "./updateInfoModal";
+import CreateInfo from "./createInfo";
 
 const { Title } = Typography;
-
-const profeshDetails = {
-  medicalLicenseNumber: "MD1733-2494",
-  specialty: ["Cardiology", "Pediatrics"],
-  yearsOfExperience: 12,
-  currentHospital: "Nairobi Hospital",
-  boardCertifications: [
-    "American Board of Medical Specialties",
-    "American Board of Orthopaedic Surgery",
-    "American Board of Radiology",
-  ],
-  education: [
-    {
-      bachelorsDegree: "B.Sc. in Biochemistry - USIU-A",
-      medicalSchool: "MedSchool Kenya",
-      residency: "AAR Hospital, Kiambu, Kenya",
-      certification: "Certified in Internal Medicine",
-    },
-  ],
-  languagesSpoken: ["English", "Swahili"],
-  practiceLicenseExpiry: "2027-08-31",
-};
 
 function ProfessionalInfo({
   sectionCardStyle,
@@ -49,6 +28,8 @@ function ProfessionalInfo({
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  //console.log(doctorProfessionalData);
+
   const handleEdit = (content) => {
     setOpenUpdateModal(true);
     setLoading(true);
@@ -58,6 +39,7 @@ function ProfessionalInfo({
     }, 100);
   };
 
+
   const renderTags = (list, color) =>
     list?.map((item) => (
       <Tag key={item} color={color} style={contentStyle}>
@@ -66,6 +48,9 @@ function ProfessionalInfo({
     )) || "—";
 
   if (doctorLoading) return <div>Loading...</div>;
+  if (doctorProfessionalData.length === 0)
+    return <CreateInfo user={user} refresh={refresh} />;
+
   return (
     <div style={{ fontFamily: "Roboto", padding: "1rem" }}>
       <div
@@ -84,7 +69,7 @@ function ProfessionalInfo({
             type="primary"
             icon={<EditOutlined />}
             onClick={() => {
-              handleEdit(profeshDetails);
+              handleEdit(doctorProfessionalData);
             }}
             style={{ padding: "10px 16px" }}
           />
@@ -111,40 +96,40 @@ function ProfessionalInfo({
           contentStyle={contentStyle}
         >
           <Descriptions.Item label="Medical License Number">
-            {profeshDetails.medicalLicenseNumber || ""}
+            {doctorProfessionalData.medicalLicenseNumber || ""}
           </Descriptions.Item>
 
           <Descriptions.Item label="Specialties">
-            {renderTags(profeshDetails.specialty, "blue")}
+            {renderTags(doctorProfessionalData.specialty, "blue")}
           </Descriptions.Item>
 
           <Descriptions.Item label="Board Certifications">
-            {renderTags(profeshDetails.boardCertifications, "green")}
+            {renderTags(doctorProfessionalData.boardCertifications, "green")}
           </Descriptions.Item>
 
           <Descriptions.Item label="Years of Experience">
-            {profeshDetails.yearsOfExperience} years
+            {doctorProfessionalData.yearsOfExperience} years
           </Descriptions.Item>
 
           <Descriptions.Item label="Current Hospital / Clinic">
-            {profeshDetails.currentHospital}
+            {doctorProfessionalData.currentHospital}
           </Descriptions.Item>
 
           <Descriptions.Item label="Education">
             <ul style={{ margin: 0, paddingLeft: "1.2rem" }}>
-              <li>{profeshDetails.education[0].bachelorsDegree}</li>
-              <li>{profeshDetails.education[0].medicalSchool}</li>
-              <li>{profeshDetails.education[0].residency}</li>
-              <li>{profeshDetails.education[0].certification}</li>
+              <li>{doctorProfessionalData?.education[0]?.bachelorsDegree}</li>
+              <li>{doctorProfessionalData?.education[0]?.medicalSchool}</li>
+              <li>{doctorProfessionalData?.education[0]?.residency}</li>
+              <li>{doctorProfessionalData?.education[0]?.certification}</li>
             </ul>
           </Descriptions.Item>
 
           <Descriptions.Item label="Languages Spoken">
-            {renderTags(profeshDetails.languagesSpoken, "gold")}
+            {renderTags(doctorProfessionalData.languagesSpoken, "gold")}
           </Descriptions.Item>
 
           <Descriptions.Item label="Practice License Expiry">
-            {profeshDetails.practiceLicenseExpiry}
+            {doctorProfessionalData.practiceLicenseExpiry}
           </Descriptions.Item>
         </Descriptions>
       </Card>
@@ -153,7 +138,8 @@ function ProfessionalInfo({
         setOpenUpdateModal={setOpenUpdateModal}
         loading={loading}
         openUpdateModal={openUpdateModal}
-        modalContent={modalContent}refresh={refresh}
+        modalContent={modalContent}
+        refresh={refresh}
       />
     </div>
   );

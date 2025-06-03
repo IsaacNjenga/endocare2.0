@@ -38,7 +38,6 @@ function UpdateInfo({ user, modalContent, setOpenUpdateModal, refresh }) {
       form.setFieldsValue(modalContent);
     }
   }, [form, modalContent]);
-  console.log(modalContent._id);
 
   const handleSubmit = async () => {
     setUpdateLoading(true);
@@ -47,7 +46,8 @@ function UpdateInfo({ user, modalContent, setOpenUpdateModal, refresh }) {
       const allValues = { ...values, createdBy: user._id };
       console.log(allValues);
       const res = await axios.put(
-        `update-doctor-details?id=${modalContent._id}`
+        `update-doctor-details?id=${modalContent._id}`,
+        allValues
       );
       if (res.data.success) {
         Swal.fire({
@@ -208,7 +208,7 @@ function UpdateInfo({ user, modalContent, setOpenUpdateModal, refresh }) {
         </Row>
         <div>
           <Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" loading={updateLoading}>
               {updateLoading ? "Updating..." : "Update"}
             </Button>
           </Form.Item>

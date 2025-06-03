@@ -29,6 +29,11 @@ const doctorSchema = new mongoose.Schema(
     ],
     servicesOffered: { type: [String] },
     acceptedInsurancePlans: { type: [String] },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "users",
+      unique: true,
+    },
   },
   { collection: "doctor", timestamps: true }
 );

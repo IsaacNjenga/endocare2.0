@@ -19,7 +19,33 @@ function useFetchDoctorData(userId) {
       try {
         const res = await axios.get(`get-doctor-details?id=${userId}`);
         if (res.data.success) {
-          console.log(res.data.fetchedDoctor);
+          const doctorData = res.data.doctorData;
+          if (doctorData && doctorData.length > 0) {
+            const professionalData = {
+              boardCertifications: doctorData[0]?.boardCertifications,
+              currentHospital: doctorData[0]?.currentHospital,
+              education: doctorData[0]?.education,
+              languagesSpoken: doctorData[0]?.languagesSpoken,
+              medicalLicenseNumber: doctorData[0]?.medicalLicenseNumber,
+              practiceLicenseExpiry: doctorData[0]?.practiceLicenseExpiry,
+              yearsOfExperience: doctorData[0]?.yearsOfExperience,
+              specialty: doctorData[0]?.specialty,
+              _id: doctorData[0]?._id,
+            };
+
+            const practiceData = {
+              acceptedInsurancePlans: doctorData[0]?.acceptedInsurancePlans,
+              contactInformation: doctorData[0]?.contactInformation,
+              officeHours: doctorData[0]?.officeHours,
+              servicesOffered: doctorData[0]?.servicesOffered,
+              practiceName: doctorData[0]?.practiceName,
+              practiceAddress: doctorData[0]?.practiceAddress,
+              _id: doctorData[0]?._id,
+            };
+
+            setDoctorProfessionalData(professionalData);
+            // setDoctorPracticeData(practiceData);
+          }
         }
       } catch (error) {
         const errorMessage =
