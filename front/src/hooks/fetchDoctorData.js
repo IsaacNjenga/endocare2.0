@@ -44,7 +44,7 @@ function useFetchDoctorData(userId) {
             };
 
             setDoctorProfessionalData(professionalData);
-            // setDoctorPracticeData(practiceData);
+            setDoctorPracticeData(practiceData);
           }
         }
       } catch (error) {

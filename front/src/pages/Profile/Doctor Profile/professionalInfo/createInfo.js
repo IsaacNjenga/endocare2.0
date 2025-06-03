@@ -28,6 +28,7 @@ const sectionHeaderStyle = {
   fontSize: 22,
   color: "#4f46e5",
 };
+
 function CreateInfo({ user, refresh }) {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);

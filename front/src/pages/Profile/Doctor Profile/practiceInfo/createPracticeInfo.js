@@ -1,4 +1,4 @@
-import { Button, Card, Col, Form, Input, InputNumber, Row, Select } from "antd";
+import { Button, Card, Col, Form, Input,  Row, Select } from "antd";
 import axios from "axios";
 import React, { useState } from "react";
 import Swal from "sweetalert2";
@@ -29,26 +29,17 @@ const sectionHeaderStyle = {
   color: "#4f46e5",
 };
 
-function UpdateInfo({ user, modalContent,  refresh }) {
+function CreatePracticeInfo({ user, refresh }) {
   const [form] = Form.useForm();
-  const [updateLoading, setUpdateLoading] = useState(false);
-
-  React.useEffect(() => {
-    if (modalContent) {
-      form.setFieldsValue(modalContent);
-    }
-  }, [form, modalContent]);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
-    setUpdateLoading(true);
+    setLoading(true);
     try {
       const values = await form.validateFields();
-      const allValues = { ...values, createdBy: user._id };
+      const allValues = { ...values, };
       console.log(allValues);
-      const res = await axios.put(
-        `update-doctor-details?id=${modalContent._id}`,
-        allValues
-      );
+      const res = await axios.put(`create-doctor-details`, allValues);
       if (res.data.success) {
         Swal.fire({
           icon: "success",
@@ -68,7 +59,7 @@ function UpdateInfo({ user, modalContent,  refresh }) {
         text: errorMessage,
       });
     } finally {
-      setUpdateLoading(false);
+      setLoading(false);
     }
   };
 
@@ -86,61 +77,42 @@ function UpdateInfo({ user, modalContent,  refresh }) {
         onFinish={handleSubmit}
         form={form}
         layout="vertical"
-        initialValues={modalContent}
       >
-        <Row gutter={[20, 20]}>
+        <Row gutter={20}>
           <Col span={12}>
             <Form.Item
-              label={<span style={labelStyle}>Medical License Number</span>}
-              name="medicalLicenseNumber"
+              label={<span style={labelStyle}>Name of Practice</span>}
+              name="practiceName"
             >
               <Input style={inputStyle} />
             </Form.Item>
-          </Col>{" "}
-          <Col span={12}>
-            <Form.Item
-              label={<span style={labelStyle}>License Expiry</span>}
-              name="practiceLicenseExpiry"
-            >
-              <Input type="date" style={inputStyle} />
-            </Form.Item>
-          </Col>
-          <Col span={24}>
-            <Form.Item
-              label={<span style={labelStyle}>Specialty</span>}
-              name="specialty"
-              extra="Separate with commas or press 'Enter'"
-            >
-              <Select mode="tags" tokenSeparators={[","]} style={inputStyle} />
-            </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item
-              label={<span style={labelStyle}>Current Hospital/Clinic</span>}
-              name="currentHospital"
+              label={<span style={labelStyle}>Address</span>}
+              name="practiceAddress"
             >
               <Input style={inputStyle} />
             </Form.Item>
-          </Col>{" "}
+          </Col>
           <Col span={12}>
             <Form.Item
-              label={<span style={labelStyle}>Years of experience</span>}
-              name="yearsOfExperience"
-            >
-              <InputNumber style={inputStyle} />
-            </Form.Item>
-          </Col>
-          <Col span={24}>
-            <Form.Item
-              label={<span style={labelStyle}>Board Certifications</span>}
-              name="boardCertifications"
-              extra="Separate with commas or press 'Enter'"
+              label={<span style={labelStyle}>Office Hours</span>}
+              name="officeHours"
             >
               <Select mode="tags" tokenSeparators={[","]} />
             </Form.Item>
-          </Col>
+          </Col>{" "}
+          <Col span={12}>
+            <Form.Item
+              label={<span style={labelStyle}>Services Offered</span>}
+              name="servicesOffered"
+            >
+              <Select mode="tags" tokenSeparators={[","]} />
+            </Form.Item>
+          </Col>{" "}
           <Col span={24}>
-            <Form.List name="education">
+            <Form.List name="contactInformation">
               {(fields, { add }) => {
                 if (fields.length === 0) add();
                 return (
@@ -150,42 +122,30 @@ function UpdateInfo({ user, modalContent,  refresh }) {
                         <Row gutter={20}>
                           <Col span={12}>
                             <Form.Item
-                              name={[name, "bachelorsDegree"]}
                               label={
-                                <span style={labelStyle}>
-                                  Bachelor's Degree
-                                </span>
+                                <span style={labelStyle}>Office Phone</span>
                               }
+                              name={[name, "officePhone"]}
                             >
-                              <Input />
+                              <Input style={inputStyle} />
                             </Form.Item>
                           </Col>
                           <Col span={12}>
                             <Form.Item
-                              name={[name, "medicalSchool"]}
                               label={
-                                <span style={labelStyle}>Medical School</span>
+                                <span style={labelStyle}>Office Email</span>
                               }
+                              name={[name, "officeEmail"]}
                             >
-                              <Input />
+                              <Input style={inputStyle} />
                             </Form.Item>
                           </Col>
                           <Col span={12}>
                             <Form.Item
-                              name={[name, "residency"]}
-                              label={<span style={labelStyle}>Residency</span>}
+                              label={<span style={labelStyle}>Website</span>}
+                              name={[name, "website"]}
                             >
-                              <Input />
-                            </Form.Item>
-                          </Col>
-                          <Col span={12}>
-                            <Form.Item
-                              name={[name, "certification"]}
-                              label={
-                                <span style={labelStyle}>Certification</span>
-                              }
-                            >
-                              <Input />
+                              <Input style={inputStyle} />
                             </Form.Item>
                           </Col>
                         </Row>
@@ -196,20 +156,19 @@ function UpdateInfo({ user, modalContent,  refresh }) {
               }}
             </Form.List>
           </Col>
-          <Col span={18}>
+          <Col span={12}>
             <Form.Item
-              label={<span style={labelStyle}>Languages</span>}
-              name="languagesSpoken"
-              extra="Separate with commas or press 'Enter'"
+              label={<span style={labelStyle}>Accepted Insurance Plans</span>}
+              name="acceptedInsurancePlans"
             >
-              <Select mode="tags" tokenSeparators={[","]} style={inputStyle} />
+              <Select mode="tags" tokenSeparators={[","]} />
             </Form.Item>
           </Col>
         </Row>
         <div>
           <Form.Item>
-            <Button type="primary" htmlType="submit" loading={updateLoading}>
-              {updateLoading ? "Updating..." : "Update"}
+            <Button type="primary" htmlType="submit" loading={loading}>
+              {loading ? "Submitting..." : "Submit"}
             </Button>
           </Form.Item>
         </div>
@@ -218,4 +177,4 @@ function UpdateInfo({ user, modalContent,  refresh }) {
   );
 }
 
-export default UpdateInfo;
+export default CreatePracticeInfo;

@@ -29,12 +29,7 @@ const sectionHeaderStyle = {
   color: "#4f46e5",
 };
 
-function UpdatePracticeInfo({
-  modalContent,
-  user,
-  setOpenUpdateModal,
-  refresh,
-}) {
+function UpdatePracticeInfo({ modalContent, user, refresh }) {
   const [form] = Form.useForm();
   const [updateLoading, setUpdateLoading] = useState(false);
 
@@ -47,9 +42,10 @@ function UpdatePracticeInfo({
   const handleSubmit = async () => {
     setUpdateLoading(true);
     try {
-      const values = form.validateFields();
+      const values = await form.validateFields();
       const allValues = { ...values, createdBy: user._id };
-      console.log(allValues);
+      //      console.log(allValues);
+
       const res = await axios.put(
         `update-doctor-details?id=${modalContent._id}`,
         allValues
