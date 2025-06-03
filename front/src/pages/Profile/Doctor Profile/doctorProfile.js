@@ -56,7 +56,15 @@ const sectionHeaderStyle = {
   color: "#4f46e5",
 };
 
-function DoctorProfile({ user, refresh, userDataLoading }) {
+function DoctorProfile({
+  user,
+  refresh,
+  userDataLoading,
+  doctorPracticeData,
+  doctorProfessionalData,
+  doctorLoading,
+  doctorRefresh,
+}) {
   const tabItems = [
     {
       key: 1,
@@ -98,7 +106,9 @@ function DoctorProfile({ user, refresh, userDataLoading }) {
           contentStyle={contentStyle}
           sectionCardStyle={sectionCardStyle}
           sectionHeaderStyle={sectionHeaderStyle}
-          refresh={refresh}
+          doctorProfessionalData={doctorProfessionalData}
+          refresh={doctorRefresh}
+          doctorLoading={doctorLoading}
         />
       ),
       icon: <AuditOutlined style={iconStyle} />,
@@ -113,14 +123,16 @@ function DoctorProfile({ user, refresh, userDataLoading }) {
           contentStyle={contentStyle}
           sectionCardStyle={sectionCardStyle}
           sectionHeaderStyle={sectionHeaderStyle}
-          refresh={refresh}
+          doctorPracticeData={doctorPracticeData}
+          refresh={doctorRefresh}
+          doctorLoading={doctorLoading}
         />
       ),
       icon: <BookOutlined style={iconStyle} />,
     },
   ];
 
-  if (userDataLoading) return <div>Loading...</div>;
+  if (userDataLoading || doctorLoading) return <div>Loading...</div>;
   return (
     <div
       style={{

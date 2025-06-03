@@ -4,6 +4,7 @@ import PatientProfile from "./Patient Profile/patientProfile";
 import DoctorProfile from "./Doctor Profile/doctorProfile";
 import useFetchUserDetails from "../../hooks/fetchUserDetails";
 import useFetchPatientData from "../../hooks/fetchPatientData";
+import useFetchDoctorData from "../../hooks/fetchDoctorData";
 
 function Profile() {
   const { user } = useContext(UserContext);
@@ -11,6 +12,12 @@ function Profile() {
   const { userData, userDataLoading, refresh } = useFetchUserDetails(userId);
   const { patientData, patientDataLoading, patientRefresh } =
     useFetchPatientData(userId);
+  const {
+    doctorPracticeData,
+    doctorProfessionalData,
+    doctorLoading,
+    doctorRefresh,
+  } = useFetchDoctorData(userId);
 
   const userRole = user?.role;
   if (userDataLoading) return <div>Loading...</div>;
@@ -31,6 +38,10 @@ function Profile() {
           user={userData}
           refresh={refresh}
           userDataLoading={userDataLoading}
+          doctorPracticeData={doctorPracticeData}
+          doctorProfessionalData={doctorProfessionalData}
+          doctorLoading={doctorLoading}
+          doctorRefresh={doctorRefresh}
         />
       ) : (
         "Unknown user role. Back to sign in"

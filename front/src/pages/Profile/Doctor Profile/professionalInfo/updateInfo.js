@@ -27,7 +27,7 @@ const sectionHeaderStyle = {
   color: "#4f46e5",
 };
 
-function UpdateInfo({ user, modalContent, setOpenUpdateModal }) {
+function UpdateInfo({ user, modalContent, setOpenUpdateModal, refresh }) {
   const [form] = Form.useForm();
   const [updateLoading, setUpdateLoading] = useState(false);
 
@@ -43,6 +43,7 @@ function UpdateInfo({ user, modalContent, setOpenUpdateModal }) {
       const values = await form.validateFields();
       const allValues = { ...values, createdBy: user._id };
       console.log(allValues);
+      //refresh()
     } catch (error) {
       console.log(error);
     } finally {

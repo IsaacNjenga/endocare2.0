@@ -25,6 +25,8 @@ function PracticeInfo({
   contentStyle,
   sectionCardStyle,
   refresh,
+  doctorPracticeData,
+  doctorLoading,
 }) {
   const [modalContent, setModalContent] = useState(null);
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
@@ -45,6 +47,8 @@ function PracticeInfo({
         {item}
       </Tag>
     )) || "—";
+
+  if (doctorLoading) return <div>Loading...</div>;
 
   return (
     <div style={{ fontFamily: "Roboto", padding: "1rem" }}>
@@ -125,6 +129,7 @@ function PracticeInfo({
         setOpenUpdateModal={setOpenUpdateModal}
         openUpdateModal={openUpdateModal}
         modalContent={modalContent}
+        refresh={refresh}
       />
     </div>
   );

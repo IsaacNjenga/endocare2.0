@@ -27,7 +27,12 @@ const sectionHeaderStyle = {
   color: "#4f46e5",
 };
 
-function UpdatePracticeInfo({ modalContent, user, setOpenUpdateModal }) {
+function UpdatePracticeInfo({
+  modalContent,
+  user,
+  setOpenUpdateModal,
+  refresh,
+}) {
   const [form] = Form.useForm();
   const [updateLoading, setUpdateLoading] = useState(false);
 
@@ -43,6 +48,7 @@ function UpdatePracticeInfo({ modalContent, user, setOpenUpdateModal }) {
       const values = form.validateFields();
       const allValues = { ...values, createdBy: user._id };
       console.log(allValues);
+      //refresh();
     } catch (error) {
       console.log(error);
     } finally {

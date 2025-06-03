@@ -41,6 +41,9 @@ function ProfessionalInfo({
   contentStyle,
   labelStyle,
   user,
+  doctorProfessionalData,
+  refresh,
+  doctorLoading,
 }) {
   const [modalContent, setModalContent] = useState(null);
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
@@ -62,6 +65,7 @@ function ProfessionalInfo({
       </Tag>
     )) || "—";
 
+  if (doctorLoading) return <div>Loading...</div>;
   return (
     <div style={{ fontFamily: "Roboto", padding: "1rem" }}>
       <div
@@ -149,7 +153,7 @@ function ProfessionalInfo({
         setOpenUpdateModal={setOpenUpdateModal}
         loading={loading}
         openUpdateModal={openUpdateModal}
-        modalContent={modalContent}
+        modalContent={modalContent}refresh={refresh}
       />
     </div>
   );

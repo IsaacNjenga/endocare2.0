@@ -8,6 +8,7 @@ function UpdateInfoModal({
   modalContent,
   user,
   loading,
+  refresh,
 }) {
   return (
     <Modal
@@ -24,6 +25,7 @@ function UpdateInfoModal({
         modalContent={modalContent}
         user={user}
         setOpenUpdateModal={setOpenUpdateModal}
+        refresh={refresh}
       />
     </Modal>
   );
