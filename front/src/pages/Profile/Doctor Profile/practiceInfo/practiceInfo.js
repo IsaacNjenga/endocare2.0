@@ -1,14 +1,7 @@
-import {
-  Card,
-  Typography,
-  Button,
-  Descriptions,
-  Divider,
-  Tooltip,
-  Tag,
-} from "antd";
+import { Card, Typography, Button, Descriptions, Tooltip, Tag } from "antd";
 import React, { useState } from "react";
 import { EditOutlined } from "@ant-design/icons";
+import UpdatePracticeInfoModal from "./updatePracticeInfoModal";
 
 const { Title } = Typography;
 
@@ -31,7 +24,6 @@ function PracticeInfo({
   labelStyle,
   contentStyle,
   sectionCardStyle,
-  sectionHeaderStyle,
   refresh,
 }) {
   const [modalContent, setModalContent] = useState(null);
@@ -111,7 +103,9 @@ function PracticeInfo({
               <li>{practiceData.contactInformation[0].officePhone}</li>
               <li>{practiceData.contactInformation[0].officeEmail}</li>
               <li>
-                <a href="#">{practiceData.contactInformation[0].website}</a>
+                <a href="https://google.com">
+                  {practiceData.contactInformation[0].website}
+                </a>
               </li>
             </ul>
           </Descriptions.Item>
@@ -125,6 +119,13 @@ function PracticeInfo({
           </Descriptions.Item>
         </Descriptions>
       </Card>
+      <UpdatePracticeInfoModal
+        user={user}
+        loading={loading}
+        setOpenUpdateModal={setOpenUpdateModal}
+        openUpdateModal={openUpdateModal}
+        modalContent={modalContent}
+      />
     </div>
   );
 }
