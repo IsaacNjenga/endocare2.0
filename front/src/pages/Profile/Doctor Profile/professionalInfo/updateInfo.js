@@ -1,4 +1,4 @@
-import { Button, Card, Form, Input, InputNumber, Select } from "antd";
+import { Button, Card, Col, Form, Input, InputNumber, Row, Select } from "antd";
 import React, { useState } from "react";
 
 const labelStyle = {
@@ -54,10 +54,10 @@ function UpdateInfo({ user, modalContent, setOpenUpdateModal }) {
     <Card
       title={<span style={sectionHeaderStyle}>Update your information</span>}
       style={{
-        padding: 5,
+        padding: 15,
         margin: 20,
         marginBottom: 20,
-        background: "linear-gradient(to right, #eef2ff 30%, #eae9e7 100%)",
+        background: "linear-gradient(to left, #eef2f3 50%, #eae9e7 100%)",
       }}
     >
       <Form
@@ -66,47 +66,124 @@ function UpdateInfo({ user, modalContent, setOpenUpdateModal }) {
         layout="vertical"
         initialValues={modalContent}
       >
-        <Form.Item
-          label={<span style={labelStyle}>Medical License Number</span>}
-          name="medicalLicenseNumber"
-        >
-          <Input style={inputStyle} />
-        </Form.Item>
-        <Form.Item
-          label={<span style={labelStyle}>Specialty</span>}
-          name="specialty"
-          extra="Separate with commas or press 'Enter'"
-        >
-          <Select mode="tags" tokenSeparators={[","]} style={inputStyle} />
-        </Form.Item>
-        <Form.Item
-          label={<span style={labelStyle}>Years of experience</span>}
-          name="yearsOfExperience"
-        >
-          <InputNumber style={inputStyle} />
-        </Form.Item>
-        <Form.Item
-          label={<span style={labelStyle}>Current Hospital/Clinic</span>}
-          name="currentHospital"
-        >
-          <Input style={inputStyle} />
-        </Form.Item>
-
-        <Form.Item
-          label={<span style={labelStyle}>License Expiry</span>}
-          name="practiceLicenseExpiry"
-        >
-          <Input type="date" style={inputStyle} />
-        </Form.Item>
-
-        <Form.Item
-          label={<span style={labelStyle}>Languages</span>}
-          name="languagesSpoken"
-          extra="Separate with commas or press 'Enter'"
-        >
-          <Select mode="tags" tokenSeparators={[","]} style={inputStyle} />
-        </Form.Item>
-
+        <Row gutter={[20, 20]}>
+          <Col span={12}>
+            <Form.Item
+              label={<span style={labelStyle}>Medical License Number</span>}
+              name="medicalLicenseNumber"
+            >
+              <Input style={inputStyle} />
+            </Form.Item>
+          </Col>{" "}
+          <Col span={12}>
+            <Form.Item
+              label={<span style={labelStyle}>License Expiry</span>}
+              name="practiceLicenseExpiry"
+            >
+              <Input type="date" style={inputStyle} />
+            </Form.Item>
+          </Col>
+          <Col span={24}>
+            <Form.Item
+              label={<span style={labelStyle}>Specialty</span>}
+              name="specialty"
+              extra="Separate with commas or press 'Enter'"
+            >
+              <Select mode="tags" tokenSeparators={[","]} style={inputStyle} />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              label={<span style={labelStyle}>Current Hospital/Clinic</span>}
+              name="currentHospital"
+            >
+              <Input style={inputStyle} />
+            </Form.Item>
+          </Col>{" "}
+          <Col span={12}>
+            <Form.Item
+              label={<span style={labelStyle}>Years of experience</span>}
+              name="yearsOfExperience"
+            >
+              <InputNumber style={inputStyle} />
+            </Form.Item>
+          </Col>
+          <Col span={24}>
+            <Form.Item
+              label={<span style={labelStyle}>Board Certifications</span>}
+              name="boardCertifications"
+              extra="Separate with commas or press 'Enter'"
+            >
+              <Select mode="tags" tokenSeparators={[","]} />
+            </Form.Item>
+          </Col>
+          <Col span={24}>
+            <Form.List name="education">
+              {(fields, { add }) => {
+                if (fields.length === 0) add();
+                return (
+                  <>
+                    {fields.map(({ key, name }) => (
+                      <div key={key}>
+                        <Row gutter={20}>
+                          <Col span={12}>
+                            <Form.Item
+                              name={[name, "bachelorsDegree"]}
+                              label={
+                                <span style={labelStyle}>
+                                  Bachelor's Degree
+                                </span>
+                              }
+                            >
+                              <Input />
+                            </Form.Item>
+                          </Col>
+                          <Col span={12}>
+                            <Form.Item
+                              name={[name, "medicalSchool"]}
+                              label={
+                                <span style={labelStyle}>Medical School</span>
+                              }
+                            >
+                              <Input />
+                            </Form.Item>
+                          </Col>
+                          <Col span={12}>
+                            <Form.Item
+                              name={[name, "residency"]}
+                              label={<span style={labelStyle}>Residency</span>}
+                            >
+                              <Input />
+                            </Form.Item>
+                          </Col>
+                          <Col span={12}>
+                            <Form.Item
+                              name={[name, "certification"]}
+                              label={
+                                <span style={labelStyle}>Certification</span>
+                              }
+                            >
+                              <Input />
+                            </Form.Item>
+                          </Col>
+                        </Row>
+                      </div>
+                    ))}
+                  </>
+                );
+              }}
+            </Form.List>
+          </Col>
+          <Col span={18}>
+            <Form.Item
+              label={<span style={labelStyle}>Languages</span>}
+              name="languagesSpoken"
+              extra="Separate with commas or press 'Enter'"
+            >
+              <Select mode="tags" tokenSeparators={[","]} style={inputStyle} />
+            </Form.Item>
+          </Col>
+        </Row>
         <div>
           <Form.Item>
             <Button type="primary" htmlType="submit">

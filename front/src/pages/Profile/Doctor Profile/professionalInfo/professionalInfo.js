@@ -23,12 +23,14 @@ const profeshDetails = {
     "American Board of Orthopaedic Surgery",
     "American Board of Radiology",
   ],
-  education: {
-    bachelorsDegree: "B.Sc. in Biochemistry - USIU-A",
-    medicalSchool: "MedSchool Kenya",
-    residency: "AAR Hospital, Kiambu, Kenya",
-    certification: "Certified in Internal Medicine",
-  },
+  education: [
+    {
+      bachelorsDegree: "B.Sc. in Biochemistry - USIU-A",
+      medicalSchool: "MedSchool Kenya",
+      residency: "AAR Hospital, Kiambu, Kenya",
+      certification: "Certified in Internal Medicine",
+    },
+  ],
   languagesSpoken: ["English", "Swahili"],
   practiceLicenseExpiry: "2027-08-31",
 };
@@ -53,9 +55,9 @@ function ProfessionalInfo({
     }, 100);
   };
 
-  const renderTags = (list) =>
+  const renderTags = (list, color) =>
     list?.map((item) => (
-      <Tag key={item} color="green" style={contentStyle}>
+      <Tag key={item} color={color} style={contentStyle}>
         {item}
       </Tag>
     )) || "—";
@@ -94,17 +96,13 @@ function ProfessionalInfo({
         }}
       >
         <Divider style={{ borderColor: "#4f46e5" }}>
-          <div
-            style={sectionHeaderStyle || { fontSize: "18px", fontWeight: 600 }}
-          >
-            Doctor Details
-          </div>
+          <div style={sectionHeaderStyle}>Doctor Details</div>
         </Divider>
 
         <Descriptions
           column={1}
           bordered
-          size="middle"
+          size="large"
           labelStyle={labelStyle}
           contentStyle={contentStyle}
         >
@@ -113,11 +111,11 @@ function ProfessionalInfo({
           </Descriptions.Item>
 
           <Descriptions.Item label="Specialties">
-            {renderTags(profeshDetails.specialty)}
+            {renderTags(profeshDetails.specialty, "blue")}
           </Descriptions.Item>
 
           <Descriptions.Item label="Board Certifications">
-            {renderTags(profeshDetails.boardCertifications)}
+            {renderTags(profeshDetails.boardCertifications, "green")}
           </Descriptions.Item>
 
           <Descriptions.Item label="Years of Experience">
@@ -130,15 +128,15 @@ function ProfessionalInfo({
 
           <Descriptions.Item label="Education">
             <ul style={{ margin: 0, paddingLeft: "1.2rem" }}>
-              <li>{profeshDetails.education.bachelorsDegree}</li>
-              <li>{profeshDetails.education.medicalSchool}</li>
-              <li>{profeshDetails.education.residency}</li>
-              <li>{profeshDetails.education.certification}</li>
+              <li>{profeshDetails.education[0].bachelorsDegree}</li>
+              <li>{profeshDetails.education[0].medicalSchool}</li>
+              <li>{profeshDetails.education[0].residency}</li>
+              <li>{profeshDetails.education[0].certification}</li>
             </ul>
           </Descriptions.Item>
 
           <Descriptions.Item label="Languages Spoken">
-            {renderTags(profeshDetails.languagesSpoken)}
+            {renderTags(profeshDetails.languagesSpoken, "gold")}
           </Descriptions.Item>
 
           <Descriptions.Item label="Practice License Expiry">
