@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Card,
@@ -8,14 +8,26 @@ import {
   Space,
   Divider,
   Spin,
+  Tag,
+  Tooltip,
 } from "antd";
 import {
   CalendarOutlined,
   ClockCircleOutlined,
   UserOutlined,
 } from "@ant-design/icons";
+import DoctorDetailsModal from "../../components/doctorDetailsModal";
+import useFetchDoctorById from "../../hooks/fetchDoctorById";
 
 const { Title, Text } = Typography;
+
+const iconStyle = {
+  fontSize: "1.4rem",
+  color: "#00152a",
+  padding: "6px",
+  borderRadius: "50%",
+  border: "1px solid #00152a",
+};
 
 function PatientAppointments({
   navigate,
@@ -24,6 +36,25 @@ function PatientAppointments({
   appointmentRefresh,
   user,
 }) {
+  const [openDoctorModal, setOpenDoctorModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const {
+    doctorProfessionalData,
+    doctorPracticeData,
+    doctorLoading,
+    fetchDoctorById,
+    doctorUserData,
+  } = useFetchDoctorById();
+
+  const viewDoctor = async (id) => {
+    setLoading(true);
+    await fetchDoctorById(id);
+    setOpenDoctorModal(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 100);
+  };
+
   return (
     <div
       style={{
@@ -74,18 +105,33 @@ function PatientAppointments({
               >
                 <Space direction="vertical" size="small">
                   <Text>
-                    <CalendarOutlined /> Date:{" "}
+                    <CalendarOutlined style={iconStyle} /> Date:{" "}
                     <strong>
                       {new Date(item.appointmentDate).toDateString()}
                     </strong>
                   </Text>
                   <Text>
-                    <ClockCircleOutlined /> Time:{" "}
+                    <ClockCircleOutlined style={iconStyle} /> Time:{" "}
                     <strong>{item.appointmentTime}</strong>
                   </Text>
                   <Text>
-                    <UserOutlined /> Physician:{" "}
-                    <strong>{item.physician?.name || "To be populated"}</strong>
+                    <UserOutlined style={iconStyle} /> Physician:{" "}
+                    <Tag
+                      style={{
+                        cursor: "pointer",
+                      }}
+                      onClick={() => viewDoctor(item.physician?._id)}
+                      color="blue"
+                    >
+                      <Tooltip
+                        title={`Click to view Dr. ${item.physician?.firstName} ${item.physician?.lastName}`}
+                      >
+                        <strong>
+                          Dr. {item.physician?.firstName}{" "}
+                          {item.physician?.lastName}
+                        </strong>
+                      </Tooltip>
+                    </Tag>
                   </Text>
                 </Space>
               </Card>
@@ -93,6 +139,15 @@ function PatientAppointments({
           />
         )}
       </Card>
+      <DoctorDetailsModal
+        openDoctorModal={openDoctorModal}
+        setOpenDoctorModal={setOpenDoctorModal}
+        loading={loading}
+        doctorPracticeData={doctorPracticeData}
+        doctorLoading={doctorLoading}
+        doctorProfessionalData={doctorProfessionalData}
+        doctorUserData={doctorUserData}
+      />
     </div>
   );
 }

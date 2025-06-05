@@ -30,7 +30,10 @@ const fetchDoctor = async (req, res) => {
   if (!id) return res.status(404).json({ error: "No ID specified" });
   try {
     const objectId = new mongoose.Types.ObjectId(id);
-    const doctorData = await DoctorModel.find({ createdBy: objectId });
+    const doctorData = await DoctorModel.find({ createdBy: objectId }).populate(
+      "createdBy",
+      "firstName lastName avatar phoneNumber email gender"
+    );
     return res.status(201).json({ success: true, doctorData });
   } catch (error) {
     console.log(error);
