@@ -14,10 +14,13 @@ import {
 import {
   CalendarOutlined,
   ClockCircleOutlined,
+  DeleteOutlined,
+  EditOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import DoctorDetailsModal from "../../components/doctorDetailsModal";
 import useFetchDoctorById from "../../hooks/fetchDoctorById";
+import Swal from "sweetalert2";
 
 const { Title, Text } = Typography;
 
@@ -53,6 +56,26 @@ function PatientAppointments({
     setTimeout(() => {
       setLoading(false);
     }, 100);
+  };
+
+  const handleReschedule = (id) => {
+    console.log("Update", id);
+  };
+
+  const handleDelete = async (id) => {
+    Swal.fire({
+      icon: "warning",
+      title: "Are you sure?",
+      text: "This action is irreversible!",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        console.log("Delete", id);
+      }
+    });
   };
 
   return (
@@ -100,40 +123,68 @@ function PatientAppointments({
             renderItem={(item) => (
               <Card
                 key={item._id}
-                style={{ marginBottom: 16, borderRadius: 8 }}
+                style={{ marginBottom: 12, borderRadius: 8 }}
                 type="inner"
               >
-                <Space direction="vertical" size="small">
-                  <Text>
-                    <CalendarOutlined style={iconStyle} /> Date:{" "}
-                    <strong>
-                      {new Date(item.appointmentDate).toDateString()}
-                    </strong>
-                  </Text>
-                  <Text>
-                    <ClockCircleOutlined style={iconStyle} /> Time:{" "}
-                    <strong>{item.appointmentTime}</strong>
-                  </Text>
-                  <Text>
-                    <UserOutlined style={iconStyle} /> Physician:{" "}
-                    <Tag
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      onClick={() => viewDoctor(item.physician?._id)}
-                      color="blue"
-                    >
-                      <Tooltip
-                        title={`Click to view Dr. ${item.physician?.firstName} ${item.physician?.lastName}`}
-                      >
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <div>
+                    <Space direction="vertical" size="small">
+                      <Text>
+                        <CalendarOutlined style={iconStyle} /> Date:{" "}
                         <strong>
-                          Dr. {item.physician?.firstName}{" "}
-                          {item.physician?.lastName}
+                          {new Date(item.appointmentDate).toDateString()}
                         </strong>
+                      </Text>
+                      <Text>
+                        <ClockCircleOutlined style={iconStyle} /> Time:{" "}
+                        <strong>{item.appointmentTime}</strong>
+                      </Text>
+                      <Text>
+                        <UserOutlined style={iconStyle} /> Physician:{" "}
+                        <Tag
+                          style={{
+                            cursor: "pointer",
+                          }}
+                          onClick={() => viewDoctor(item.physician?._id)}
+                          color="blue"
+                        >
+                          <Tooltip
+                            title={`Click to view Dr. ${item.physician?.firstName} ${item.physician?.lastName}`}
+                          >
+                            <strong>
+                              Dr. {item.physician?.firstName}{" "}
+                              {item.physician?.lastName}
+                            </strong>
+                          </Tooltip>
+                        </Tag>
+                      </Text>
+                    </Space>
+                  </div>
+                  <div>
+                    <Space direction="vertical" size="small">
+                      <Tooltip title="Reschedule this appointment">
+                        <Button
+                          type="primary"
+                          icon={<EditOutlined />}
+                          onClick={() => handleReschedule(item._id)}
+                        />
                       </Tooltip>
-                    </Tag>
-                  </Text>
-                </Space>
+                      <Tooltip title="Delete this appointment">
+                        <Button
+                          danger
+                          icon={<DeleteOutlined />}
+                          onClick={() => handleDelete(item._id)}
+                        />
+                      </Tooltip>
+                    </Space>
+                  </div>
+                </div>
               </Card>
             )}
           />
