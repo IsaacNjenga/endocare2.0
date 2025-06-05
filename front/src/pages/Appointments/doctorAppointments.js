@@ -1,6 +1,12 @@
 import React from "react";
 
-function DoctorAppointments() {
+function DoctorAppointments({
+  navigate,
+  doctorAppointments,
+  appointmentsLoading,
+  appointmentRefresh,
+  user,
+}) {
   return <div>DoctorAppointments</div>;
 }
 

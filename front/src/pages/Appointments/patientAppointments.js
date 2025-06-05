@@ -1,35 +1,97 @@
 import React from "react";
-import { Button, Card } from "antd";
+import {
+  Button,
+  Card,
+  Typography,
+  List,
+  Empty,
+  Space,
+  Divider,
+  Spin,
+} from "antd";
+import {
+  CalendarOutlined,
+  ClockCircleOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
+
+const { Title, Text } = Typography;
 
 function PatientAppointments({
   navigate,
   patientAppointments,
   appointmentsLoading,
   appointmentRefresh,
+  user,
 }) {
   return (
-    <div>
-      {" "}
+    <div
+      style={{
+        maxWidth: 900,
+        margin: "auto",
+        marginTop: 40,
+        padding: "0 16px",
+      }}
+    >
       <Card
-        style={{ maxWidth: 1000, margin: "auto", marginTop: 32, padding: 24 }}
+        style={{
+          padding: 24,
+          borderRadius: 12,
+          boxShadow: "0 2px 12px rgba(0,0,0,0.05)",
+        }}
       >
-        <div>Available times:</div>
-        <div>
-          Upcoming Appointments:
-          <div>
-            <pre>{JSON.stringify(patientAppointments, null, 2)}</pre>
-          </div>
-        </div>
-        <div>
+        <Space
+          style={{
+            width: "100%",
+            justifyContent: "space-between",
+            marginBottom: 16,
+          }}
+        >
+          <Title level={4}>Upcoming Appointments</Title>
           <Button
             type="primary"
-            onClick={() => {
-              navigate("/appointments/create-appointment");
-            }}
+            onClick={() => navigate("/appointments/create-appointment")}
           >
-            Book an appointment
+            Book an Appointment
           </Button>
-        </div>
+        </Space>
+
+        <Divider />
+
+        {appointmentsLoading ? (
+          <Spin />
+        ) : patientAppointments?.length === 0 ? (
+          <Empty description="No upcoming appointments." />
+        ) : (
+          <List
+            itemLayout="vertical"
+            dataSource={patientAppointments}
+            renderItem={(item) => (
+              <Card
+                key={item._id}
+                style={{ marginBottom: 16, borderRadius: 8 }}
+                type="inner"
+              >
+                <Space direction="vertical" size="small">
+                  <Text>
+                    <CalendarOutlined /> Date:{" "}
+                    <strong>
+                      {new Date(item.appointmentDate).toDateString()}
+                    </strong>
+                  </Text>
+                  <Text>
+                    <ClockCircleOutlined /> Time:{" "}
+                    <strong>{item.appointmentTime}</strong>
+                  </Text>
+                  <Text>
+                    <UserOutlined /> Physician:{" "}
+                    <strong>{item.physician?.name || "To be populated"}</strong>
+                  </Text>
+                </Space>
+              </Card>
+            )}
+          />
+        )}
       </Card>
     </div>
   );
