@@ -36,6 +36,13 @@ import {
   fetchAllDoctors,
   updateDoctor,
 } from "../controllers/doctorController.js";
+import {
+  updateAppointment,
+  createAppointment,
+  deleteAppointment,
+  fetchPatientAppointments,
+  fetchDoctorAppointments,
+} from "../controllers/appointmentController.js";
 
 const router = express.Router();
 
@@ -81,4 +88,12 @@ router.get("/fetch-diary-entry", fetchDiaryEntry);
 router.get("/fetch-diary-entries", fetchDiaryEntries);
 router.put("/update-diary-entry", updateDiaryEntry);
 router.delete("/delete-diary-entry", deleteDiaryEntry);
+
+//appointment routes
+router.post("/create-appointment", createAppointment);
+router.get("/fetch-doctor-appointments", fetchDoctorAppointments);
+router.get("/fetch-patient-appointments", fetchPatientAppointments);
+router.put("/", updateAppointment);
+router.delete("/", deleteAppointment);
+
 export { router as Router };

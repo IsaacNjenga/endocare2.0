@@ -1,26 +1,45 @@
-import React from "react";
-import { Button, Card } from "antd";
+import React, { useContext } from "react";
+
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../App";
+import PatientAppointments from "./patientAppointments";
+import DoctorAppointments from "./doctorAppointments";
+import useFetchAppointmentData from "../../hooks/fetchAppointmentData";
 
 function Appointments() {
   const navigate = useNavigate();
+  const { user } = useContext(UserContext);
+  const userId = user?._id;
+  const userRole = user?.role;
+  const {
+    doctorAppointments,
+    patientAppointments,
+    appointmentsLoading,
+    appointmentRefresh,
+  } = useFetchAppointmentData(userId);
+
   return (
-    <Card
-      style={{ maxWidth: 1000, margin: "auto", marginTop: 32, padding: 24 }}
-    >
-      <div>Available times:</div>
-      <div>Upcoming Appointments:</div>
-      <div>
-        <Button
-          type="primary"
-          onClick={() => {
-            navigate("/appointments/create-appointment");
-          }}
-        >
-          Book an appointment
-        </Button>
-      </div>
-    </Card>
+    <>
+      {userRole === "patient" ? (
+        <PatientAppointments
+          navigate={navigate}
+          user={user}
+          patientAppointments={patientAppointments}
+          appointmentsLoading={appointmentsLoading}
+          appointmentRefresh={appointmentRefresh}
+        />
+      ) : userRole === "doctor" ? (
+        <DoctorAppointments
+          navigate={navigate}
+          user={user}
+          doctorAppointments={doctorAppointments}
+          appointmentsLoading={appointmentsLoading}
+          appointmentRefresh={appointmentRefresh}
+        />
+      ) : (
+        "Unknown user. Back to sign in"
+      )}
+    </>
   );
 }
 

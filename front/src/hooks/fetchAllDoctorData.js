@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 function useFetchAllDoctorData() {
   const [doctors, setDoctors] = useState([]);
@@ -16,6 +17,14 @@ function useFetchAllDoctorData() {
         }
       } catch (error) {
         console.log(error);
+        const errorMessage =
+          error.response?.data?.error ??
+          "An unexpected error occurred. Please try again later.";
+        Swal.fire({
+          icon: "warning",
+          title: "Error",
+          text: errorMessage,
+        });
       } finally {
         setAllDoctorsLoading(false);
       }

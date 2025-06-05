@@ -122,20 +122,20 @@ function CreateAppointment() {
           createdBy: user._id,
           physician: selectedPhysician,
         };
-        console.log(values);
-        //const res = await axios.post(,values);
-        // if (res.data.success) {
-        api.success({
-          message: "Appointment Set!",
-          description: `Appointment set for ${selectedDate.format(
-            "dddd, MMMM D YYYY"
-          )} at
-            ${selectedTime} with Dr ${selectedPhysicianName}. Don't be late`,
-        });
-
-        // Continue to next step here (e.g., confirm, submit, etc.)
+        const res = await axios.post("create-appointment", values);
+        if (res.data.success) {
+          api.success({
+            message: "Appointment Set!",
+            description: `Appointment set for ${selectedDate.format(
+              "dddd, MMMM D YYYY"
+            )} at
+            ${selectedTime} with Dr ${selectedPhysicianName}. Don't be late!`,
+          });
+          setTimeout(() => {
+            navigate("/appointments");
+          }, 4500);
+        }
       }
-      //}
     } catch (error) {
       console.log(error);
       api.error({
