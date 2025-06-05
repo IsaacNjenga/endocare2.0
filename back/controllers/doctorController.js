@@ -12,6 +12,19 @@ const createDoctor = async (req, res) => {
   }
 };
 
+const fetchAllDoctors = async (req, res) => {
+  try {
+    const allDoctors = await DoctorModel.find({}).populate(
+      "createdBy",
+      "firstName lastName avatar phoneNumber email gender"
+    );
+    return res.status(201).json({ success: true, allDoctors });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 const fetchDoctor = async (req, res) => {
   const { id } = req.query;
   if (!id) return res.status(404).json({ error: "No ID specified" });
@@ -52,4 +65,10 @@ const deleteDoctor = async (req, res) => {
   }
 };
 
-export { createDoctor, fetchDoctor, updateDoctor, deleteDoctor };
+export {
+  createDoctor,
+  fetchDoctor,
+  updateDoctor,
+  deleteDoctor,
+  fetchAllDoctors,
+};

@@ -29,9 +29,11 @@ import {
   updateDiaryEntry,
   deleteDiaryEntry,
 } from "../controllers/diaryController.js";
-import {deleteDoctor, 
+import {
+  deleteDoctor,
   createDoctor,
   fetchDoctor,
+  fetchAllDoctors,
   updateDoctor,
 } from "../controllers/doctorController.js";
 
@@ -66,7 +68,7 @@ router.delete("/delete-detail", deletePatientDetail);
 //doctor routes
 router.post("/create-doctor-details", createDoctor);
 router.get("/get-doctor-details", fetchDoctor);
-//router.get("/");
+router.get("/get-all-doctors", fetchAllDoctors);
 router.put("/update-doctor-details", updateDoctor);
 router.delete("/delete-details", deleteDoctor);
 
