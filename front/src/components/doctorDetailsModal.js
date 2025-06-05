@@ -1,7 +1,6 @@
 import React from "react";
 import { Col, Modal, Row, Spin, Card, Avatar } from "antd";
 
-
 function DoctorDetailsModal({
   openDoctorModal,
   setOpenDoctorModal,
@@ -16,14 +15,14 @@ function DoctorDetailsModal({
       footer={null}
       open={openDoctorModal}
       onCancel={() => setOpenDoctorModal(false)}
-      width={850}
+      width={950}
       confirmLoading={loading}
       style={{ maxWidth: "95vw" }}
     >
       {doctorLoading ? (
         <Spin tip="Loading..." />
       ) : (
-        <div style={{ padding: "16px" }}>
+        <div style={{ padding: "12px" }}>
           <Row gutter={[24, 24]}>
             {/* Avatar and Basic Info */}
             <Col span={24}>
@@ -65,8 +64,12 @@ function DoctorDetailsModal({
                   {doctorProfessionalData?.yearsOfExperience}
                 </p>
                 <p>
-                  <strong>Medical License #:</strong>{" "}
+                  <strong>Medical License No.:</strong>{" "}
                   {doctorProfessionalData?.medicalLicenseNumber}
+                </p>
+                <p>
+                  <strong>Languages Spoken:</strong>{" "}
+                  {doctorProfessionalData?.languagesSpoken?.join(", ")}
                 </p>
                 <p>
                   <strong>Board Certifications:</strong>
@@ -78,10 +81,6 @@ function DoctorDetailsModal({
                     )
                   )}
                 </ul>
-                <p>
-                  <strong>Languages Spoken:</strong>{" "}
-                  {doctorProfessionalData?.languagesSpoken?.join(", ")}
-                </p>
               </Card>
             </Col>
 
