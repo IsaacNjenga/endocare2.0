@@ -66,6 +66,7 @@ function ChangePassword({ setOpen }) {
         title: "Error",
         text: errorMessage,
       });
+      setTimeLeft(0);
     } finally {
       setOtpLoading(false);
     }
@@ -98,6 +99,7 @@ function ChangePassword({ setOpen }) {
         title: "Error",
         text: errorMessage,
       });
+      setTimeLeft(0)
     }
   };
 

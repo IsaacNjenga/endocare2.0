@@ -39,10 +39,7 @@ const fetchDoctorAppointments = async (req, res) => {
     const objectId = new mongoose.Types.ObjectId(id);
     const doctorAppointments = await AppointmentModel.find({
       physician: objectId,
-    }).populate(
-      "createdBy",
-      "firstName lastName avatar phoneNumber email gender"
-    );
+    }).populate("createdBy", "firstName lastName");
     return res.status(200).json({ success: true, doctorAppointments });
   } catch (error) {
     console.log(error);

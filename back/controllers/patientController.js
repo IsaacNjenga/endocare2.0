@@ -20,7 +20,12 @@ const fetchPatientDetails = async (req, res) => {
   }
   try {
     const objectId = new mongoose.Types.ObjectId(id);
-    const patientData = await PatientModel.find({ createdBy: objectId });
+    const patientData = await PatientModel.find({
+      createdBy: objectId,
+    }).populate(
+      "createdBy",
+      "firstName lastName email phoneNumber gender avatar"
+    );
     return res.status(200).json({ success: true, patientData });
   } catch (error) {
     console.log("Error fetching patient information", error);

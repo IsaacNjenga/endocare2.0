@@ -64,7 +64,8 @@ function useFetchDoctorById() {
   return {
     doctorProfessionalData,
     doctorPracticeData,
-    doctorLoading,doctorUserData,
+    doctorLoading,
+    doctorUserData,
     fetchDoctorById,
   };
 }

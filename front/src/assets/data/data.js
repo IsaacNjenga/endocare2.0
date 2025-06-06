@@ -761,7 +761,7 @@ export const exerciseType = [
     value: "High-Intensity Interval Training",
     label: "High-Intensity Interval Training (HIIT)",
   },
-  { value: "sports", label: "Sports" },
+  { value: "Sports", label: "Sports" },
 ];
 
 export const exerciseExperiences = [
