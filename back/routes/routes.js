@@ -94,6 +94,6 @@ router.post("/create-appointment", createAppointment);
 router.get("/fetch-doctor-appointments", fetchDoctorAppointments);
 router.get("/fetch-patient-appointments", fetchPatientAppointments);
 router.put("/update-appointment", updateAppointment);
-router.delete("/", deleteAppointment);
+router.delete("/delete-appointment", deleteAppointment);
 
 export { router as Router };

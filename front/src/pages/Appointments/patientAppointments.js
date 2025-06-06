@@ -22,6 +22,7 @@ import DoctorDetailsModal from "../../components/doctorDetailsModal";
 import useFetchDoctorById from "../../hooks/fetchDoctorById";
 import Swal from "sweetalert2";
 import UpdateAppointmentModal from "./updateAppointmentModal";
+import axios from "axios";
 
 const { Title, Text } = Typography;
 
@@ -38,7 +39,6 @@ function PatientAppointments({
   patientAppointments,
   appointmentsLoading,
   appointmentRefresh,
-  
 }) {
   const [openDoctorModal, setOpenDoctorModal] = useState(false);
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
@@ -79,11 +79,32 @@ function PatientAppointments({
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        console.log("Delete", id);
-      }
-    });
+    })
+      .then(async (result) => {
+        if (result.isConfirmed) {
+          console.log("Delete", id);
+          const res = await axios.delete(`delete-appointment?id=${id}`);
+          if (res.data.success) {
+            Swal.fire({
+              icon: "success",
+              title: "Deleted!",
+              text: "Appointment deleted",
+            });
+            appointmentRefresh();
+          }
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        const errorMessage =
+          err.response?.data?.error ??
+          "An unexpected error occurred. Please try again later.";
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: errorMessage,
+        });
+      });
   };
 
   return (
@@ -211,7 +232,8 @@ function PatientAppointments({
         openUpdateModal={openUpdateModal}
         setOpenUpdateModal={setOpenUpdateModal}
         loading={loading}
-        modalContent={modalContent} appointmentRefresh={appointmentRefresh}
+        modalContent={modalContent}
+        appointmentRefresh={appointmentRefresh}
       />
     </div>
   );

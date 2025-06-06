@@ -71,7 +71,14 @@ const updateAppointment = async (req, res) => {
 };
 
 const deleteAppointment = async (req, res) => {
+  const { id } = req.query;
+  if (!id) return res.status(400).json({ error: "No ID specified" });
   try {
+    const objectId = new mongoose.Types.ObjectId(id);
+    const appointmentDeleted = await AppointmentModel.findOneAndDelete({
+      _id: objectId,
+    });
+    return res.status(201).json({ success: true, appointmentDeleted });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: "Internal Server Error" });
