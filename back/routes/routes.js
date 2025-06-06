@@ -93,7 +93,7 @@ router.delete("/delete-diary-entry", deleteDiaryEntry);
 router.post("/create-appointment", createAppointment);
 router.get("/fetch-doctor-appointments", fetchDoctorAppointments);
 router.get("/fetch-patient-appointments", fetchPatientAppointments);
-router.put("/", updateAppointment);
+router.put("/update-appointment", updateAppointment);
 router.delete("/", deleteAppointment);
 
 export { router as Router };

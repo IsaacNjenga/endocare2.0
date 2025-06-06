@@ -12,7 +12,7 @@ import {
   Avatar,
   Tag,
 } from "antd";
-//import axios from "axios";
+import axios from "axios";
 import dayjs from "dayjs";
 import {
   MailOutlined,
@@ -83,12 +83,17 @@ const afternoonHours = [
   { label: "4:00 PM", value: "4:00 PM" },
 ];
 
-function UpdateAppointment({ modalContent }) {
+function UpdateAppointment({
+  modalContent,
+  setOpenUpdateModal,
+  appointmentRefresh,
+}) {
   const { user } = useContext(UserContext);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [selectedPhysician, setSelectedPhysician] = useState(null);
   const [selectedPhysicianName, setSelectedPhysicianName] = useState(null);
+  const [updateLoading, setUpdateLoading] = useState(false);
   const { doctors, allDoctorsLoading } = useFetchAllDoctorData();
 
   React.useEffect(() => {
@@ -119,6 +124,7 @@ function UpdateAppointment({ modalContent }) {
   };
 
   const handleContinue = async () => {
+    setUpdateLoading(true);
     try {
       if (selectedDate && selectedTime && selectedPhysician) {
         const values = {
@@ -127,7 +133,19 @@ function UpdateAppointment({ modalContent }) {
           createdBy: user._id,
           physician: selectedPhysician,
         };
-        console.log(values);
+        //console.log(values);
+        const res = await axios.put(
+          `update-appointment?id=${modalContent._id}`,
+          values
+        );
+        if (res.data.success) {
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: "Appointment successfully rescheduled",
+          });
+          appointmentRefresh();
+        }
       }
     } catch (error) {
       console.log(error);
@@ -135,10 +153,13 @@ function UpdateAppointment({ modalContent }) {
         error.response?.data?.error ??
         "An unexpected error occurred. Please try again later.";
       Swal.fire({
-        icon: "warning",
+        icon: "error",
         title: "Error",
         text: errorMessage,
       });
+    } finally {
+      setUpdateLoading(false);
+      setOpenUpdateModal(false);
     }
   };
 
@@ -155,9 +176,9 @@ function UpdateAppointment({ modalContent }) {
   if (allDoctorsLoading) return <div>Loading...</div>;
 
   return (
-    <Card style={{ maxWidth: 800, margin: "auto", marginTop: 32, padding: 24 }}>
+    <Card style={{ maxWidth: 800, margin: "auto", marginTop: 28, padding: 16 }}>
       <Typography.Title level={3} style={sectionCardStyle}>
-        Schedule Your Appointment
+        Reschedule Your Appointment
       </Typography.Title>
       <Divider orientation="left">
         <span style={sectionHeaderStyle}>Select a Date</span>
@@ -313,6 +334,7 @@ function UpdateAppointment({ modalContent }) {
             disabled={!selectedDate || !selectedTime || !selectedPhysician}
             size="large"
             onClick={handleContinue}
+            loading={updateLoading}
           >
             Set Appointment
           </Button>

@@ -38,7 +38,7 @@ function PatientAppointments({
   patientAppointments,
   appointmentsLoading,
   appointmentRefresh,
-  user,
+  
 }) {
   const [openDoctorModal, setOpenDoctorModal] = useState(false);
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
@@ -211,7 +211,7 @@ function PatientAppointments({
         openUpdateModal={openUpdateModal}
         setOpenUpdateModal={setOpenUpdateModal}
         loading={loading}
-        modalContent={modalContent}
+        modalContent={modalContent} appointmentRefresh={appointmentRefresh}
       />
     </div>
   );

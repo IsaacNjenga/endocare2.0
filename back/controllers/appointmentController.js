@@ -22,10 +22,7 @@ const fetchPatientAppointments = async (req, res) => {
     const objectId = new mongoose.Types.ObjectId(id);
     const patientAppointments = await AppointmentModel.find({
       createdBy: objectId,
-    }).populate(
-      "physician",
-      "firstName lastName "
-    );
+    }).populate("physician", "firstName lastName ");
     return res.status(200).json({ success: true, patientAppointments });
   } catch (error) {
     console.log(error);
@@ -54,7 +51,19 @@ const fetchDoctorAppointments = async (req, res) => {
 };
 
 const updateAppointment = async (req, res) => {
+  const { id } = req.query;
+  //console.log(id);
+  if (!id) return res.status(400).json({ error: "No ID specified" });
   try {
+    const objectId = new mongoose.Types.ObjectId(id);
+    const updatedAppointment = await AppointmentModel.findOneAndUpdate(
+      {
+        _id: objectId,
+      },
+      { $set: req.body },
+      { new: true }
+    );
+    return res.status(201).json({ success: true, updatedAppointment });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: "Internal Server Error" });

@@ -6,6 +6,7 @@ function UpdateAppointmentModal({
   setOpenUpdateModal,
   loading,
   modalContent,
+  appointmentRefresh,
 }) {
   return (
     <Modal
@@ -13,10 +14,14 @@ function UpdateAppointmentModal({
       open={openUpdateModal}
       onCancel={() => setOpenUpdateModal(false)}
       confirmLoading={loading}
-      width={850}
+      width={800}
       style={{ maxWidth: "95vw" }}
     >
-      <UpdateAppointment modalContent={modalContent}/>
+      <UpdateAppointment
+        modalContent={modalContent}
+        setOpenUpdateModal={setOpenUpdateModal}
+        appointmentRefresh={appointmentRefresh}
+      />
     </Modal>
   );
 }
