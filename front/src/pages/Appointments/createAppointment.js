@@ -115,7 +115,7 @@ function CreateAppointment() {
 
   const handleContinue = async () => {
     try {
-      if (selectedDate && selectedTime) {
+      if (selectedDate && selectedTime && selectedPhysician) {
         const values = {
           appointmentDate: selectedDate.format("YYYY-MM-DD"),
           appointmentTime: selectedTime,

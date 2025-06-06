@@ -21,6 +21,7 @@ import {
 import DoctorDetailsModal from "../../components/doctorDetailsModal";
 import useFetchDoctorById from "../../hooks/fetchDoctorById";
 import Swal from "sweetalert2";
+import UpdateAppointmentModal from "./updateAppointmentModal";
 
 const { Title, Text } = Typography;
 
@@ -40,6 +41,8 @@ function PatientAppointments({
   user,
 }) {
   const [openDoctorModal, setOpenDoctorModal] = useState(false);
+  const [openUpdateModal, setOpenUpdateModal] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
   const [loading, setLoading] = useState(false);
   const {
     doctorProfessionalData,
@@ -58,8 +61,13 @@ function PatientAppointments({
     }, 100);
   };
 
-  const handleReschedule = (id) => {
-    console.log("Update", id);
+  const handleReschedule = (item) => {
+    setLoading(true);
+    setModalContent(item);
+    setOpenUpdateModal(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 100);
   };
 
   const handleDelete = async (id) => {
@@ -172,7 +180,7 @@ function PatientAppointments({
                         <Button
                           type="primary"
                           icon={<EditOutlined />}
-                          onClick={() => handleReschedule(item._id)}
+                          onClick={() => handleReschedule(item)}
                         />
                       </Tooltip>
                       <Tooltip title="Delete this appointment">
@@ -198,6 +206,12 @@ function PatientAppointments({
         doctorLoading={doctorLoading}
         doctorProfessionalData={doctorProfessionalData}
         doctorUserData={doctorUserData}
+      />
+      <UpdateAppointmentModal
+        openUpdateModal={openUpdateModal}
+        setOpenUpdateModal={setOpenUpdateModal}
+        loading={loading}
+        modalContent={modalContent}
       />
     </div>
   );
