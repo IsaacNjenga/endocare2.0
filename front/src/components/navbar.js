@@ -3,6 +3,7 @@ import { Button, Divider, FloatButton, Layout, Menu, theme } from "antd";
 import {
   BookOutlined,
   CalendarOutlined,
+  MedicineBoxOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   PoweroffOutlined,
@@ -29,9 +30,11 @@ function Navbar() {
   const [loading, setLoading] = useState(false);
   const [openBot, setOpenBot] = useState(false);
   const [input, setInput] = useState("");
+
   const [messages, setMessages] = useState([
     { role: "system", content: "Ask me anything..." },
   ]);
+  const userRole = user?.role;
 
   const assistantModel = () => {
     setOpenBot((prev) => !prev);
@@ -66,11 +69,20 @@ function Navbar() {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
-  const navItems = [
+  const doctorNavItems = [
     { label: "Dashboard", path: "/dashboard", icon: UserOutlined },
+    { label: "My Patients", path: "/diary", icon: BookOutlined },
+    { label: "Appointments", path: "/appointments", icon: CalendarOutlined },
+  ];
+
+  const patientNavItems = [
+    { label: "Dashboard", path: "/dashboard", icon: UserOutlined },
+    { label: "Specialists", path: "/specialists", icon: MedicineBoxOutlined },
     { label: "Diary", path: "/diary", icon: BookOutlined },
     { label: "Appointments", path: "/appointments", icon: CalendarOutlined },
   ];
+
+  const navItems = userRole === "patient" ? patientNavItems : doctorNavItems;
 
   const menuItems = [
     { key: "1", icon: <UserOutlined />, label: "Profile", path: "/profile" },
@@ -273,7 +285,7 @@ function Navbar() {
               }}
             >
               {menuItems.map((item) => (
-                <Menu.Item key={item.path || item.key} icon={item.icon}>
+                <Menu.Item key={item?.path || item?.key} icon={item.icon}>
                   <Link
                     to={item.path}
                     style={{
