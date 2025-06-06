@@ -125,7 +125,7 @@ function DoctorAppointments({
                             cursor: "pointer",
                           }}
                           onClick={() => viewPatient(item.createdBy?._id)}
-                          color="blue"
+                          color="green"
                         >
                           <Tooltip
                             title={`Click to view ${item.createdBy?.firstName} ${item.createdBy?.lastName}`}

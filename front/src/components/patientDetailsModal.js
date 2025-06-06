@@ -11,7 +11,7 @@ function PatientDetailsModal({
   patientData,
   patientLoading,
 }) {
-  const patient = patientData?.[0]; // assuming single object in array
+  const patient = patientData?.[0]; 
 
   return (
     <Modal
@@ -25,7 +25,7 @@ function PatientDetailsModal({
       {patientLoading ? (
         <Spin tip="Loading..." />
       ) : (
-        <div>
+        <div style={{ padding: "12px" }}>
           {/* Personal Info */}
           <Card>
             <Row align="middle" gutter={16}>
@@ -36,9 +36,13 @@ function PatientDetailsModal({
                 <Title level={4}>
                   {patient?.createdBy?.firstName} {patient?.createdBy?.lastName}
                 </Title>
-                <Text type="secondary">{patient?.createdBy?.email}</Text><br />
-                <Text>{patient?.createdBy?.phoneNumber}</Text><br />
-                <Text><strong>Gender:</strong> {patient?.createdBy?.gender}</Text>
+                <Text type="secondary">{patient?.createdBy?.email}</Text>
+                <br />
+                <Text>{patient?.createdBy?.phoneNumber}</Text>
+                <br />
+                <Text>
+                  <strong>Gender:</strong> {patient?.createdBy?.gender}
+                </Text>
               </Col>
             </Row>
           </Card>
@@ -49,10 +53,19 @@ function PatientDetailsModal({
           <Card title="Diagnosis & Health Info">
             {patient?.patientInformation?.map((info, idx) => (
               <div key={idx}>
-                <p><strong>Diagnosis:</strong> {info.diagnosis}</p>
-                <p><strong>Blood Type:</strong> {info.bloodType}</p>
-                <p><strong>Chronic Conditions:</strong> {info.chronicConditions?.join(", ")}</p>
-                <p><strong>Allergies:</strong> {info.allergies?.join(", ")}</p>
+                <p>
+                  <strong>Diagnosis:</strong> {info.diagnosis}
+                </p>
+                <p>
+                  <strong>Blood Type:</strong> {info.bloodType}
+                </p>
+                <p>
+                  <strong>Chronic Conditions:</strong>{" "}
+                  {info.chronicConditions?.join(", ")}
+                </p>
+                <p>
+                  <strong>Allergies:</strong> {info.allergies?.join(", ")}
+                </p>
               </div>
             ))}
           </Card>
@@ -63,9 +76,17 @@ function PatientDetailsModal({
           <Card title="Current Medications">
             {patient?.currentMedications?.map((med, idx) => (
               <div key={idx} style={{ marginBottom: 8 }}>
-                <Text><strong>{med.name}</strong> — {med.dosage}, {med.frequency}</Text><br />
-                <Text type="secondary">Ongoing: {med.isOngoing ? "Yes" : "No"}</Text><br />
-                <Text type="secondary">Started: {moment(med.startDate).format("YYYY-MM-DD")}</Text>
+                <Text>
+                  <strong>{med.name}</strong> — {med.dosage}, {med.frequency}
+                </Text>
+                <br />
+                <Text type="secondary">
+                  Ongoing: {med.isOngoing ? "Yes" : "No"}
+                </Text>
+                <br />
+                <Text type="secondary">
+                  Started: {moment(med.startDate).format("YYYY-MM-DD")}
+                </Text>
               </div>
             ))}
           </Card>
@@ -76,10 +97,22 @@ function PatientDetailsModal({
           <Card title="Treatment History">
             {patient?.treatmentHistory?.map((treat, idx) => (
               <div key={idx} style={{ marginBottom: 8 }}>
-                <Text><strong>Condition:</strong> {treat.condition}</Text><br />
-                <Text><strong>Diagnosis Date:</strong> {moment(treat.diagnosisDate).format("YYYY-MM-DD")}</Text><br />
-                <Text><strong>Treatment:</strong> {treat.treatmentDescription}</Text><br />
-                <Text><strong>Outcome:</strong> {treat.outcome}</Text>
+                <Text>
+                  <strong>Condition:</strong> {treat.condition}
+                </Text>
+                <br />
+                <Text>
+                  <strong>Diagnosis Date:</strong>{" "}
+                  {moment(treat.diagnosisDate).format("YYYY-MM-DD")}
+                </Text>
+                <br />
+                <Text>
+                  <strong>Treatment:</strong> {treat.treatmentDescription}
+                </Text>
+                <br />
+                <Text>
+                  <strong>Outcome:</strong> {treat.outcome}
+                </Text>
               </div>
             ))}
           </Card>
@@ -90,9 +123,18 @@ function PatientDetailsModal({
           <Card title="Medical Procedures">
             {patient?.medicalProcedures?.map((proc, idx) => (
               <div key={idx} style={{ marginBottom: 8 }}>
-                <Text><strong>Procedure:</strong> {proc.procedureName}</Text><br />
-                <Text><strong>Date:</strong> {moment(proc.dateOfProcedure).format("YYYY-MM-DD")}</Text><br />
-                <Text><strong>Notes:</strong> {proc.notes}</Text>
+                <Text>
+                  <strong>Procedure:</strong> {proc.procedureName}
+                </Text>
+                <br />
+                <Text>
+                  <strong>Date:</strong>{" "}
+                  {moment(proc.dateOfProcedure).format("YYYY-MM-DD")}
+                </Text>
+                <br />
+                <Text>
+                  <strong>Notes:</strong> {proc.notes}
+                </Text>
               </div>
             ))}
           </Card>
@@ -103,7 +145,10 @@ function PatientDetailsModal({
           <Card title="Family History">
             {patient?.familyHistory?.map((fam, idx) => (
               <div key={idx} style={{ marginBottom: 8 }}>
-                <Text><strong>{fam.relation}</strong> — {fam.condition}</Text><br />
+                <Text>
+                  <strong>{fam.relation}</strong> — {fam.condition}
+                </Text>
+                <br />
                 <Text type="secondary">{fam.notes}</Text>
               </div>
             ))}
@@ -115,8 +160,12 @@ function PatientDetailsModal({
           <Card title="Previous Providers">
             {patient?.previousProviders?.map((prov, idx) => (
               <div key={idx} style={{ marginBottom: 8 }}>
-                <Text><strong>{prov.name}</strong></Text><br />
-                <Text>Contact: {prov.contactInfo}</Text><br />
+                <Text>
+                  <strong>{prov.name}</strong>
+                </Text>
+                <br />
+                <Text>Contact: {prov.contactInfo}</Text>
+                <br />
                 <Text>Period: {prov.period}</Text>
               </div>
             ))}
@@ -128,10 +177,18 @@ function PatientDetailsModal({
           <Card title="Lifestyle">
             {patient?.lifestyle?.map((life, idx) => (
               <div key={idx}>
-                <p><strong>Smoking:</strong> {life.smoking}</p>
-                <p><strong>Alcohol Use:</strong> {life.alcoholUse}</p>
-                <p><strong>Exercise:</strong> {life.exerciseFrequency}</p>
-                <p><strong>Diet:</strong> {life.dietDescription}</p>
+                <p>
+                  <strong>Smoking:</strong> {life.smoking}
+                </p>
+                <p>
+                  <strong>Alcohol Use:</strong> {life.alcoholUse}
+                </p>
+                <p>
+                  <strong>Exercise:</strong> {life.exerciseFrequency}
+                </p>
+                <p>
+                  <strong>Diet:</strong> {life.dietDescription}
+                </p>
               </div>
             ))}
           </Card>
