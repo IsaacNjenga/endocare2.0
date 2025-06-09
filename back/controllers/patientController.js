@@ -24,7 +24,7 @@ const fetchPatientDetails = async (req, res) => {
       createdBy: objectId,
     }).populate(
       "createdBy",
-      "firstName lastName email phoneNumber gender avatar"
+      "firstName lastName email phoneNumber gender avatar dob middleName emergencyEmail emergencyPhoneNumber emergencyName"
     );
     return res.status(200).json({ success: true, patientData });
   } catch (error) {
