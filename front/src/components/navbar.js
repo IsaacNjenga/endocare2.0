@@ -71,7 +71,7 @@ function Navbar() {
 
   const doctorNavItems = [
     { label: "Dashboard", path: "/dashboard", icon: UserOutlined },
-    { label: "My Patients", path: "/diary", icon: BookOutlined },
+    { label: "My Patients", path: "/my-patients", icon: BookOutlined },
     { label: "Appointments", path: "/appointments", icon: CalendarOutlined },
   ];
 

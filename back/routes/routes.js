@@ -36,6 +36,7 @@ import {
   fetchDoctor,
   fetchAllDoctors,
   updateDoctor,
+  fetchMyPatients,
 } from "../controllers/doctorController.js";
 import {
   updateAppointment,
@@ -78,6 +79,7 @@ router.delete("/delete-detail", deletePatientDetail);
 router.post("/create-doctor-details", createDoctor);
 router.get("/get-doctor-details", fetchDoctor);
 router.get("/get-all-doctors", fetchAllDoctors);
+router.get("/get-my-patients", fetchMyPatients);
 router.put("/update-doctor-details", updateDoctor);
 router.delete("/delete-details", deleteDoctor);
 

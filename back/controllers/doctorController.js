@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import DoctorModel from "../models/Doctor.js";
+import PatientModel from "../models/Patient.js";
 
 const createDoctor = async (req, res) => {
   try {
@@ -41,6 +42,19 @@ const fetchDoctor = async (req, res) => {
   }
 };
 
+const fetchMyPatients = async (req, res) => {
+  const { id } = req.query;
+  if (!id) return res.status(404).json({ error: "No ID specified" });
+  try {
+    const objectId = new mongoose.Types.ObjectId(id);
+    const myPatients = await PatientModel.find({ selectedPhysician: objectId });
+    return res.status(200).json({ success: true, myPatients });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 const updateDoctor = async (req, res) => {
   const { id } = req.query;
   if (!id) return res.status(400).json({ error: "No ID specified" });
@@ -74,4 +88,5 @@ export {
   updateDoctor,
   deleteDoctor,
   fetchAllDoctors,
+  fetchMyPatients,
 };

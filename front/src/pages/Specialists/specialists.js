@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import useFetchAllDoctorData from "../../hooks/fetchAllDoctorData";
 import {
   Button,
   Col,
@@ -11,7 +10,6 @@ import {
   Avatar,
   Spin,
   Tag,
-  Tooltip,
 } from "antd";
 import {
   MailOutlined,
@@ -22,10 +20,7 @@ import {
 } from "@ant-design/icons";
 import useFetchDoctorById from "../../hooks/fetchDoctorById";
 import DoctorDetailsModal from "../../components/doctorDetailsModal";
-import axios from "axios";
 import { UserContext } from "../../App";
-import Swal from "sweetalert2";
-import SelectSpecialist from "./selectSpecialist";
 import useFetchPatientData from "../../hooks/fetchPatientData";
 import doctorImg from "../../assets/images/doctor.png";
 import { useNavigate } from "react-router-dom";
@@ -66,11 +61,9 @@ function Specialists() {
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
   const userId = user?._id;
-  const { doctors, allDoctorsLoading } = useFetchAllDoctorData();
   const [openDoctorModal, setOpenDoctorModal] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { patientData, patientDataLoading, patientRefresh } =
-    useFetchPatientData(userId);
+  const { patientData, patientDataLoading } = useFetchPatientData(userId);
   const {
     doctorProfessionalData,
     doctorPracticeData,
@@ -276,6 +269,13 @@ function Specialists() {
       </Card>
     );
   };
+
+  if (patientDataLoading)
+    return (
+      <div>
+        <Spin tip="Loading..." />
+      </div>
+    );
 
   return (
     <div style={{ padding: 12 }}>

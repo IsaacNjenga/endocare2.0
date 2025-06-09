@@ -17,6 +17,7 @@ import DiaryContent from "./pages/Diary/diaryContent";
 import CreateAppointment from "./pages/Appointments/createAppointment";
 import Specialists from "./pages/Specialists/specialists.js";
 import SelectSpecialist from "./pages/Specialists/selectSpecialist.js";
+import MyPatients from "./pages/MyPatients/myPatients.js";
 
 const cookies = new Cookies();
 export const UserContext = createContext();
@@ -63,6 +64,7 @@ function App() {
             <Route path="resources" element={<Resources />} />
             <Route path="profile" element={<Profile />} />
             <Route path="specialists" element={<Specialists />} />
+            <Route path="my-patients" element={<MyPatients />} />
             <Route
               path="profile/create-medical-info"
               element={<CreateMedicalInfo />}
