@@ -20,6 +20,7 @@ import {
   fetchPatientsDetails,
   updatePatientDetails,
   deletePatientDetail,
+  updatePatientPhysician,
 } from "../controllers/patientController.js";
 import { chatWithCohere } from "../controllers/chatbotController.js";
 import {
@@ -69,6 +70,7 @@ router.post("/create-patient-details", createPatientDetails);
 router.get("/get-patient-details", fetchPatientDetails);
 router.get("/get-patients-details", fetchPatientsDetails);
 router.put("/update-patient-details", updatePatientDetails);
+router.put("/update-patient-physician", updatePatientPhysician);
 router.delete("/delete-patient-details", deletePatientDetails);
 router.delete("/delete-detail", deletePatientDetail);
 

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import useFetchAllDoctorData from "../hooks/fetchAllDoctorData";
+import React, { useContext, useState } from "react";
+import useFetchAllDoctorData from "../../hooks/fetchAllDoctorData";
 import {
   Button,
   Col,
@@ -20,8 +20,12 @@ import {
   EnvironmentOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import useFetchDoctorById from "../hooks/fetchDoctorById";
-import DoctorDetailsModal from "../components/doctorDetailsModal";
+import useFetchDoctorById from "../../hooks/fetchDoctorById";
+import DoctorDetailsModal from "../../components/doctorDetailsModal";
+import axios from "axios";
+import { UserContext } from "../../App";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const { Title, Text } = Typography;
 
@@ -55,7 +59,10 @@ const iconStyle = {
 
 const labelStyle = { fontFamily: "Raleway", fontSize: "1.1rem" };
 
-function Specialists() {
+function SelectSpecialist() {
+  const { user } = useContext(UserContext);
+  const navigate = useNavigate();
+  const userId = user?._id;
   const { doctors, allDoctorsLoading } = useFetchAllDoctorData();
   const [openDoctorModal, setOpenDoctorModal] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -79,9 +86,27 @@ function Specialists() {
   const handleSelect = async (id) => {
     setLoading(true);
     try {
-      console.log(id);
+      const res = await axios.put(
+        `update-patient-physician?id=${userId}&physId=${id}`
+      );
+      if (res.data.success) {
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Physician has been selected successfully!",
+        });
+        navigate("/specialists");
+      }
     } catch (error) {
       console.log(error);
+      const errorMessage =
+        error.response?.data?.error ??
+        "An unexpected error occurred. Please try again later.";
+      Swal.fire({
+        icon: "warning",
+        title: "Error",
+        text: errorMessage,
+      });
     } finally {
       setLoading(false);
     }
@@ -93,6 +118,9 @@ function Specialists() {
         <Spin tip="Loading..." />
       ) : (
         <>
+          <Button danger onClick={() => navigate("/specialists")}>
+            Back
+          </Button>
           <Title level={4} style={{ textAlign: "center" }}>
             Select your primary physician
           </Title>
@@ -243,4 +271,4 @@ function Specialists() {
   );
 }
 
-export default Specialists;
+export default SelectSpecialist;

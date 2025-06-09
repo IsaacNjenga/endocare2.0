@@ -63,6 +63,30 @@ const updatePatientDetails = async (req, res) => {
   }
 };
 
+const updatePatientPhysician = async (req, res) => {
+  const { id, physId } = req.query;
+
+  if (!id) return res.status(404).json({ error: "No ID Specified" });
+  if (!physId) return res.status(404).json({ error: "No ID Specified" });
+
+  try {
+    const objectId = new mongoose.Types.ObjectId(id);
+    const physicianId = new mongoose.Types.ObjectId(physId);
+    const updatedPatientLog = await PatientModel.findOneAndUpdate(
+      { createdBy: objectId },
+      { selectedPhysician: physicianId },
+      { new: true }
+    );
+    if (!updatedPatientLog) {
+      return res.status(404).json({ error: "Patient record not found" });
+    }
+    return res.status(201).json({ success: true, data: updatedPatientLog });
+  } catch (error) {
+    console.log("Error updating patient information", error);
+    return res.status(500).json({ error: error.message });
+  }
+};
+
 const deletePatientDetail = async (req, res) => {
   const { section, id, userId } = req.query;
   console.log(section);
@@ -113,4 +137,5 @@ export {
   updatePatientDetails,
   deletePatientDetails,
   deletePatientDetail,
+  updatePatientPhysician,
 };

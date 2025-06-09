@@ -66,7 +66,7 @@ const patientSchema = new mongoose.Schema(
       },
     ],
 
-    //assignedPhysician: { type: mongoose.Schema.Types.ObjectId, ref: "users" }, // Better to reference a physician object
+    selectedPhysician: { type: mongoose.Schema.Types.ObjectId, ref: "users" }, // Better to reference a physician object
 
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
