@@ -79,10 +79,158 @@ function Specialists() {
     doctorUserData,
   } = useFetchDoctorById();
 
-  //console.log(patientData[0]?.selectedPhysician);
+  const physicianId = patientData[0]?.selectedPhysician;
+
+  React.useEffect(() => {
+    if (physicianId) {
+      fetchDoctorById(physicianId);
+    }
+  }, [physicianId]);
+
+  const viewDoctor = async (id) => {
+    setLoading(true);
+    await fetchDoctorById(id);
+    setOpenDoctorModal(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 100);
+  };
 
   const YesPhysician = () => {
-    return <div>There is</div>;
+    if (doctorLoading)
+      return (
+        <div>
+          <Spin tip="Loading..." />
+        </div>
+      );
+
+    return (
+      <div style={{ padding: 24 }}>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div>
+            <Title>Your selected specialist</Title>
+          </div>
+          <div>
+            <Button
+              type="link"
+              onClick={() => {
+                navigate("/specialists/select-specialist");
+              }}
+            >
+              Change your specialist
+            </Button>
+          </div>
+        </div>
+        <Card hoverable style={cardStyle}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <div style={avatarStyle}>
+              <Avatar
+                size={74}
+                src={doctorUserData?.avatar}
+                icon={!doctorUserData?.avatar && <UserOutlined />}
+                style={{
+                  backgroundColor: !doctorUserData?.avatar && "#f56a00",
+                  fontWeight: "bold",
+                }}
+              >
+                {!user?.avatar &&
+                  `${doctorUserData?.firstName?.charAt(
+                    0
+                  )}${doctorUserData?.lastName?.charAt(0)}`}
+              </Avatar>
+              <div>
+                <div style={titleStyle}>
+                  Dr. {doctorUserData?.firstName} {doctorUserData?.lastName}
+                </div>
+                <div style={{ color: "#666" }}>
+                  {doctorProfessionalData?.specialty.join(", ")}
+                </div>
+              </div>
+            </div>
+            <div
+              style={{
+                margin: "0px",
+                display: "flex",
+                flexDirection: "column",
+                gap: 5,
+              }}
+            >
+              <Button
+                type="primary"
+                style={{ fontFamily: "Roboto" }}
+                onClick={() => viewDoctor(doctorUserData?._id)}
+              >
+                View More
+              </Button>
+            </div>
+          </div>
+          <Divider style={{ borderColor: "#00152a" }} />
+          <Space
+            direction="vertical"
+            size="small"
+            style={{ padding: "0px 10px" }}
+          >
+            <div>
+              <Text style={labelStyle}>
+                <PhoneOutlined style={iconStyle} />{" "}
+                {doctorUserData?.phoneNumber}
+              </Text>
+            </div>
+            <div>
+              <Text style={labelStyle}>
+                <MailOutlined style={iconStyle} /> {doctorUserData?.email}
+              </Text>
+            </div>
+            <div>
+              <Text style={labelStyle}>
+                <EnvironmentOutlined style={iconStyle} />{" "}
+                {doctorProfessionalData?.currentHospital}
+              </Text>
+            </div>
+            <div>
+              <Text style={labelStyle}>
+                <ClockCircleOutlined style={iconStyle} />{" "}
+                {doctorPracticeData?.officeHours}
+              </Text>
+            </div>
+            <div>
+              <Text style={labelStyle}>
+                Experience: {doctorProfessionalData?.yearsOfExperience} years
+              </Text>
+            </div>
+
+            <div>
+              {doctorPracticeData?.servicesOffered.map((service, idx) => (
+                <Tag color="blue" key={idx} style={{ fontFamily: "Roboto" }}>
+                  {service}
+                </Tag>
+              ))}
+            </div>
+            <div>
+              {doctorProfessionalData?.boardCertifications.map((cert, idx) => (
+                <Tag color="green" key={idx} style={{ fontFamily: "Roboto" }}>
+                  {cert}
+                </Tag>
+              ))}
+            </div>
+          </Space>
+        </Card>
+        <DoctorDetailsModal
+          openDoctorModal={openDoctorModal}
+          setOpenDoctorModal={setOpenDoctorModal}
+          loading={loading}
+          doctorPracticeData={doctorPracticeData}
+          doctorLoading={doctorLoading}
+          doctorProfessionalData={doctorProfessionalData}
+          doctorUserData={doctorUserData}
+        />
+      </div>
+    );
   };
 
   const NoPhysician = () => {
@@ -132,7 +280,7 @@ function Specialists() {
   return (
     <div style={{ padding: 12 }}>
       {patientData[0]?.selectedPhysician ||
-      patientData[0]?.selectedPhysician === "" ? (
+      patientData[0]?.selectedPhysician !== "" ? (
         <YesPhysician />
       ) : (
         <NoPhysician />
