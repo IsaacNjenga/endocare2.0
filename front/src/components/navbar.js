@@ -12,7 +12,7 @@ import {
   UserOutlined,
   VideoCameraOutlined,
 } from "@ant-design/icons";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import logo from "../assets/icons/logo.png";
 import Swal from "sweetalert2";
 import { UserContext } from "../App";
@@ -24,6 +24,7 @@ const cookies = new Cookies();
 const { Header, Sider, Content } = Layout;
 function Navbar() {
   const location = useLocation();
+  const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const [current, setCurrent] = useState(location.pathname);
   const { user, setUser } = useContext(UserContext);
@@ -118,6 +119,7 @@ function Navbar() {
         }
         setUser(null);
       }
+      navigate('/')
       window.location.reload();
     });
   };
