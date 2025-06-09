@@ -110,8 +110,16 @@ function UpdatePracticeInfo({ modalContent, user, refresh }) {
             <Form.Item
               label={<span style={labelStyle}>Office Hours</span>}
               name="officeHours"
+              extra="Select or type other"
             >
-              <Select mode="tags" tokenSeparators={[","]} />
+              <Select
+                mode="tags"
+                tokenSeparators={[","]}
+                options={[
+                  { value: "9:00AM - 5:00PM Weekdays" },
+                  { value: "10:00AM - 3:00PM Weekends" },
+                ]}
+              />
             </Form.Item>
           </Col>{" "}
           <Col span={12}>
@@ -171,8 +179,18 @@ function UpdatePracticeInfo({ modalContent, user, refresh }) {
             <Form.Item
               label={<span style={labelStyle}>Accepted Insurance Plans</span>}
               name="acceptedInsurancePlans"
+              extra="Select or type other"
             >
-              <Select mode="tags" tokenSeparators={[","]} />
+              <Select
+                mode="tags"
+                tokenSeparators={[","]}
+                options={[
+                  { value: "SHA" },
+                  { value: "NHIF" },
+                  { value: "Britam Insurance" },
+                  { value: "AAR Insurance" },
+                ]}
+              />
             </Form.Item>
           </Col>
         </Row>

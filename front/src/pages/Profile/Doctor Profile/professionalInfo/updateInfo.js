@@ -29,7 +29,7 @@ const sectionHeaderStyle = {
   color: "#4f46e5",
 };
 
-function UpdateInfo({ user, modalContent,  refresh }) {
+function UpdateInfo({ user, modalContent, refresh }) {
   const [form] = Form.useForm();
   const [updateLoading, setUpdateLoading] = useState(false);
 
@@ -111,7 +111,16 @@ function UpdateInfo({ user, modalContent,  refresh }) {
               name="specialty"
               extra="Separate with commas or press 'Enter'"
             >
-              <Select mode="tags" tokenSeparators={[","]} style={inputStyle} />
+              <Select
+                mode="tags"
+                tokenSeparators={[","]}
+                style={inputStyle}
+                placeholder="E.g Health Expert"
+                options={[
+                  { value: "Cardiologist" },
+                  { value: "Endocrine Expert" },
+                ]}
+              />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -202,7 +211,16 @@ function UpdateInfo({ user, modalContent,  refresh }) {
               name="languagesSpoken"
               extra="Separate with commas or press 'Enter'"
             >
-              <Select mode="tags" tokenSeparators={[","]} style={inputStyle} />
+              <Select
+                mode="tags"
+                tokenSeparators={[","]}
+                style={inputStyle}
+                options={[
+                  { value: "Kiswahili" },
+                  { value: "English" },
+                  { value: "French" },
+                ]}
+              />
             </Form.Item>
           </Col>
         </Row>

@@ -370,9 +370,9 @@ export const MedicationsLog = () => {
                         }
                       >
                         <Select placeholder="Select" style={inputStyle}>
-                          <Select.Option value="yes">Yes</Select.Option>
-                          <Select.Option value="no">No</Select.Option>
-                          <Select.Option value="partial">
+                          <Select.Option value="Yes">Yes</Select.Option>
+                          <Select.Option value="No">No</Select.Option>
+                          <Select.Option value="Partial">
                             Partially
                           </Select.Option>
                         </Select>

@@ -1,4 +1,4 @@
-import { Button, Card, Col, Form, Input,  Row, Select } from "antd";
+import { Button, Card, Col, Form, Input, Row, Select } from "antd";
 import axios from "axios";
 import React, { useState } from "react";
 import Swal from "sweetalert2";
@@ -37,7 +37,7 @@ function CreatePracticeInfo({ user, refresh }) {
     setLoading(true);
     try {
       const values = await form.validateFields();
-      const allValues = { ...values, };
+      const allValues = { ...values };
       console.log(allValues);
       const res = await axios.put(`create-doctor-details`, allValues);
       if (res.data.success) {
@@ -73,11 +73,7 @@ function CreatePracticeInfo({ user, refresh }) {
         background: "linear-gradient(to left, #eef2f3 50%, #eae9e7 100%)",
       }}
     >
-      <Form
-        onFinish={handleSubmit}
-        form={form}
-        layout="vertical"
-      >
+      <Form onFinish={handleSubmit} form={form} layout="vertical">
         <Row gutter={20}>
           <Col span={12}>
             <Form.Item
@@ -99,8 +95,16 @@ function CreatePracticeInfo({ user, refresh }) {
             <Form.Item
               label={<span style={labelStyle}>Office Hours</span>}
               name="officeHours"
+              extra="Select or type other"
             >
-              <Select mode="tags" tokenSeparators={[","]} />
+              <Select
+                mode="tags"
+                tokenSeparators={[","]}
+                options={[
+                  { value: "9:00AM - 5:00PM Weekdays" },
+                  { value: "10:00AM - 3:00PM Weekends" },
+                ]}
+              />
             </Form.Item>
           </Col>{" "}
           <Col span={12}>
@@ -160,8 +164,18 @@ function CreatePracticeInfo({ user, refresh }) {
             <Form.Item
               label={<span style={labelStyle}>Accepted Insurance Plans</span>}
               name="acceptedInsurancePlans"
+              extra="Select or type other"
             >
-              <Select mode="tags" tokenSeparators={[","]} />
+              <Select
+                mode="tags"
+                tokenSeparators={[","]}
+                options={[
+                  { value: "SHA" },
+                  { value: "NHIF" },
+                  { value: "Britam Insurance" },
+                  { value: "AAR Insurance" },
+                ]}
+              />
             </Form.Item>
           </Col>
         </Row>

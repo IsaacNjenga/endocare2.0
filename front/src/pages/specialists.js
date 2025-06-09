@@ -11,6 +11,7 @@ import {
   Avatar,
   Spin,
   Tag,
+  Tooltip,
 } from "antd";
 import {
   MailOutlined,
@@ -75,6 +76,17 @@ function Specialists() {
     }, 100);
   };
 
+  const handleSelect = async (id) => {
+    setLoading(true);
+    try {
+      console.log(id);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div style={{ padding: 12 }}>
       {allDoctorsLoading ? (
@@ -88,7 +100,7 @@ function Specialists() {
           <Row gutter={[20, 20]}>
             {doctors?.map((doctor) => {
               const user = doctor.createdBy;
-              
+
               return (
                 <Col span={12} key={doctor._id}>
                   <Card hoverable style={cardStyle}>
@@ -122,7 +134,14 @@ function Specialists() {
                           </div>
                         </div>
                       </div>
-                      <div style={{ margin: "0px" }}>
+                      <div
+                        style={{
+                          margin: "0px",
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: 5,
+                        }}
+                      >
                         <Button
                           type="primary"
                           style={{ fontFamily: "Roboto" }}
@@ -130,6 +149,21 @@ function Specialists() {
                         >
                           View More
                         </Button>
+                        <Tooltip
+                          title={`Select 
+                            Dr. ${user.firstName} ${user.lastName}`}
+                        >
+                          <Button
+                            type="primary"
+                            style={{
+                              fontFamily: "Roboto",
+                              background: "#00152a",
+                            }}
+                            onClick={() => handleSelect(user?._id)}
+                          >
+                            Select
+                          </Button>
+                        </Tooltip>
                       </div>
                     </div>
                     <Divider style={{ borderColor: "#00152a" }} />

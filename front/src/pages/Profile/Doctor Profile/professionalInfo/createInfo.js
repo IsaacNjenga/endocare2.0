@@ -97,7 +97,16 @@ function CreateInfo({ user, refresh }) {
               name="specialty"
               extra="Separate with commas or press 'Enter'"
             >
-              <Select mode="tags" tokenSeparators={[","]} style={inputStyle} />
+              <Select
+                mode="tags"
+                tokenSeparators={[","]}
+                style={inputStyle}
+                placeholder="E.g Health Expert"
+                options={[
+                  { value: "Cardiologist" },
+                  { value: "Endocrine Expert" },
+                ]}
+              />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -188,7 +197,16 @@ function CreateInfo({ user, refresh }) {
               name="languagesSpoken"
               extra="Separate with commas or press 'Enter'"
             >
-              <Select mode="tags" tokenSeparators={[","]} style={inputStyle} />
+              <Select
+                mode="tags"
+                tokenSeparators={[","]}
+                style={inputStyle}
+                options={[
+                  { value: "Kiswahili" },
+                  { value: "English" },
+                  { value: "French" },
+                ]}
+              />
             </Form.Item>
           </Col>
         </Row>

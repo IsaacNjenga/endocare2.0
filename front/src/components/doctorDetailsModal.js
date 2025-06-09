@@ -1,6 +1,12 @@
 import React from "react";
 import { Col, Modal, Row, Spin, Card, Avatar } from "antd";
 
+const cardStyle = {
+  borderRadius: 12,
+  boxShadow: "0 2px 12px rgba(0,0,0,0.08)",
+  border: "1px solid #00152a",
+};
+
 function DoctorDetailsModal({
   openDoctorModal,
   setOpenDoctorModal,
@@ -26,7 +32,7 @@ function DoctorDetailsModal({
           <Row gutter={[24, 24]}>
             {/* Avatar and Basic Info */}
             <Col span={24}>
-              <Card>
+              <Card style={cardStyle}>
                 <Row align="middle" gutter={16}>
                   <Col>
                     <Avatar size={80} src={doctorUserData?.avatar}>
@@ -54,7 +60,7 @@ function DoctorDetailsModal({
 
             {/* Professional Info */}
             <Col span={12}>
-              <Card title="Professional Details">
+              <Card title="Professional Details" style={cardStyle}>
                 <p>
                   <strong>Specialty:</strong>{" "}
                   {doctorProfessionalData?.specialty?.join(", ")}
@@ -86,7 +92,7 @@ function DoctorDetailsModal({
 
             {/* Education Info */}
             <Col span={12}>
-              <Card title="Education">
+              <Card title="Education" style={cardStyle}>
                 {doctorProfessionalData?.education?.map((edu, index) => (
                   <div key={index} style={{ marginBottom: 12 }}>
                     <p>
@@ -108,7 +114,7 @@ function DoctorDetailsModal({
 
             {/* Practice Info */}
             <Col span={12}>
-              <Card title="Practice Info">
+              <Card title="Practice Info" style={cardStyle}>
                 <p>
                   <strong>Practice Name:</strong>{" "}
                   {doctorPracticeData?.practiceName}
@@ -134,7 +140,7 @@ function DoctorDetailsModal({
 
             {/* Contact & Services */}
             <Col span={12}>
-              <Card title="Contact & Services">
+              <Card title="Contact & Services" style={cardStyle}>
                 <p>
                   <strong>Services Offered:</strong>
                 </p>
