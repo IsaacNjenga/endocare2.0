@@ -8,6 +8,7 @@ function FeedbackModal({
   sectionName,
   loading,
   user,
+  diaryId,
 }) {
   const [form] = Form.useForm();
   const [submitLoading, setSubmitLoading] = useState(false);
@@ -16,7 +17,13 @@ function FeedbackModal({
     setSubmitLoading(true);
     try {
       const values = await form.validateFields();
-      console.log(values);
+      const allValues = {
+        ...values,
+        diaryId: diaryId,
+        createdBy: user._id,
+        entryId: modalContent[0]?._id,
+      };
+      console.log(allValues);
     } catch (error) {
       console.log(error);
     } finally {

@@ -28,7 +28,11 @@ function MyPatientsDiary() {
 
   const diaryForDate = diaryData.find(
     (entry) => entry.entryDate === format(new Date(date), "yyyy-MM-dd")
+
   );
+
+  
+  const diaryId = diaryForDate?._id;
 
   if (diaryLoading) return <Spin tip="Loading. Please wait..." />;
 
@@ -132,6 +136,7 @@ function MyPatientsDiary() {
         modalContent={modalContent}
         loading={loading}
         sectionName={sectionName}
+        diaryId={diaryId}
       />
     </>
   );
