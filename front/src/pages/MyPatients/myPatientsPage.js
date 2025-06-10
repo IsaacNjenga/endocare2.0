@@ -18,11 +18,16 @@ import {
   Card,
   Divider,
   Empty,
+  Calendar,
+  Tooltip,
 } from "antd";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useFetchPatientById from "../../hooks/fetchPatientById";
 import { format, formatDistanceToNowStrict } from "date-fns";
+import dayjs from "dayjs";
+import useFetchDiaryData from "../../hooks/fetchDiaryData";
+import MyPatientsDiary from "./myPatientsDiary";
 
 const { Title, Text } = Typography;
 
@@ -73,6 +78,14 @@ const sectionHeaderStyle = {
   color: "#4f46e5",
 };
 
+const markerStyle = {
+  display: "inline-block",
+  width: 28,
+  height: 28,
+  borderRadius: "50%",
+  margin: "auto",
+};
+
 const PatientInformation = ({ patientInformation }) => {
   if (!patientInformation)
     return (
@@ -90,7 +103,7 @@ const PatientInformation = ({ patientInformation }) => {
         bordered
         size="medium"
         column={1}
-        labelStyle={{ fontWeight: "bold" }}
+        styles={{ label: { fontWeight: "bold" } }}
       >
         <Descriptions.Item label="Full Name" style={contentStyle}>
           {patient[0]?.createdBy?.firstName} {patient[0]?.createdBy?.middleName}{" "}
@@ -163,7 +176,7 @@ const PatientDetails = ({ details }) => {
   return (
     <Card style={sectionCardStyle}>
       <div style={sectionHeaderStyle}>Medical Information</div>
-      <Divider />
+      <Divider style={{ borderColor: "#00152a" }} dashed size="large" />
 
       {patientInformation?.map((info, i) => (
         <Descriptions
@@ -199,7 +212,12 @@ const PatientDetails = ({ details }) => {
         </Descriptions>
       ))}
 
-      <Divider orientation="left" style={sectionHeaderStyle}>
+      <Divider
+        orientation="left"
+        style={sectionHeaderStyle}
+        dashed
+        size="large"
+      >
         Current Medications
       </Divider>
 
@@ -333,8 +351,63 @@ const PatientDetails = ({ details }) => {
   );
 };
 
-const PatientDiary = () => {
-  return <div>Diary entries calendar</div>;
+const PatientDiary = ({ diaryData, diaryLoading, navigate, id }) => {
+  const [value, setValue] = useState(dayjs());
+
+  const onSelect = (date) => {
+    setValue(date);
+  };
+
+  const onPanelChange = (date) => {
+    setValue(date);
+  };
+
+  const dateCellRender = (value) => {
+    const dateStr = value.format("YYYY-MM-DD");
+    const hasEntry = diaryData?.some((entry) => entry.entryDate === dateStr);
+    return (
+      <div style={{ display: "flex", justifyContent: "center", marginTop: 18 }}>
+        <Tooltip title={hasEntry ? "Click to view entry" : "Diary not filled"}>
+          <span
+            style={{
+              ...markerStyle,
+              background: hasEntry
+                ? "#1677ff"
+                : "linear-gradient(to left, #e9e8e6 0%, #ddd1d1 100%)",
+              border: hasEntry ? "" : "2px dashed grey",
+            }}
+            onClick={() => {
+              navigate(`/my-patients/${id}/date/${value.format("YYYY-MM-DD")}`);
+            }}
+          />
+        </Tooltip>
+      </div>
+    );
+  };
+
+  if (diaryLoading)
+    return <Spin tip="Fetching the diary entry. Please wait..." fullscreen />;
+  return (
+    <div>
+      <Typography.Title
+        style={{
+          fontFamily: "Raleway",
+          display: "flex",
+          justifyContent: "right",
+          marginBottom: 24,
+        }}
+      >
+        {format(new Date(value), "EEEE, do MMMM yyyy")}
+      </Typography.Title>
+      <Divider style={{ borderColor: "#00152a" }} dashed size="large" />
+      <Calendar
+        value={value}
+        onSelect={onSelect}
+        cellRender={dateCellRender}
+        onPanelChange={onPanelChange}
+      />
+    </div>
+  );
 };
 
 function MyPatientsPage() {
@@ -342,6 +415,7 @@ function MyPatientsPage() {
   const { patientData, patientLoading, fetchPatientById } =
     useFetchPatientById();
   const { id } = useParams();
+  const { diaryData, diaryLoading } = useFetchDiaryData(id);
 
   useEffect(() => {
     const fetchingPatient = async () => {
@@ -369,7 +443,14 @@ function MyPatientsPage() {
     {
       key: 3,
       name: "Diary Entries",
-      childPage: <PatientDiary />,
+      childPage: (
+        <PatientDiary
+          diaryData={diaryData}
+          diaryLoading={diaryLoading}
+          navigate={navigate}
+          id={id}
+        />
+      ),
       icon: <CalendarOutlined style={iconStyle} />,
     },
   ];
@@ -411,7 +492,7 @@ function MyPatientsPage() {
         }}
       >
         <div>
-          <Avatar src={patient.avatar} size={82} />
+          <Avatar src={patient?.avatar} size={82} />
         </div>
         <div
           style={{
@@ -420,13 +501,13 @@ function MyPatientsPage() {
           }}
         >
           <Title level={3} style={{ fontFamily: "Raleway", marginBottom: 3 }}>
-            {patient.firstName} {patient.middleName} {patient.lastName}
+            {patient?.firstName} {patient?.middleName} {patient?.lastName}
           </Title>
           <Text
             type="secondary"
             style={{ fontFamily: "Roboto", fontWeight: 600 }}
           >
-            {patientDiagnosis.diagnosis}
+            {patientDiagnosis?.diagnosis}
           </Text>
         </div>
       </div>

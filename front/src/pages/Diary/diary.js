@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Button, Typography, Divider, Calendar, Tooltip } from "antd";
+import { Button, Typography, Divider, Calendar, Tooltip, Spin } from "antd";
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 // import { diaryValues,data } from "../../assets/data/data";
@@ -14,6 +14,7 @@ const markerStyle = {
   borderRadius: "50%",
   margin: "auto",
 };
+
 function Diary() {
   const navigate = useNavigate();
   const [value, setValue] = useState(dayjs());
@@ -36,7 +37,11 @@ function Diary() {
     const hasEntry = diaryData?.some((entry) => entry.entryDate === dateStr);
     return (
       <div style={{ display: "flex", justifyContent: "center", marginTop: 18 }}>
-        <Tooltip title={hasEntry ? "Click to view entry" : "Diary not filled, click to fill"}>
+        <Tooltip
+          title={
+            hasEntry ? "Click to view entry" : "Diary not filled, click to fill"
+          }
+        >
           <span
             style={{
               ...markerStyle,
@@ -54,7 +59,8 @@ function Diary() {
     );
   };
 
-  if (diaryLoading) return <div>Loading...</div>;
+  if (diaryLoading)
+    return <Spin tip="Fetching the diary entry. Please wait..." fullscreen />;
 
   return (
     <>

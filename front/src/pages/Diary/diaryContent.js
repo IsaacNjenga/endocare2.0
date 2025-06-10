@@ -32,6 +32,7 @@ function DiaryContent() {
   const diaryForDate = diaryData.find(
     (entry) => entry.entryDate === format(new Date(date), "yyyy-MM-dd")
   );
+  
   const currentDiaryId = diaryForDate?._id;
   return (
     <>
