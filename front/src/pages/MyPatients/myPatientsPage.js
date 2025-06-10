@@ -27,7 +27,6 @@ import useFetchPatientById from "../../hooks/fetchPatientById";
 import { format, formatDistanceToNowStrict } from "date-fns";
 import dayjs from "dayjs";
 import useFetchDiaryData from "../../hooks/fetchDiaryData";
-import MyPatientsDiary from "./myPatientsDiary";
 
 const { Title, Text } = Typography;
 

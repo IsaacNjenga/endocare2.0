@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Col, Divider, Row, Typography, Button } from "antd";
+import { Col, Divider, Row, Typography, Button, Spin } from "antd";
 import {
   MealsEntry,
   MedicationsEntry,
@@ -32,8 +32,10 @@ function DiaryContent() {
   const diaryForDate = diaryData.find(
     (entry) => entry.entryDate === format(new Date(date), "yyyy-MM-dd")
   );
-  
+
   const currentDiaryId = diaryForDate?._id;
+
+  if (diaryLoading) return <Spin tip="Loading. Please wait..." />;
   return (
     <>
       <div>
@@ -63,6 +65,7 @@ function DiaryContent() {
                 setModalContent={setModalContent}
                 setLoading={setLoading}
                 setSectionName={setSectionName}
+                user={user}
               />
             </Col>
 
@@ -74,6 +77,7 @@ function DiaryContent() {
                 setModalContent={setModalContent}
                 setLoading={setLoading}
                 setSectionName={setSectionName}
+                user={user}
               />
             </Col>
 
@@ -85,6 +89,7 @@ function DiaryContent() {
                 setModalContent={setModalContent}
                 setSectionName={setSectionName}
                 setLoading={setLoading}
+                user={user}
               />
             </Col>
 
@@ -96,6 +101,7 @@ function DiaryContent() {
                 setModalContent={setModalContent}
                 setSectionName={setSectionName}
                 setLoading={setLoading}
+                user={user}
               />
             </Col>
 
@@ -107,6 +113,7 @@ function DiaryContent() {
                 setModalContent={setModalContent}
                 setSectionName={setSectionName}
                 setLoading={setLoading}
+                user={user}
               />
             </Col>
 
@@ -118,6 +125,7 @@ function DiaryContent() {
                 setModalContent={setModalContent}
                 setSectionName={setSectionName}
                 setLoading={setLoading}
+                user={user}
               />
             </Col>
           </Row>
@@ -131,7 +139,8 @@ function DiaryContent() {
         loading={loading}
         sectionName={sectionName}
         user={user}
-        currentDiaryId={currentDiaryId}diaryRefresh={diaryRefresh}
+        currentDiaryId={currentDiaryId}
+        diaryRefresh={diaryRefresh}
       />
     </>
   );

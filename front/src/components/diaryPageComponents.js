@@ -5,6 +5,7 @@ import {
   ClockCircleOutlined,
   SmileOutlined,
   FireOutlined,
+  CommentOutlined,
 } from "@ant-design/icons";
 import {
   Button,
@@ -69,9 +70,12 @@ export const MealsEntry = ({
   setModalContent,
   setLoading,
   setSectionName,
+  user,
+  setOpenFeedbackModal,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const currentMeal = content[currentIndex - 1];
+  const userRole = user?.role;
 
   const actions = [
     <Tooltip title="Edit this entry" key="edit">
@@ -89,6 +93,19 @@ export const MealsEntry = ({
     </Tooltip>,
   ];
 
+  const doctorActions = [
+    <Tooltip title="Write your feedback" key="feedback">
+      <Button
+        type="primary"
+        icon={<CommentOutlined />}
+        onClick={() => {
+          handleFeedback(content);
+          setSectionName("mealLogs");
+        }}
+      />
+    </Tooltip>,
+  ];
+
   const handleUpdate = (content) => {
     setOpenDiaryModal(true);
     setModalContent(content);
@@ -98,11 +115,20 @@ export const MealsEntry = ({
     }, 100);
   };
 
+  const handleFeedback = (content) => {
+    setLoading(true);
+    setOpenFeedbackModal(true);
+    setModalContent(content);
+    setTimeout(() => {
+      setLoading(false);
+    }, 100);
+  };
+
   return (
     <Card
       hoverable
       loading={diaryLoading}
-      actions={actions}
+      actions={userRole === "patient" ? actions : doctorActions}
       style={{
         borderRadius: 12,
         boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
@@ -198,10 +224,13 @@ export const MedicationsEntry = ({
   setOpenDiaryModal,
   setModalContent,
   setLoading,
+  user,
   setSectionName,
+  setOpenFeedbackModal,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const currentMedication = content[currentIndex - 1];
+  const userRole = user?.role;
 
   const actions = [
     <Tooltip title="Edit this entry" key="edit">
@@ -219,10 +248,31 @@ export const MedicationsEntry = ({
     </Tooltip>,
   ];
 
+  const doctorActions = [
+    <Tooltip title="Write your feedback" key="feedback">
+      <Button
+        type="primary"
+        icon={<CommentOutlined />}
+        onClick={() => {
+          handleFeedback(content);
+          setSectionName("medicationsLogs");
+        }}
+      />
+    </Tooltip>,
+  ];
+
   const handleUpdate = (content) => {
     setOpenDiaryModal(true);
     setModalContent(content);
     setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 100);
+  };
+  const handleFeedback = (content) => {
+    setLoading(true);
+    setOpenFeedbackModal(true);
+    setModalContent(content);
     setTimeout(() => {
       setLoading(false);
     }, 100);
@@ -232,7 +282,7 @@ export const MedicationsEntry = ({
     <Card
       hoverable
       loading={diaryLoading}
-      actions={actions}
+      actions={userRole === "patient" ? actions : doctorActions}
       style={{
         borderRadius: 12,
         boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
@@ -335,11 +385,13 @@ export const BloodSugarEntry = ({
   setOpenDiaryModal,
   setModalContent,
   setLoading,
+  user,
   setSectionName,
+  setOpenFeedbackModal,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const currentEntry = content[currentIndex - 1];
-
+  const userRole = user?.role;
   const actions = [
     <Tooltip title="Edit this entry" key="edit">
       <Button
@@ -356,6 +408,19 @@ export const BloodSugarEntry = ({
     </Tooltip>,
   ];
 
+  const doctorActions = [
+    <Tooltip title="Write your feedback" key="feedback">
+      <Button
+        type="primary"
+        icon={<CommentOutlined />}
+        onClick={() => {
+          handleFeedback(content);
+          setSectionName("bloodSugarLogs");
+        }}
+      />
+    </Tooltip>,
+  ];
+
   const handleUpdate = (content) => {
     setOpenDiaryModal(true);
     setModalContent(content);
@@ -364,11 +429,21 @@ export const BloodSugarEntry = ({
       setLoading(false);
     }, 100);
   };
+
+  const handleFeedback = (content) => {
+    setLoading(true);
+    setOpenFeedbackModal(true);
+    setModalContent(content);
+    setTimeout(() => {
+      setLoading(false);
+    }, 100);
+  };
+
   return (
     <Card
       hoverable
       loading={diaryLoading}
-      actions={actions}
+      actions={userRole === "patient" ? actions : doctorActions}
       style={{
         borderRadius: 12,
         boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
@@ -465,9 +540,12 @@ export const PhysicalActivityEntry = ({
   setModalContent,
   setLoading,
   setSectionName,
+  user,
+  setOpenFeedbackModal,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const currentContent = content[currentIndex - 1];
+  const userRole = user?.role;
 
   const actions = [
     <Tooltip title="Edit this entry" key="edit">
@@ -485,6 +563,19 @@ export const PhysicalActivityEntry = ({
     </Tooltip>,
   ];
 
+  const doctorActions = [
+    <Tooltip title="Write your feedback" key="feedback">
+      <Button
+        type="primary"
+        icon={<CommentOutlined />}
+        onClick={() => {
+          handleFeedback(content);
+          setSectionName("physicalActivityLogs");
+        }}
+      />
+    </Tooltip>,
+  ];
+
   const handleUpdate = (content) => {
     setOpenDiaryModal(true);
     setModalContent(content);
@@ -494,11 +585,20 @@ export const PhysicalActivityEntry = ({
     }, 100);
   };
 
+  const handleFeedback = (content) => {
+    setLoading(true);
+    setOpenFeedbackModal(true);
+    setModalContent(content);
+    setTimeout(() => {
+      setLoading(false);
+    }, 100);
+  };
+
   return (
     <Card
       hoverable
       loading={diaryLoading}
-      actions={actions}
+      actions={userRole === "patient" ? actions : doctorActions}
       style={{
         borderRadius: 12,
         boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
@@ -576,9 +676,12 @@ export const SymptomsEntry = ({
   setModalContent,
   setLoading,
   setSectionName,
+  user,
+  setOpenFeedbackModal,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const currentEntry = content[currentIndex - 1];
+  const userRole = user?.role;
 
   const actions = [
     <Tooltip title="Edit this entry" key="edit">
@@ -596,6 +699,19 @@ export const SymptomsEntry = ({
     </Tooltip>,
   ];
 
+  const doctorActions = [
+    <Tooltip title="Write your feedback" key="feedback">
+      <Button
+        type="primary"
+        icon={<CommentOutlined />}
+        onClick={() => {
+          handleFeedback(content);
+          setSectionName("symptomsLogs");
+        }}
+      />
+    </Tooltip>,
+  ];
+
   const handleUpdate = (content) => {
     setOpenDiaryModal(true);
     setModalContent(content);
@@ -604,11 +720,21 @@ export const SymptomsEntry = ({
       setLoading(false);
     }, 100);
   };
+
+  const handleFeedback = (content) => {
+    setLoading(true);
+    setOpenFeedbackModal(true);
+    setModalContent(content);
+    setTimeout(() => {
+      setLoading(false);
+    }, 100);
+  };
+
   return (
     <Card
       hoverable
       loading={diaryLoading}
-      actions={actions}
+      actions={userRole === "patient" ? actions : doctorActions}
       style={{
         borderRadius: 12,
         boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
@@ -671,10 +797,13 @@ export const MoodsEntry = ({
   setOpenDiaryModal,
   setModalContent,
   setLoading,
+  user,
   setSectionName,
+  setOpenFeedbackModal,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const currentEntry = content[currentIndex - 1];
+  const userRole = user?.role;
 
   const actions = [
     <Tooltip title="Edit this entry" key="edit">
@@ -692,6 +821,19 @@ export const MoodsEntry = ({
     </Tooltip>,
   ];
 
+  const doctorActions = [
+    <Tooltip title="Write your feedback" key="feedback">
+      <Button
+        type="primary"
+        icon={<CommentOutlined />}
+        onClick={() => {
+          handleFeedback(content);
+          setSectionName("moodLogs");
+        }}
+      />
+    </Tooltip>,
+  ];
+
   const handleUpdate = (content) => {
     setOpenDiaryModal(true);
     setModalContent(content);
@@ -700,11 +842,20 @@ export const MoodsEntry = ({
       setLoading(false);
     }, 100);
   };
+
+  const handleFeedback = (content) => {
+    setLoading(true);
+    setOpenFeedbackModal(true);
+    setModalContent(content);
+    setTimeout(() => {
+      setLoading(false);
+    }, 100);
+  };
   return (
     <Card
       hoverable
       loading={diaryLoading}
-      actions={actions}
+      actions={userRole === "patient" ? actions : doctorActions}
       style={{
         borderRadius: 12,
         boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
