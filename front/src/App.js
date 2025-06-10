@@ -18,6 +18,7 @@ import CreateAppointment from "./pages/Appointments/createAppointment";
 import Specialists from "./pages/Specialists/specialists.js";
 import SelectSpecialist from "./pages/Specialists/selectSpecialist.js";
 import MyPatients from "./pages/MyPatients/myPatients.js";
+import MyPatientsPage from "./pages/MyPatients/myPatientsPage.js";
 
 const cookies = new Cookies();
 export const UserContext = createContext();
@@ -79,6 +80,7 @@ function App() {
               path="specialists/select-specialist"
               element={<SelectSpecialist />}
             />
+            <Route path="my-patients/:id" element={<MyPatientsPage />} />
           </Route>
         </Routes>
       </UserContext.Provider>

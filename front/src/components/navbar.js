@@ -8,6 +8,7 @@ import {
   MenuUnfoldOutlined,
   PoweroffOutlined,
   RobotOutlined,
+  TeamOutlined,
   UploadOutlined,
   UserOutlined,
   VideoCameraOutlined,
@@ -72,7 +73,7 @@ function Navbar() {
 
   const doctorNavItems = [
     { label: "Dashboard", path: "/dashboard", icon: UserOutlined },
-    { label: "My Patients", path: "/my-patients", icon: BookOutlined },
+    { label: "My Patients", path: "/my-patients", icon: TeamOutlined },
     { label: "Appointments", path: "/appointments", icon: CalendarOutlined },
   ];
 

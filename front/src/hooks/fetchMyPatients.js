@@ -10,6 +10,10 @@ function useFetchMyPatients(userId) {
   useEffect(() => {
     const fetchMyPatients = async () => {
       setMyPatientsLoading(true);
+      if (!userId) {
+        console.warn("No ID specified");
+        return;
+      }
       try {
         const res = await axios.get(`get-my-patients?id=${userId}`);
         if (res.data.success) {

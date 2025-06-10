@@ -23,6 +23,7 @@ import {
 import { formatDistanceToNowStrict } from "date-fns";
 import PatientModal from "./patientModal";
 import useFetchPatientById from "../../hooks/fetchPatientById";
+import { useNavigate } from "react-router-dom";
 // import { myPatients } from "../../assets/data/data";
 
 const { Title, Text } = Typography;
@@ -59,6 +60,7 @@ const iconStyle = {
 const labelStyle = { fontFamily: "Raleway", fontSize: "1rem" };
 
 function MyPatients() {
+  const navigate = useNavigate();
   const { user } = useContext(UserContext);
   const userId = user?._id;
   const { myPatients, myPatientsLoading } = useFetchMyPatients(userId);
@@ -71,7 +73,8 @@ function MyPatients() {
   const handleView = async (id) => {
     setLoading(true);
     await fetchPatientById(id);
-    setOpenPatientModal(true);
+    navigate(`/my-patients/${id}`);
+    //setOpenPatientModal(true);
     setTimeout(() => {
       setLoading(false);
     }, 100);
