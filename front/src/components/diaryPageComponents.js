@@ -54,7 +54,7 @@ const descriptionLabelStyle = { fontFamily: "Raleway", fontWeight: 500 };
 
 const renderListAsTags = (items, color) => (
   <Space wrap>
-    {items.map((item, idx) => (
+    {items?.map((item, idx) => (
       <Tag key={idx} color={color} style={descriptionStyle}>
         {item}
       </Tag>

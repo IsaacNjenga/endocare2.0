@@ -280,7 +280,7 @@ function Specialists() {
   return (
     <div style={{ padding: 12 }}>
       {patientData[0]?.selectedPhysician ||
-      patientData[0]?.selectedPhysician !== "" ? (
+      patientData[0]?.selectedPhysician === "" ? (
         <YesPhysician />
       ) : (
         <NoPhysician />

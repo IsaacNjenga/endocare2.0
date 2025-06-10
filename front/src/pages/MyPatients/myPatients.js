@@ -31,7 +31,7 @@ const { Title, Text } = Typography;
 const avatarStyle = {
   display: "flex",
   alignItems: "center",
-  gap: 10,
+  gap: 6,
   marginBottom: 0,
   fontFamily: "Raleway",
 };
