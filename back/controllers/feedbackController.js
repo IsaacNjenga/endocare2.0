@@ -68,6 +68,15 @@ const updateFeedback = async (req, res) => {
   const { id } = req.query;
   if (!id) return res.status(404).json({ error: "No ID specified" });
   try {
+    const objectId = new mongoose.Types.ObjectId(id);
+    const updateFeedback = await FeedbackModel.findOneAndUpdate(
+      {
+        entryId: objectId,
+      },
+      { $set: req.body },
+      { new: true }
+    );
+    return res.status(201).json({ success: true, updateFeedback });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: "Internal Server Error" });

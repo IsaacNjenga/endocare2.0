@@ -11,6 +11,14 @@ import {
   SymptomsComponent,
 } from "../../components/feedbackDiaryPage";
 
+const labelStyle = {
+  fontFamily: "Raleway",
+  fontWeight: 600,
+  margin: 0,
+  fontSize: "1rem",
+  letterSpacing: "1px",
+};
+
 function FeedbackModal({
   openFeedbackModal,
   setOpenFeedbackModal,
@@ -20,29 +28,58 @@ function FeedbackModal({
   user,
   feedbackRefresh,
   diaryId,
+  groupedFeedback,
 }) {
   const [form] = Form.useForm();
   const [submitLoading, setSubmitLoading] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(1);
+  const [value, setValue] = useState("");
+
+  const fbValue = groupedFeedback[sectionName];
+
+  React.useEffect(() => {
+    if (groupedFeedback && fbValue?.length) {
+      const feedbackText = fbValue[0].feedback;
+      setValue({ feedback: feedbackText });
+      form.setFieldsValue({ feedback: feedbackText });
+    } else {
+      setValue({ feedback: "" });
+      form.setFieldsValue({ feedback: "" });
+    }
+  }, [groupedFeedback, sectionName, form]);
 
   const handleSubmit = async () => {
     setSubmitLoading(true);
     try {
       const values = await form.validateFields();
-      const allValues = {
+      const existingFeedback = fbValue?.[0];
+
+      const payload = {
         ...values,
-        diaryId: diaryId,
+        diaryId,
         createdBy: user._id,
         entryId: modalContent[0]?._id,
         section: sectionName,
       };
-      //console.log(allValues);
-      const res = await axios.post("/create-feedback", allValues);
+      //      console.log(payload);
+
+      let res;
+      if (existingFeedback) {
+        res = await axios.put(
+          `update-feedback?id=${modalContent[0]._id}`,
+          payload
+        );
+      } else {
+        res = await axios.post("create-feedback", payload);
+      }
+
       if (res.data.success) {
         Swal.fire({
           icon: "success",
           title: "Success",
-          text: "Feedback saved successfully",
+          text: existingFeedback
+            ? "Feedback updated successfully"
+            : "Feedback saved successfully",
         });
         feedbackRefresh();
       }
@@ -132,25 +169,16 @@ function FeedbackModal({
       style={{ maxWidth: "95vw" }}
     >
       <Row gutter={[20, 20]}>
+        <Col span={12}>{renderComponent()}</Col>
         <Col span={12}>
-          {renderComponent()}
-        </Col>
-        <Col span={12}>
-          <Form form={form} onFinish={handleSubmit} layout="vertical">
+          <Form
+            form={form}
+            onFinish={handleSubmit}
+            layout="vertical"
+            initialValues={value}
+          >
             <Form.Item
-              label={
-                <span
-                  style={{
-                    fontFamily: "Raleway",
-                    fontWeight: 600,
-                    margin: 0,
-                    fontSize: "1rem",
-                    letterSpacing: "1px",
-                  }}
-                >
-                  Feedback
-                </span>
-              }
+              label={<span style={labelStyle}>Feedback</span>}
               name="feedback"
             >
               <Input.TextArea

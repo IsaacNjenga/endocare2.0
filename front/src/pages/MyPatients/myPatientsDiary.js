@@ -185,6 +185,7 @@ function MyPatientsDiary() {
         sectionName={sectionName}
         diaryId={diaryId}
         feedbackRefresh={feedbackRefresh}
+        groupedFeedback={groupedFeedback}
       />
     </>
   );
