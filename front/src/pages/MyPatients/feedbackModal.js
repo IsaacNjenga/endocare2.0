@@ -75,27 +75,47 @@ function FeedbackModal({
           display: sectionName === "medicationsLogs" ? "block" : "none",
         }}
       >
-        <MedicationsComponent />
+        <MedicationsComponent
+          content={modalContent}
+          currentIndex={currentIndex}
+          setCurrentIndex={setCurrentIndex}
+        />
       </div>
       <div
         style={{ display: sectionName === "bloodSugarLogs" ? "block" : "none" }}
       >
-        <BloodSugarComponent />
+        <BloodSugarComponent
+          content={modalContent}
+          currentIndex={currentIndex}
+          setCurrentIndex={setCurrentIndex}
+        />
       </div>
       <div
         style={{
           display: sectionName === "physicalActivityLogs" ? "block" : "none",
         }}
       >
-        <PhysicalActivityComponent />
+        <PhysicalActivityComponent
+          content={modalContent}
+          currentIndex={currentIndex}
+          setCurrentIndex={setCurrentIndex}
+        />
       </div>
       <div
         style={{ display: sectionName === "symptomsLogs" ? "block" : "none" }}
       >
-        <SymptomsComponent />
+        <SymptomsComponent
+          content={modalContent}
+          currentIndex={currentIndex}
+          setCurrentIndex={setCurrentIndex}
+        />
       </div>
       <div style={{ display: sectionName === "moodLogs" ? "block" : "none" }}>
-        <MoodsComponent />
+        <MoodsComponent
+          content={modalContent}
+          currentIndex={currentIndex}
+          setCurrentIndex={setCurrentIndex}
+        />
       </div>
     </>
   );
