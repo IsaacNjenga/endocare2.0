@@ -16,6 +16,7 @@ const createFeedback = async (req, res) => {
 const fetchFeedback = async (req, res) => {
   const { id } = req.query;
   if (!id) return res.status(404).json({ error: "No ID specified" });
+
   try {
     const objectId = new mongoose.Types.ObjectId(id);
     const feedback = await FeedbackModel.find({ diaryId: objectId });

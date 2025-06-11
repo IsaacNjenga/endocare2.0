@@ -1,16 +1,11 @@
 import React from "react";
 import {
-  EditOutlined,
-  DeleteOutlined,
   ClockCircleOutlined,
   SmileOutlined,
   FireOutlined,
-  CommentOutlined,
 } from "@ant-design/icons";
 import {
-  Button,
   Card,
-  Tooltip,
   Descriptions,
   Pagination,
   Typography,

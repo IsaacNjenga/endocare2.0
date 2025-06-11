@@ -822,7 +822,7 @@ export const MoodsEntry = ({
   ];
 
   const doctorActions = [
-    <Tooltip title="Write your feedback" key="feedback">
+    <Tooltip title="Give your feedback" key="feedback">
       <Button
         type="primary"
         icon={<CommentOutlined />}

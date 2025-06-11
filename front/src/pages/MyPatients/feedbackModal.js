@@ -155,7 +155,7 @@ function FeedbackModal({
             >
               <Input.TextArea
                 rows={10}
-                placeholder="Write your feedback..."
+                placeholder="Give your feedback..."
                 style={{ fontFamily: "Raleway" }}
               />
             </Form.Item>

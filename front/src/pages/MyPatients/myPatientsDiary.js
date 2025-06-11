@@ -13,6 +13,7 @@ import {
 import useFetchDiaryData from "../../hooks/fetchDiaryData";
 import { UserContext } from "../../App";
 import FeedbackModal from "./feedbackModal";
+import useFetchFeedbackByDiaryId from "../../hooks/fetchFeedbackByDiaryId";
 
 const colStyle = { margin: "15px 0px" };
 
@@ -28,13 +29,14 @@ function MyPatientsDiary() {
 
   const diaryForDate = diaryData.find(
     (entry) => entry.entryDate === format(new Date(date), "yyyy-MM-dd")
-
   );
 
-  
   const diaryId = diaryForDate?._id;
+  const { feedback, feedbackLoading } = useFetchFeedbackByDiaryId(diaryId);
+  console.log(feedback);
 
-  if (diaryLoading) return <Spin tip="Loading. Please wait..." />;
+  if (diaryLoading || feedbackLoading)
+    return <Spin tip="Loading. Please wait..." />;
 
   return (
     <>
