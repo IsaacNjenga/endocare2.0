@@ -48,15 +48,25 @@ const descriptionStyle = { fontFamily: "Roboto", fontSize: 15 };
 
 const descriptionLabelStyle = { fontFamily: "Raleway", fontWeight: 500 };
 
-const renderListAsTags = (items, color) => (
-  <Space wrap>
-    {items?.map((item, idx) => (
-      <Tag key={idx} color={color} style={descriptionStyle}>
-        {item}
+const renderListAsTags = (items, color) => {
+  if (!Array.isArray(items)) {
+    return (
+      <Tag color={color} style={descriptionStyle}>
+        {items || "None"}
       </Tag>
-    ))}
-  </Space>
-);
+    );
+  }
+
+  return (
+    <Space wrap>
+      {items.map((item, idx) => (
+        <Tag key={idx} color={color} style={descriptionStyle}>
+          {item}
+        </Tag>
+      ))}
+    </Space>
+  );
+};
 
 export const MealsComponent = ({ content, currentIndex, setCurrentIndex }) => {
   const currentEntry = content[currentIndex - 1];
@@ -439,6 +449,7 @@ export const SymptomsComponent = ({
   setCurrentIndex,
 }) => {
   const currentEntry = content[currentIndex - 1];
+
   return (
     <Card
       hoverable
@@ -461,9 +472,6 @@ export const SymptomsComponent = ({
       ) : (
         <Descriptions column={1} bordered size="medium">
           <Descriptions.Item label="Symptoms" style={descriptionLabelStyle}>
-            {/* <Text strong style={descriptionStyle}>
-                {currentEntry?.symptoms || "N/A"}
-              </Text> */}
             {renderListAsTags(currentEntry?.symptoms, "red")}
           </Descriptions.Item>
           <Descriptions.Item label="Severity" style={descriptionLabelStyle}>

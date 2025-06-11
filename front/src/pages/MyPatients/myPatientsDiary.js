@@ -17,6 +17,15 @@ import useFetchFeedbackByDiaryId from "../../hooks/fetchFeedbackByDiaryId";
 
 const colStyle = { margin: "15px 0px" };
 
+// const sectionNames = [
+//   "mealLogs",
+//   "bloodSugarLogs",
+//   "physicalActivityLogs",
+//   "symptomsLogs",
+//   "moodLogs",
+//   "medicationsLogs",
+// ];
+
 function MyPatientsDiary() {
   const { date, id } = useParams();
   const navigate = useNavigate();
@@ -32,11 +41,26 @@ function MyPatientsDiary() {
   );
 
   const diaryId = diaryForDate?._id;
-  const { feedback, feedbackLoading } = useFetchFeedbackByDiaryId(diaryId);
-  console.log(feedback);
+  const { feedback, feedbackLoading, feedbackRefresh } =
+    useFetchFeedbackByDiaryId(diaryId);
+
+  const groupedFeedback =
+    feedback?.reduce((acc, item) => {
+      if (!acc[item.section]) {
+        acc[item.section] = [];
+      }
+      acc[item.section].push(item);
+      return acc;
+    }, {}) || {};
+
+  //console.log(groupedFeedback);
+  // sectionNames.forEach((section) => {
+  //   const sectionFeedback = groupedFeedback[section] || [];
+  //   console.log(sectionFeedback);
+  // });
 
   if (diaryLoading || feedbackLoading)
-    return <Spin tip="Loading. Please wait..." />;
+    return <Spin tip="Loading. Please wait..." fullscreen />;
 
   return (
     <>
@@ -71,6 +95,7 @@ function MyPatientsDiary() {
               setModalContent={setModalContent}
               setSectionName={setSectionName}
               setLoading={setLoading}
+              groupedFeedback={groupedFeedback}
             />
           </Col>
           <Col span={12} style={colStyle}>
@@ -82,6 +107,7 @@ function MyPatientsDiary() {
               setModalContent={setModalContent}
               setSectionName={setSectionName}
               setLoading={setLoading}
+              groupedFeedback={groupedFeedback}
             />
           </Col>
           <Col span={12} style={colStyle}>
@@ -93,6 +119,7 @@ function MyPatientsDiary() {
               setModalContent={setModalContent}
               setSectionName={setSectionName}
               setLoading={setLoading}
+              groupedFeedback={groupedFeedback}
             />
           </Col>
           <Col span={12} style={colStyle}>
@@ -104,6 +131,7 @@ function MyPatientsDiary() {
               setModalContent={setModalContent}
               setSectionName={setSectionName}
               setLoading={setLoading}
+              groupedFeedback={groupedFeedback}
             />
           </Col>
           <Col span={12} style={colStyle}>
@@ -115,6 +143,7 @@ function MyPatientsDiary() {
               setModalContent={setModalContent}
               setSectionName={setSectionName}
               setLoading={setLoading}
+              groupedFeedback={groupedFeedback}
             />
           </Col>
           <Col span={12} style={colStyle}>
@@ -126,10 +155,26 @@ function MyPatientsDiary() {
               setModalContent={setModalContent}
               setSectionName={setSectionName}
               setLoading={setLoading}
+              groupedFeedback={groupedFeedback}
             />
           </Col>
         </Row>
       </div>
+      {/* <div>
+        {groupedFeedback &&
+          sectionNames?.map((section) => (
+            <div key={section}>
+              <h3>{section}</h3>
+              {groupedFeedback[section]?.length > 0 ? (
+                groupedFeedback[section].map((fb) => (
+                  <p key={fb._id}>{fb.feedback}</p>
+                ))
+              ) : (
+                <p>No feedback yet.</p>
+              )}
+            </div>
+          ))}
+      </div> */}
 
       <FeedbackModal
         openFeedbackModal={openFeedbackModal}
@@ -139,6 +184,7 @@ function MyPatientsDiary() {
         loading={loading}
         sectionName={sectionName}
         diaryId={diaryId}
+        feedbackRefresh={feedbackRefresh}
       />
     </>
   );

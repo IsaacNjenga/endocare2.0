@@ -1,4 +1,5 @@
 import { jwtDecode } from "jwt-decode";
+import { Navigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import Cookies from "universal-cookie";
 
@@ -22,6 +23,7 @@ function ProtectedRoutes({ children }) {
           confirmButtonText: "OK",
         });
         window.location.reload();
+        <Navigate to="/" replace />;
         // <Navigate to="/auth" replace />;
       }
       return children;
@@ -37,6 +39,7 @@ function ProtectedRoutes({ children }) {
       });
 
       window.location.reload();
+      <Navigate to="/" replace />;
       // <Navigate to="/auth" replace />;
     }
   }

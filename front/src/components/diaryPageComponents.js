@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   EditOutlined,
   DeleteOutlined,
@@ -19,6 +19,7 @@ import {
   Empty,
   Space,
   Tag,
+  Badge,
 } from "antd";
 import mealIcon from "../assets/icons/meal.png";
 import medicationIcon from "../assets/icons/medication.png";
@@ -72,10 +73,18 @@ export const MealsEntry = ({
   setSectionName,
   user,
   setOpenFeedbackModal,
+  groupedFeedback,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(1);
+  const [show, setShow] = useState(false);
   const currentMeal = content[currentIndex - 1];
   const userRole = user?.role;
+
+  useEffect(() => {
+    if (groupedFeedback?.mealLogs) {
+      setShow(true);
+    }
+  }, [groupedFeedback]);
 
   const actions = [
     <Tooltip title="Edit this entry" key="edit">
@@ -94,15 +103,17 @@ export const MealsEntry = ({
   ];
 
   const doctorActions = [
-    <Tooltip title="Write your feedback" key="feedback">
-      <Button
-        type="primary"
-        icon={<CommentOutlined />}
-        onClick={() => {
-          handleFeedback(content);
-          setSectionName("mealLogs");
-        }}
-      />
+    <Tooltip title="Give your feedback" key="feedback">
+      <Badge dot={show}>
+        <Button
+          type="primary"
+          icon={<CommentOutlined />}
+          onClick={() => {
+            handleFeedback(content);
+            setSectionName("mealLogs");
+          }}
+        />
+      </Badge>
     </Tooltip>,
   ];
 
@@ -227,10 +238,18 @@ export const MedicationsEntry = ({
   user,
   setSectionName,
   setOpenFeedbackModal,
+  groupedFeedback,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const currentMedication = content[currentIndex - 1];
+  const [show, setShow] = useState(false);
   const userRole = user?.role;
+
+  useEffect(() => {
+    if (groupedFeedback?.medicationsLogs) {
+      setShow(true);
+    }
+  }, [groupedFeedback]);
 
   const actions = [
     <Tooltip title="Edit this entry" key="edit">
@@ -249,15 +268,17 @@ export const MedicationsEntry = ({
   ];
 
   const doctorActions = [
-    <Tooltip title="Write your feedback" key="feedback">
-      <Button
-        type="primary"
-        icon={<CommentOutlined />}
-        onClick={() => {
-          handleFeedback(content);
-          setSectionName("medicationsLogs");
-        }}
-      />
+    <Tooltip title="Give your feedback" key="feedback">
+      <Badge dot={show}>
+        <Button
+          type="primary"
+          icon={<CommentOutlined />}
+          onClick={() => {
+            handleFeedback(content);
+            setSectionName("medicationsLogs");
+          }}
+        />
+      </Badge>
     </Tooltip>,
   ];
 
@@ -388,10 +409,19 @@ export const BloodSugarEntry = ({
   user,
   setSectionName,
   setOpenFeedbackModal,
+  groupedFeedback,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const currentEntry = content[currentIndex - 1];
+  const [show, setShow] = useState(false);
   const userRole = user?.role;
+
+  useEffect(() => {
+    if (groupedFeedback?.bloodSugarLogs) {
+      setShow(true);
+    }
+  }, [groupedFeedback]);
+
   const actions = [
     <Tooltip title="Edit this entry" key="edit">
       <Button
@@ -409,15 +439,17 @@ export const BloodSugarEntry = ({
   ];
 
   const doctorActions = [
-    <Tooltip title="Write your feedback" key="feedback">
-      <Button
-        type="primary"
-        icon={<CommentOutlined />}
-        onClick={() => {
-          handleFeedback(content);
-          setSectionName("bloodSugarLogs");
-        }}
-      />
+    <Tooltip title="Give your feedback" key="feedback">
+      <Badge dot={show}>
+        <Button
+          type="primary"
+          icon={<CommentOutlined />}
+          onClick={() => {
+            handleFeedback(content);
+            setSectionName("bloodSugarLogs");
+          }}
+        />
+      </Badge>
     </Tooltip>,
   ];
 
@@ -542,10 +574,18 @@ export const PhysicalActivityEntry = ({
   setSectionName,
   user,
   setOpenFeedbackModal,
+  groupedFeedback,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const currentContent = content[currentIndex - 1];
+  const [show, setShow] = useState(false);
   const userRole = user?.role;
+
+  useEffect(() => {
+    if (groupedFeedback?.physicalActivityLogs) {
+      setShow(true);
+    }
+  }, [groupedFeedback]);
 
   const actions = [
     <Tooltip title="Edit this entry" key="edit">
@@ -564,15 +604,17 @@ export const PhysicalActivityEntry = ({
   ];
 
   const doctorActions = [
-    <Tooltip title="Write your feedback" key="feedback">
-      <Button
-        type="primary"
-        icon={<CommentOutlined />}
-        onClick={() => {
-          handleFeedback(content);
-          setSectionName("physicalActivityLogs");
-        }}
-      />
+    <Tooltip title="Give your feedback" key="feedback">
+      <Badge dot={show}>
+        <Button
+          type="primary"
+          icon={<CommentOutlined />}
+          onClick={() => {
+            handleFeedback(content);
+            setSectionName("physicalActivityLogs");
+          }}
+        />
+      </Badge>
     </Tooltip>,
   ];
 
@@ -678,10 +720,18 @@ export const SymptomsEntry = ({
   setSectionName,
   user,
   setOpenFeedbackModal,
+  groupedFeedback,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const currentEntry = content[currentIndex - 1];
+  const [show, setShow] = useState(false);
   const userRole = user?.role;
+
+  useEffect(() => {
+    if (groupedFeedback?.symptomsLogs) {
+      setShow(true);
+    }
+  }, [groupedFeedback]);
 
   const actions = [
     <Tooltip title="Edit this entry" key="edit">
@@ -700,15 +750,17 @@ export const SymptomsEntry = ({
   ];
 
   const doctorActions = [
-    <Tooltip title="Write your feedback" key="feedback">
-      <Button
-        type="primary"
-        icon={<CommentOutlined />}
-        onClick={() => {
-          handleFeedback(content);
-          setSectionName("symptomsLogs");
-        }}
-      />
+    <Tooltip title="Give your feedback" key="feedback">
+      <Badge dot={show}>
+        <Button
+          type="primary"
+          icon={<CommentOutlined />}
+          onClick={() => {
+            handleFeedback(content);
+            setSectionName("symptomsLogs");
+          }}
+        />
+      </Badge>
     </Tooltip>,
   ];
 
@@ -754,9 +806,6 @@ export const SymptomsEntry = ({
       ) : (
         <Descriptions column={1} bordered size="medium">
           <Descriptions.Item label="Symptoms" style={descriptionLabelStyle}>
-            {/* <Text strong style={descriptionStyle}>
-              {currentEntry?.symptoms || "N/A"}
-            </Text> */}
             {renderListAsTags(currentEntry?.symptoms, "red")}
           </Descriptions.Item>
           <Descriptions.Item label="Severity" style={descriptionLabelStyle}>
@@ -800,10 +849,18 @@ export const MoodsEntry = ({
   user,
   setSectionName,
   setOpenFeedbackModal,
+  groupedFeedback,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(1);
+  const [show, setShow] = useState(false);
   const currentEntry = content[currentIndex - 1];
   const userRole = user?.role;
+
+  useEffect(() => {
+    if (groupedFeedback?.moodLogs) {
+      setShow(true);
+    }
+  }, [groupedFeedback]);
 
   const actions = [
     <Tooltip title="Edit this entry" key="edit">
@@ -823,14 +880,16 @@ export const MoodsEntry = ({
 
   const doctorActions = [
     <Tooltip title="Give your feedback" key="feedback">
-      <Button
-        type="primary"
-        icon={<CommentOutlined />}
-        onClick={() => {
-          handleFeedback(content);
-          setSectionName("moodLogs");
-        }}
-      />
+      <Badge dot={show}>
+        <Button
+          type="primary"
+          icon={<CommentOutlined />}
+          onClick={() => {
+            handleFeedback(content);
+            setSectionName("moodLogs");
+          }}
+        />
+      </Badge>
     </Tooltip>,
   ];
 

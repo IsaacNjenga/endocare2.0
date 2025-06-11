@@ -18,6 +18,7 @@ function FeedbackModal({
   sectionName,
   loading,
   user,
+  feedbackRefresh,
   diaryId,
 }) {
   const [form] = Form.useForm();
@@ -35,7 +36,7 @@ function FeedbackModal({
         entryId: modalContent[0]?._id,
         section: sectionName,
       };
-      console.log(allValues);
+      //console.log(allValues);
       const res = await axios.post("/create-feedback", allValues);
       if (res.data.success) {
         Swal.fire({
@@ -43,6 +44,7 @@ function FeedbackModal({
           title: "Success",
           text: "Feedback saved successfully",
         });
+        feedbackRefresh();
       }
     } catch (error) {
       console.log(error);
@@ -131,9 +133,7 @@ function FeedbackModal({
     >
       <Row gutter={[20, 20]}>
         <Col span={12}>
-          {/* {sectionName} */}
           {renderComponent()}
-          {/* <pre>{JSON.stringify(modalContent, null, 2)}</pre> */}
         </Col>
         <Col span={12}>
           <Form form={form} onFinish={handleSubmit} layout="vertical">
