@@ -103,7 +103,7 @@ export const MealsEntry = ({
   ];
 
   const doctorActions = [
-    <Tooltip title="Give your feedback" key="feedback">
+    <Tooltip title={`${show ? "View" : "Give"} your feedback`} key="feedback">
       <Badge dot={show}>
         <Button
           type="primary"
@@ -268,7 +268,7 @@ export const MedicationsEntry = ({
   ];
 
   const doctorActions = [
-    <Tooltip title="Give your feedback" key="feedback">
+    <Tooltip title={`${show ? "View" : "Give"} your feedback`} key="feedback">
       <Badge dot={show}>
         <Button
           type="primary"
@@ -439,7 +439,7 @@ export const BloodSugarEntry = ({
   ];
 
   const doctorActions = [
-    <Tooltip title="Give your feedback" key="feedback">
+    <Tooltip title={`${show ? "View" : "Give"} your feedback`} key="feedback">
       <Badge dot={show}>
         <Button
           type="primary"
@@ -604,7 +604,7 @@ export const PhysicalActivityEntry = ({
   ];
 
   const doctorActions = [
-    <Tooltip title="Give your feedback" key="feedback">
+    <Tooltip title={`${show ? "View" : "Give"} your feedback`} key="feedback">
       <Badge dot={show}>
         <Button
           type="primary"
@@ -750,7 +750,7 @@ export const SymptomsEntry = ({
   ];
 
   const doctorActions = [
-    <Tooltip title="Give your feedback" key="feedback">
+    <Tooltip title={`${show ? "View" : "Give"} your feedback`} key="feedback">
       <Badge dot={show}>
         <Button
           type="primary"
@@ -879,7 +879,7 @@ export const MoodsEntry = ({
   ];
 
   const doctorActions = [
-    <Tooltip title="Give your feedback" key="feedback">
+    <Tooltip title={`${show ? "View" : "Give"} your feedback`} key="feedback">
       <Badge dot={show}>
         <Button
           type="primary"
