@@ -7,7 +7,8 @@ function UpdatePracticeInfoModal({
   loading,
   setOpenUpdateModal,
   openUpdateModal,
-  modalContent,refresh
+  modalContent,
+  refresh,
 }) {
   return (
     <Modal
@@ -21,7 +22,8 @@ function UpdatePracticeInfoModal({
       <UpdatePracticeInfo
         modalContent={modalContent}
         user={user}
-        setOpenUpdateModal={setOpenUpdateModal}refresh={refresh}
+        setOpenUpdateModal={setOpenUpdateModal}
+        refresh={refresh}
       />
     </Modal>
   );
