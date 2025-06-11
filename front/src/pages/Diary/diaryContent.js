@@ -15,6 +15,8 @@ import UpdateDiary from "./updateDiary";
 import useFetchDiaryData from "../../hooks/fetchDiaryData";
 import { useContext } from "react";
 import { UserContext } from "../../App";
+import useFetchFeedbackByDiaryId from "../../hooks/fetchFeedbackByDiaryId";
+import FeedbackModal from "../MyPatients/feedbackModal";
 
 const colStyle = { margin: "15px 0px" };
 
@@ -27,6 +29,7 @@ function DiaryContent() {
   const [sectionName, setSectionName] = useState("");
   const { user } = useContext(UserContext);
   const userId = user?._id;
+  const [openFeedbackModal, setOpenFeedbackModal] = useState(false);
   const { diaryData, diaryLoading, diaryRefresh } = useFetchDiaryData(userId);
 
   const diaryForDate = diaryData.find(
@@ -34,8 +37,20 @@ function DiaryContent() {
   );
 
   const currentDiaryId = diaryForDate?._id;
+  const { feedback, feedbackLoading } =
+    useFetchFeedbackByDiaryId(currentDiaryId);
 
-  if (diaryLoading) return <Spin tip="Loading. Please wait..." />;
+  const groupedFeedback =
+    feedback?.reduce((acc, item) => {
+      if (!acc[item.section]) {
+        acc[item.section] = [];
+      }
+      acc[item.section].push(item);
+      return acc;
+    }, {}) || {};
+
+  if (diaryLoading || feedbackLoading)
+    return <Spin tip="Loading. Please wait..." />;
   return (
     <>
       <div>
@@ -66,6 +81,8 @@ function DiaryContent() {
                 setLoading={setLoading}
                 setSectionName={setSectionName}
                 user={user}
+                groupedFeedback={groupedFeedback}
+                setOpenFeedbackModal={setOpenFeedbackModal}
               />
             </Col>
 
@@ -78,6 +95,8 @@ function DiaryContent() {
                 setLoading={setLoading}
                 setSectionName={setSectionName}
                 user={user}
+                groupedFeedback={groupedFeedback}
+                setOpenFeedbackModal={setOpenFeedbackModal}
               />
             </Col>
 
@@ -90,6 +109,8 @@ function DiaryContent() {
                 setSectionName={setSectionName}
                 setLoading={setLoading}
                 user={user}
+                groupedFeedback={groupedFeedback}
+                setOpenFeedbackModal={setOpenFeedbackModal}
               />
             </Col>
 
@@ -102,6 +123,8 @@ function DiaryContent() {
                 setSectionName={setSectionName}
                 setLoading={setLoading}
                 user={user}
+                groupedFeedback={groupedFeedback}
+                setOpenFeedbackModal={setOpenFeedbackModal}
               />
             </Col>
 
@@ -114,6 +137,8 @@ function DiaryContent() {
                 setSectionName={setSectionName}
                 setLoading={setLoading}
                 user={user}
+                groupedFeedback={groupedFeedback}
+                setOpenFeedbackModal={setOpenFeedbackModal}
               />
             </Col>
 
@@ -126,6 +151,8 @@ function DiaryContent() {
                 setSectionName={setSectionName}
                 setLoading={setLoading}
                 user={user}
+                groupedFeedback={groupedFeedback}
+                setOpenFeedbackModal={setOpenFeedbackModal}
               />
             </Col>
           </Row>
@@ -141,6 +168,17 @@ function DiaryContent() {
         user={user}
         currentDiaryId={currentDiaryId}
         diaryRefresh={diaryRefresh}
+      />
+
+      <FeedbackModal
+        openFeedbackModal={openFeedbackModal}
+        setOpenFeedbackModal={setOpenFeedbackModal}
+        groupedFeedback={groupedFeedback}
+        user={user}
+        modalContent={modalContent}
+        loading={loading}
+        sectionName={sectionName}
+        diaryId={currentDiaryId}
       />
     </>
   );

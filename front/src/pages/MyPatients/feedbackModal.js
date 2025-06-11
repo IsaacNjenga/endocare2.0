@@ -34,6 +34,7 @@ function FeedbackModal({
   const [submitLoading, setSubmitLoading] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(1);
   const [value, setValue] = useState("");
+  const userRole = user?.role;
 
   const fbValue = groupedFeedback[sectionName];
 
@@ -187,16 +188,18 @@ function FeedbackModal({
                 style={{ fontFamily: "Raleway" }}
               />
             </Form.Item>
-            <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                loading={submitLoading}
-                block
-              >
-                {submitLoading ? "Submitting..." : "Submit"}
-              </Button>
-            </Form.Item>
+            {userRole === "doctor" ? (
+              <Form.Item>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  loading={submitLoading}
+                  block
+                >
+                  {submitLoading ? "Submitting..." : "Submit"}
+                </Button>
+              </Form.Item>
+            ) : null}
           </Form>
         </Col>
       </Row>

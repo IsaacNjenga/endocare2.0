@@ -100,6 +100,25 @@ export const MealsEntry = ({
     <Tooltip title="Delete this entry" key="delete">
       <Button danger icon={<DeleteOutlined />} />
     </Tooltip>,
+    <Tooltip
+      title={`${
+        show
+          ? "View your specialist's feedback"
+          : "Your specialist is yet to give their feedback"
+      }`}
+      key="feedback"
+    >
+      <Badge dot={show}>
+        <Button
+          type="primary"
+          icon={<CommentOutlined />}
+          onClick={() => {
+            handleFeedback(content);
+            setSectionName("mealLogs");
+          }}
+        />
+      </Badge>
+    </Tooltip>,
   ];
 
   const doctorActions = [
@@ -264,6 +283,25 @@ export const MedicationsEntry = ({
     </Tooltip>,
     <Tooltip title="Delete this entry" key="delete">
       <Button danger icon={<DeleteOutlined />} />
+    </Tooltip>,
+    <Tooltip
+      title={`${
+        show
+          ? "View your specialist's feedback"
+          : "Your specialist is yet to give their feedback"
+      }`}
+      key="feedback"
+    >
+      <Badge dot={show}>
+        <Button
+          type="primary"
+          icon={<CommentOutlined />}
+          onClick={() => {
+            handleFeedback(content);
+            setSectionName("medicationsLogs");
+          }}
+        />
+      </Badge>
     </Tooltip>,
   ];
 
@@ -436,6 +474,25 @@ export const BloodSugarEntry = ({
     <Tooltip title="Delete this entry" key="delete">
       <Button danger icon={<DeleteOutlined />} />
     </Tooltip>,
+    <Tooltip
+      title={`${
+        show
+          ? "View your specialist's feedback"
+          : "Your specialist is yet to give their feedback"
+      }`}
+      key="feedback"
+    >
+      <Badge dot={show}>
+        <Button
+          type="primary"
+          icon={<CommentOutlined />}
+          onClick={() => {
+            handleFeedback(content);
+            setSectionName("bloodSugarLogs");
+          }}
+        />
+      </Badge>
+    </Tooltip>,
   ];
 
   const doctorActions = [
@@ -601,6 +658,25 @@ export const PhysicalActivityEntry = ({
     <Tooltip title="Delete this entry" key="delete">
       <Button danger icon={<DeleteOutlined />} />
     </Tooltip>,
+    <Tooltip
+      title={`${
+        show
+          ? "View your specialist's feedback"
+          : "Your specialist is yet to give their feedback"
+      }`}
+      key="feedback"
+    >
+      <Badge dot={show}>
+        <Button
+          type="primary"
+          icon={<CommentOutlined />}
+          onClick={() => {
+            handleFeedback(content);
+            setSectionName("physicalActivityLogs");
+          }}
+        />
+      </Badge>
+    </Tooltip>,
   ];
 
   const doctorActions = [
@@ -747,6 +823,25 @@ export const SymptomsEntry = ({
     <Tooltip title="Delete this entry" key="delete">
       <Button danger icon={<DeleteOutlined />} />
     </Tooltip>,
+    <Tooltip
+      title={`${
+        show
+          ? "View your specialist's feedback"
+          : "Your specialist is yet to give their feedback"
+      }`}
+      key="feedback"
+    >
+      <Badge dot={show}>
+        <Button
+          type="primary"
+          icon={<CommentOutlined />}
+          onClick={() => {
+            handleFeedback(content);
+            setSectionName("symptomsLogs");
+          }}
+        />
+      </Badge>
+    </Tooltip>,
   ];
 
   const doctorActions = [
@@ -876,6 +971,25 @@ export const MoodsEntry = ({
     <Tooltip title="Delete this entry" key="delete">
       <Button danger icon={<DeleteOutlined />} />
     </Tooltip>,
+    <Tooltip
+      title={`${
+        show
+          ? "View your specialist's feedback"
+          : "Your specialist is yet to give their feedback"
+      }`}
+      key="feedback"
+    >
+      <Badge dot={show}>
+        <Button
+          type="primary"
+          icon={<CommentOutlined />}
+          onClick={() => {
+            handleFeedback(content);
+            setSectionName("moodLogs");
+          }}
+        />
+      </Badge>
+    </Tooltip>,
   ];
 
   const doctorActions = [
@@ -1000,7 +1114,7 @@ export const MoodsEntry = ({
 };
 
 function diaryPageComponents() {
-  return <div>diaryPageComponents</div>;
+  return <div></div>;
 }
 
 export default diaryPageComponents;
