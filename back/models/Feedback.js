@@ -3,7 +3,19 @@ import mongoose from "mongoose";
 const feedbackSchema = new mongoose.Schema(
   {
     diaryId: { type: mongoose.Schema.Types.ObjectId, ref: "diary" },
-    entryId,
+    section: {
+      type: String,
+      enum: [
+        "mealLogs",
+        "bloodSugarLogs",
+        "physicalActivityLogs",
+        "symptomsLogs",
+        "moodLogs",
+        "medicationsLogs",
+      ],
+      required: true,
+    },
+    entryId: { type: mongoose.Schema.Types.ObjectId },
     feedback: { type: String },
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
   },
@@ -11,3 +23,4 @@ const feedbackSchema = new mongoose.Schema(
 );
 
 const FeedbackModel = mongoose.model("feedback", feedbackSchema);
+export default FeedbackModel;

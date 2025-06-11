@@ -1,5 +1,7 @@
-import { Button, Form, Input, Modal } from "antd";
+import { Button, Col, Form, Input, Modal, Row } from "antd";
+import axios from "axios";
 import React, { useState } from "react";
+import Swal from "sweetalert2";
 
 function FeedbackModal({
   openFeedbackModal,
@@ -22,12 +24,31 @@ function FeedbackModal({
         diaryId: diaryId,
         createdBy: user._id,
         entryId: modalContent[0]?._id,
+        section: sectionName,
       };
       console.log(allValues);
+      const res = await axios.post("/create-feedback", allValues);
+      if (res.data.success) {
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Feedback saved successfully",
+        });
+      }
     } catch (error) {
       console.log(error);
+      const errorMessage =
+        error.response?.data?.error ??
+        "An unexpected error occurred. Please try again later.";
+      Swal.fire({
+        icon: "warning",
+        title: "Error",
+        text: errorMessage,
+      });
     } finally {
       setSubmitLoading(false);
+      form.resetFields();
+      setOpenFeedbackModal(false);
     }
   };
 
@@ -37,21 +58,27 @@ function FeedbackModal({
       open={openFeedbackModal}
       onCancel={() => setOpenFeedbackModal(false)}
       confirmLoading={loading}
-      width={750}
+      width={850}
       style={{ maxWidth: "95vw" }}
     >
-      {sectionName}
-      <pre>{JSON.stringify(modalContent, null, 2)}</pre>
-      <Form form={form} onFinish={handleSubmit} layout="vertical">
-        <Form.Item label={<span>Feedback</span>} name="feedback">
-          <Input.TextArea rows={6} placeholder="Write your feedback..." />
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit" loading={submitLoading}>
-            {submitLoading ? "Submitting..." : "Submit"}
-          </Button>
-        </Form.Item>
-      </Form>
+      <Row gutter={[20, 20]}>
+        <Col span={12}>
+          {sectionName}
+          <pre>{JSON.stringify(modalContent, null, 2)}</pre>
+        </Col>
+        <Col span={12}>
+          <Form form={form} onFinish={handleSubmit} layout="vertical">
+            <Form.Item label={<span>Feedback</span>} name="feedback">
+              <Input.TextArea rows={8} placeholder="Write your feedback..." />
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit" loading={submitLoading} block>
+                {submitLoading ? "Submitting..." : "Submit"}
+              </Button>
+            </Form.Item>
+          </Form>
+        </Col>
+      </Row>
     </Modal>
   );
 }

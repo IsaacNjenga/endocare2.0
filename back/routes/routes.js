@@ -45,6 +45,14 @@ import {
   fetchPatientAppointments,
   fetchDoctorAppointments,
 } from "../controllers/appointmentController.js";
+import {
+  fetchFeedbackForEntry,
+  createFeedback,
+  fetchFeedback,
+  fetchDoctorFeedback,
+  updateFeedback,
+  deleteFeedback,
+} from "../controllers/feedbackController.js";
 
 const router = express.Router();
 
@@ -99,5 +107,13 @@ router.get("/fetch-doctor-appointments", fetchDoctorAppointments);
 router.get("/fetch-patient-appointments", fetchPatientAppointments);
 router.put("/update-appointment", updateAppointment);
 router.delete("/delete-appointment", deleteAppointment);
+
+//feedback routes
+router.post("/create-feedback", createFeedback);
+router.get("/get-all-feedback", fetchFeedback);
+router.get("/get-entry-feedback", fetchFeedbackForEntry);
+router.get("/get-doctor-feedback", fetchDoctorFeedback);
+router.put("/update-feedback", updateFeedback);
+router.delete("/delete-feedback", deleteFeedback);
 
 export { router as Router };

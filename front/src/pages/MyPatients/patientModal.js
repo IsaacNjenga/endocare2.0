@@ -21,7 +21,7 @@ function PatientModal({ openPatientModal, patientData, setOpenPatientModal, load
     </>
   );
 
-  console.log(patientData)
+  //console.log(patientData)
 
   return (
     <Modal
