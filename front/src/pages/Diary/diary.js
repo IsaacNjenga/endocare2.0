@@ -48,7 +48,7 @@ function Diary() {
               background: hasEntry
                 ? "#1677ff"
                 : "linear-gradient(to left, #e9e8e6 0%, #ddd1d1 100%)",
-              border: hasEntry ? "" : "2px dashed grey",
+              border: hasEntry ? "" : "2px dashed grey", cursor: hasEntry ? "pointer" : "default",
             }}
             onClick={() => {
               navigate(`/diary/date/${value.format("YYYY-MM-DD")}`);

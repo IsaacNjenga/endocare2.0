@@ -21,6 +21,7 @@ import {
 } from "@ant-design/icons";
 import { formatDistanceToNowStrict } from "date-fns";
 import dayjs from "dayjs";
+import useFetchDiaryData from "../../hooks/fetchDiaryData";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -39,16 +40,30 @@ const titleStyle = {
 
 const markerStyle = {
   display: "inline-block",
-  width: 7,
-  height: 7,
+  width: 15,
+  height: 15,
   borderRadius: "50%",
   margin: "auto",
 };
 
 const textStyle = { fontFamily: "Roboto" };
 
-const AIOutput = () => {
+const AIOutput = ({ entryData, patientInfo }) => {
   const [aiLoading, setAILoading] = useState(false);
+
+  const entryInfo = {
+    bloodSugarLogs: entryData?.bloodSugarLogs,
+    entryDate: entryData?.entryDate,
+    mealLogs: entryData?.mealLogs,
+    medicationsLogs: entryData?.medicationsLogs,
+    moodLogs: entryData?.moodLogs,
+    physicalActivityLogs: entryData?.physicalActivityLogs,
+    symptomsLogs: entryData?.symptomsLogs,
+  };
+
+  const patientContext = { ...patientInfo, ...entryInfo };
+
+//  console.log(patientContext);
   return (
     <div style={{ marginTop: 24 }}>
       <Button type="primary" icon={<SearchOutlined />} loading={aiLoading}>
@@ -56,6 +71,8 @@ const AIOutput = () => {
           ? "Analyzing. This could take a while..."
           : "Analyze with EndoAI"}
       </Button>
+
+      {entryData && <pre>{JSON.stringify(entryData, null, 2)}</pre>}
     </div>
   );
 };
@@ -65,6 +82,8 @@ function Endoai() {
   const userId = user?._id;
   const { userData, userDataLoading } = useFetchUserDetails(userId);
   const { patientData, patientDataLoading } = useFetchPatientData(userId);
+  const { diaryData, diaryLoading } = useFetchDiaryData(userId);
+  const [entryData, setEntryData] = useState(null);
   const [value, setValue] = useState(dayjs());
 
   const handleDateSelect = (date) => {
@@ -72,17 +91,41 @@ function Endoai() {
   };
 
   const patient = patientData?.[0];
-  //console.log(patient);
 
-  const dateCellRender = () => {
-    const hasEntry = true;
+  const patientInfo = {
+    dob: userData?.dob,
+    firstName: userData?.firstName,
+    lastName: userData?.lastName,
+    gender: userData?.gender,
+    currentMedications: patient?.currentMedications,
+    familyHistory: patient?.familyHistory,
+    lifestyle: patient?.lifestyle,
+    medicalProcedures: patient?.medicalProcedures,
+    treatmentHistory: patient?.treatmentHistory,
+  };
+
+  const dateCellRender = (value) => {
+    const dateStr = value.format("YYYY-MM-DD");
+    const hasEntry = diaryData?.some((entry) => entry.entryDate === dateStr);
+
     return (
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Tooltip title={hasEntry ? "Click to select" : "Diary not filled"}>
           <span
             style={{
               ...markerStyle,
-              background: hasEntry ? "#1677ff" : "red",
+              background: hasEntry ? "#1677ff" : "#f83d12",
+              cursor: hasEntry ? "pointer" : "default",
+            }}
+            onClick={() => {
+              if (hasEntry) {
+                const entryForDate = diaryData.find(
+                  (entry) => entry.entryDate === dateStr
+                );
+                setEntryData(entryForDate);
+              } else {
+                setEntryData({});
+              }
             }}
           />
         </Tooltip>
@@ -90,7 +133,7 @@ function Endoai() {
     );
   };
 
-  if (userDataLoading || patientDataLoading)
+  if (userDataLoading || patientDataLoading || diaryLoading)
     return <Spin tip="Loading. Please Wait..." fullscreen />;
 
   return (
@@ -282,7 +325,7 @@ function Endoai() {
 
         {/* AI */}
         <div>
-          <AIOutput />
+          <AIOutput entryData={entryData} patientInfo={patientInfo} />
         </div>
       </div>
     </>
