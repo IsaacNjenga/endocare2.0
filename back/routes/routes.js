@@ -53,6 +53,7 @@ import {
   updateFeedback,
   deleteFeedback,
 } from "../controllers/feedbackController.js";
+import { EndoAI } from "../controllers/endoController.js";
 
 const router = express.Router();
 
@@ -93,6 +94,9 @@ router.delete("/delete-details", deleteDoctor);
 
 //chatbot route
 router.post("/endo-ai", chatWithCohere);
+
+//EndoAI route
+router.post("/ask-endo", EndoAI);
 
 //diary routes
 router.post("/create-diary-entry", createDiaryEntry);

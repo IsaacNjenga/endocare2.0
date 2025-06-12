@@ -22,6 +22,8 @@ import {
 import { formatDistanceToNowStrict } from "date-fns";
 import dayjs from "dayjs";
 import useFetchDiaryData from "../../hooks/fetchDiaryData";
+import Swal from "sweetalert2";
+import axios from "axios";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -50,6 +52,7 @@ const textStyle = { fontFamily: "Roboto" };
 
 const AIOutput = ({ entryData, patientInfo }) => {
   const [aiLoading, setAILoading] = useState(false);
+  const [AIResponse, setAIResponse] = useState(null);
 
   const entryInfo = {
     bloodSugarLogs: entryData?.bloodSugarLogs,
@@ -63,16 +66,45 @@ const AIOutput = ({ entryData, patientInfo }) => {
 
   const patientContext = { ...patientInfo, ...entryInfo };
 
-//  console.log(patientContext);
+  const handleSubmit = async () => {
+    setAILoading(true);
+    try {
+      const res = await axios.post("ask-endo", { patientContext });
+      if (res.data.success) {
+        console.log(res.data.reply);
+        setAIResponse(res.data.reply);
+      }
+    } catch (error) {
+      console.log(error);
+      const errorMessage =
+        error.response?.data?.error ??
+        "An unexpected error occurred. Please try again later.";
+      Swal.fire({
+        icon: "warning",
+        title: "Error",
+        text: errorMessage,
+      });
+    } finally {
+      setAILoading(false);
+    }
+  };
+
   return (
     <div style={{ marginTop: 24 }}>
-      <Button type="primary" icon={<SearchOutlined />} loading={aiLoading}>
+      <Button
+        type="primary"
+        icon={<SearchOutlined />}
+        loading={aiLoading}
+        onClick={handleSubmit}
+        disabled={entryData && Object.keys(entryData).length > 0 ? false : true}
+      >
         {aiLoading
           ? "Analyzing. This could take a while..."
           : "Analyze with EndoAI"}
       </Button>
 
-      {entryData && <pre>{JSON.stringify(entryData, null, 2)}</pre>}
+      {AIResponse && <pre>{JSON.stringify(AIResponse, null, 2)}</pre>}
+
     </div>
   );
 };
