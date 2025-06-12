@@ -13,8 +13,7 @@ const { Title, Text, Paragraph } = Typography;
 const avatarStyle = {
   display: "flex",
   alignItems: "center",
-  gap: 6,
-  marginBottom: 0,
+  gap: 8,
   fontFamily: "Raleway",
 };
 
@@ -200,14 +199,18 @@ function Endoai() {
               border: "1px solid #00152a",
             }}
           >
-            <Text type="primary" style={textStyle}>
-              Date: {value.format("dddd, Do MMMM YYYY")}
-            </Text>
-            <Calendar
-              fullscreen={false}
-              value={value}
-              onSelect={handleDateSelect}
-            />
+            <div
+              style={{
+                margin: 2,
+                right: "0px",
+                padding: "5px",
+              }}
+            >
+              <Text type="primary" style={textStyle}>
+                Date: {value.format("dddd, Do, MMMM YYYY")}
+              </Text>
+            </div>
+            <Calendar fullscreen={false} onSelect={handleDateSelect} />
           </div>
         </div>
       </div>
