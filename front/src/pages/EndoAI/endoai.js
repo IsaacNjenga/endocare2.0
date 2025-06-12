@@ -24,6 +24,9 @@ import dayjs from "dayjs";
 import useFetchDiaryData from "../../hooks/fetchDiaryData";
 import Swal from "sweetalert2";
 import axios from "axios";
+import ReactMarkdown from "react-markdown";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -71,7 +74,7 @@ const AIOutput = ({ entryData, patientInfo }) => {
     try {
       const res = await axios.post("ask-endo", { patientContext });
       if (res.data.success) {
-        console.log(res.data.reply);
+        //console.log(res.data.reply);
         setAIResponse(res.data.reply);
       }
     } catch (error) {
@@ -89,6 +92,61 @@ const AIOutput = ({ entryData, patientInfo }) => {
     }
   };
 
+  const renderContent = (markdownText) => (
+    <ReactMarkdown
+      children={markdownText}
+      components={{
+        h2: ({ children }) => (
+          <h2
+            style={{
+              fontSize: "1.25rem",
+              marginTop: "1.5rem",
+              color: "#2e3a59",
+            }}
+          >
+            {children}
+          </h2>
+        ),
+        p: ({ children }) => (
+          <p style={{ lineHeight: 1.6, marginBottom: "1rem" }}>{children}</p>
+        ),
+        strong: ({ children }) => (
+          <strong style={{ color: "#111", fontWeight: 600 }}>{children}</strong>
+        ),
+        li: ({ children }) => (
+          <li style={{ marginBottom: "0.5rem", lineHeight: 1.5 }}>
+            {children}
+          </li>
+        ),
+        ul: ({ children }) => (
+          <ul style={{ paddingLeft: "1.2rem" }}>{children}</ul>
+        ),
+        code({ inline, children, ...props }) {
+          return !inline ? (
+            <SyntaxHighlighter
+              style={oneDark}
+              language="javascript"
+              PreTag="div"
+              {...props}
+            >
+              {String(children).replace(/\n$/, "")}
+            </SyntaxHighlighter>
+          ) : (
+            <code
+              style={{
+                backgroundColor: "#eee",
+                padding: "2px 4px",
+                borderRadius: 4,
+              }}
+            >
+              {children}
+            </code>
+          );
+        },
+      }}
+    />
+  );
+
   return (
     <div style={{ marginTop: 24 }}>
       <Button
@@ -103,8 +161,19 @@ const AIOutput = ({ entryData, patientInfo }) => {
           : "Analyze with EndoAI"}
       </Button>
 
-      {AIResponse && <pre>{JSON.stringify(AIResponse, null, 2)}</pre>}
-
+      {AIResponse && (
+        <div
+          style={{
+            background: "#fff",
+            padding: "24px",
+            borderRadius: "10px",
+            boxShadow: "0 2px 10px rgba(0,0,0,0.05)",
+            marginTop: 24,
+          }}
+        >
+          {renderContent(AIResponse)}
+        </div>
+      )}
     </div>
   );
 };

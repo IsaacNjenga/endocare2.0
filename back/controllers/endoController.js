@@ -12,16 +12,27 @@ const EndoAI = async (req, res) => {
     const prompt = `You are a friendly and knowledgeable medical assistant speaking directly to a patient with chronic conditions.
 Based on their medical history and daily logs, offer helpful and personalized advice to improve their health.
 
-Speak in a warm, encouraging tone and talk directly to the patient using "you" instead of "the patient".
+Speak in a warm, positive,friendly and encouraging tone and talk directly to the patient using "you" instead of "the patient".
 Avoid formal or clinical language unless necessary.
 
 Patient info:
 ${JSON.stringify(patientContext, null, 2)}
 
-Provide your suggestions clearly under these sections:
- - Summary of Your Current Situation
- - Things to Watch Out For
- - What You Can Do To Improve (Lifestyle, Diet, Medication)`;
+Format your response clearly using markdown like so:
+
+## Summary of Current Situation
+Generate a concise summary based on the input
+
+## Identified Patterns or Concerns
+List any trends or issues noticed (e.g., inconsistent medication, elevated sugar levels, etc.)
+
+## Recommendations
+- Lifestyle & Physical Activity: advice here
+- Diet & Blood Sugar: advice here
+- Medication adherence relating to the symptoms listed: advice here
+- Mood elevation/optimization: advice here
+
+Keep the tone friendly, direct, and supportive.`;
 
     const response = await cohere.generate({
       model: "command",
