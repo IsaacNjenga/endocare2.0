@@ -82,6 +82,7 @@ function Navbar() {
     { label: "Specialists", path: "/specialists", icon: MedicineBoxOutlined },
     { label: "Diary", path: "/diary", icon: BookOutlined },
     { label: "Appointments", path: "/appointments", icon: CalendarOutlined },
+    { label: "EndoAI Assistant", path: "/endo-ai", icon: RobotOutlined },
   ];
 
   const navItems = userRole === "patient" ? patientNavItems : doctorNavItems;
@@ -120,7 +121,7 @@ function Navbar() {
         }
         setUser(null);
       }
-      navigate('/')
+      navigate("/");
       window.location.reload();
     });
   };

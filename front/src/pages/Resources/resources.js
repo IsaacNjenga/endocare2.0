@@ -1,6 +1,6 @@
 import React from "react";
 import { Tabs } from "antd";
-import { endocrineIllnesses } from "../assets/data/data";
+import { endocrineIllnesses } from "../../assets/data/data";
 import parse from "html-react-parser";
 
 function Resources() {

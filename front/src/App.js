@@ -6,7 +6,7 @@ import Home from "./pages/home.js";
 import Diary from "./pages/Diary/diary";
 import Dashboard from "./pages/dashboard.js";
 import Appointments from "./pages/Appointments/appointments";
-import Resources from "./pages/resources";
+import Resources from "./pages/Resources/resources";
 import Auth from "./pages/auth";
 import ProtectedRoutes from "./components/protectedRoutes";
 import Profile from "./pages/Profile/profile";
@@ -20,6 +20,7 @@ import SelectSpecialist from "./pages/Specialists/selectSpecialist.js";
 import MyPatients from "./pages/MyPatients/myPatients.js";
 import MyPatientsPage from "./pages/MyPatients/myPatientsPage.js";
 import MyPatientsDiary from "./pages/MyPatients/myPatientsDiary.js";
+import Endoai from "./pages/EndoAI/endoai.js";
 
 const cookies = new Cookies();
 export const UserContext = createContext();
@@ -66,6 +67,7 @@ function App() {
             <Route path="resources" element={<Resources />} />
             <Route path="profile" element={<Profile />} />
             <Route path="specialists" element={<Specialists />} />
+            <Route path="endo-ai" element={<Endoai />} />
             <Route path="my-patients" element={<MyPatients />} />
             <Route
               path="profile/create-medical-info"
