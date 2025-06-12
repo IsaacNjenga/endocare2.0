@@ -2,9 +2,23 @@ import React, { useState } from "react";
 import { useContext } from "react";
 import { UserContext } from "../../App";
 import useFetchUserDetails from "../../hooks/fetchUserDetails";
-import { Avatar, Calendar, Card, Divider, Spin, Typography } from "antd";
+import {
+  Alert,
+  Avatar,
+  Button,
+  Calendar,
+  Card,
+  Divider,
+  Spin,
+  Tooltip,
+  Typography,
+} from "antd";
 import useFetchPatientData from "../../hooks/fetchPatientData";
-import { InfoCircleOutlined, UserOutlined } from "@ant-design/icons";
+import {
+  InfoCircleOutlined,
+  SearchOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import { formatDistanceToNowStrict } from "date-fns";
 import dayjs from "dayjs";
 
@@ -23,10 +37,27 @@ const titleStyle = {
   fontSize: 16,
 };
 
+const markerStyle = {
+  display: "inline-block",
+  width: 7,
+  height: 7,
+  borderRadius: "50%",
+  margin: "auto",
+};
+
 const textStyle = { fontFamily: "Roboto" };
 
 const AIOutput = () => {
-  return <div>Output</div>;
+  const [aiLoading, setAILoading] = useState(false);
+  return (
+    <div style={{ marginTop: 24 }}>
+      <Button type="primary" icon={<SearchOutlined />} loading={aiLoading}>
+        {aiLoading
+          ? "Analyzing. This could take a while..."
+          : "Analyze with EndoAI"}
+      </Button>
+    </div>
+  );
 };
 
 function Endoai() {
@@ -43,30 +74,61 @@ function Endoai() {
   const patient = patientData?.[0];
   //console.log(patient);
 
+  const dateCellRender = () => {
+    const hasEntry = true;
+    return (
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <Tooltip title={hasEntry ? "Click to select" : "Diary not filled"}>
+          <span
+            style={{
+              ...markerStyle,
+              background: hasEntry ? "#1677ff" : "red",
+            }}
+          />
+        </Tooltip>
+      </div>
+    );
+  };
+
   if (userDataLoading || patientDataLoading)
     return <Spin tip="Loading. Please Wait..." fullscreen />;
 
   return (
     <>
-      <div style={{ margin: 5, padding: "0.3rem" }}>
+      <div style={{ margin: 0, padding: 5 }}>
         <div>
           <Title type="primary" style={{ fontFamily: "Raleway" }}>
             EndoAI Medical Assistant
           </Title>
         </div>
         <Divider style={{ borderColor: "#00152a" }} dashed size="large" />
+        <div style={{ padding: 10 }}>
+          <Alert
+            message={<Text style={titleStyle}>How to?</Text>}
+            type="info"
+            showIcon
+            description={
+              <Text type="primary" style={textStyle}>
+                Simply select a date with a diary entry and click the 'analyze'
+                button to get insights from EndoAI. The blue dots represents the
+                days that have the diary filled.
+              </Text>
+            }
+            closable
+          />
+        </div>
         <div
           style={{
             display: "flex",
-            gap: "2px",
+            gap: "1px",
             margin: "auto",
-            justifyContent: "space-around",
+            justifyContent: "space-between",
           }}
         >
           <div>
             <Card
               style={{
-                width: "400px",
+                width: "350px",
                 boxShadow: "0px 4px 12px rgba(0,0,0,0.3)",
                 border: "1px solid #00152a",
               }}
@@ -191,7 +253,7 @@ function Endoai() {
           </div>
           <div
             style={{
-              width: 600,
+              width: 650,
               boxShadow: "0px 4px 12px rgba(0,0,0,0.34)",
               padding: "10px",
               background: "#fff",
@@ -201,17 +263,26 @@ function Endoai() {
           >
             <div
               style={{
-                margin: 2,
+                margin: 1,
                 right: "0px",
-                padding: "5px",
+                padding: "2px",
               }}
             >
-              <Text type="primary" style={textStyle}>
-                Date: {value.format("dddd, Do, MMMM YYYY")}
+              <Text type="primary" style={titleStyle}>
+                {value.format("dddd, Do, MMMM YYYY")}
               </Text>
             </div>
-            <Calendar fullscreen={false} onSelect={handleDateSelect} />
+            <Calendar
+              fullscreen={false}
+              onSelect={handleDateSelect}
+              cellRender={dateCellRender}
+            />
           </div>
+        </div>
+
+        {/* AI */}
+        <div>
+          <AIOutput />
         </div>
       </div>
     </>
