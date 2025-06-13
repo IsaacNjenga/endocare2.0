@@ -12,8 +12,8 @@ import {
   pic9,
 } from "../assets/data/data";
 import { Typography, Row, Col, Card } from "antd";
-
-import Aurora from "../components/auroraComponent";
+//import Aurora from "../components/auroraComponent";
+import { UserContext } from "../App";
 
 const { Title, Paragraph } = Typography;
 
@@ -51,6 +51,8 @@ const pics = [
 ];
 
 function Home() {
+  const { user } = useContext(UserContext);
+  const userRole = user?.role;
   return (
     <div style={{ minHeight: "100vh" }}>
       {/* Image Banner */}
@@ -71,24 +73,24 @@ function Home() {
         <div
           style={{
             textAlign: "center",
-            marginTop: 5,
-            padding: "0 0px",
+            marginTop: 10,
+            padding: "20px",
             fontFamily: "Raleway",
             position: "absolute",
             top: 0,
             zIndex: 10,
-            margin: "10px 70px",
-            background: "#00152a",
+            margin: "20px 70px",
+            background: "rgb(0,21,42,0.66)",
             alignContent: "center",
             borderRadius: "12px",
           }}
         >
-          <Aurora
+          {/* <Aurora
             colorStops={["#3A29FF", "#c5c2c9", "#1c74f1"]}
             blend={0.2}
             amplitude={0.2}
             speed={2}
-          />
+          /> */}
           <Title
             level={1}
             style={{ fontFamily: "Raleway", color: "whitesmoke" }}
@@ -112,54 +114,57 @@ function Home() {
             style={{ maxWidth: 1200, margin: "48px auto", padding: "0 24px" }}
           >
             <Row gutter={[32, 32]}>
-              <Col xs={24} md={12}>
-                <Card
-                  style={{
-                    borderRadius: 12,
-                    background: "rgba(255, 255, 255, 0.05)",
-                    backdropFilter: "blur(8px)",
-                    border: "1px solid rgba(255, 255, 255, 0.15)",
-                  }}
-                >
-                  <ul
+              {userRole === "patient" ? (
+                <Col xs={24} md={12}>
+                  <Card
                     style={{
-                      paddingLeft: 20,
-                      color: "#fff",
-                      textAlign: "left",
+                      borderRadius: 12,
+                      background: "rgba(255, 255, 255, 0.05)",
+                      backdropFilter: "blur(8px)",
+                      border: "1px solid rgba(255, 255, 255, 0.15)",
                     }}
                   >
-                    <li>Book and manage appointments</li>
-                    <li>Log meals, blood sugar, and symptoms</li>
-                    <li>Upload medical images for AI analysis</li>
-                    <li>Receive feedback from your doctor</li>
-                    <li>Access treatment history securely</li>
-                  </ul>
-                </Card>
-              </Col>
-              <Col xs={24} md={12}>
-                <Card
-                  style={{
-                    borderRadius: 12,
-                    background: "rgba(255, 255, 255, 0.05)",
-                    backdropFilter: "blur(8px)",
-                    border: "1px solid rgba(255, 255, 255, 0.15)",
-                  }}
-                >
-                  <ul
+                    <ul
+                      style={{
+                        paddingLeft: 20,
+                        color: "#fff",
+                        textAlign: "left",
+                      }}
+                    >
+                      <li>Book and manage appointments</li>
+                      <li>Log meals, blood sugar, and symptoms</li>
+                      <li>Upload medical images for AI analysis</li>
+                      <li>Receive feedback from your doctor</li>
+                      <li>Access treatment history securely</li>
+                    </ul>
+                  </Card>
+                </Col>
+              ) : (
+                <Col xs={24} md={12}>
+                  <Card
                     style={{
-                      paddingLeft: 20,
-                      color: "#fff",
-                      textAlign: "left",
+                      borderRadius: 12,
+                      background: "rgba(255, 255, 255, 0.05)",
+                      backdropFilter: "blur(8px)",
+                      border: "1px solid rgba(255, 255, 255, 0.15)",
                     }}
                   >
-                    <li>View patient logs and records</li>
-                    <li>Provide medical feedback and recommendations</li>
-                    <li>Review uploaded images for insights</li>
-                    <li>Track multiple patient profiles</li>
-                    <li>Manage your appointments and schedule</li>
-                  </ul>
-                </Card>
-              </Col>
+                    <ul
+                      style={{
+                        paddingLeft: 20,
+                        color: "#fff",
+                        textAlign: "left",
+                      }}
+                    >
+                      <li>View patient logs and records</li>
+                      <li>Provide medical feedback and recommendations</li>
+                      <li>Review uploaded images for insights</li>
+                      <li>Track multiple patient profiles</li>
+                      <li>Manage your appointments and schedule</li>
+                    </ul>
+                  </Card>
+                </Col>
+              )}
             </Row>
           </div>
         </div>
