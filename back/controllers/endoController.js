@@ -20,7 +20,7 @@ ${JSON.stringify(patientContext, null, 2)}
 
 Format your response clearly using markdown like so:
 
-## Summary of Current Situation (Date of the entry)
+## Summary of Current Situation (${patientContext.entryDate})
 Generate a concise summary based on the input
 
 ## Identified Patterns or Concerns

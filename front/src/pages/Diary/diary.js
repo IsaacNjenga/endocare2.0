@@ -48,7 +48,8 @@ function Diary() {
               background: hasEntry
                 ? "#1677ff"
                 : "linear-gradient(to left, #e9e8e6 0%, #ddd1d1 100%)",
-              border: hasEntry ? "" : "2px dashed grey", cursor: hasEntry ? "pointer" : "default",
+              border: hasEntry ? "" : "2px dashed grey",
+              cursor: hasEntry ? "pointer" : "default",
             }}
             onClick={() => {
               navigate(`/diary/date/${value.format("YYYY-MM-DD")}`);
@@ -64,27 +65,29 @@ function Diary() {
 
   return (
     <>
-      <Button type="primary" onClick={() => navigate("/diary/create-entry")}>
-        Create an Entry
-      </Button>
-      <Typography.Title
-        style={{
-          fontFamily: "Raleway",
-          display: "flex",
-          justifyContent: "right",
-          marginBottom: 24,
-        }}
-      >
-        {format(new Date(), "EEEE, do MMMM yyyy")}
-      </Typography.Title>
-      <Divider style={{ borderColor: "#00152a" }} dashed size="large" />
+      <div style={{ margin: "10px" }}>
+        <Button type="primary" onClick={() => navigate("/diary/create-entry")}>
+          Create an Entry
+        </Button>
+        <Typography.Title
+          style={{
+            fontFamily: "Raleway",
+            display: "flex",
+            justifyContent: "right",
+            marginBottom: 24,
+          }}
+        >
+          {format(new Date(), "EEEE, do MMMM yyyy")}
+        </Typography.Title>
+        <Divider style={{ borderColor: "#00152a" }} dashed size="large" />
 
-      <Calendar
-        value={value}
-        onSelect={onSelect}
-        cellRender={dateCellRender}
-        onPanelChange={onPanelChange}
-      />
+        <Calendar
+          value={value}
+          onSelect={onSelect}
+          cellRender={dateCellRender}
+          onPanelChange={onPanelChange}
+        />
+      </div>
     </>
   );
 }

@@ -115,7 +115,7 @@ function SelectSpecialist() {
   return (
     <div style={{ padding: 12 }}>
       {allDoctorsLoading ? (
-        <Spin tip="Loading..." />
+        <Spin tip="Loading. Please wait..." fullscreen />
       ) : (
         <>
           <Button danger onClick={() => navigate("/specialists")}>

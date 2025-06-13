@@ -83,6 +83,7 @@ function Home() {
             background: "rgb(0,21,42,0.66)",
             alignContent: "center",
             borderRadius: "12px",
+            backdropFilter: "blur(3px)",
           }}
         >
           {/* <Aurora
