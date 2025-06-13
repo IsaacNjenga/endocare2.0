@@ -328,7 +328,7 @@ function Navbar() {
 
           <Content
             style={{
-              margin: "10px 10px",
+              margin: "0px",
               padding: 0,
               minHeight: "100vh",
               //background: colorBgContainer,

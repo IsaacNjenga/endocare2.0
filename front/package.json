@@ -14,6 +14,7 @@
     "dayjs": "^1.11.13",
     "framer-motion": "^12.12.1",
     "front": "file:",
+    "gsap": "^3.13.0",
     "html-react-parser": "^5.2.5",
     "jwt-decode": "^4.0.0",
     "moment": "^2.30.1",
