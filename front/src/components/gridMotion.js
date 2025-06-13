@@ -7,11 +7,11 @@ const GridMotion = ({ items = [], gradientColor = "black" }) => {
   const rowRefs = useRef([]);
   const mouseXRef = useRef(window.innerWidth / 2);
 
-  const totalItems = 20;
-  const defaultItems = Array.from(
-    { length: totalItems },
-    (_, index) => `Item ${index + 1}`
-  );
+  const totalItems = 9;
+  //   const defaultItems = Array.from(
+  //     { length: totalItems },
+  //     (_, index) => `Item ${index + 1}`
+  //   );
 
   const combinedItems = [
     ...items,
@@ -30,8 +30,8 @@ const GridMotion = ({ items = [], gradientColor = "black" }) => {
 
     const updateMotion = () => {
       const maxMoveAmount = 200;
-      const baseDuration = 0.8;
-      const inertiaFactors = [0.6, 0.4, 0.3, 0.2];
+      const baseDuration = 0.01;
+      const inertiaFactors = [0.4, 0.2, 0.1, 0.1];
 
       rowRefs.current.forEach((row, index) => {
         if (row) {
@@ -45,7 +45,7 @@ const GridMotion = ({ items = [], gradientColor = "black" }) => {
             x: moveAmount,
             duration:
               baseDuration + inertiaFactors[index % inertiaFactors.length],
-            ease: "power3.out",
+            ease: "power2.out",
             overwrite: "auto",
           });
         }
