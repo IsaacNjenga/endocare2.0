@@ -142,7 +142,7 @@ function PatientAppointments({
         <Divider />
 
         {appointmentsLoading ? (
-          <Spin />
+          <Spin tip="Loading. Please wait..." fullscreen />
         ) : patientAppointments?.length === 0 ? (
           <Empty description="No upcoming appointments." />
         ) : (

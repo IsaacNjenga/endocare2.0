@@ -50,10 +50,10 @@ function DiaryContent() {
     }, {}) || {};
 
   if (diaryLoading || feedbackLoading)
-    return <Spin tip="Loading. Please wait..." />;
+    return <Spin tip="Loading. Please wait..." fullscreen />;
   return (
     <>
-      <div>
+      <div style={{ margin: 10 }}>
         {" "}
         <Button danger onClick={() => navigate("/diary")}>
           Back

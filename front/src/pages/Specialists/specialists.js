@@ -93,7 +93,7 @@ function Specialists() {
     if (doctorLoading)
       return (
         <div>
-          <Spin tip="Loading..." />
+          <Spin tip="Loading. Please wait..." fullscreen/>
         </div>
       );
 
