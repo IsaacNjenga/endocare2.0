@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Card, Col, Image, Row, Typography } from "antd";
+import { Button, Card, Col, Divider, Image, Row, Typography } from "antd";
 import ResourceModal from "./resourceModal";
 import {
   AdrenalFatigue,
@@ -11,7 +11,7 @@ import {
 // import parse from "html-react-parser";
 
 const { Meta } = Card;
-const { Paragraph } = Typography;
+const { Paragraph, Title } = Typography;
 
 const cardStyle = {
   boxShadow: "0px 4px 10px rgb(1, 7, 14)",
@@ -110,6 +110,8 @@ function Resources() {
   return (
     <>
       <div style={{ margin: 10, padding: "1rem" }}>
+        <Title>Resources</Title>
+        <Divider dashed style={{ borderColor: "#00152a" }} size="large" />
         <Row gutter={[20, 20]}>
           {endocrineDisorders.map((disorder) => (
             <Col xs={32} sm={24} md={16} lg={8}>
@@ -146,14 +148,14 @@ function Resources() {
                   {ellipsisMap[disorder.key] ? "more" : "less"}
                 </p>
                 <div>
-                  <Button 
+                  <Button
                     type="primary"
                     style={buttonStyle}
                     onClick={() => {
                       viewMore(disorder.content);
                     }}
                   >
-                    View More
+                    Read More
                   </Button>
                 </div>
               </Card>

@@ -12,9 +12,11 @@ function ResourceModal({
       footer={null}
       open={openResourceModal}
       onCancel={() => setOpenResourceModal(false)}
-      confirmLoading={loading}
-      width={900}
+      loading={loading}
+      width={1200}
       style={{ maxWidth: "95vw" }}
+      centered
+      height={600}
     >
       {modalContent}
     </Modal>
