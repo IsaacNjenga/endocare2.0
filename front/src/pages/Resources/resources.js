@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import { Button, Card, Col, Image, Row, Typography } from "antd";
 import ResourceModal from "./resourceModal";
+import {
+  AdrenalFatigue,
+  Cortisol,
+  Diabetes1,
+  Diabetes2,
+  PCOS,
+} from "./resourcesData";
 // import parse from "html-react-parser";
 
 const { Meta } = Card;
@@ -40,31 +47,23 @@ const endocrineDisorders = [
     desc: "This is a term used by alternative health practitioners to explain tiredness and other symptoms which are thought to be chronic. It suggests that the adrenal glands are exhausted and unable to produce adequate quantities of hormones, primarily cortisol, due to chronic stress or infections.",
     image:
       "https://images.unsplash.com/photo-1715529282062-773305ae0178?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YWRyZW5hbCUyMGdsYW5kc3xlbnwwfHwwfHx8MA%3D%3D",
+    content: <AdrenalFatigue />,
   },
   {
     key: 2,
     name: "PCOS",
-    desc: `
-            Polycystic ovary syndrome (PCOS) is a common hormonal condition that
-            affects women of reproductive age. It usually starts during
-            adolescence, but symptoms may fluctuate over time.PCOS can cause
-            hormonal imbalances, irregular periods, excess androgen levels and
-            cysts in the ovaries. Irregular periods, usually with a lack of
-            ovulation, can make it difficult to become pregnant. PCOS is a
-            leading cause of infertility.`,
+    desc: `Polycystic ovary syndrome (PCOS) is a common hormonal condition that affects women of reproductive age. It usually starts during adolescence, but symptoms may fluctuate over time.PCOS can cause hormonal imbalances, irregular periods, excess androgen levels and cysts in the ovaries. Irregular periods, usually with a lack of ovulation, can make it difficult to become pregnant. PCOS is a leading cause of infertility.`,
     image:
       "https://images.unsplash.com/photo-1716930138567-606d08a4dfd6?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fFBvbHljeXN0aWMlMjBPdmFyeSUyMFN5bmRyb21lfGVufDB8fDB8fHww",
+    content: <PCOS />,
   },
   {
     key: 3,
     name: "Type 1 Diabetes",
-    desc: `A chronic condition in which the pancreas produces little or no
-            insulin. It typically appears in adolescence. Symptoms include
-            increased thirst, frequent urination, hunger, fatigue and blurred
-            vision. Treatment aims at maintaining normal blood sugar levels
-            through regular monitoring, insulin therapy, diet and exercise.`,
+    desc: `A chronic condition in which the pancreas produces little or no insulin. It typically appears in adolescence. Symptoms include increased thirst, frequent urination, hunger, fatigue and blurred vision. Treatment aims at maintaining normal blood sugar levels through regular monitoring, insulin therapy, diet and exercise.`,
     image:
       "https://images.unsplash.com/photo-1626092806645-ae053131caff?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTl8fGluc3VsaW58ZW58MHx8MHx8fDA%3D",
+    content: <Diabetes1 />,
   },
   {
     key: 4,
@@ -72,22 +71,19 @@ const endocrineDisorders = [
     desc: "Type 2 diabetes happens when the body cannot use insulin correctly and sugar builds up in the blood. It was once called adult-onset diabetes. Type 2 diabetes affects how your body uses sugar (glucose) for energy. It stops the body from using insulin properly, which can lead to high levels of blood sugar, if not treated.",
     image:
       "https://images.unsplash.com/photo-1685967836908-7d3b4921a670?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Njd8fGRpYWJldGVzfGVufDB8fDB8fHww",
+    content: <Diabetes2 />,
   },
   {
     key: 5,
     name: "Cortisol",
-    desc: ` Cortisol is a steroid hormone in the glucocorticoid class of
-            hormones and a stress hormone. When used as medication, it is known
-            as hydrocortisone. Cortisol is produced in many animals, mainly by
-            the zona fasciculata of the adrenal cortex in an adrenal gland. In
-            other tissues, it is produced in lower quantities.`,
+    desc: ` Cortisol is a steroid hormone in the glucocorticoid class of hormones and a stress hormone. When used as medication, it is known as hydrocortisone. Cortisol is produced in many animals, mainly by the zona fasciculata of the adrenal cortex in an adrenal gland. In other tissues, it is produced in lower quantities.`,
     image:
       "https://images.unsplash.com/photo-1714939722610-9169e8883bf8?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGNvcnRpc29sfGVufDB8fDB8fHww",
+    content: <Cortisol />,
   },
 ];
 
 function Resources() {
-  const id = 2;
   const [openResourceModal, setOpenResourceModal] = useState(false);
   const [modalContent, setModalContent] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -102,21 +98,10 @@ function Resources() {
     setEllipsisMap((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
-  const actions = [
-    <Button
-      type="primary"
-      style={buttonStyle}
-      onClick={() => {
-        viewMore(id);
-      }}
-    >
-      View More
-    </Button>,
-  ];
-  const viewMore = (id) => {
+  const viewMore = (content) => {
     setLoading(true);
     setOpenResourceModal(true);
-    setModalContent(id);
+    setModalContent(content);
     setTimeout(() => {
       setLoading(false);
     }, 100);
@@ -127,7 +112,7 @@ function Resources() {
       <div style={{ margin: 10, padding: "1rem" }}>
         <Row gutter={[20, 20]}>
           {endocrineDisorders.map((disorder) => (
-            <Col span={8}>
+            <Col xs={32} sm={24} md={16} lg={8}>
               <Card
                 hoverable
                 key={disorder.key}
@@ -139,7 +124,6 @@ function Resources() {
                     style={{ objectFit: "cover", height: 250 }}
                   />
                 }
-                actions={actions}
               >
                 <Meta
                   title={<span style={titleStyle}>{disorder.name}</span>}
@@ -161,6 +145,17 @@ function Resources() {
                 >
                   {ellipsisMap[disorder.key] ? "more" : "less"}
                 </p>
+                <div>
+                  <Button 
+                    type="primary"
+                    style={buttonStyle}
+                    onClick={() => {
+                      viewMore(disorder.content);
+                    }}
+                  >
+                    View More
+                  </Button>
+                </div>
               </Card>
             </Col>
           ))}

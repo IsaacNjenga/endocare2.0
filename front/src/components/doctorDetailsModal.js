@@ -59,7 +59,7 @@ function DoctorDetailsModal({
             </Col>
 
             {/* Professional Info */}
-            <Col span={12}>
+            <Col xs={32} sm={24} md={16} lg={8}>
               <Card title="Professional Details" style={cardStyle}>
                 <p>
                   <strong>Specialty:</strong>{" "}
@@ -91,7 +91,7 @@ function DoctorDetailsModal({
             </Col>
 
             {/* Education Info */}
-            <Col span={12}>
+            <Col xs={32} sm={24} md={16} lg={8}>
               <Card title="Education" style={cardStyle}>
                 {doctorProfessionalData?.education?.map((edu, index) => (
                   <div key={index} style={{ marginBottom: 12 }}>
@@ -113,7 +113,7 @@ function DoctorDetailsModal({
             </Col>
 
             {/* Practice Info */}
-            <Col span={12}>
+            <Col xs={32} sm={24} md={16} lg={8}>
               <Card title="Practice Info" style={cardStyle}>
                 <p>
                   <strong>Practice Name:</strong>{" "}
@@ -139,7 +139,7 @@ function DoctorDetailsModal({
             </Col>
 
             {/* Contact & Services */}
-            <Col span={12}>
+            <Col xs={32} sm={24} md={16} lg={8}>
               <Card title="Contact & Services" style={cardStyle}>
                 <p>
                   <strong>Services Offered:</strong>

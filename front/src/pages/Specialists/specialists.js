@@ -101,7 +101,7 @@ function Specialists() {
       <div style={{ padding: 24 }}>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div>
-            <Title>Your selected specialist</Title>
+            <Title level={2}>Your selected specialist</Title>
           </div>
           <div>
             <Button
