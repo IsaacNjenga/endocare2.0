@@ -13,8 +13,15 @@ import {
   PCOSSignsAndSymptoms,
   PCOSTips,
 } from "../../assets/data/pcos";
+import {
+  Diabetes1DefinitionAndOverview,
+  Diabetes1DietAndLifestyle,
+  Diabetes1SignsAndSymptoms,
+  Diabetes1Tips,
+} from "../../assets/data/diabetes1";
 import fatigue from "../../assets/icons/adfatigue.png";
 import pcos from "../../assets/icons/pcos.png";
+import pancreas from "../../assets/icons/pancreas.png";
 
 const { Title } = Typography;
 
@@ -68,6 +75,12 @@ const PcosContentList = {
   tab4: <PCOSTips />,
 };
 
+const diabetesContentList = {
+  tab1: <Diabetes1DefinitionAndOverview />,
+  tab2: <Diabetes1SignsAndSymptoms />,
+  tab3: <Diabetes1DietAndLifestyle />,
+  tab4: <Diabetes1Tips />,
+};
 export const AdrenalFatigue = () => {
   const [activeTabKey, setActiveTabKey] = useState("tab1");
 
@@ -173,7 +186,54 @@ export const PCOS = () => {
 };
 
 export const Diabetes1 = () => {
-  return <div>Type 1 Diabetes</div>;
+  const [activeTabKey, setActiveTabKey] = useState("tab1");
+
+  const onTabChange = (key) => {
+    setActiveTabKey(key);
+  };
+
+  return (
+    <div
+      style={{
+        padding: "0px 0px",
+        background:
+          "linear-gradient(to right,rgba(224, 247, 250, 0),rgba(255, 255, 255, 0))",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "flex-start",
+        borderRadius: "12px",
+      }}
+    >
+      <Card
+        style={cardStyle}
+        title={
+          <div style={{ display: "flex" }}>
+            <img src={pancreas} alt="diabetes_icon" style={iconStyle} />
+            <Title style={cardTitleStyle}>Type 1 Diabetes</Title>
+          </div>
+        }
+        tabList={tabItems}
+        activeTabKey={activeTabKey}
+        onTabChange={onTabChange}
+        tabProps={{
+          size: "large",
+        }}
+        type="inner"
+      >
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTabKey}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+          >
+            {diabetesContentList[activeTabKey]}
+          </motion.div>
+        </AnimatePresence>
+      </Card>
+    </div>
+  );
 };
 
 export const Diabetes2 = () => {

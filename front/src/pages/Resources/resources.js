@@ -67,7 +67,7 @@ const endocrineDisorders = [
     name: "Type 1 Diabetes",
     desc: `A chronic condition in which the pancreas produces little or no insulin. It typically appears in adolescence. Symptoms include increased thirst, frequent urination, hunger, fatigue and blurred vision. Treatment aims at maintaining normal blood sugar levels through regular monitoring, insulin therapy, diet and exercise.`,
     image:
-      "https://images.unsplash.com/photo-1626092806645-ae053131caff?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTl8fGluc3VsaW58ZW58MHx8MHx8fDA%3D",
+      "https://plus.unsplash.com/premium_photo-1718606568830-cda64cd9bf7c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGFuY3JlYXNlfGVufDB8fDB8fHww",
     content: <Diabetes1 />,
   },
   {

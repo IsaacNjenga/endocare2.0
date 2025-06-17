@@ -68,7 +68,8 @@ export const PCOSDefinitionAndOverview = () => {
             <Image
               src="https://media.healthdirect.org.au/images/inline/original/polycystic-ovarian-syndrome-pcos-a0470f.png"
               alt="pcos_pic"
-              style={{ width: "80%" }}
+              style={{ width: "80%",
+        borderRadius: "12px", }}
             />
           </div>
         </div>
