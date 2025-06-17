@@ -14,7 +14,7 @@ function ResourceModal({
       onCancel={() => setOpenResourceModal(false)}
       loading={loading}
       width={1200}
-      style={{ maxWidth: "95vw" }}
+      style={{ maxWidth: "95vw", }}
       centered
       height={600}
     >

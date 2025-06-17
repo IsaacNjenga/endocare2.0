@@ -30,7 +30,11 @@ const titleStyle = {
 
 const descStyle = { fontFamily: "Roboto" };
 
-const buttonStyle = {};
+const buttonStyle = {
+  fontFamily: "Raleway",
+  fontWeight: 500,
+  boxShadow: "0px 4px 5px rgb(1, 7, 14)",
+};
 
 const ellipsisStyle = {
   color: "#1890ff",
@@ -38,6 +42,7 @@ const ellipsisStyle = {
   textAlign: "right",
   margin: 0,
   padding: 0,
+  fontWeight: "bold",
 };
 
 const endocrineDisorders = [

@@ -7,6 +7,14 @@ import {
   SignsAndSymptoms,
   Tips,
 } from "../../assets/data/adrenalFatigue";
+import {
+  PCOSDefinitionAndOverview,
+  PCOSDietAndLifestyle,
+  PCOSSignsAndSymptoms,
+  PCOSTips,
+} from "../../assets/data/pcos";
+import fatigue from "../../assets/icons/adfatigue.png";
+import pcos from "../../assets/icons/pcos.png";
 
 const { Title } = Typography;
 
@@ -22,18 +30,26 @@ const cardStyle = {
   border: "1px solid #e6f0ff",
   borderRadius: "12px",
   boxShadow: "0 4px 12px rgba(0, 21, 42, 0.1)",
-  background: "rgb(0,0,0,0)",
 };
 
 const cardTitleStyle = {
   fontFamily: "Raleway",
-  fontSize: "22px",
+  fontSize: "28px",
   color: "#00152a",
+  marginLeft: "3px",
+};
+
+const iconStyle = {
+  width: "50px",
+  padding: "5px",
+  borderRadius: "50%",
+  border: "1px solid black",
+  margin: "3px",
 };
 
 const tabItems = [
   { key: "tab1", tab: <span style={tabStyle}>Definition & Overview</span> },
-  { key: "tab2", tab: <span style={tabStyle}>Sign & Symptoms</span> },
+  { key: "tab2", tab: <span style={tabStyle}>Signs & Symptoms</span> },
   { key: "tab3", tab: <span style={tabStyle}>Diet & Lifestyle</span> },
   { key: "tab4", tab: <span style={tabStyle}>Extra Tips</span> },
 ];
@@ -43,6 +59,13 @@ const adrenalFatigueContentList = {
   tab2: <SignsAndSymptoms />,
   tab3: <DietAndLifestyle />,
   tab4: <Tips />,
+};
+
+const PcosContentList = {
+  tab1: <PCOSDefinitionAndOverview />,
+  tab2: <PCOSSignsAndSymptoms />,
+  tab3: <PCOSDietAndLifestyle />,
+  tab4: <PCOSTips />,
 };
 
 export const AdrenalFatigue = () => {
@@ -55,8 +78,9 @@ export const AdrenalFatigue = () => {
   return (
     <div
       style={{
-        padding: "24px 0px",
-        background: "linear-gradient(to right, #e0f7fa, #ffffff)",
+        padding: "0px 0px",
+        background:
+          "linear-gradient(to right,rgba(224, 247, 250, 0),rgba(255, 255, 255, 0))",
         display: "flex",
         justifyContent: "center",
         alignItems: "flex-start",
@@ -65,13 +89,19 @@ export const AdrenalFatigue = () => {
     >
       <Card
         style={cardStyle}
-        title={<Title style={cardTitleStyle}>Adrenal Fatigue</Title>}
+        title={
+          <div style={{ display: "flex" }}>
+            <img src={fatigue} alt="adf_icon" style={iconStyle} />
+            <Title style={cardTitleStyle}>Adrenal Fatigue</Title>
+          </div>
+        }
         tabList={tabItems}
         activeTabKey={activeTabKey}
         onTabChange={onTabChange}
         tabProps={{
           size: "large",
         }}
+        type="inner"
       >
         <AnimatePresence mode="wait">
           <motion.div
@@ -90,7 +120,56 @@ export const AdrenalFatigue = () => {
 };
 
 export const PCOS = () => {
-  return <div>PCOS</div>;
+  const [activeTabKey, setActiveTabKey] = useState("tab1");
+
+  const onTabChange = (key) => {
+    setActiveTabKey(key);
+  };
+
+  return (
+    <div
+      style={{
+        padding: "0px 0px",
+        background:
+          "linear-gradient(to right,rgba(224, 247, 250, 0),rgba(255, 255, 255, 0))",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "flex-start",
+        borderRadius: "12px",
+      }}
+    >
+      <Card
+        style={cardStyle}
+        title={
+          <div style={{ display: "flex" }}>
+            <img src={pcos} alt="pcos_icon" style={iconStyle} />
+            <Title style={cardTitleStyle}>
+              Polycystic Ovarian Syndrome (PCOS)
+            </Title>
+          </div>
+        }
+        tabList={tabItems}
+        activeTabKey={activeTabKey}
+        onTabChange={onTabChange}
+        tabProps={{
+          size: "large",
+        }}
+        type="inner"
+      >
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTabKey}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+          >
+            {PcosContentList[activeTabKey]}
+          </motion.div>
+        </AnimatePresence>
+      </Card>
+    </div>
+  );
 };
 
 export const Diabetes1 = () => {
