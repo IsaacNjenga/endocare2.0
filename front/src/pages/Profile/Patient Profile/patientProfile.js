@@ -1,5 +1,5 @@
 import React from "react";
-import { Tabs } from "antd";
+import { Spin, Tabs } from "antd";
 import UserAccount from "../userAccount/userAccount";
 import PersonalInfo from "../personalInfo/personalInfo";
 import MedicalInfo from "./medicalInfo/medicalInfo";
@@ -116,21 +116,21 @@ const PatientProfile = ({
       ),
       icon: <InfoCircleOutlined style={iconStyle} />,
     },
-    {
-      key: 4,
-      name: "AI Recommendations",
-      childPage: (
-        <AIInsight
-          user={user}
-          labelStyle={labelStyle}
-          contentStyle={contentStyle}
-          sectionCardStyle={sectionCardStyle}
-          refresh={refresh}
-          sectionHeaderStyle={sectionHeaderStyle}
-        />
-      ),
-      icon: <RobotOutlined style={iconStyle} />,
-    },
+    // {
+    //   key: 4,
+    //   name: "AI Recommendations",
+    //   childPage: (
+    //     <AIInsight
+    //       user={user}
+    //       labelStyle={labelStyle}
+    //       contentStyle={contentStyle}
+    //       sectionCardStyle={sectionCardStyle}
+    //       refresh={refresh}
+    //       sectionHeaderStyle={sectionHeaderStyle}
+    //     />
+    //   ),
+    //   icon: <RobotOutlined style={iconStyle} />,
+    // },
     {
       key: 5,
       name: "Document & Reports",
@@ -146,24 +146,24 @@ const PatientProfile = ({
       ),
       icon: <BarChartOutlined style={iconStyle} />,
     },
-    {
-      key: 6,
-      name: "Health Diary / Logs",
-      childPage: (
-        <Logs
-          user={user}
-          labelStyle={labelStyle}
-          contentStyle={contentStyle}
-          sectionCardStyle={sectionCardStyle}
-          sectionHeaderStyle={sectionHeaderStyle}
-          refresh={refresh}
-        />
-      ),
-      icon: <FileDoneOutlined style={iconStyle} />,
-    },
+    // {
+    //   key: 6,
+    //   name: "Health Diary / Logs",
+    //   childPage: (
+    //     <Logs
+    //       user={user}
+    //       labelStyle={labelStyle}
+    //       contentStyle={contentStyle}
+    //       sectionCardStyle={sectionCardStyle}
+    //       sectionHeaderStyle={sectionHeaderStyle}
+    //       refresh={refresh}
+    //     />
+    //   ),
+    //   icon: <FileDoneOutlined style={iconStyle} />,
+    // },
   ];
 
-  if (userDataLoading) return <div>Loading...</div>;
+  if (userDataLoading) return <Spin tip="Loading. Please wait..." fullscreen />;
 
   return (
     <div

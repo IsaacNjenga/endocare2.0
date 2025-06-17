@@ -5,6 +5,7 @@ import DoctorProfile from "./Doctor Profile/doctorProfile";
 import useFetchUserDetails from "../../hooks/fetchUserDetails";
 import useFetchPatientData from "../../hooks/fetchPatientData";
 import useFetchDoctorData from "../../hooks/fetchDoctorData";
+import { Spin } from "antd";
 
 function Profile() {
   const { user } = useContext(UserContext);
@@ -20,7 +21,7 @@ function Profile() {
   } = useFetchDoctorData(userId);
 
   const userRole = user?.role;
-  if (userDataLoading) return <div>Loading...</div>;
+  if (userDataLoading) return <Spin tip="Loading. Please wait..." fullscreen />;
 
   return (
     <>

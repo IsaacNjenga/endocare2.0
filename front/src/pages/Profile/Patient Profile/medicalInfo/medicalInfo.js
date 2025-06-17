@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Typography, Divider, Tag, Space, Button } from "antd";
+import { Typography, Divider, Tag, Space, Button, Spin } from "antd";
 import UpdateMedicalInfoModal from "./updateMedicalInfoModal";
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
@@ -94,7 +94,7 @@ function MedicalInfo({
   };
 
   if (patientDataLoading) {
-    return <div>Loading...</div>;
+    return <Spin tip="Loading. Please wait..." fullscreen />;
   }
   return (
     <>
@@ -177,19 +177,21 @@ function MedicalInfo({
         </>
       ) : (
         <>
-          <Space direction="vertical" size="medium" style={{ width: "100%" }}>
-            <Typography.Paragraph>
-              Looks like your information is not updated.
-            </Typography.Paragraph>
-            <Button
-              type="link"
-              onClick={() => {
-                navigate("/profile/create-medical-info");
-              }}
-            >
-              Click here to get started
-            </Button>
-          </Space>
+          <div style={{ padding: 24, margin: 10, textAlign: "center" }}>
+            <Space direction="vertical" size="medium" style={{ width: "100%" }}>
+              <Typography.Paragraph>
+                Looks like your information is not updated.
+              </Typography.Paragraph>
+              <Button
+                type="link"
+                onClick={() => {
+                  navigate("/profile/create-medical-info");
+                }}
+              >
+                Click here to get started
+              </Button>
+            </Space>
+          </div>
         </>
       )}
     </>

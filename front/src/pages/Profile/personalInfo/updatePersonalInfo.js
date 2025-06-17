@@ -236,7 +236,7 @@ function UpdatePersonalInfo({
             </Row>
           </Card>{" "}
           <Button type="primary" htmlType="submit">
-            {loading ? "Updating" : "Update"}
+            {loading ? "Updating..." : "Update"}
           </Button>
         </Form>
       </div>
