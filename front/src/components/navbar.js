@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Button, Divider, FloatButton, Layout, Menu, theme } from "antd";
 import {
+  AppstoreOutlined,
   BookOutlined,
   CalendarOutlined,
   MedicineBoxOutlined,
@@ -23,6 +24,7 @@ import axios from "axios";
 
 const cookies = new Cookies();
 const { Header, Sider, Content } = Layout;
+
 function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -72,13 +74,13 @@ function Navbar() {
   } = theme.useToken();
 
   const doctorNavItems = [
-    { label: "Dashboard", path: "/dashboard", icon: UserOutlined },
+    { label: "Dashboard", path: "/dashboard", icon: AppstoreOutlined },
     { label: "My Patients", path: "/my-patients", icon: TeamOutlined },
     { label: "Appointments", path: "/appointments", icon: CalendarOutlined },
   ];
 
   const patientNavItems = [
-    { label: "Dashboard", path: "/dashboard", icon: UserOutlined },
+    { label: "Dashboard", path: "/dashboard", icon: AppstoreOutlined },
     { label: "Specialists", path: "/specialists", icon: MedicineBoxOutlined },
     { label: "Diary", path: "/diary", icon: BookOutlined },
     { label: "Appointments", path: "/appointments", icon: CalendarOutlined },
@@ -166,9 +168,10 @@ function Navbar() {
           collapsed={collapsed}
           breakpoint="md"
           onBreakpoint={(broken) => setCollapsed(broken)}
-          width={300}
+          width={250}
+          style={{ padding: 3 }}
         >
-          <div style={{ margin: "5px 1px" }}>
+          <div style={{ margin: "4px 0px" }}>
             <div
               style={{
                 display: "flex",
@@ -190,7 +193,7 @@ function Navbar() {
                     height: collapsed ? "65px" : "85px",
                     borderRadius: "50%",
                     border: "2px solid #2f3c92",
-                    padding: "8px",
+                    padding: "6px",
                     background: "whitesmoke",
                   }}
                 />
@@ -223,16 +226,22 @@ function Navbar() {
                 marginTop: 6,
               }}
             >
-              <span>
+              {/* <span>
                 {collapsed
                   ? `${user?.firstName.charAt(0)}${user?.lastName.charAt(0)}`
-                  : `${user?.firstName} ${user?.lastName}`}
-              </span>
+                  : `Hi, ${user?.firstName} ${user?.lastName}`}
+              </span> */}
             </div>
             <Divider
               dashed
               style={{ borderColor: "whitesmoke", color: "whitesmoke" }}
-            ></Divider>
+            >
+              <span style={{ fontFamily: "Raleway" }}>
+                {collapsed
+                  ? `${user?.firstName.charAt(0)}${user?.lastName.charAt(0)}`
+                  : `Hi, ${user?.firstName} ${user?.lastName}`}
+              </span>
+            </Divider>
             <Menu
               theme="dark"
               mode="inline"
@@ -240,22 +249,23 @@ function Navbar() {
               onClick={handleClick}
               inlineCollapsed={collapsed}
               style={{
-                fontFamily: "Roboto",
+                fontFamily: "Raleway",
                 border: "none",
               }}
               items={navItems.map(({ key, icon, label, path }) => ({
                 key: path || key,
                 icon: React.createElement(icon, {
                   style: {
-                    fontSize: "1.6rem",
+                    fontSize: collapsed ? "1.5rem" : "1.7rem",
                     color: "whitesmoke",
+                    margin: "7px 0px",
                   },
                 }),
                 label: (
                   <Link
                     to={path}
                     style={{
-                      fontSize: "17px",
+                      fontSize: "18px",
                       color: "whitesmoke",
                     }}
                   >
@@ -264,7 +274,7 @@ function Navbar() {
                 ),
                 style: {
                   textAlign: "left",
-                  margin: "12px 0",
+                  margin: collapsed ? "14px 4.1px" : "19px 4.1px",
                 },
               }))}
             />
@@ -289,11 +299,27 @@ function Navbar() {
               }}
             >
               {menuItems.map((item) => (
-                <Menu.Item key={item?.path || item?.key} icon={item.icon}>
+                <Menu.Item
+                  key={item?.path || item?.key}
+                  icon={
+                    <span
+                      style={{
+                        borderRadius: "50%",
+                        border: "1px solid #fff",
+                        padding: "7px",
+                        margin: 0,
+                      }}
+                    >
+                      {item.icon}
+                    </span>
+                  }
+                  style={{ color: "whitesmoke", fontSize: "0.9rem" }}
+                >
                   <Link
                     to={item.path}
                     style={{
                       textDecoration: "none",
+                      color: "whitesmoke",
                     }}
                   >
                     {item.label}

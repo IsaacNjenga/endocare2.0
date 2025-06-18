@@ -130,8 +130,8 @@ function SelectSpecialist() {
               const user = doctor.createdBy;
 
               return (
-                <Col span={12} key={doctor._id}>
-                  <Card hoverable style={cardStyle}>
+                <Col xs={24} sm={12} md={10} lg={8} key={doctor._id}>
+                  <Card hoverable style={{ ...cardStyle }}>
                     <div
                       style={{
                         display: "flex",

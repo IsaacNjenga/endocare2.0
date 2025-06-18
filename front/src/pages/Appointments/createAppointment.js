@@ -11,6 +11,7 @@ import {
   notification,
   Avatar,
   Tag,
+  Spin,
 } from "antd";
 //import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
@@ -156,7 +157,8 @@ function CreateAppointment() {
     fontFamily: "Roboto",
   });
 
-  if (allDoctorsLoading) return <div>Loading...</div>;
+  if (allDoctorsLoading)
+    return <Spin tip="Loading.Please wait..." fullscreen />;
   return (
     <Card style={{ maxWidth: 800, margin: "auto", marginTop: 32, padding: 24 }}>
       {contextHolder}
@@ -243,7 +245,15 @@ function CreateAppointment() {
                     <Col span={12} key={doctor._id}>
                       <Card
                         hoverable
-                        style={cardStyle}
+                        style={{
+                          ...cardStyle,
+                          boxShadow:
+                            selectedPhysician === user._id
+                              ? "0px 4px 10px 1px #00152a"
+                              : "none",
+                          borderColor: "#00152a",
+                          transition:'box-shadow 0.3s ease-in-out'
+                        }}
                         onClick={() => handlePhysicianSelect(user._id, docName)}
                       >
                         <div style={avatarStyle}>
@@ -270,7 +280,7 @@ function CreateAppointment() {
                             </div>
                           </div>
                         </div>
-                        <Divider />
+                        <Divider style={{ borderColor: "#00152a" }} />
                         <Space direction="vertical" size="small">
                           <div>
                             <PhoneOutlined /> {user.phoneNumber}

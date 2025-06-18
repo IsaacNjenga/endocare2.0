@@ -12,8 +12,11 @@ import {
 import { PlusOutlined } from "@ant-design/icons";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
+import Chart from "./chart";
 
 const { Title, Text } = Typography;
+
+const cardStyle = { width: "100%", boxShadow: "2px 5px 6px 0px #00152a" };
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -32,7 +35,7 @@ const Dashboard = () => {
       <Row justify="space-between" align="middle">
         <Col>
           <Title level={3} style={{ fontFamily: "Raleway" }}>
-            🧠 Health Diary Dashboard
+            Dashboard
           </Title>
         </Col>
         <Col>
@@ -49,7 +52,7 @@ const Dashboard = () => {
       <Divider />
 
       {/* Today's Overview */}
-      <Card style={{ marginBottom: 24 }}>
+      <Card style={cardStyle}>
         <Title level={4}>📌 Today: {todayFormatted}</Title>
         <Space direction="vertical">
           <Text>Mood: 😊 Happy</Text>
@@ -59,25 +62,15 @@ const Dashboard = () => {
         </Space>
       </Card>
 
-      {/* Entry Section (placeholder for meals, meds, etc.) */}
-      <Row gutter={[16, 16]}>
-        <Col span={12}>
-          <Card title="🍽️ Meals" bordered>
-            <Text>No entries yet for today</Text>
-          </Card>
-        </Col>
-        <Col span={12}>
-          <Card title="💊 Medications" bordered>
-            <Text>No entries yet for today</Text>
-          </Card>
-        </Col>
-      </Row>
-
       <Divider />
 
       {/* Calendar */}
       <Title level={4}>📅 View Past Entries</Title>
-      <Calendar fullscreen={false} onSelect={handleDateSelect} />
+      <Calendar
+        fullscreen={false}
+        onSelect={handleDateSelect}
+        style={cardStyle}
+      />
 
       {selectedDate && (
         <Card style={{ marginTop: 16 }}>
@@ -87,6 +80,9 @@ const Dashboard = () => {
           <Text>(Render diary entries here based on the selected date)</Text>
         </Card>
       )}
+
+      <Divider />
+      <Chart cardStyle={cardStyle} />
     </div>
   );
 };

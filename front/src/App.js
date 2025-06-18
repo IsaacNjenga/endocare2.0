@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Home from "./pages/home.js";
 import Diary from "./pages/Diary/diary";
-import Dashboard from "./pages/dashboard.js";
+import Dashboard from "./pages/Dashpage/dashboard.js";
 import Appointments from "./pages/Appointments/appointments";
 import Resources from "./pages/Resources/resources";
 import Auth from "./pages/auth";

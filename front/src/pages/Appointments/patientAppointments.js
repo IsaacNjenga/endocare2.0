@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Card,
@@ -23,6 +23,7 @@ import useFetchDoctorById from "../../hooks/fetchDoctorById";
 import Swal from "sweetalert2";
 import UpdateAppointmentModal from "./updateAppointmentModal";
 import axios from "axios";
+import { format } from "date-fns";
 
 const { Title, Text } = Typography;
 
@@ -43,6 +44,8 @@ function PatientAppointments({
   const [openDoctorModal, setOpenDoctorModal] = useState(false);
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
   const [modalContent, setModalContent] = useState(null);
+  const [oldAppointments, setOldAppointments] = useState(null);
+  const [newAppointments, setNewAppointments] = useState(null);
   const [loading, setLoading] = useState(false);
   const {
     doctorProfessionalData,
@@ -51,6 +54,20 @@ function PatientAppointments({
     fetchDoctorById,
     doctorUserData,
   } = useFetchDoctorById();
+  const currentDate = format(new Date(), "yyyy-MM-dd");
+
+  useEffect(() => {
+    const olderAppointments = patientAppointments.filter(
+      (date) => date.appointmentDate < currentDate
+    );
+    const newerAppointments = patientAppointments.filter(
+      (date) => date.appointmentDate > currentDate
+    );
+    setNewAppointments(newerAppointments)
+    setOldAppointments(olderAppointments);
+  }, [patientAppointments, currentDate]);
+
+  //  console.log(olderAppointments);
 
   const viewDoctor = async (id) => {
     setLoading(true);
@@ -146,77 +163,162 @@ function PatientAppointments({
         ) : patientAppointments?.length === 0 ? (
           <Empty description="No upcoming appointments." />
         ) : (
-          <List
-            itemLayout="vertical"
-            dataSource={patientAppointments}
-            renderItem={(item) => (
-              <Card
-                key={item._id}
-                style={{ marginBottom: 12, borderRadius: 8 }}
-                type="inner"
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                  }}
+          <>
+            <List
+              itemLayout="vertical"
+              dataSource={newAppointments}
+              renderItem={(item) => (
+                <Card
+                  key={item._id}
+                  style={{ marginBottom: 12, borderRadius: 8 }}
+                  type="inner"
                 >
-                  <div>
-                    <Space direction="vertical" size="small">
-                      <Text>
-                        <CalendarOutlined style={iconStyle} /> Date:{" "}
-                        <strong>
-                          {new Date(item.appointmentDate).toDateString()}
-                        </strong>
-                      </Text>
-                      <Text>
-                        <ClockCircleOutlined style={iconStyle} /> Time:{" "}
-                        <strong>{item.appointmentTime}</strong>
-                      </Text>
-                      <Text>
-                        <UserOutlined style={iconStyle} /> Physician:{" "}
-                        <Tag
-                          style={{
-                            cursor: "pointer",
-                          }}
-                          onClick={() => viewDoctor(item.physician?._id)}
-                          color="blue"
-                        >
-                          <Tooltip
-                            title={`Click to view Dr. ${item.physician?.firstName} ${item.physician?.lastName}`}
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <div>
+                      <Space direction="vertical" size="small">
+                        <Text>
+                          <CalendarOutlined style={iconStyle} /> Date:{" "}
+                          <strong>
+                            {new Date(item.appointmentDate).toDateString()}
+                          </strong>
+                        </Text>
+                        <Text>
+                          <ClockCircleOutlined style={iconStyle} /> Time:{" "}
+                          <strong>{item.appointmentTime}</strong>
+                        </Text>
+                        <Text>
+                          <UserOutlined style={iconStyle} /> Physician:{" "}
+                          <Tag
+                            style={{
+                              cursor: "pointer",
+                            }}
+                            onClick={() => viewDoctor(item.physician?._id)}
+                            color="blue"
                           >
-                            <strong>
-                              Dr. {item.physician?.firstName}{" "}
-                              {item.physician?.lastName}
-                            </strong>
-                          </Tooltip>
-                        </Tag>
-                      </Text>
-                    </Space>
+                            <Tooltip
+                              title={`Click to view Dr. ${item.physician?.firstName} ${item.physician?.lastName}`}
+                            >
+                              <strong>
+                                Dr. {item.physician?.firstName}{" "}
+                                {item.physician?.lastName}
+                              </strong>
+                            </Tooltip>
+                          </Tag>
+                        </Text>
+                      </Space>
+                    </div>
+                    <div>
+                      <Space direction="vertical" size="small">
+                        <Tooltip title="Reschedule this appointment">
+                          <Button
+                            type="primary"
+                            icon={<EditOutlined />}
+                            onClick={() => handleReschedule(item)}
+                          />
+                        </Tooltip>
+                        <Tooltip title="Delete this appointment">
+                          <Button
+                            danger
+                            icon={<DeleteOutlined />}
+                            onClick={() => handleDelete(item._id)}
+                          />
+                        </Tooltip>
+                      </Space>
+                    </div>
                   </div>
-                  <div>
-                    <Space direction="vertical" size="small">
-                      <Tooltip title="Reschedule this appointment">
-                        <Button
-                          type="primary"
-                          icon={<EditOutlined />}
-                          onClick={() => handleReschedule(item)}
-                        />
-                      </Tooltip>
-                      <Tooltip title="Delete this appointment">
-                        <Button
-                          danger
-                          icon={<DeleteOutlined />}
-                          onClick={() => handleDelete(item._id)}
-                        />
-                      </Tooltip>
-                    </Space>
-                  </div>
-                </div>
-              </Card>
-            )}
-          />
+                </Card>
+              )}
+            />
+          </>
+        )}
+      </Card>
+      <Divider />
+      <Card
+        style={{
+          padding: 24,
+          borderRadius: 12,
+          boxShadow: "0 2px 12px rgba(0,0,0,0.05)",
+        }}
+      >
+        <Space
+          style={{
+            width: "100%",
+            justifyContent: "space-between",
+            marginBottom: 16,
+          }}
+        >
+          <Title level={4}>History</Title>
+         
+        </Space>
+
+        <Divider />
+
+        {appointmentsLoading ? (
+          <Spin tip="Loading. Please wait..." fullscreen />
+        ) : patientAppointments?.length === 0 ? (
+          <Empty description="No previous appointments." />
+        ) : (
+          <>
+            <List
+              itemLayout="vertical"
+              dataSource={oldAppointments}
+              renderItem={(item) => (
+                <Card
+                  key={item._id}
+                  style={{ marginBottom: 12, borderRadius: 8 }}
+                  type="inner"
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <div>
+                      <Space direction="vertical" size="small">
+                        <Text>
+                          <CalendarOutlined style={iconStyle} /> Date:{" "}
+                          <strong>
+                            {new Date(item.appointmentDate).toDateString()}
+                          </strong>
+                        </Text>
+                        <Text>
+                          <ClockCircleOutlined style={iconStyle} /> Time:{" "}
+                          <strong>{item.appointmentTime}</strong>
+                        </Text>
+                        <Text>
+                          <UserOutlined style={iconStyle} /> Physician:{" "}
+                          <Tag
+                            style={{
+                              cursor: "pointer",
+                            }}
+                            onClick={() => viewDoctor(item.physician?._id)}
+                            color="blue"
+                          >
+                            <Tooltip
+                              title={`Click to view Dr. ${item.physician?.firstName} ${item.physician?.lastName}`}
+                            >
+                              <strong>
+                                Dr. {item.physician?.firstName}{" "}
+                                {item.physician?.lastName}
+                              </strong>
+                            </Tooltip>
+                          </Tag>
+                        </Text>
+                      </Space>
+                    </div>
+                   </div>
+                </Card>
+              )}
+            />
+          </>
         )}
       </Card>
       <DoctorDetailsModal
