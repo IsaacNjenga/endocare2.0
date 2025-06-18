@@ -9,7 +9,7 @@ import {
   PoweroffOutlined,
   RobotOutlined,
   TeamOutlined,
-  UploadOutlined,
+  //UploadOutlined,
   UserOutlined,
   VideoCameraOutlined,
 } from "@ant-design/icons";
@@ -95,7 +95,7 @@ function Navbar() {
       label: "Resources",
       path: "/resources",
     },
-    { key: "3", icon: <UploadOutlined />, label: "Uploads", path: "/uploads" },
+    // { key: "3", icon: <UploadOutlined />, label: "Uploads", path: "/resources" },
   ];
 
   const handleClick = (e) => {

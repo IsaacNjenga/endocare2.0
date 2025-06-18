@@ -3,7 +3,7 @@ import { Button, Card, Col, Divider, Image, Row, Typography } from "antd";
 import ResourceModal from "./resourceModal";
 import {
   AdrenalFatigue,
-  Cortisol,
+  Addisons,
   Diabetes1,
   Diabetes2,
   PCOS,
@@ -80,11 +80,11 @@ const endocrineDisorders = [
   },
   {
     key: 5,
-    name: "Cortisol",
-    desc: ` Cortisol is a steroid hormone in the glucocorticoid class of hormones and a stress hormone. When used as medication, it is known as hydrocortisone. Cortisol is produced in many animals, mainly by the zona fasciculata of the adrenal cortex in an adrenal gland. In other tissues, it is produced in lower quantities.`,
+    name: "Addison's Disease",
+    desc: `Addison's disease is a rare condition where the adrenal glands do not make enough of the hormones cortisol and aldosterone (both of these are known as corticosteroid hormones). Addison's disease is also sometimes called primary adrenal insufficiency.`,
     image:
-      "https://images.unsplash.com/photo-1714939722610-9169e8883bf8?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGNvcnRpc29sfGVufDB8fDB8fHww",
-    content: <Cortisol />,
+      "https://images.unsplash.com/photo-1715527498487-85f97b828616?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8YWRyZW5hbCUyMGdsYW5kc3xlbnwwfHwwfHx8MA%3D%3D",
+    content: <Addisons />,
   },
 ];
 

@@ -3,15 +3,15 @@ import { Spin, Tabs } from "antd";
 import UserAccount from "../userAccount/userAccount";
 import PersonalInfo from "../personalInfo/personalInfo";
 import MedicalInfo from "./medicalInfo/medicalInfo";
-import AIInsight from "./AIInsight";
+//import AIInsight from "./AIInsight";
 import Reports from "./reports";
-import Logs from "./logs";
+//import Logs from "./logs";
 import {
   BarChartOutlined,
-  FileDoneOutlined,
+  //FileDoneOutlined,
   InfoCircleOutlined,
   LockOutlined,
-  RobotOutlined,
+  //RobotOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 

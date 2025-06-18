@@ -19,9 +19,23 @@ import {
   Diabetes1SignsAndSymptoms,
   Diabetes1Tips,
 } from "../../assets/data/diabetes1";
+import {
+  Diabetes2DefinitionAndOverview,
+  Diabetes2DietAndLifestyle,
+  Diabetes2SignsAndSymptoms,
+  Diabetes2Tips,
+} from "../../assets/data/diabetes2";
+import {
+  AddisonsDefinitionAndOverview,
+  AddisonsDietAndLifestyle,
+  AddisonsSignsAndSymptoms,
+  AddisonsTips,
+} from "../../assets/data/addisons";
 import fatigue from "../../assets/icons/adfatigue.png";
 import pcos from "../../assets/icons/pcos.png";
 import pancreas from "../../assets/icons/pancreas.png";
+import type2 from "../../assets/icons/type2.png";
+import addisons from "../../assets/icons/addisons.png";
 
 const { Title } = Typography;
 
@@ -80,6 +94,20 @@ const diabetesContentList = {
   tab2: <Diabetes1SignsAndSymptoms />,
   tab3: <Diabetes1DietAndLifestyle />,
   tab4: <Diabetes1Tips />,
+};
+
+const diabetes2ContentList = {
+  tab1: <Diabetes2DefinitionAndOverview />,
+  tab2: <Diabetes2SignsAndSymptoms />,
+  tab3: <Diabetes2DietAndLifestyle />,
+  tab4: <Diabetes2Tips />,
+};
+
+const addisonsContentList = {
+  tab1: <AddisonsDefinitionAndOverview />,
+  tab2: <AddisonsSignsAndSymptoms />,
+  tab3: <AddisonsDietAndLifestyle />,
+  tab4: <AddisonsTips />,
 };
 export const AdrenalFatigue = () => {
   const [activeTabKey, setActiveTabKey] = useState("tab1");
@@ -237,11 +265,105 @@ export const Diabetes1 = () => {
 };
 
 export const Diabetes2 = () => {
-  return <div>Type 2 Diabetes</div>;
+  const [activeTabKey, setActiveTabKey] = useState("tab1");
+
+  const onTabChange = (key) => {
+    setActiveTabKey(key);
+  };
+
+  return (
+    <div
+      style={{
+        padding: "0px 0px",
+        background:
+          "linear-gradient(to right,rgba(224, 247, 250, 0),rgba(255, 255, 255, 0))",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "flex-start",
+        borderRadius: "12px",
+      }}
+    >
+      <Card
+        style={cardStyle}
+        title={
+          <div style={{ display: "flex" }}>
+            <img src={type2} alt="diabetes2_icon" style={iconStyle} />
+            <Title style={cardTitleStyle}>Type 2 Diabetes</Title>
+          </div>
+        }
+        tabList={tabItems}
+        activeTabKey={activeTabKey}
+        onTabChange={onTabChange}
+        tabProps={{
+          size: "large",
+        }}
+        type="inner"
+      >
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTabKey}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+          >
+            {diabetes2ContentList[activeTabKey]}
+          </motion.div>
+        </AnimatePresence>
+      </Card>
+    </div>
+  );
 };
 
-export const Cortisol = () => {
-  return <div>Cortisol</div>;
+export const Addisons = () => {
+  const [activeTabKey, setActiveTabKey] = useState("tab1");
+
+  const onTabChange = (key) => {
+    setActiveTabKey(key);
+  };
+
+  return (
+    <div
+      style={{
+        padding: "0px 0px",
+        background:
+          "linear-gradient(to right,rgba(224, 247, 250, 0),rgba(255, 255, 255, 0))",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "flex-start",
+        borderRadius: "12px",
+      }}
+    >
+      <Card
+        style={cardStyle}
+        title={
+          <div style={{ display: "flex" }}>
+            <img src={addisons} alt="addisons_icon" style={iconStyle} />
+            <Title style={cardTitleStyle}>Addison's Disease</Title>
+          </div>
+        }
+        tabList={tabItems}
+        activeTabKey={activeTabKey}
+        onTabChange={onTabChange}
+        tabProps={{
+          size: "large",
+        }}
+        type="inner"
+      >
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTabKey}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+          >
+            {addisonsContentList[activeTabKey]}
+          </motion.div>
+        </AnimatePresence>
+      </Card>
+    </div>
+  );
 };
 
 function ResourcesData() {

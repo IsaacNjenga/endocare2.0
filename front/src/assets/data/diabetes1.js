@@ -191,7 +191,7 @@ export const Diabetes1DietAndLifestyle = () => {
           borderRadius: "12px",
         }}
       >
-        <Title style={titleStyle}>Lifestyle 🥗</Title>
+        <Title style={titleStyle}>Lifestyle 🏃‍♂️</Title>
         <Divider style={{ borderColor: "whitesmoke" }} />
         <Paragraph style={paragraphStyle}>
           Being diagnosed with type 1 diabetes can be overwhelming. But you will
@@ -255,7 +255,7 @@ export const Diabetes1Tips = () => {
         <Title style={titleStyle}>What Can I Do? 🌟</Title>
         <Divider style={{ borderColor: "whitesmoke" }} />
         <Paragraph style={paragraphStyle}>
-          Living with PCOS means managing both physical and emotional
+          Living with diabetes means managing both physical and emotional
           challenges. With the right care, you can lead a normal life.
           Treatments and lifestyle changes, such as staying active and eating
           well, can help improve your symptoms. It's also important to seek
@@ -279,8 +279,8 @@ export const Diabetes1Tips = () => {
   );
 };
 
-function PCOS() {
+function Diabetes1() {
   return <div></div>;
 }
 
-export default PCOS;
+export default Diabetes1;
