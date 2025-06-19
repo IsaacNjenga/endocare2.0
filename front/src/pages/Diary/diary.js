@@ -6,6 +6,7 @@ import { format } from "date-fns";
 import useFetchDiaryData from "../../hooks/fetchDiaryData";
 import { UserContext } from "../../App";
 import dayjs from "dayjs";
+import { PlusOutlined } from "@ant-design/icons";
 
 const markerStyle = {
   display: "inline-block",
@@ -66,7 +67,11 @@ function Diary() {
   return (
     <>
       <div style={{ margin: "10px" }}>
-        <Button type="primary" onClick={() => navigate("/diary/create-entry")}>
+        <Button
+          type="primary"
+          icon={<PlusOutlined />}
+          onClick={() => navigate("/diary/create-entry")}
+        >
           Create an Entry
         </Button>
         <Typography.Title

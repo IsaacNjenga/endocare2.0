@@ -45,8 +45,8 @@ const titleStyle = {
 
 const markerStyle = {
   display: "inline-block",
-  width: 15,
-  height: 15,
+  width: 8,
+  height: 8,
   borderRadius: "50%",
   margin: "auto",
 };
@@ -189,6 +189,18 @@ function Endoai() {
 
   const handleDateSelect = (date) => {
     setValue(date);
+
+    const dateStr = date.format("YYYY-MM-DD");
+    const hasEntry = diaryData?.some((entry) => entry.entryDate === dateStr);
+
+    if (hasEntry) {
+      const entryForDate = diaryData.find(
+        (entry) => entry.entryDate === dateStr
+      );
+      setEntryData(entryForDate);
+    } else {
+      setEntryData({});
+    }
   };
 
   const patient = patientData?.[0];
@@ -215,19 +227,19 @@ function Endoai() {
           <span
             style={{
               ...markerStyle,
-              background: hasEntry ? "#1677ff" : "#f83d12",
+              background: hasEntry ? "#1677ff" : "#f83d1200",
               cursor: hasEntry ? "pointer" : "default",
             }}
-            onClick={() => {
-              if (hasEntry) {
-                const entryForDate = diaryData.find(
-                  (entry) => entry.entryDate === dateStr
-                );
-                setEntryData(entryForDate);
-              } else {
-                setEntryData({});
-              }
-            }}
+            // onClick={() => {
+            //   if (hasEntry) {
+            //     const entryForDate = diaryData.find(
+            //       (entry) => entry.entryDate === dateStr
+            //     );
+            //     setEntryData(entryForDate);
+            //   } else {
+            //     setEntryData({});
+            //   }
+            // }}
           />
         </Tooltip>
       </div>
@@ -264,9 +276,9 @@ function Endoai() {
         <div
           style={{
             display: "flex",
-            gap: "1px",
+            gap: "5px",
             margin: "auto",
-            justifyContent: "space-between",
+            justifyContent: "space-evenly",
           }}
         >
           <div>
@@ -397,9 +409,9 @@ function Endoai() {
           </div>
           <div
             style={{
-              width: 650,
+              width: 600,
               boxShadow: "0px 4px 12px rgba(0,0,0,0.34)",
-              padding: "10px",
+              padding: 8,
               background: "#fff",
               borderRadius: "8px",
               border: "1px solid #00152a",
@@ -420,6 +432,9 @@ function Endoai() {
               fullscreen={false}
               onSelect={handleDateSelect}
               cellRender={dateCellRender}
+              disabledDate={(current) =>
+                current && current > dayjs().endOf("day")
+              }
             />
           </div>
         </div>

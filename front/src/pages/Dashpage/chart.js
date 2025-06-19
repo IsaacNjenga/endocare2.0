@@ -8,7 +8,7 @@ function Chart({cardStyle}) {
   return (
     <div style={{}}>
       <Row gutter={[20, 20]}>
-        <Col xs={28} sm={24} md={18} lg={12}>
+        {/* <Col xs={28} sm={24} md={18} lg={12}>
           <Card hoverable style={cardStyle}>
             <Title level={3}>📈 Trends</Title>
             <BarChart
@@ -22,7 +22,7 @@ function Chart({cardStyle}) {
               xAxis={[{ data: ["Q1", "Q2", "Q3", "Q4"] }]}
             />
           </Card>
-        </Col>
+        </Col> */}
         <Col xs={28} sm={24} md={18} lg={12}>
           <Card hoverable style={cardStyle}>
             <Title level={3}>📈 Trends</Title>
@@ -31,7 +31,7 @@ function Chart({cardStyle}) {
               series={[
                 {
                   data: [2, 5.5, 2, 8.5, 1.5, 5],
-                  area: true,
+                  area: false,
                 },
               ]}
               height={300}
