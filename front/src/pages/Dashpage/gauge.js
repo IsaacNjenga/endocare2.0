@@ -6,7 +6,7 @@ import { FireOutlined } from "@ant-design/icons";
 const { Title, Text } = Typography;
 
 function GaugeDisplay({ cardStyle, diaryData, diaryLoading }) {
-  console.log(diaryData);
+  //console.log(diaryData);
   return (
     <>
       <Card
