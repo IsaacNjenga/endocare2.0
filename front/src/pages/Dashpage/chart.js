@@ -1,10 +1,9 @@
 import React from "react";
-import { BarChart, LineChart } from "@mui/x-charts";
+import {  LineChart } from "@mui/x-charts";
 import { Card, Col, Row, Typography } from "antd";
 const { Title } = Typography;
 
-
-function Chart({cardStyle}) {
+function Chart({ cardStyle, diaryLoading, diaryData }) {
   return (
     <div style={{}}>
       <Row gutter={[20, 20]}>

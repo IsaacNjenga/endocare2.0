@@ -37,6 +37,7 @@ import {
 } from "../../components/diaryPageComponents";
 import useFetchFeedbackByDiaryId from "../../hooks/fetchFeedbackByDiaryId";
 import FeedbackModal from "../MyPatients/feedbackModal";
+import GaugeDisplay from "./gauge";
 
 const { Title } = Typography;
 
@@ -46,16 +47,22 @@ const markerStyle = {
   height: 6,
   borderRadius: "50%",
   margin: "auto",
+  marginTop: "2px",
 };
 
-const cardStyle = { width: "100%", boxShadow: "2px 5px 6px 0px #00152a" };
+const cardStyle = {
+  width: "100%",
+  borderRadius: "12px",
+  boxShadow: "0 4px 12px rgba(0, 21, 42, 0.15)",
+  background: "#fff",
+  padding: "16px",
+};
 
 const PanelItems = ({ entryData, user }) => {
   const [openFeedbackModal, setOpenFeedbackModal] = useState(false);
   const [modalContent, setModalContent] = useState(null);
   const [loading, setLoading] = useState(false);
   const [sectionName, setSectionName] = useState("");
-
   const { feedback, feedbackLoading } = useFetchFeedbackByDiaryId(
     entryData._id
   );
@@ -195,7 +202,8 @@ const PanelItems = ({ entryData, user }) => {
     },
   ];
 
-  if (feedbackLoading) return <Spin tip="Loading. Please Wait..." fullscreen />;
+  if (feedback && feedbackLoading)
+    return <Spin tip="Loading. Please Wait..." fullscreen />;
 
   return (
     <>
@@ -272,12 +280,18 @@ const Dashboard = () => {
   if (diaryLoading) return <Spin tip="Loading. Please Wait..." fullscreen />;
 
   return (
-    <div style={{ padding: 24 }}>
+    <div
+      style={{
+        padding: "32px 24px",
+        background: "#f5f8fc",
+        minHeight: "100vh",
+      }}
+    >
       {/* Header */}
-      <Row justify="space-between" align="middle">
+      <Row justify="space-between" align="middle" style={{ marginBottom: 16 }}>
         <Col>
-          <Title level={3} style={{ fontFamily: "Raleway" }}>
-            Dashboard
+          <Title level={2} style={{ fontFamily: "Raleway", marginBottom: 0 }}>
+            🩺 Your Health Dashboard
           </Title>
         </Col>
         <Col>
@@ -285,54 +299,86 @@ const Dashboard = () => {
             type="primary"
             icon={<PlusOutlined />}
             onClick={() => navigate("/diary/create-entry")}
+            size="large"
           >
-            Create An Entry
+            Create A Diary Entry
           </Button>
         </Col>
       </Row>
 
       <Divider />
 
-      {/* Today's Overview */}
-      <Card style={cardStyle}>
-        <Title level={4}>📌 Today: {todayFormatted}</Title>
-      </Card>
+      {/* Today’s Overview */}
+      <Row gutter={[24, 24]}>
+        <Col xs={24} sm={24} md={12}>
+          <Card style={{ ...cardStyle, padding: "18px" }}>
+            <Title level={3} style={{ marginBottom: 18 }}>
+              Today: {todayFormatted}
+            </Title>
+            <p style={{ fontSize: "18px", color: "#333" }}>
+              📌 Don't forget to check in on your latest health stats, moods,
+              logs and your specialist's feedback.
+            </p>
+          </Card>
+        </Col>
+        <Col xs={24} sm={24} md={12}>
+          <GaugeDisplay
+            cardStyle={cardStyle}
+            diaryData={diaryData}
+            diaryLoading={diaryLoading}
+          />
+        </Col>
+      </Row>
 
       <Divider />
 
-      {/* Calendar */}
-      <Title level={4}>📅 View Past Entries</Title>
-      <Row gutter={[20, 20]}>
-        <Col xs={28} sm={24} md={18} lg={12}>
-          <div
-            style={{
-              padding: 10,
-              background: "rgb(0,0,0,0)",
-              borderRadius: "8px",
-            }}
-          >
+      {/* Calendar Section */}
+      <Title level={4} style={{ marginBottom: 12 }}>
+        📅 View Past Entries
+      </Title>
+      <Row gutter={[24, 24]}>
+        <Col xs={24} sm={24} md={12}>
+          <Card style={{ ...cardStyle, padding: 0 }}>
             <Calendar
               fullscreen={false}
               onSelect={handleDateSelect}
-              style={cardStyle}
               cellRender={dateCellRender}
               disabledDate={(current) =>
                 current && current > dayjs().endOf("day")
               }
+              style={{ borderRadius: "12px" }}
             />
-          </div>
+          </Card>
         </Col>
-        <Col xs={28} sm={24} md={18} lg={12}>
+        <Col xs={24} sm={24} md={12}>
           {selectedDate && (
-            <div style={cardStyle}>
-              {entryData && <PanelItems entryData={entryData} user={user} />}
-            </div>
+            <Card style={cardStyle}>
+              <Title level={5} style={{ marginBottom: 12 }}>
+                📝 Entry Details for {selectedDate.format("MMM D, YYYY")}
+              </Title>
+              {entryData ? (
+                <PanelItems entryData={entryData} user={user} />
+              ) : (
+                <p style={{ color: "#999" }}>No data for this date.</p>
+              )}
+            </Card>
           )}
         </Col>
       </Row>
 
       <Divider />
-      <Chart cardStyle={cardStyle} />
+
+      {/* Chart Section */}
+      <Card style={{ ...cardStyle, marginTop: 24 }}>
+        <Title level={4} style={{ marginBottom: 12 }}>
+          📈 Trends & Insights
+        </Title>
+        <Chart
+          cardStyle={cardStyle}
+          diaryData={diaryData}
+          diaryLoading={diaryLoading}
+        />
+      </Card>
     </div>
   );
 };

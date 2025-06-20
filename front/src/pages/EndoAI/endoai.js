@@ -49,6 +49,7 @@ const markerStyle = {
   height: 8,
   borderRadius: "50%",
   margin: "auto",
+  marginTop: "2px",
 };
 
 const textStyle = { fontFamily: "Roboto" };
