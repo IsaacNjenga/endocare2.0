@@ -1,21 +1,7 @@
-import { TeamOutlined } from "@ant-design/icons";
-import {
-  Avatar,
-  Statistic,
-  Typography,
-  Card,
-  Tooltip,
-  Divider,
-  Button,
-} from "antd";
+import { Avatar, Statistic, Typography, Tooltip, Divider, Button } from "antd";
 import React from "react";
 
 const { Title, Text } = Typography;
-
-const iconStyle = {
-  padding: "6px",
-  fontSize: 24,
-};
 
 function DocGauge({ myPatients, navigate }) {
   const myPatientsCount = myPatients?.length;

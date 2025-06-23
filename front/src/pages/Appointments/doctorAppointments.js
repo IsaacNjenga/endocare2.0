@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Card,
@@ -19,6 +19,7 @@ import {
 //import Swal from "sweetalert2";
 import PatientDetailsModal from "../../components/patientDetailsModal";
 import useFetchPatientById from "../../hooks/fetchPatientById";
+import { format } from "date-fns";
 
 const { Title, Text } = Typography;
 
@@ -39,8 +40,23 @@ function DoctorAppointments({
 }) {
   const [openPatientModal, setOpenPatientModal] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [oldAppointments, setOldAppointments] = useState(null);
+  const [newAppointments, setNewAppointments] = useState(null);
   const { patientData, patientLoading, fetchPatientById } =
     useFetchPatientById();
+
+  const currentDate = format(new Date(), "yyyy-MM-dd");
+
+  useEffect(() => {
+    const olderAppointments = doctorAppointments.filter(
+      (date) => date.appointmentDate < currentDate
+    );
+    const newerAppointments = doctorAppointments.filter(
+      (date) => date.appointmentDate > currentDate
+    );
+    setNewAppointments(newerAppointments);
+    setOldAppointments(olderAppointments);
+  }, [doctorAppointments, currentDate]);
 
   const viewPatient = async (id) => {
     setLoading(true);
@@ -86,13 +102,13 @@ function DoctorAppointments({
         <Divider />
 
         {appointmentsLoading ? (
-          <Spin />
+          <Spin tip="Loading. Please wait..." fullscreen size="large" />
         ) : doctorAppointments?.length === 0 ? (
           <Empty description="No upcoming appointments." />
         ) : (
           <List
             itemLayout="vertical"
-            dataSource={doctorAppointments}
+            dataSource={newAppointments}
             renderItem={(item) => (
               <Card
                 key={item._id}
@@ -143,6 +159,88 @@ function DoctorAppointments({
               </Card>
             )}
           />
+        )}
+      </Card>
+      <Divider />
+      <Card
+        style={{
+          padding: 24,
+          borderRadius: 12,
+          boxShadow: "0 2px 12px rgba(0,0,0,0.05)",
+        }}
+      >
+        <Space
+          style={{
+            width: "100%",
+            justifyContent: "space-between",
+            marginBottom: 16,
+          }}
+        >
+          <Title level={4}>History</Title>
+        </Space>
+
+        <Divider />
+
+        {appointmentsLoading ? (
+          <Spin tip="Loading. Please wait..." fullscreen />
+        ) : doctorAppointments?.length === 0 ? (
+          <Empty description="No previous appointments." />
+        ) : (
+          <>
+            <List
+              itemLayout="vertical"
+              dataSource={oldAppointments}
+              renderItem={(item) => (
+                <Card
+                  key={item._id}
+                  style={{ marginBottom: 12, borderRadius: 8 }}
+                  type="inner"
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <div>
+                      <Space direction="vertical" size="small">
+                        <Text>
+                          <CalendarOutlined style={iconStyle} /> Date:{" "}
+                          <strong>
+                            {new Date(item.appointmentDate).toDateString()}
+                          </strong>
+                        </Text>
+                        <Text>
+                          <ClockCircleOutlined style={iconStyle} /> Time:{" "}
+                          <strong>{item.appointmentTime}</strong>
+                        </Text>
+                        <Text>
+                          <UserOutlined style={iconStyle} /> Patient:{" "}
+                          <Tag
+                            style={{
+                              cursor: "pointer",
+                            }}
+                            onClick={() => viewPatient(item.createdBy?._id)}
+                            color="green"
+                          >
+                            <Tooltip
+                              title={`Click to view ${item.createdBy?.firstName} ${item.createdBy?.lastName}`}
+                            >
+                              <strong>
+                                {item.createdBy?.firstName}{" "}
+                                {item.createdBy?.lastName}
+                              </strong>
+                            </Tooltip>
+                          </Tag>
+                        </Text>
+                      </Space>
+                    </div>
+                  </div>
+                </Card>
+              )}
+            />
+          </>
         )}
       </Card>
       <PatientDetailsModal

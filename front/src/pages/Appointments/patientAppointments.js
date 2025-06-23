@@ -67,7 +67,6 @@ function PatientAppointments({
     setOldAppointments(olderAppointments);
   }, [patientAppointments, currentDate]);
 
-  //  console.log(olderAppointments);
 
   const viewDoctor = async (id) => {
     setLoading(true);
@@ -159,7 +158,7 @@ function PatientAppointments({
         <Divider />
 
         {appointmentsLoading ? (
-          <Spin tip="Loading. Please wait..." fullscreen />
+          <Spin tip="Loading. Please wait..." fullscreen size="large"/>
         ) : patientAppointments?.length === 0 ? (
           <Empty description="No upcoming appointments." />
         ) : (
