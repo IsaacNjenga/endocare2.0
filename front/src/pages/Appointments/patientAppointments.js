@@ -16,6 +16,7 @@ import {
   ClockCircleOutlined,
   DeleteOutlined,
   EditOutlined,
+  QuestionOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import DoctorDetailsModal from "../../components/doctorDetailsModal";
@@ -77,7 +78,7 @@ function PatientAppointments({
 
     setNewAppointments(newerAppointments);
     setOldAppointments(olderAppointments);
-  }, [patientAppointments, ]);
+  }, [patientAppointments]);
 
   const viewDoctor = async (id) => {
     setLoading(true);
@@ -197,6 +198,14 @@ function PatientAppointments({
                           <strong>
                             {new Date(item.appointmentDate).toDateString()}
                           </strong>
+                        </Text>{" "}
+                        <Text>
+                          <QuestionOutlined style={iconStyle} /> Reason:{" "}
+                          <strong>
+                            {item.appointmentReason
+                              ? item.appointmentReason
+                              : "N/A"}
+                          </strong>
                         </Text>
                         <Text>
                           <ClockCircleOutlined style={iconStyle} /> Time:{" "}
@@ -296,6 +305,14 @@ function PatientAppointments({
                           <CalendarOutlined style={iconStyle} /> Date:{" "}
                           <strong>
                             {new Date(item.appointmentDate).toDateString()}
+                          </strong>
+                        </Text>{" "}
+                        <Text>
+                          <QuestionOutlined style={iconStyle} /> Reason:{" "}
+                          <strong>
+                            {item.appointmentReason
+                              ? item.appointmentReason
+                              : "N/A"}
                           </strong>
                         </Text>
                         <Text>

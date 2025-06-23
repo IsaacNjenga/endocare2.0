@@ -161,6 +161,21 @@ export const severityTypes = [
   { value: "Unbearable", label: "Unbearable" },
 ];
 
+export const ReasonsForAppointment = [
+  {
+    value: "Routine Check-up",
+    label: "Routine Check-up - Health screenings and preventive care",
+  },
+  { value: "Acute Illness", label: "Acute Illness - Serious symptoms showing" },
+  {
+    value: "Mental Health Check-up",
+    label: "Mental Health Check-up",
+  },
+  { value: "Follow-up Care", label: "Follow-up Care" },
+  { value: "Doctor's Request", label: "Doctor's Request" },
+  { value: "Rather Not Say", label: "Rather Not Say" },
+];
+
 export const moodsOptions = [
   {
     label: (

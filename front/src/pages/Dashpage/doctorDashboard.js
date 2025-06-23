@@ -22,8 +22,10 @@ const AppointmentsUpcoming = ({
   user,
   appointmentsLoading,
   doctorAppointments,
+  navigate,
 }) => {
   const [newAppointments, setNewAppointments] = useState([]);
+  console.log(doctorAppointments);
 
   useEffect(() => {
     const current = new Date();
@@ -44,14 +46,25 @@ const AppointmentsUpcoming = ({
       dataIndex: "name",
       key: "name",
       render: (_, record) => (
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <Avatar src={record.avatar}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 7,
+            cursor: "pointer",
+          }}
+        >
+          <Avatar src={record.avatar} style={{ background: "#00152a" }}>
             {record.firstName?.[0]}
             {record.lastName?.[0]}
           </Avatar>
-          <span>
+          <Text
+            type="link"
+            style={{ cursor: "pointer" }}
+            onClick={() => navigate(`/my-patients/${record.patientId}`)}
+          >
             {record.firstName} {record.lastName}
-          </span>
+          </Text>
         </div>
       ),
     },
@@ -60,6 +73,12 @@ const AppointmentsUpcoming = ({
       dataIndex: "appointmentTime",
       key: "appointmentTime",
       render: (time) => <Tag color="geekblue">{time}</Tag>,
+    },
+    {
+      title: "Reason",
+      dataIndex: "appointmentReason",
+      key: "appointmentReason",
+      render: (time) => <Tag color="red">{time}</Tag>,
     },
     {
       title: "Set",
@@ -74,8 +93,10 @@ const AppointmentsUpcoming = ({
     key: index,
     firstName: appt?.createdBy?.firstName,
     lastName: appt?.createdBy?.lastName,
+    patientId: appt?.createdBy?._id,
     avatar: appt?.createdBy?.avatar,
     appointmentTime: appt?.appointmentTime,
+    appointmentReason: appt?.appointmentReason,
     createdAt: appt?.createdAt,
   }));
 
@@ -153,14 +174,15 @@ function DoctorDashboard({ cardStyle, user }) {
         </Col>
       </Row>
       <Divider />
-      <Title level={2} style={{ marginBottom: 12 }}>
-        Upcoming Appointments
-      </Title>
       <Card style={cardStyle}>
+        <Title level={3} style={{ marginBottom: 15, marginTop: 0 }}>
+          Upcoming Appointments
+        </Title>
         <AppointmentsUpcoming
           user={user}
           appointmentsLoading={appointmentsLoading}
           doctorAppointments={doctorAppointments}
+          navigate={navigate}
         />
       </Card>
       <Divider />

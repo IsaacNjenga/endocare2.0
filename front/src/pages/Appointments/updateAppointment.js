@@ -11,23 +11,27 @@ import {
   Space,
   Avatar,
   Tag,
+  Form,
+  Spin,
+  Select,
 } from "antd";
 import axios from "axios";
 import dayjs from "dayjs";
 import {
   MailOutlined,
   PhoneOutlined,
-  ClockCircleOutlined,
   EnvironmentOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import useFetchAllDoctorData from "../../hooks/fetchAllDoctorData";
 import { format } from "date-fns";
 import Swal from "sweetalert2";
+import { ReasonsForAppointment } from "../../assets/data/data";
 
 const cardStyle = {
   borderRadius: 12,
   boxShadow: "0 2px 12px rgba(0,0,0,0.08)",
+  height: "100%",
 };
 
 const avatarStyle = {
@@ -89,24 +93,29 @@ function UpdateAppointment({
   appointmentRefresh,
 }) {
   const { user } = useContext(UserContext);
+  const [form] = Form.useForm();
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [selectedPhysician, setSelectedPhysician] = useState(null);
+  const [selectedReason, setSelectedReason] = useState(null);
   const [selectedPhysicianName, setSelectedPhysicianName] = useState(null);
   const [updateLoading, setUpdateLoading] = useState(false);
   const { doctors, allDoctorsLoading } = useFetchAllDoctorData();
 
   React.useEffect(() => {
     if (modalContent) {
+      //console.log(modalContent);
       const newValue = {
         appointmentDate: modalContent.appointmentDate,
         appointmentTime: modalContent.appointmentTime,
+        appointmentReason: modalContent.appointmentReason,
         physician: modalContent.physician,
       };
       setSelectedDate(newValue.appointmentDate);
       setSelectedTime(newValue.appointmentTime);
       setSelectedPhysician(newValue.physician._id);
       setSelectedPhysicianName(newValue.physician.firstName);
+      setSelectedReason(newValue.appointmentReason);
     }
   }, [modalContent, user]);
 
@@ -126,10 +135,12 @@ function UpdateAppointment({
   const handleContinue = async () => {
     setUpdateLoading(true);
     try {
-      if (selectedDate && selectedTime && selectedPhysician) {
+      const formValue = await form.validateFields();
+      if (selectedDate && selectedTime && selectedPhysician && selectedReason) {
         const values = {
-          appointmentDate: selectedDate.format("YYYY-MM-DD"),
+          appointmentDate: dayjs(selectedDate).format("YYYY-MM-DD"),
           appointmentTime: selectedTime,
+          appointmentReason: formValue.appointmentReason,
           createdBy: user._id,
           physician: selectedPhysician,
         };
@@ -173,10 +184,17 @@ function UpdateAppointment({
     fontFamily: "Roboto",
   });
 
-  if (allDoctorsLoading) return <div>Loading...</div>;
+  if (allDoctorsLoading)
+    return (
+      <Spin
+        tip="Getting things ready. Please wait..."
+        fullscreen
+        size="large"
+      />
+    );
 
   return (
-    <Card style={{ maxWidth: 800, margin: "auto", marginTop: 28, padding: 16 }}>
+    <Card style={{ maxWidth: 900, margin: "auto", marginTop: 28, padding: 16 }}>
       <Typography.Title level={3} style={sectionCardStyle}>
         Reschedule Your Appointment
       </Typography.Title>
@@ -193,48 +211,80 @@ function UpdateAppointment({
         <Divider orientation="left">
           <span style={sectionHeaderStyle}>Select a Time</span>
         </Divider>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <Row gutter={[25, 25]}>
-            <Col span={12}>
-              <Typography.Title level={4} style={labelStyle}>
-                Morning
-              </Typography.Title>
-              <Space direction="vertical">
-                {morningHours.map((hour) => (
-                  <Button
-                    key={hour.value}
-                    onClick={() => handleTimeSelect(hour.value)}
-                    style={timeButtonStyle(hour.value)}
-                  >
-                    {hour.label}
-                  </Button>
-                ))}
-              </Space>
-            </Col>
 
-            <Col span={12}>
-              <Typography.Title level={4} style={labelStyle}>
-                Afternoon
-              </Typography.Title>
-              <Space direction="vertical">
-                {afternoonHours.map((hour) => (
-                  <Button
-                    key={hour.value}
-                    onClick={() => handleTimeSelect(hour.value)}
-                    style={timeButtonStyle(hour.value)}
-                  >
-                    {hour.label}
-                  </Button>
-                ))}
-              </Space>
-            </Col>
-          </Row>
-        </div>
+        <Row gutter={[25, 25]}>
+          <Col span={12}>
+            <div>
+              <Row gutter={[25, 25]}>
+                <Col span={12}>
+                  <Typography.Title level={4} style={labelStyle}>
+                    Morning
+                  </Typography.Title>
+                  <Space direction="vertical">
+                    {morningHours.map((hour) => (
+                      <Button
+                        key={hour.value}
+                        onClick={() => handleTimeSelect(hour.value)}
+                        style={timeButtonStyle(hour.value)}
+                      >
+                        {hour.label}
+                      </Button>
+                    ))}
+                  </Space>
+                </Col>
+
+                <Col span={12}>
+                  <Typography.Title level={4} style={labelStyle}>
+                    Afternoon
+                  </Typography.Title>
+                  <Space direction="vertical">
+                    {afternoonHours.map((hour) => (
+                      <Button
+                        key={hour.value}
+                        onClick={() => handleTimeSelect(hour.value)}
+                        style={timeButtonStyle(hour.value)}
+                      >
+                        {hour.label}
+                      </Button>
+                    ))}
+                  </Space>
+                </Col>
+              </Row>
+            </div>
+          </Col>
+
+          <Col span={12}>
+            <div>
+              <Form form={form} layout="vertical">
+                <Typography.Title level={4} style={labelStyle}>
+                  Reason for appointment
+                </Typography.Title>
+                <Form.Item
+                  label={
+                    <span style={{ fontFamily: "Raleway" }}>
+                      Select one from the list below
+                    </span>
+                  }
+                  name="appointmentReason"
+                  rules={[
+                    {
+                      required: true,
+                      message: "This field is required",
+                    },
+                  ]}
+                >
+                  <Select>
+                    {ReasonsForAppointment.map((reason) => (
+                      <Select.Option value={reason.value}>
+                        {reason.label}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Form>
+            </div>
+          </Col>
+        </Row>
 
         {selectedTime && (
           <div>
@@ -250,7 +300,16 @@ function UpdateAppointment({
                   <Col span={12} key={doctor._id}>
                     <Card
                       hoverable
-                      style={cardStyle}
+                      style={{
+                        ...cardStyle,
+                        boxShadow:
+                          selectedPhysician === user._id
+                            ? "0px 4px 10px 1px #00152a"
+                            : "none",
+                        borderColor: "#00152a",
+                        transition: "box-shadow 0.3s ease-in-out",
+                        height: "100%",
+                      }}
                       onClick={() => handlePhysicianSelect(user._id, docName)}
                     >
                       <div style={avatarStyle}>
@@ -289,7 +348,10 @@ function UpdateAppointment({
                           <EnvironmentOutlined /> {doctor.currentHospital}
                         </div>
                         <div>
-                          <ClockCircleOutlined /> {doctor.officeHours}
+                          Office Hours:
+                          {doctor?.officeHours.map((hours) => (
+                            <Tag>{hours}</Tag>
+                          ))}
                         </div>
                         <div>Experience: {doctor.yearsOfExperience} years</div>
 

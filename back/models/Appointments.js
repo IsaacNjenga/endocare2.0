@@ -4,6 +4,7 @@ const appointmentSchema = new mongoose.Schema(
   {
     appointmentDate: { type: String },
     appointmentTime: { type: String },
+    appointmentReason: { type: String },
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
     physician: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
   },
