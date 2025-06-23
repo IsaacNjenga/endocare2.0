@@ -11,7 +11,14 @@ import {
   Avatar,
 } from "antd";
 import { useNavigate } from "react-router-dom";
-import { format, formatDistanceToNow, isAfter, isEqual, parse } from "date-fns";
+import {
+  format,
+  formatDistanceToNow,
+  formatRelative,
+  isAfter,
+  isEqual,
+  parse,
+} from "date-fns";
 import DocGauge from "./docGauge";
 import useFetchMyPatients from "../../hooks/fetchMyPatients";
 import useFetchAppointmentData from "../../hooks/fetchAppointmentData";
@@ -68,11 +75,25 @@ const AppointmentsUpcoming = ({
         </div>
       ),
     },
+    // {
+    //   title: "Time",
+    //   dataIndex: "appointmentTime",
+    //   key: "appointmentTime",
+    //   render: (time) => <Tag color="geekblue">{time}</Tag>,
+    // },
     {
-      title: "Time of Appointment",
-      dataIndex: "appointmentTime",
-      key: "appointmentTime",
-      render: (time) => <Tag color="geekblue">{time}</Tag>,
+      title: "Date & Time",
+      dataIndex: "appointmentDate",
+      key: "appointmentDate",
+      render: (date, record) => {
+        const fullDate = parse(
+          `${record.appointmentDate} ${record.appointmentTime}`,
+          "yyyy-MM-dd hh:mm a",
+          new Date()
+        );
+        const formatted = formatRelative(fullDate, new Date());
+        return <Tag color="green">{formatted}</Tag>;
+      },
     },
     {
       title: "Reason",
@@ -96,6 +117,7 @@ const AppointmentsUpcoming = ({
     patientId: appt?.createdBy?._id,
     avatar: appt?.createdBy?.avatar,
     appointmentTime: appt?.appointmentTime,
+    appointmentDate: appt?.appointmentDate,
     appointmentReason: appt?.appointmentReason,
     createdAt: appt?.createdAt,
   }));
@@ -119,6 +141,7 @@ const AppointmentsUpcoming = ({
         bordered
         size="small"
         style={{ background: "white", borderRadius: "12px" }}
+        locale={{ emptyText: "📭 No upcoming appointments" }}
       />
     </div>
   );

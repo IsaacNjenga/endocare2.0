@@ -33,6 +33,7 @@ const cardStyle = {
   borderRadius: 12,
   boxShadow: "0 2px 12px rgba(0,0,0,0.08)",
   border: "1px solid #00152a",
+  height:'100%'
 };
 
 const avatarStyle = {
@@ -218,8 +219,12 @@ function SelectSpecialist() {
                       </div>
                       <div>
                         <Text style={labelStyle}>
-                          <ClockCircleOutlined style={iconStyle} />{" "}
-                          {doctor.officeHours}
+                          Office Hours:
+                          {doctor.officeHours.map((hours, idx) => (
+                            <Tag key={idx} style={{ fontFamily: "Raleway" }}>
+                              {hours}
+                            </Tag>
+                          ))}
                         </Text>
                       </div>
                       <div>
