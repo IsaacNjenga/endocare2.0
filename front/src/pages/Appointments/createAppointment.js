@@ -21,7 +21,6 @@ import useFetchAllDoctorData from "../../hooks/fetchAllDoctorData";
 import {
   MailOutlined,
   PhoneOutlined,
-  ClockCircleOutlined,
   EnvironmentOutlined,
   UserOutlined,
 } from "@ant-design/icons";
@@ -134,7 +133,7 @@ function CreateAppointment() {
           });
           setTimeout(() => {
             navigate("/appointments");
-          }, 4500);
+          }, 2500);
         }
       }
     } catch (error) {
@@ -158,7 +157,14 @@ function CreateAppointment() {
   });
 
   if (allDoctorsLoading)
-    return <Spin tip="Loading.Please wait..." fullscreen />;
+    return (
+      <Spin
+        tip="Getting things ready. Please wait..."
+        fullscreen
+        size="large"
+      />
+    );
+
   return (
     <Card style={{ maxWidth: 800, margin: "auto", marginTop: 32, padding: 24 }}>
       {contextHolder}
@@ -252,7 +258,8 @@ function CreateAppointment() {
                               ? "0px 4px 10px 1px #00152a"
                               : "none",
                           borderColor: "#00152a",
-                          transition:'box-shadow 0.3s ease-in-out'
+                          transition: "box-shadow 0.3s ease-in-out",
+                          height: "100%",
                         }}
                         onClick={() => handlePhysicianSelect(user._id, docName)}
                       >
@@ -292,7 +299,10 @@ function CreateAppointment() {
                             <EnvironmentOutlined /> {doctor.currentHospital}
                           </div>
                           <div>
-                            <ClockCircleOutlined /> {doctor.officeHours}
+                            Office Hours:
+                            {doctor?.officeHours.map((hours) => (
+                              <Tag>{hours}</Tag>
+                            ))}
                           </div>
                           <div>
                             Experience: {doctor.yearsOfExperience} years

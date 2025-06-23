@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
-  Button,
+  //Button,
   Card,
   Typography,
   List,
@@ -16,10 +16,9 @@ import {
   ClockCircleOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-//import Swal from "sweetalert2";
 import PatientDetailsModal from "../../components/patientDetailsModal";
 import useFetchPatientById from "../../hooks/fetchPatientById";
-import { format } from "date-fns";
+import { isAfter, isBefore, isEqual, parse } from "date-fns";
 
 const { Title, Text } = Typography;
 
@@ -45,18 +44,29 @@ function DoctorAppointments({
   const { patientData, patientLoading, fetchPatientById } =
     useFetchPatientById();
 
-  const currentDate = format(new Date(), "yyyy-MM-dd");
-
   useEffect(() => {
-    const olderAppointments = doctorAppointments.filter(
-      (date) => date.appointmentDate < currentDate
-    );
-    const newerAppointments = doctorAppointments.filter(
-      (date) => date.appointmentDate > currentDate
-    );
+    const current = new Date();
+    const olderAppointments = doctorAppointments.filter((appt) => {
+      const apptDateTime = parse(
+        `${appt.appointmentDate} ${appt.appointmentTime}`,
+        "yyyy-MM-dd p",
+        new Date()
+      );
+      return isBefore(apptDateTime, current);
+    });
+
+    const newerAppointments = doctorAppointments.filter((appt) => {
+      const apptDateTime = parse(
+        `${appt.appointmentDate} ${appt.appointmentTime}`,
+        "yyyy-MM-dd p",
+        new Date()
+      );
+      return isAfter(apptDateTime, current) || isEqual(apptDateTime, current);
+    });
+
     setNewAppointments(newerAppointments);
     setOldAppointments(olderAppointments);
-  }, [doctorAppointments, currentDate]);
+  }, [doctorAppointments, ]);
 
   const viewPatient = async (id) => {
     setLoading(true);
@@ -91,12 +101,12 @@ function DoctorAppointments({
           }}
         >
           <Title level={4}>Upcoming Appointments</Title>
-          <Button
+          {/* <Button
             type="primary"
             onClick={() => navigate("/appointments/create-appointment")}
           >
             Schedule an Appointment
-          </Button>
+          </Button> */}
         </Space>
 
         <Divider />

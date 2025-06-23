@@ -11,7 +11,7 @@ import {
   Avatar,
 } from "antd";
 import { useNavigate } from "react-router-dom";
-import { format, formatDistanceToNow } from "date-fns";
+import { format, formatDistanceToNow, isAfter, isEqual, parse } from "date-fns";
 import DocGauge from "./docGauge";
 import useFetchMyPatients from "../../hooks/fetchMyPatients";
 import useFetchAppointmentData from "../../hooks/fetchAppointmentData";
@@ -25,14 +25,18 @@ const AppointmentsUpcoming = ({
 }) => {
   const [newAppointments, setNewAppointments] = useState([]);
 
-  const currentDate = format(new Date(), "yyyy-MM-dd");
-
   useEffect(() => {
-    const filtered = doctorAppointments.filter(
-      (appt) => appt.appointmentDate === currentDate
-    );
+    const current = new Date();
+    const filtered = doctorAppointments.filter((appt) => {
+      const apptDateTime = parse(
+        `${appt.appointmentDate} ${appt.appointmentTime}`,
+        "yyyy-MM-dd p",
+        new Date()
+      );
+      return isAfter(apptDateTime, current) || isEqual(apptDateTime, current);
+    });
     setNewAppointments(filtered);
-  }, [doctorAppointments, currentDate]);
+  }, [doctorAppointments]);
 
   const columns = [
     {

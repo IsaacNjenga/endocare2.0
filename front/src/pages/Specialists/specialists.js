@@ -14,7 +14,6 @@ import {
 import {
   MailOutlined,
   PhoneOutlined,
-  ClockCircleOutlined,
   EnvironmentOutlined,
   UserOutlined,
 } from "@ant-design/icons";
@@ -72,6 +71,7 @@ function Specialists() {
     doctorUserData,
   } = useFetchDoctorById();
 
+
   const physicianId = patientData[0]?.selectedPhysician;
 
   React.useEffect(() => {
@@ -93,7 +93,7 @@ function Specialists() {
     if (doctorLoading)
       return (
         <div>
-          <Spin tip="Loading. Please wait..." fullscreen/>
+          <Spin tip="Loading. Please wait..." fullscreen />
         </div>
       );
 
@@ -187,8 +187,10 @@ function Specialists() {
             </div>
             <div>
               <Text style={labelStyle}>
-                <ClockCircleOutlined style={iconStyle} />{" "}
-                {doctorPracticeData?.officeHours}
+                Office Hours:
+                {doctorPracticeData?.officeHours.map((hours) => (
+                  <Tag style={labelStyle}>{hours}</Tag>
+                ))}
               </Text>
             </div>
             <div>

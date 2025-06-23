@@ -23,7 +23,7 @@ import useFetchDoctorById from "../../hooks/fetchDoctorById";
 import Swal from "sweetalert2";
 import UpdateAppointmentModal from "./updateAppointmentModal";
 import axios from "axios";
-import { format } from "date-fns";
+import { isAfter, isBefore, isEqual, parse } from "date-fns";
 
 const { Title, Text } = Typography;
 
@@ -54,19 +54,30 @@ function PatientAppointments({
     fetchDoctorById,
     doctorUserData,
   } = useFetchDoctorById();
-  const currentDate = format(new Date(), "yyyy-MM-dd");
 
   useEffect(() => {
-    const olderAppointments = patientAppointments.filter(
-      (date) => date.appointmentDate < currentDate
-    );
-    const newerAppointments = patientAppointments.filter(
-      (date) => date.appointmentDate > currentDate
-    );
-    setNewAppointments(newerAppointments)
-    setOldAppointments(olderAppointments);
-  }, [patientAppointments, currentDate]);
+    const current = new Date();
+    const olderAppointments = patientAppointments.filter((appt) => {
+      const apptDateTime = parse(
+        `${appt.appointmentDate} ${appt.appointmentTime}`,
+        "yyyy-MM-dd p",
+        new Date()
+      );
+      return isBefore(apptDateTime, current);
+    });
 
+    const newerAppointments = patientAppointments.filter((appt) => {
+      const apptDateTime = parse(
+        `${appt.appointmentDate} ${appt.appointmentTime}`,
+        "yyyy-MM-dd p",
+        new Date()
+      );
+      return isAfter(apptDateTime, current) || isEqual(apptDateTime, current);
+    });
+
+    setNewAppointments(newerAppointments);
+    setOldAppointments(olderAppointments);
+  }, [patientAppointments, ]);
 
   const viewDoctor = async (id) => {
     setLoading(true);
@@ -158,7 +169,7 @@ function PatientAppointments({
         <Divider />
 
         {appointmentsLoading ? (
-          <Spin tip="Loading. Please wait..." fullscreen size="large"/>
+          <Spin tip="Loading. Please wait..." fullscreen size="large" />
         ) : patientAppointments?.length === 0 ? (
           <Empty description="No upcoming appointments." />
         ) : (
@@ -253,13 +264,12 @@ function PatientAppointments({
           }}
         >
           <Title level={4}>History</Title>
-         
         </Space>
 
         <Divider />
 
         {appointmentsLoading ? (
-          <Spin tip="Loading. Please wait..." fullscreen />
+          <div>Loading</div>
         ) : patientAppointments?.length === 0 ? (
           <Empty description="No previous appointments." />
         ) : (
@@ -313,7 +323,7 @@ function PatientAppointments({
                         </Text>
                       </Space>
                     </div>
-                   </div>
+                  </div>
                 </Card>
               )}
             />

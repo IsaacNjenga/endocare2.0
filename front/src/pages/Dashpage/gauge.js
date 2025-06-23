@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { Gauge } from "@mui/x-charts";
-import { Card, Spin, Typography } from "antd";
+import {  Spin, Typography } from "antd";
 import { FireOutlined } from "@ant-design/icons";
 
 const { Title, Text } = Typography;
@@ -32,10 +32,9 @@ function GaugeDisplay({ cardStyle, diaryData, diaryLoading }) {
 
   return (
     <>
-      <Card
+      <div
         style={{
           ...cardStyle,
-          borderRadius: "12px",
           textAlign: "center",
           display: "flex",
           justifyContent: "center",
@@ -83,7 +82,7 @@ function GaugeDisplay({ cardStyle, diaryData, diaryLoading }) {
             />
           </div>
         )}
-      </Card>
+      </div>
     </>
   );
 }
