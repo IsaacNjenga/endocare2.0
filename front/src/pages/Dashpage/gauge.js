@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Gauge } from "@mui/x-charts";
 import { Card, Spin, Typography } from "antd";
 import { FireOutlined } from "@ant-design/icons";
@@ -6,7 +6,30 @@ import { FireOutlined } from "@ant-design/icons";
 const { Title, Text } = Typography;
 
 function GaugeDisplay({ cardStyle, diaryData, diaryLoading }) {
-  //console.log(diaryData);
+  const now = new Date();
+  const currentMonth = now.getMonth();
+  const currentYear = now.getFullYear();
+
+  const daysLoggedThisMonth = useMemo(() => {
+    if (!diaryData || diaryData.length === 0) return 0;
+
+    const uniqueDays = new Set();
+    diaryData.forEach((entry) => {
+      const date = new Date(entry.entryDate);
+      if (
+        date.getMonth() === currentMonth &&
+        date.getFullYear() === currentYear
+      ) {
+        const key = date.toISOString().split("T")[0];
+        uniqueDays.add(key);
+      }
+    });
+
+    return uniqueDays.size;
+  }, [diaryData, currentMonth, currentYear]);
+
+  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
   return (
     <>
       <Card
@@ -40,12 +63,12 @@ function GaugeDisplay({ cardStyle, diaryData, diaryLoading }) {
                 <FireOutlined style={{ color: "#fa541c", marginRight: 8 }} />
                 Days Logged This Month
               </Title>
-              <Text type="secondary">Your current logging streak</Text>
+              <Text type="secondary">Your current diary logging streak</Text>
             </div>
 
             <Gauge
-              value={diaryData?.daysLogged || 12}
-              valueMax={30}
+              value={daysLoggedThisMonth}
+              valueMax={daysInMonth}
               startAngle={-110}
               endAngle={110}
               sx={{
