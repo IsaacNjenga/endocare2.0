@@ -9,6 +9,7 @@ import {
   Table,
   Tag,
   Avatar,
+  Empty,
 } from "antd";
 import { useNavigate } from "react-router-dom";
 import {
@@ -22,6 +23,7 @@ import {
 import DocGauge from "./docGauge";
 import useFetchMyPatients from "../../hooks/fetchMyPatients";
 import useFetchAppointmentData from "../../hooks/fetchAppointmentData";
+import SinglePatientDiary from "./singlePatientDiary";
 
 const { Title, Text } = Typography;
 
@@ -32,7 +34,7 @@ const AppointmentsUpcoming = ({
   navigate,
 }) => {
   const [newAppointments, setNewAppointments] = useState([]);
-  console.log(doctorAppointments);
+  //console.log(doctorAppointments);
 
   useEffect(() => {
     const current = new Date();
@@ -92,14 +94,22 @@ const AppointmentsUpcoming = ({
           new Date()
         );
         const formatted = formatRelative(fullDate, new Date());
-        return <Tag color="green">{formatted}</Tag>;
+        return (
+          <Tag color="white" style={{ backgroundColor: "green" }}>
+            {formatted}
+          </Tag>
+        );
       },
     },
     {
       title: "Reason",
       dataIndex: "appointmentReason",
       key: "appointmentReason",
-      render: (time) => <Tag color="red">{time}</Tag>,
+      render: (time) => (
+        <Tag color="white" style={{ backgroundColor: "red" }}>
+          {time}
+        </Tag>
+      ),
     },
     {
       title: "Set",
@@ -122,6 +132,20 @@ const AppointmentsUpcoming = ({
     createdAt: appt?.createdAt,
   }));
 
+  const sortedData = [...dataSource].sort((a, b) => {
+    const dateA = parse(
+      `${a.appointmentDate} ${a.appointmentTime}`,
+      "yyyy-MM-dd hh:mm a",
+      new Date()
+    );
+    const dateB = parse(
+      `${b.appointmentDate} ${b.appointmentTime}`,
+      "yyyy-MM-dd hh:mm a",
+      new Date()
+    );
+    return dateA - dateB;
+  });
+
   if (appointmentsLoading) {
     return (
       <Spin
@@ -134,15 +158,32 @@ const AppointmentsUpcoming = ({
 
   return (
     <div>
-      <Table
-        columns={columns}
-        dataSource={dataSource}
-        pagination={false}
-        bordered
-        size="small"
-        style={{ background: "white", borderRadius: "12px" }}
-        locale={{ emptyText: "📭 No upcoming appointments" }}
-      />
+      {" "}
+      {sortedData.length > 0 ? (
+        <Table
+          columns={columns}
+          dataSource={sortedData}
+          pagination={false}
+          bordered
+          size="small"
+          style={{ background: "white", borderRadius: "12px" }}
+          locale={{ emptyText: "📭 No upcoming appointments" }}
+        />
+      ) : (
+        <Empty description="📭 No upcoming appointments" />
+      )}
+    </div>
+  );
+};
+
+const PendingFeedback = ({ myPatients }) => {
+  const patientIds = myPatients?.map((i) => i.createdBy._id);
+
+  return (
+    <div>
+      {patientIds?.map((id) => (
+        <SinglePatientDiary patientId={id} />
+      ))}
     </div>
   );
 };
@@ -208,8 +249,17 @@ function DoctorDashboard({ cardStyle, user }) {
           navigate={navigate}
         />
       </Card>
-      <Divider />
-      <br /> Pending Feedback
+      <Divider />{" "}
+      <Card style={cardStyle}>
+        <Title level={3} style={{ marginBottom: 15, marginTop: 0 }}>
+          Diaries Awaiting Feedback
+        </Title>
+        <PendingFeedback
+          user={user}
+          navigate={navigate}
+          myPatients={myPatients}
+        />
+      </Card>
     </div>
   );
 }

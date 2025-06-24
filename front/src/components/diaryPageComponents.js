@@ -54,6 +54,12 @@ const descriptionStyle = { fontFamily: "Roboto", fontSize: 15 };
 
 const descriptionLabelStyle = { fontFamily: "Raleway", fontWeight: 500 };
 
+const cardStyle = {
+  borderRadius: 12,
+  boxShadow: "0 4px 12px rgba(0,0,0,0.4)",
+  height: "auto",
+};
+
 const renderListAsTags = (items, color) => (
   <Space wrap>
     {items?.map((item, idx) => (
@@ -159,12 +165,7 @@ export const MealsEntry = ({
       hoverable
       loading={diaryLoading}
       actions={userRole === "patient" ? actions : doctorActions}
-      style={{
-        borderRadius: 12,
-        boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
-        height: "auto",
-        marginBottom: 24,
-      }}
+      style={cardStyle}
     >
       <Title level={4} style={{ marginBottom: 2 }}>
         <div style={{ display: "flex", alignItems: "center" }}>
@@ -342,10 +343,7 @@ export const MedicationsEntry = ({
       hoverable
       loading={diaryLoading}
       actions={userRole === "patient" ? actions : doctorActions}
-      style={{
-        borderRadius: 12,
-        boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
-      }}
+      style={cardStyle}
     >
       <Title level={4} style={{ marginBottom: 2 }}>
         <div style={{ display: "flex", alignItems: "center" }}>
@@ -533,10 +531,7 @@ export const BloodSugarEntry = ({
       hoverable
       loading={diaryLoading}
       actions={userRole === "patient" ? actions : doctorActions}
-      style={{
-        borderRadius: 12,
-        boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
-      }}
+      style={cardStyle}
     >
       <Title level={4} style={{ marginBottom: 2 }}>
         <div style={{ display: "flex", alignItems: "center" }}>
@@ -717,10 +712,7 @@ export const PhysicalActivityEntry = ({
       hoverable
       loading={diaryLoading}
       actions={userRole === "patient" ? actions : doctorActions}
-      style={{
-        borderRadius: 12,
-        boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
-      }}
+      style={cardStyle}
     >
       <Title level={4} style={{ marginBottom: 2 }}>
         <div style={{ display: "flex", alignItems: "center" }}>
@@ -882,10 +874,7 @@ export const SymptomsEntry = ({
       hoverable
       loading={diaryLoading}
       actions={userRole === "patient" ? actions : doctorActions}
-      style={{
-        borderRadius: 12,
-        boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
-      }}
+      style={cardStyle}
     >
       <Title level={4} style={{ marginBottom: 2 }}>
         <div style={{ display: "flex", alignItems: "center" }}>
@@ -1029,10 +1018,7 @@ export const MoodsEntry = ({
       hoverable
       loading={diaryLoading}
       actions={userRole === "patient" ? actions : doctorActions}
-      style={{
-        borderRadius: 12,
-        boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
-      }}
+      style={cardStyle}
     >
       <Title level={4} style={{ marginBottom: 2 }}>
         <div style={{ display: "flex", alignItems: "center" }}>

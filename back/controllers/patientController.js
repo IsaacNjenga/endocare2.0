@@ -65,7 +65,7 @@ const updatePatientDetails = async (req, res) => {
 
 const updatePatientPhysician = async (req, res) => {
   const { id, physId } = req.query;
-
+  
   if (!id) return res.status(404).json({ error: "No ID Specified" });
   if (!physId) return res.status(404).json({ error: "No ID Specified" });
 
@@ -78,7 +78,12 @@ const updatePatientPhysician = async (req, res) => {
       { new: true }
     );
     if (!updatedPatientLog) {
-      return res.status(404).json({ error: "Patient record not found" });
+      return res
+        .status(404)
+        .json({
+          error:
+            "Patient record not found. Update your patient information in your profile before proceeding",
+        });
     }
     return res.status(201).json({ success: true, data: updatedPatientLog });
   } catch (error) {

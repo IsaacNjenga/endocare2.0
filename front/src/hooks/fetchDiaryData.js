@@ -21,6 +21,7 @@ function useFetchDiaryData(userId) {
           setDiaryData(res.data.entry);
         }
       } catch (error) {
+        console.log(error);
         const errorMessage =
           error.response?.data?.error ??
           "An unexpected error occurred. Please try again later.";

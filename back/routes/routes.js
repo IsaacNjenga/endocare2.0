@@ -29,6 +29,7 @@ import {
   fetchDiaryEntry,
   updateDiaryEntry,
   deleteDiaryEntry,
+  diaryWithNoFeedback,
 } from "../controllers/diaryController.js";
 import {
   deleteDoctor,
@@ -102,6 +103,7 @@ router.post("/ask-endo", EndoAI);
 router.post("/create-diary-entry", createDiaryEntry);
 router.get("/fetch-diary-entry", fetchDiaryEntry);
 router.get("/fetch-diary-entries", fetchDiaryEntries);
+router.get("/fetch-my-patients-diary", diaryWithNoFeedback);
 router.put("/update-diary-entry", updateDiaryEntry);
 router.delete("/delete-diary-entry", deleteDiaryEntry);
 

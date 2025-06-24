@@ -27,6 +27,7 @@ import useFetchPatientById from "../../hooks/fetchPatientById";
 import { format, formatDistanceToNowStrict } from "date-fns";
 import dayjs from "dayjs";
 import useFetchDiaryData from "../../hooks/fetchDiaryData";
+import Swal from "sweetalert2";
 
 const { Title, Text } = Typography;
 
@@ -187,22 +188,22 @@ const PatientDetails = ({ details }) => {
           style={{ marginBottom: 24 }}
         >
           <Descriptions.Item label="Diagnosis" style={contentStyle}>
-            {info.diagnosis}
+            {info?.diagnosis}
           </Descriptions.Item>
           <Descriptions.Item label="Blood Type" style={contentStyle}>
             <Tag color="red" style={contentStyle}>
-              {info.bloodType}
+              {info?.bloodType}
             </Tag>
           </Descriptions.Item>
           <Descriptions.Item label="Chronic Conditions" style={contentStyle}>
-            {info.chronicConditions?.map((c, idx) => (
+            {info?.chronicConditions?.map((c, idx) => (
               <Tag key={idx} color="orange" style={contentStyle}>
                 {c}
               </Tag>
             ))}
           </Descriptions.Item>
           <Descriptions.Item label="Allergies" style={contentStyle}>
-            {info.allergies?.map((a, idx) => (
+            {info?.allergies?.map((a, idx) => (
               <Tag key={idx} color="green" style={contentStyle}>
                 {a}
               </Tag>
@@ -230,19 +231,21 @@ const PatientDetails = ({ details }) => {
           title={`${i + 1}`}
         >
           <Descriptions.Item label="Name" style={contentStyle}>
-            {med.name}
+            {med?.name}
           </Descriptions.Item>
           <Descriptions.Item label="Dosage" style={contentStyle}>
-            {med.dosage}
+            {med?.dosage}
           </Descriptions.Item>
           <Descriptions.Item label="Frequency" style={contentStyle}>
-            {med.frequency}
+            {med?.frequency}
           </Descriptions.Item>
           <Descriptions.Item label="Start Date" style={contentStyle}>
-            {format(new Date(med.startDate), "yyyy-MM-dd")}
+            {med.startDate
+              ? `${format(new Date(med?.startDate), "yyyy-MM-dd")}`
+              : null}
           </Descriptions.Item>
           <Descriptions.Item label="Ongoing" style={contentStyle}>
-            {med.isOngoing ? "Yes" : "No"}
+            {med?.isOngoing ? "Yes" : "No"}
           </Descriptions.Item>
         </Descriptions>
       ))}
@@ -260,16 +263,19 @@ const PatientDetails = ({ details }) => {
           style={{ marginBottom: 16 }}
         >
           <Descriptions.Item label="Condition" style={contentStyle}>
-            {treat.condition}
+            {treat?.condition}
           </Descriptions.Item>
           <Descriptions.Item label="Diagnosis Date" style={contentStyle}>
-            {format(new Date(treat.diagnosisDate), "yyyy-MM-dd")}
+            {" "}
+            {treat?.diagnosisDate
+              ? `${format(new Date(treat?.diagnosisDate), "yyyy-MM-dd")}`
+              : null}
           </Descriptions.Item>
           <Descriptions.Item label="Description" style={contentStyle}>
-            {treat.treatmentDescription}
+            {treat?.treatmentDescription}
           </Descriptions.Item>
           <Descriptions.Item label="Outcome" style={contentStyle}>
-            {treat.outcome}
+            {treat?.outcome}
           </Descriptions.Item>
         </Descriptions>
       ))}
@@ -288,13 +294,16 @@ const PatientDetails = ({ details }) => {
           title={i + 1}
         >
           <Descriptions.Item label="Procedure Name" style={contentStyle}>
-            {proc.procedureName}
+            {proc?.procedureName}
           </Descriptions.Item>
           <Descriptions.Item label="Date" style={contentStyle}>
-            {format(new Date(proc.dateOfProcedure), "yyyy-MM-dd")}
+            {" "}
+            {proc.dateOfProcedure
+              ? `${format(new Date(proc?.dateOfProcedure), "yyyy-MM-dd")}`
+              : null}
           </Descriptions.Item>
           <Descriptions.Item label="Notes" style={contentStyle}>
-            {proc.notes}
+            {proc?.notes}
           </Descriptions.Item>
         </Descriptions>
       ))}
@@ -312,13 +321,13 @@ const PatientDetails = ({ details }) => {
           style={{ marginBottom: 16 }}
         >
           <Descriptions.Item label="Relation" style={contentStyle}>
-            {fam.relation}
+            {fam?.relation}
           </Descriptions.Item>
           <Descriptions.Item label="Condition" style={contentStyle}>
-            {fam.condition}
+            {fam?.condition}
           </Descriptions.Item>
           <Descriptions.Item label="Notes" style={contentStyle}>
-            {fam.notes}
+            {fam?.notes}
           </Descriptions.Item>
         </Descriptions>
       ))}
@@ -336,13 +345,13 @@ const PatientDetails = ({ details }) => {
           style={{ marginBottom: 16 }}
         >
           <Descriptions.Item label="Name" style={contentStyle}>
-            {doc.name}
+            {doc?.name}
           </Descriptions.Item>
           <Descriptions.Item label="Contact" style={contentStyle}>
-            {doc.contactInfo}
+            {doc?.contactInfo}
           </Descriptions.Item>
           <Descriptions.Item label="Period" style={contentStyle}>
-            {doc.period}
+            {doc?.period}
           </Descriptions.Item>
         </Descriptions>
       ))}
@@ -377,7 +386,17 @@ const PatientDiary = ({ diaryData, diaryLoading, navigate, id }) => {
               cursor: hasEntry ? "pointer" : "default",
             }}
             onClick={() => {
-              navigate(`/my-patients/${id}/date/${value.format("YYYY-MM-DD")}`);
+              if (hasEntry) {
+                navigate(
+                  `/my-patients/${id}/date/${value.format("YYYY-MM-DD")}`
+                );
+              } else {
+                Swal.fire({
+                  icon: "error",
+                  title: "Not Updated",
+                  text: "Patient hasn't updated for this day",
+                });
+              }
             }}
           />
         </Tooltip>
@@ -405,6 +424,7 @@ const PatientDiary = ({ diaryData, diaryLoading, navigate, id }) => {
         onSelect={onSelect}
         cellRender={dateCellRender}
         onPanelChange={onPanelChange}
+        disabledDate={(current) => current && current > dayjs().endOf("day")}
       />
     </div>
   );

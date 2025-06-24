@@ -417,7 +417,7 @@ export const FamilyMedicalHistorySection = ({
       {content?.length === 0 ? (
         <Empty />
       ) : (
-        content.map((info) => (
+        content?.map((info) => (
           <Card
             type="inner"
             style={{ marginBottom: "1rem", borderRadius: "10px" }}
@@ -446,17 +446,17 @@ export const FamilyMedicalHistorySection = ({
               <Descriptions.Item
                 label={<span style={labelStyle}>Relation</span>}
               >
-                <span style={contentStyle}>{info.relation}</span>
+                <span style={contentStyle}>{info?.relation}</span>
               </Descriptions.Item>
               <Descriptions.Item
                 label={<span style={labelStyle}>Condition</span>}
               >
-                <span style={contentStyle}>{info.condition}</span>
+                <span style={contentStyle}>{info?.condition}</span>
               </Descriptions.Item>
             </Descriptions>
             <Collapse style={{ marginTop: "1rem" }}>
               <Panel header="View Notes" key="1">
-                <p style={contentStyle}>{info.notes}</p>
+                <p style={contentStyle}>{info?.notes}</p>
               </Panel>
             </Collapse>
           </Card>
@@ -496,7 +496,7 @@ export const PreviousProvidersSection = ({
       {content?.length === 0 ? (
         <Empty />
       ) : (
-        content.map((info) => (
+        content?.map((info) => (
           <Card
             type="inner"
             style={{ marginBottom: "1rem", borderRadius: "10px" }}
@@ -523,15 +523,15 @@ export const PreviousProvidersSection = ({
             </div>
             <Descriptions size="small" column={1}>
               <Descriptions.Item label={<span style={labelStyle}>Name</span>}>
-                <span style={contentStyle}>{info.name}</span>
+                <span style={contentStyle}>{info?.name}</span>
               </Descriptions.Item>
               <Descriptions.Item
                 label={<span style={labelStyle}>Contact Information</span>}
               >
-                <span style={contentStyle}>{info.contactInfo}</span>
+                <span style={contentStyle}>{info?.contactInfo}</span>
               </Descriptions.Item>{" "}
               <Descriptions.Item label={<span style={labelStyle}>Period</span>}>
-                <span style={contentStyle}>{info.period}</span>
+                <span style={contentStyle}>{info?.period}</span>
               </Descriptions.Item>
             </Descriptions>
           </Card>
@@ -571,7 +571,7 @@ export const LifestyleSection = ({
       {content?.length === 0 ? (
         <Empty />
       ) : (
-        content.map((info) => (
+        content?.map((info) => (
           <>
             {" "}
             <div

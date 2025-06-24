@@ -63,7 +63,7 @@ function MyPatientsDiary() {
     return <Spin tip="Loading. Please wait..." fullscreen />;
 
   return (
-    <>
+    <div style={{ margin: 10 }}>
       <Button
         danger
         onClick={() => {
@@ -187,7 +187,7 @@ function MyPatientsDiary() {
         feedbackRefresh={feedbackRefresh}
         groupedFeedback={groupedFeedback}
       />
-    </>
+    </div>
   );
 }
 
