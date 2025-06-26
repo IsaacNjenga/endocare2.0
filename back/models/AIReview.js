@@ -2,7 +2,8 @@ import mongoose from "mongoose";
 
 const reviewSchema = new mongoose.Schema(
   {
-    createdBy:{ type: mongoose.Schema.Types.ObjectId, ref: "users" },
+    diaryId: { type: mongoose.Schema.Types.ObjectId, ref: "diary" },
+    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
     physicianId: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
     review: { type: String },
   },

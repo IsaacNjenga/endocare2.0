@@ -77,6 +77,7 @@ function Navbar() {
     { label: "Dashboard", path: "/dashboard", icon: AppstoreOutlined },
     { label: "My Patients", path: "/my-patients", icon: TeamOutlined },
     { label: "Appointments", path: "/appointments", icon: CalendarOutlined },
+    { label: "EndoAI Reviews", path: "/reviews", icon: RobotOutlined },
   ];
 
   const patientNavItems = [

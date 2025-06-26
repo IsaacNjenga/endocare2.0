@@ -75,6 +75,8 @@ const AIOutput = ({ entryData, patientInfo, patientPhysician, userId }) => {
   const [shareLoading, setShareLoading] = useState(false);
   const [AIResponse, setAIResponse] = useState(null);
 
+  const entryId = entryData?._id;
+
   const entryInfo = {
     bloodSugarLogs: entryData?.bloodSugarLogs,
     entryDate: entryData?.entryDate,
@@ -117,6 +119,7 @@ const AIOutput = ({ entryData, patientInfo, patientPhysician, userId }) => {
         physicianId: patientPhysician,
         review: review,
         createdBy: userId,
+        diaryId: entryId,
       };
       //console.log(values);
       const res = await axios.post("create-review", values);
@@ -223,7 +226,7 @@ const AIOutput = ({ entryData, patientInfo, patientPhysician, userId }) => {
               </div>
             </Col>
             <Col xs={24} sm={20} md={18} lg={10}>
-              <div style={{...divStyle,height:'auto'}}>
+              <div style={{ ...divStyle, height: "auto" }}>
                 <div>
                   <Paragraph>
                     <Title level={4} style={{ fontFamily: "Raleway" }}>
@@ -296,6 +299,8 @@ function Endoai() {
     treatmentHistory: patient?.treatmentHistory,
   };
 
+  //console.log(patientInfo);
+
   const dateCellRender = (value) => {
     const dateStr = value.format("YYYY-MM-DD");
     const hasEntry = diaryData?.some((entry) => entry.entryDate === dateStr);
@@ -358,7 +363,6 @@ function Endoai() {
               <Card
                 style={{
                   boxShadow: "0px 4px 12px rgba(0,0,0,0.3)",
-
                   border: "1px solid rgba(0, 0, 0, 0.39)",
                   height: "100%",
                 }}

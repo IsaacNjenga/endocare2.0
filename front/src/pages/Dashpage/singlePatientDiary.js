@@ -2,7 +2,7 @@ import React from "react";
 import useFetchMyPatientDiary from "../../hooks/fetchMyPatientDiary";
 import { Avatar, Button, Divider, List, Skeleton, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
-import { format, formatDistanceToNow, formatRelative, parse } from "date-fns";
+import { formatDistanceToNow } from "date-fns";
 
 function SinglePatientDiary({ patientId }) {
   const navigate = useNavigate();
@@ -42,7 +42,11 @@ function SinglePatientDiary({ patientId }) {
             <Skeleton avatar title={false} loading={patientDiaryLoading} active>
               <List.Item.Meta
                 avatar={
-                  <Avatar src={item.createdBy.avatar} size={60}>
+                  <Avatar
+                    src={item.createdBy.avatar}
+                    size={60}
+                    style={{ background: "#00152a" }}
+                  >
                     {item.createdBy.firstName} {item.createdBy.lastName}
                   </Avatar>
                 }
