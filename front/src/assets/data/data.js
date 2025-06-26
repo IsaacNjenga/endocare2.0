@@ -248,3 +248,15 @@ export const pic8 =
 
 export const pic9 =
   "https://plus.unsplash.com/premium_photo-1718570264171-2c87c2d7e79e?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8YWZyaWNhbiUyMHBhdGllbnR8ZW58MHx8MHx8fDA%3D";
+
+export const homeImages = [
+  { id: 1, img: pic, url: pic, height: 400 },
+  { id: 2, img: pic2, url: pic2, height: 300 },
+  { id: 3, img: pic3, url: pic3, height: 600 },
+  { id: 4, img: pic4, url: pic4, height: 500 },
+  { id: 5, img: pic5, url: pic5, height: 400 },
+  { id: 6, img: pic6, url: pic6, height: 250 },
+  { id: 7, img: pic7, url: pic7, height: 500 },
+  { id: 8, img: pic8, url: pic8, height: 600 },
+  { id: 9, img: pic9, url: pic9, height: 400 },
+];

@@ -55,6 +55,7 @@ import {
   deleteFeedback,
 } from "../controllers/feedbackController.js";
 import { EndoAI } from "../controllers/endoController.js";
+import { createReview } from "../controllers/reviewController.js";
 
 const router = express.Router();
 
@@ -122,4 +123,6 @@ router.get("/get-doctor-feedback", fetchDoctorFeedback);
 router.put("/update-feedback", updateFeedback);
 router.delete("/delete-feedback", deleteFeedback);
 
+//review routes
+router.post("/create-review", createReview);
 export { router as Router };

@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import GridMotion from "../components/gridMotion";
 import {
+  //homeImages,
   pic,
   pic2,
   pic3,
@@ -11,17 +12,25 @@ import {
   pic8,
   pic9,
 } from "../assets/data/data";
-import { Typography, Row, Col, Card } from "antd";
+import { Typography, Row, Col, Card, Divider } from "antd";
 //import Aurora from "../components/auroraComponent";
 import { UserContext } from "../App";
+//import Masonry from "../components/masonry";
 
 const { Title, Paragraph } = Typography;
 
 const imgStyle = {
   objectFit: "cover",
-  width: "100%",
-  height: "200px",
+  width: "120%",
+  height: "230px",
   borderRadius: "12px",
+};
+
+const cardStyle = {
+  borderRadius: 12,
+  background: "rgba(255, 255, 255, 0.05)",
+  backdropFilter: "blur(8px)",
+  border: "1px solid rgba(255, 255, 255, 0.15)",
 };
 
 const pics = [
@@ -68,22 +77,35 @@ function Home() {
             ]}
           />
         </div>
+        {/* <div>
+          <Masonry
+            items={homeImages}
+            ease="power3.out"
+            duration={0.6}
+            stagger={0.05}
+            animateFrom="bottom"
+            scaleOnHover={true}
+            hoverScale={0.95}
+            blurToFocus={true}
+            colorShiftOnHover={false}
+          />
+        </div> */}
 
         {/* Hero Section */}
         <div
           style={{
             textAlign: "center",
             marginTop: 10,
-            padding: "20px",
+            padding: "30px",
             fontFamily: "Raleway",
             position: "absolute",
             top: 0,
             zIndex: 10,
-            margin: "20px 70px",
-            background: "rgb(0,21,42,0.66)",
+            margin: "20px 80px",
+            background: "rgb(0,21,42,0.56)",
             alignContent: "center",
             borderRadius: "12px",
-            backdropFilter: "blur(3px)",
+            backdropFilter: "blur(2px)",
           }}
         >
           {/* <Aurora
@@ -98,6 +120,7 @@ function Home() {
           >
             Welcome to EndoCare Medical
           </Title>
+          <Divider style={{ borderColor: "whitesmoke" }} />
           <Paragraph
             style={{
               maxWidth: 800,
@@ -112,19 +135,12 @@ function Home() {
           </Paragraph>
           {/* Role-Based Feature Cards */}
           <div
-            style={{ maxWidth: 1200, margin: "48px auto", padding: "0 24px" }}
+            style={{ maxWidth: 1200, margin: "30px auto", padding: "0 24px" }}
           >
-            <Row gutter={[32, 32]}>
+            <Row gutter={[32]}>
               {userRole === "patient" ? (
-                <Col xs={24} md={12}>
-                  <Card
-                    style={{
-                      borderRadius: 12,
-                      background: "rgba(255, 255, 255, 0.05)",
-                      backdropFilter: "blur(8px)",
-                      border: "1px solid rgba(255, 255, 255, 0.15)",
-                    }}
-                  >
+                <Col>
+                  <Card style={cardStyle}>
                     <ul
                       style={{
                         paddingLeft: 20,
@@ -141,15 +157,8 @@ function Home() {
                   </Card>
                 </Col>
               ) : (
-                <Col xs={24} md={12}>
-                  <Card
-                    style={{
-                      borderRadius: 12,
-                      background: "rgba(255, 255, 255, 0.05)",
-                      backdropFilter: "blur(8px)",
-                      border: "1px solid rgba(255, 255, 255, 0.15)",
-                    }}
-                  >
+                <Col>
+                  <Card style={cardStyle}>
                     <ul
                       style={{
                         paddingLeft: 20,

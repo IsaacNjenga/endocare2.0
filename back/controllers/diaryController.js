@@ -4,8 +4,8 @@ import FeedbackModel from "../models/Feedback.js";
 
 const createDiaryEntry = async (req, res) => {
   try {
-    const newDiary = await DiaryModel({ ...req.body });
-    const results = newDiary.save();
+    const newDiary = new DiaryModel({ ...req.body });
+    const results = await newDiary.save();
     return res.status(200).json({ success: true, ...results._doc });
   } catch (error) {
     console.log(error);
