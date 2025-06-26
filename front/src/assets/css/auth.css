@@ -1,8 +1,6 @@
 .auth-bg {
   background: url("../images/authbg.jpg") no-repeat center center/cover;
-  height: 100vh;
-}
-
-.auth-back {
-  background: linear-gradient(to right, #803b8ec0 0%, #ffffffb4 70%);
+  min-height: auto;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
 }
