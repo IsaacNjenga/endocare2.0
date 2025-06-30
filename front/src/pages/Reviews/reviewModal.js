@@ -155,7 +155,9 @@ function ReviewModal({
                 name="response"
                 label={
                   <Title level={4} style={labelStyle}>
-                    Your response
+                    {userRole === "doctor"
+                      ? "Your response"
+                      : "Your physician's response"}
                   </Title>
                 }
               >

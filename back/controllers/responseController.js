@@ -20,7 +20,10 @@ const fetchResponses = async (req, res) => {
     return res.status(404).json({ success: false, error: "No ID specified" });
   try {
     const objectId = new mongoose.Types.ObjectId(id);
-    const fetchedResponses = await ResponseModel.find({ patientId: objectId });
+    const fetchedResponses = await ResponseModel.find({ patientId: objectId })
+      .populate("patientId", "firstName lastName avatar email ")
+      .populate("reviewId", "review")
+      .populate("diaryId", "entryDate createdAt");
 
     return res.status(200).json({ success: true, fetchedResponses });
   } catch (error) {

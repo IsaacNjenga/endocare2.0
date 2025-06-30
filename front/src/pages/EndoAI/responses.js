@@ -2,7 +2,6 @@ import {
   Avatar,
   Button,
   Card,
-  Divider,
   Empty,
   List,
   Skeleton,
@@ -11,11 +10,11 @@ import {
   Typography,
 } from "antd";
 import React, { useContext, useState } from "react";
-import ReviewModal from "./reviewModal";
 import { UserContext } from "../../App.js";
-import useFetchAllResponses from "../../hooks/fetchAllResponses.js";
 import { UndoOutlined } from "@ant-design/icons";
 import { format } from "date-fns";
+import useFetchPatientResponses from "../../hooks/fetchPatientResponses.js";
+import ReviewModal from "../Reviews/reviewModal.js";
 
 const { Text } = Typography;
 
@@ -29,17 +28,18 @@ const cardStyle = {
   border: "1px solid rgba(43, 44, 45, 0.31)",
 };
 
-function PreviousReviews() {
+function Responses() {
   const [openReviewModal, setOpenReviewModal] = useState(false);
   const [modalContent, setModalContent] = useState(null);
   const [loading, setLoading] = useState(false);
   const { user } = useContext(UserContext);
   const userId = user?._id;
   const { allResponses, allResponsesLoading, responsesRefresh } =
-    useFetchAllResponses(userId);
+    useFetchPatientResponses(userId);
+
+  console.log(allResponses);
 
   const flattened = (allResponses || []).filter((r) => r && r._id);
-//  console.log(allResponses);
 
   const viewReview = (response) => {
     const review = {
@@ -118,12 +118,11 @@ function PreviousReviews() {
                     }
                     title={
                       <Text type="primary">
-                        {item.patientId.firstName} {item.patientId.lastName}
+                        Diary Date: {item.diaryId.entryDate}
                       </Text>
                     }
                     description={
                       <>
-                        {item.patientId.email} <Divider type="vertical" />{" "}
                         Responded On:{" "}
                         {format(new Date(item.createdAt), "yyyy-MM-dd, p")}
                       </>
@@ -146,4 +145,4 @@ function PreviousReviews() {
   );
 }
 
-export default PreviousReviews;
+export default Responses;
