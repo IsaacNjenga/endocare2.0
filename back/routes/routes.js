@@ -55,11 +55,16 @@ import {
   deleteFeedback,
 } from "../controllers/feedbackController.js";
 import { EndoAI } from "../controllers/endoController.js";
-import { createReview, fetchReviews, fetchUnrespondedReviews } from "../controllers/reviewController.js";
+import {
+  createReview,
+  fetchReviews,
+  fetchUnrespondedReviews,
+} from "../controllers/reviewController.js";
 import {
   createResponse,
   fetchDoctorResponses,
   fetchResponses,
+  updateResponse,
 } from "../controllers/responseController.js";
 
 const router = express.Router();
@@ -136,5 +141,5 @@ router.get("/fetch-reviews", fetchUnrespondedReviews);
 router.post("/create-response", createResponse);
 router.get("/fetch-responses", fetchResponses);
 router.get("/fetch-doctor-responses", fetchDoctorResponses);
-
+router.put("/update-response", updateResponse);
 export { router as Router };

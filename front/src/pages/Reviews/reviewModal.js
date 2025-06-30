@@ -38,30 +38,68 @@ function ReviewModal({
   user,
   reviewsRefresh,
 }) {
+  const userRole = user?.role;
   const [form] = Form.useForm();
   const [submitLoading, setSubmitLoading] = useState(false);
-  // console.log(modalContent);
+  const [value, setValue] = useState("");
+
+  const responseValue = modalContent?.response ? modalContent?.response : null;
+
+  React.useEffect(() => {
+    if (responseValue) {
+      setValue({ response: responseValue });
+      form.setFieldsValue({ response: responseValue });
+    }
+  }, [responseValue, form]);
+
   const handleResponse = async () => {
     setSubmitLoading(true);
     try {
       const values = await form.validateFields();
-      const allValues = {
-        ...values,
-        createdBy: user?._id,
-        reviewId: modalContent?._id,
-        diaryId: modalContent?.diaryId,
-        patientId: modalContent?.createdBy?._id,
-      };
-      //console.log(allValues);
-      const res = await axios.post("create-response", allValues);
-      if (res.data.success) {
-        Swal.fire({
-          icon: "success",
-          title: "Success!",
-          text: "Your patient will receive the response",
-        });
-        reviewsRefresh();
-        setOpenReviewModal(false);
+      const existingResponse = responseValue;
+
+      let res;
+      if (existingResponse) {
+        const updatedValues = {
+          ...values,
+          createdBy: user?._id,
+          reviewId: modalContent?.reviewId,
+          diaryId: modalContent?.diaryId,
+          patientId: modalContent?.patientId,
+        };
+        console.log(updatedValues);
+        res = await axios.put(
+          `update-response?id=${modalContent?.reviewId}`,
+          updatedValues
+        );
+        if (res.data.success) {
+          Swal.fire({
+            icon: "success",
+            title: "Success!",
+            text: "Your response has been updated",
+          });
+          setOpenReviewModal(false);
+        }
+      } else {
+        const newValues = {
+          ...values,
+          createdBy: user?._id,
+          reviewId: modalContent?._id,
+          diaryId: modalContent?.diaryId,
+          patientId: modalContent?.createdBy?._id,
+        };
+
+        console.log(newValues);
+        res = await axios.post("create-response", newValues);
+        if (res.data.success) {
+          Swal.fire({
+            icon: "success",
+            title: "Success!",
+            text: "Your patient will receive the response",
+          });
+          reviewsRefresh();
+          setOpenReviewModal(false);
+        }
       }
     } catch (error) {
       console.log(error);
@@ -111,6 +149,7 @@ function ReviewModal({
               layout="vertical"
               onFinish={handleResponse}
               style={divStyle}
+              initialValues={value}
             >
               <Form.Item
                 name="response"
@@ -122,16 +161,18 @@ function ReviewModal({
               >
                 <Input.TextArea rows={12} style={inputStyle} />
               </Form.Item>
-              <Form.Item>
-                <Button
-                  type="primary"
-                  loading={submitLoading}
-                  htmlType="submit"
-                  block
-                >
-                  {submitLoading ? "Submitting..." : "Submit"}
-                </Button>
-              </Form.Item>
+              {userRole === "doctor" ? (
+                <Form.Item>
+                  <Button
+                    type="primary"
+                    loading={submitLoading}
+                    htmlType="submit"
+                    block
+                  >
+                    {submitLoading ? "Submitting..." : "Submit"}
+                  </Button>
+                </Form.Item>
+              ) : null}
             </Form>
           </Col>
         </Row>

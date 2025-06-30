@@ -47,4 +47,25 @@ const fetchDoctorResponses = async (req, res) => {
   }
 };
 
-export { createResponse, fetchResponses, fetchDoctorResponses };
+const updateResponse = async (req, res) => {
+  const { id } = req.query;
+  if (!id)
+    return res.status(404).json({ success: false, error: "No ID specified" });
+  try {
+    const objectId = new mongoose.Types.ObjectId(id);
+    const updatedReview = await ResponseModel.findOneAndUpdate(
+      {
+        reviewId: objectId,
+      },
+      { $set: req.body },
+      { new: true }
+    );
+
+    return res.status(201).json({ success: true, updatedReview });
+  } catch (error) {
+    console.log("Internal Server Error:", error);
+    return res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+export { createResponse, fetchResponses, fetchDoctorResponses, updateResponse };

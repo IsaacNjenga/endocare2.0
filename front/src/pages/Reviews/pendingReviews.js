@@ -2,6 +2,7 @@ import {
   Avatar,
   Button,
   Card,
+  Empty,
   List,
   Skeleton,
   Spin,
@@ -44,7 +45,12 @@ function PendingReviews() {
     }, 100);
   };
 
-  if (!reviewsLoading && flattened.length === 0) return null;
+  if (!reviewsLoading && flattened.length === 0)
+    return (
+      <div>
+        <Empty description="No pending responses" />
+      </div>
+    );
   if (reviewsLoading) return <Spin fullscreen tip="Loading. Please wait..." />;
 
   return (
@@ -88,7 +94,6 @@ function PendingReviews() {
                     description={<>{item.createdBy.email}</>}
                   />
                 </Skeleton>
-                
               </List.Item>
             )}
           />

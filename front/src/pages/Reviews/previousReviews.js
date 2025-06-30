@@ -1,8 +1,21 @@
-import { Avatar, Button, Card, List, Skeleton, Spin, Typography } from "antd";
+import {
+  Avatar,
+  Button,
+  Card,
+  Divider,
+  Empty,
+  List,
+  Skeleton,
+  Spin,
+  Tooltip,
+  Typography,
+} from "antd";
 import React, { useContext, useState } from "react";
 import ReviewModal from "./reviewModal";
 import { UserContext } from "../../App.js";
 import useFetchAllResponses from "../../hooks/fetchAllResponses.js";
+import { UndoOutlined } from "@ant-design/icons";
+import { format } from "date-fns";
 
 const { Text } = Typography;
 
@@ -22,14 +35,19 @@ function PreviousReviews() {
   const [loading, setLoading] = useState(false);
   const { user } = useContext(UserContext);
   const userId = user?._id;
-  const { allResponses, allResponsesLoading } = useFetchAllResponses(userId);
+  const { allResponses, allResponsesLoading, responsesRefresh } =
+    useFetchAllResponses(userId);
 
   const flattened = (allResponses || []).filter((r) => r && r._id);
+  console.log(allResponses);
 
   const viewReview = (response) => {
     const review = {
       review: response?.reviewId.review,
       response: response?.response,
+      diaryId: response?.diaryId,
+      patientId: response?.patientId._id,
+      reviewId: response?.reviewId._id,
     };
     setLoading(true);
     setModalContent(review);
@@ -39,7 +57,12 @@ function PreviousReviews() {
     }, 100);
   };
 
-  if (!allResponsesLoading && flattened.length === 0) return null;
+  if (!allResponsesLoading && flattened.length === 0)
+    return (
+      <div>
+        <Empty />
+      </div>
+    );
   if (allResponsesLoading)
     return <Spin fullscreen tip="Loading. Please wait..." />;
 
@@ -47,7 +70,24 @@ function PreviousReviews() {
     <>
       <div style={{ padding: 8, margin: "0px" }}>
         <Card style={cardStyle}>
-          {" "}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "right",
+              margin: "0px 10px",
+            }}
+          >
+            <Tooltip title="Refresh">
+              <Button
+                icon={<UndoOutlined />}
+                danger
+                onClick={() => {
+                  responsesRefresh();
+                }}
+              />
+            </Tooltip>
+          </div>
+
           <List
             itemLayout="horizontal"
             dataSource={flattened}
@@ -81,7 +121,13 @@ function PreviousReviews() {
                         {item.patientId.firstName} {item.patientId.lastName}
                       </Text>
                     }
-                    description={<>{item.patientId.email}</>}
+                    description={
+                      <>
+                        {item.patientId.email} <Divider type="vertical" />{" "}
+                        Responded On:{" "}
+                        {format(new Date(item.createdAt), "yyyy-MM-dd, p")}
+                      </>
+                    }
                   />
                 </Skeleton>
               </List.Item>

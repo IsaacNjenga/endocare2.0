@@ -17,7 +17,6 @@ function useFetchAllResponses(physicianId) {
       try {
         const res = await axios.get(`fetch-doctor-responses?id=${physicianId}`);
         if (res.data.success) {
-          console.log(res.data.fetchedResponses);
           setAllResponses(res.data.fetchedResponses);
         }
       } catch (error) {
