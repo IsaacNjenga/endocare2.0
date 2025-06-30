@@ -13,7 +13,7 @@ const EndoAI = async (req, res) => {
 Based on their medical history and daily logs, offer helpful and personalized advice to improve their health.
 
 Speak in a warm, positive,friendly and encouraging tone and talk directly to the patient using "you" instead of "the patient".
-Avoid formal or clinical language unless necessary.
+Avoid formal or clinical language unless necessary. Respond in first person perspective as if you are giving medical aid to the patient yourself
 
 Patient info:
 ${JSON.stringify(patientContext, null, 2)}
@@ -21,10 +21,10 @@ ${JSON.stringify(patientContext, null, 2)}
 Format your response clearly using markdown like so:
 
 ## Summary of Current Situation (${patientContext.entryDate})
-Generate a concise summary based on the input
+Generate a concise summary based on the input. Respond in first person perspective as if you are summarizing the content to yourself
 
 ## Identified Patterns or Concerns
-List any trends or issues noticed (e.g., inconsistent medication, elevated sugar levels, etc.)
+List any trends or issues noticed (e.g., inconsistent medication, elevated sugar levels, etc.). Respond in first person perspective 
 
 ## Recommendations
 - Lifestyle & Physical Activity: advice here
@@ -32,7 +32,7 @@ List any trends or issues noticed (e.g., inconsistent medication, elevated sugar
 - Medication adherence relating to the symptoms listed: advice here
 - Mood elevation/optimization: advice here
 
-Keep the tone friendly, direct, and supportive.`;
+Keep the tone friendly, direct, in first person perspective and supportive.`;
 
     const response = await cohere.generate({
       model: "command",
