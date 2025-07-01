@@ -10,7 +10,6 @@ import {
 } from "../../components/diaryPageComponents";
 import { useNavigate, useParams } from "react-router-dom";
 import { format } from "date-fns";
-//import { diaryValues } from "../assets/data/data";
 import UpdateDiary from "./updateDiary";
 import useFetchDiaryData from "../../hooks/fetchDiaryData";
 import { useContext } from "react";

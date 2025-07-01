@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-import { Button, Divider, FloatButton, Layout, Menu, theme } from "antd";
+import React, { useContext, useRef, useState } from "react";
+import { Button, Divider, FloatButton, Layout, Menu, theme, Tour } from "antd";
 import {
   AppstoreOutlined,
   BookOutlined,
@@ -34,6 +34,25 @@ function Navbar() {
   const [loading, setLoading] = useState(false);
   const [openBot, setOpenBot] = useState(false);
   const [input, setInput] = useState("");
+  const ref1 = useRef(null);
+  const ref2 = useRef(null);
+  const ref3 = useRef(null);
+
+  const [tourOpen, setTourOpen] = useState(false);
+
+  const tourSteps = [
+    { title: "Title", description: "Upload", target: () => ref1.current },
+    {
+      title: "Save",
+      description: "Save your changes.",
+      target: () => ref2.current,
+    },
+    {
+      title: "Other Actions",
+      description: "Click to see other actions.",
+      target: () => ref3.current,
+    },
+  ];
 
   const [messages, setMessages] = useState([
     { role: "system", content: "Ask me anything..." },
@@ -81,9 +100,21 @@ function Navbar() {
   ];
 
   const patientNavItems = [
-    { label: "Dashboard", path: "/dashboard", icon: AppstoreOutlined },
-    { label: "Specialists", path: "/specialists", icon: MedicineBoxOutlined },
-    { label: "Diary", path: "/diary", icon: BookOutlined },
+    {
+      label: <span ref={ref1}>Dashboard</span>,
+      path: "/dashboard",
+      icon: AppstoreOutlined,
+    },
+    {
+      label: <span ref={ref2}>Specialists</span>,
+      path: "/specialists",
+      icon: MedicineBoxOutlined,
+    },
+    {
+      label: <span ref={ref3}>My Health Diary</span>,
+      path: "/diary",
+      icon: BookOutlined,
+    },
     { label: "Appointments", path: "/appointments", icon: CalendarOutlined },
     { label: "EndoAI Assistant", path: "/endo-ai", icon: RobotOutlined },
   ];
@@ -130,6 +161,11 @@ function Navbar() {
   };
   return (
     <>
+      <Tour
+        open={tourOpen}
+        onClose={() => setTourOpen(false)}
+        steps={tourSteps}
+      />
       <FloatButton
         description=""
         tooltip={collapsed ? "Open" : "Collapse"}

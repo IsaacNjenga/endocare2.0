@@ -25,11 +25,9 @@ function Diary() {
 
   const onSelect = (date) => {
     setValue(date);
-    // navigate(`/diary/date/${date.format("YYYY-MM-DD")}`);
   };
 
   const onPanelChange = (date, mode) => {
-    // console.log("Panel changed to:", date.format("YYYY-MM-DD"), "Mode:", mode);
     setValue(date);
   };
 
@@ -53,7 +51,9 @@ function Diary() {
               cursor: hasEntry ? "pointer" : "default",
             }}
             onClick={() => {
-              navigate(`/diary/date/${value.format("YYYY-MM-DD")}`);
+              hasEntry
+                ? navigate(`/diary/date/${value.format("YYYY-MM-DD")}`)
+                : navigate(`/diary/create-entry`);
             }}
           />
         </Tooltip>

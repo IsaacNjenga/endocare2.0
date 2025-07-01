@@ -1,7 +1,6 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import GridMotion from "../components/gridMotion";
 import {
-  //homeImages,
   pic,
   pic2,
   pic3,
@@ -12,12 +11,10 @@ import {
   pic8,
   pic9,
 } from "../assets/data/data";
-import { Typography, Row, Col, Card, Divider } from "antd";
-//import Aurora from "../components/auroraComponent";
+import { Typography, Row, Col, Card } from "antd";
 import { UserContext } from "../App";
-//import Masonry from "../components/masonry";
 
-const { Title, Paragraph } = Typography;
+const { Title, Text } = Typography;
 
 const imgStyle = {
   objectFit: "cover",
@@ -28,9 +25,11 @@ const imgStyle = {
 
 const cardStyle = {
   borderRadius: 12,
-  background: "rgba(255, 255, 255, 0.05)",
-  backdropFilter: "blur(8px)",
+  background: "rgba(255, 255, 255, 0.03)",
+  backdropFilter: "blur(4px)",
   border: "1px solid rgba(255, 255, 255, 0.15)",
+  maxWidth: "1200px",
+  width: "100%",
 };
 
 const pics = [
@@ -59,6 +58,19 @@ const pics = [
   pic5,
 ];
 
+const ulStyle = {
+  paddingLeft: 20,
+  color: "#fff",
+  textAlign: "left",
+  fontFamily: "Roboto",
+  fontSize: "20px",
+};
+
+const homeImage =
+  "https://plus.unsplash.com/premium_photo-1682130171029-49261a5ba80a?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fGFmcmljYW4lMjBwYXRpZW50fGVufDB8fDB8fHww";
+const patientImage =
+  "https://images.unsplash.com/photo-1684607631635-44399dee5ac9?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YWZyaWNhbiUyMHBhdGllbnR8ZW58MHx8MHx8fDA%3D";
+
 function Home() {
   const { user } = useContext(UserContext);
   const userRole = user?.role;
@@ -77,105 +89,137 @@ function Home() {
             ]}
           />
         </div>
-        {/* <div>
-          <Masonry
-            items={homeImages}
-            ease="power3.out"
-            duration={0.6}
-            stagger={0.05}
-            animateFrom="bottom"
-            scaleOnHover={true}
-            hoverScale={0.95}
-            blurToFocus={true}
-            colorShiftOnHover={false}
-          />
-        </div> */}
 
         {/* Hero Section */}
         <div
           style={{
             textAlign: "center",
-            marginTop: 10,
-            padding: "30px",
+            marginTop: 5,
+            padding: "20px",
             fontFamily: "Raleway",
             position: "absolute",
             top: 0,
             zIndex: 10,
-            margin: "20px 80px",
-            background: "rgb(0,21,42,0.56)",
-            alignContent: "center",
-            borderRadius: "12px",
-            backdropFilter: "blur(2px)",
+            margin: "5px 20px",
+            background: "rgba(0, 21, 42, 0.43)",
+            borderRadius: "16px",
+            backdropFilter: "blur(3px)",
+            border: "1px solid rgba(255, 255, 255, 0)",
+            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.37)",
           }}
         >
-          {/* <Aurora
-            colorStops={["#3A29FF", "#c5c2c9", "#1c74f1"]}
-            blend={0.2}
-            amplitude={0.2}
-            speed={2}
-          /> */}
-          <Title
-            level={1}
-            style={{ fontFamily: "Raleway", color: "whitesmoke" }}
-          >
-            Welcome to EndoCare Medical
-          </Title>
-          <Divider style={{ borderColor: "whitesmoke" }} />
-          <Paragraph
-            style={{
-              maxWidth: 800,
-              margin: "0 auto",
-              fontSize: "20px",
-              color: "#fff",
-            }}
-          >
-            A smart medical platform for both patients and doctors — enabling
-            personalized healthcare management, record tracking, and AI-enhanced
-            diagnostics.
-          </Paragraph>
-          {/* Role-Based Feature Cards */}
+          <div style={{ margin: "0px 20px" }}>
+            <Title
+              style={{
+                color: "#fff",
+                textAlign: "left",
+                fontFamily: "Raleway",
+                fontSize: "2rem",
+                lineHeight: "1.4",
+              }}
+            >
+              Empowering personalized care through smart health tracking, AI
+              diagnostics, and doctor-patient collaboration.
+            </Title>
+            <Text
+              style={{
+                color: "#ccc",
+                textAlign: "left",
+                fontSize: "1.4rem",
+                display: "block",
+                marginTop: "12px",
+                fontFamily: "Raleway",
+              }}
+            >
+              {userRole === "patient"
+                ? "Stay on top of your health with seamless tools for tracking and feedback."
+                : "Support your patients with timely insights and personalized care guidance."}
+            </Text>
+          </div>
           <div
-            style={{ maxWidth: 1200, margin: "30px auto", padding: "0 24px" }}
+            style={{ maxWidth: 1200, margin: "20px auto", padding: "0 18px" }}
           >
-            <Row gutter={[32]}>
-              {userRole === "patient" ? (
-                <Col>
-                  <Card style={cardStyle}>
-                    <ul
-                      style={{
-                        paddingLeft: 20,
-                        color: "#fff",
-                        textAlign: "left",
-                      }}
-                    >
-                      <li>Book and manage appointments</li>
-                      <li>Log meals, blood sugar, and symptoms</li>
-                      <li>Upload medical images for AI analysis</li>
-                      <li>Receive feedback from your doctor</li>
-                      <li>Access treatment history securely</li>
-                    </ul>
-                  </Card>
+            <Card style={cardStyle}>
+              <Row gutter={[32, 32]}>
+                <Col xs={24} sm={20} md={18} lg={12}>
+                  <div>
+                    {userRole === "patient" ? (
+                      <ul style={{ ...ulStyle, listStyle: "none", padding: 0 }}>
+                        {[
+                          "Book and manage appointments",
+                          "Log meals, blood sugar, and symptoms",
+                          "Upload medical diaries for AI analysis",
+                          "Receive feedback from your doctor",
+                          "Access treatment history securely",
+                        ].map((item, index) => (
+                          <li
+                            key={index}
+                            style={{
+                              marginBottom: 12,
+                              display: "flex",
+                              alignItems: "center",
+                            }}
+                          >
+                            <span
+                              style={{
+                                fontSize: "1.1rem",
+                                color: "#00b96b",
+                                marginRight: 8,
+                              }}
+                            >
+                              ✔
+                            </span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <ul style={{ ...ulStyle, listStyle: "none", padding: 0 }}>
+                        {[
+                          "View patient logs and records",
+                          "Provide medical feedback and recommendations",
+                          "Review uploaded AI responses for insights",
+                          "Track multiple patient profiles",
+                          "Manage your appointments and schedules",
+                        ].map((item, index) => (
+                          <li
+                            key={index}
+                            style={{
+                              marginBottom: 12,
+                              display: "flex",
+                              alignItems: "center",
+                            }}
+                          >
+                            <span
+                              style={{
+                                fontSize: "1.1rem",
+                                color: "#00b96b",
+                                marginRight: 8,
+                              }}
+                            >
+                              ✔
+                            </span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
                 </Col>
-              ) : (
-                <Col>
-                  <Card style={cardStyle}>
-                    <ul
-                      style={{
-                        paddingLeft: 20,
-                        color: "#fff",
-                        textAlign: "left",
-                      }}
-                    >
-                      <li>View patient logs and records</li>
-                      <li>Provide medical feedback and recommendations</li>
-                      <li>Review uploaded images for insights</li>
-                      <li>Track multiple patient profiles</li>
-                      <li>Manage your appointments and schedule</li>
-                    </ul>
-                  </Card>
+                <Col xs={24} sm={20} md={18} lg={12}>
+                  <img
+                    src={userRole === "patient" ? homeImage : patientImage}
+                    alt="img"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: "14px",
+                      objectFit: "contain",
+                    }}
+                  />
                 </Col>
-              )}
-            </Row>
+              </Row>
+            </Card>
           </div>
         </div>
       </div>

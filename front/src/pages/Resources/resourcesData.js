@@ -36,6 +36,13 @@ import pcos from "../../assets/icons/pcos.png";
 import pancreas from "../../assets/icons/pancreas.png";
 import type2 from "../../assets/icons/type2.png";
 import addisons from "../../assets/icons/addisons.png";
+import cushings from "../../assets/icons/cortisol.png";
+import {
+  CushingsDefinitionAndOverview,
+  CushingssDietAndLifestyle,
+  CushingsSignsAndSymptoms,
+  CushingsTips,
+} from "../../assets/data/cushings";
 
 const { Title } = Typography;
 
@@ -109,6 +116,14 @@ const addisonsContentList = {
   tab3: <AddisonsDietAndLifestyle />,
   tab4: <AddisonsTips />,
 };
+
+const cushingsContentList = {
+  tab1: <CushingsDefinitionAndOverview />,
+  tab2: <CushingsSignsAndSymptoms />,
+  tab3: <CushingssDietAndLifestyle />,
+  tab4: <CushingsTips />,
+};
+
 export const AdrenalFatigue = () => {
   const [activeTabKey, setActiveTabKey] = useState("tab1");
 
@@ -359,6 +374,57 @@ export const Addisons = () => {
             transition={{ duration: 0.4, ease: "easeInOut" }}
           >
             {addisonsContentList[activeTabKey]}
+          </motion.div>
+        </AnimatePresence>
+      </Card>
+    </div>
+  );
+};
+
+export const Cushings = () => {
+  const [activeTabKey, setActiveTabKey] = useState("tab1");
+
+  const onTabChange = (key) => {
+    setActiveTabKey(key);
+  };
+
+  return (
+    <div
+      style={{
+        padding: "0px 0px",
+        background:
+          "linear-gradient(to right,rgba(224, 247, 250, 0),rgba(255, 255, 255, 0))",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "flex-start",
+        borderRadius: "12px",
+      }}
+    >
+      <Card
+        style={cardStyle}
+        title={
+          <div style={{ display: "flex" }}>
+            <img src={cushings} alt="addisons_icon" style={iconStyle} />
+            <Title style={cardTitleStyle}>Cushing's Syndrome</Title>
+          </div>
+        }
+        tabList={tabItems}
+        activeTabKey={activeTabKey}
+        onTabChange={onTabChange}
+        tabProps={{
+          size: "large",
+        }}
+        type="inner"
+      >
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTabKey}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+          >
+            {cushingsContentList[activeTabKey]}
           </motion.div>
         </AnimatePresence>
       </Card>

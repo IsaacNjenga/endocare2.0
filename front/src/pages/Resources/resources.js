@@ -7,6 +7,7 @@ import {
   Diabetes1,
   Diabetes2,
   PCOS,
+  Cushings,
 } from "./resourcesData";
 // import parse from "html-react-parser";
 
@@ -85,6 +86,14 @@ const endocrineDisorders = [
     image:
       "https://images.unsplash.com/photo-1715527498487-85f97b828616?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8YWRyZW5hbCUyMGdsYW5kc3xlbnwwfHwwfHx8MA%3D%3D",
     content: <Addisons />,
+  },
+  {
+    key: 6,
+    name: "Cushing's Syndrome",
+    desc: "Cushing's syndrome is a hormonal disorder caused by prolonged exposure to high levels of cortisol, a steroid hormone. It can result from the body producing too much cortisol or from taking corticosteroid medications.",
+    image:
+      "https://images.unsplash.com/photo-1743267216954-7d5d6fbe9c5c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y3VzaGluZ3MlMjBzeW5kcm9tZXxlbnwwfHwwfHx8MA%3D%3D",
+    content: <Cushings />,
   },
 ];
 

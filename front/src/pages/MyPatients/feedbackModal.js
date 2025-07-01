@@ -184,7 +184,9 @@ function FeedbackModal({
             >
               <Input.TextArea
                 rows={10}
-                placeholder="Give your feedback..."
+                placeholder={
+                  userRole === "doctor" ? "Give your feedback..." : "Feedback pending..."
+                }
                 style={{ fontFamily: "Raleway" }}
               />
             </Form.Item>
