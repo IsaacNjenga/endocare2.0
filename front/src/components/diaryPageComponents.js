@@ -27,6 +27,8 @@ import bloodSugarIcon from "../assets/icons/bloodSugar.png";
 import moodsIcon from "../assets/icons/moods.png";
 import symptomsIcon from "../assets/icons/symptoms.png";
 import pActivityIcon from "../assets/icons/physicalActivity.png";
+import Swal from "sweetalert2";
+import axios from "axios";
 
 const { Text, Title } = Typography;
 const { Panel } = Collapse;
@@ -70,6 +72,44 @@ const renderListAsTags = (items, color) => (
   </Space>
 );
 
+const handleDelete = (content, sectionName, currentDiaryId, diaryRefresh) => {
+  Swal.fire({
+    icon: "warning",
+    title: "Are you sure?",
+    text: "This action cannot be undone",
+    showCancelButton: true,
+    confirmButtonText: "Yes",
+    confirmButtonColor: "#00152a",
+    cancelButtonText: "No, keep it",
+    cancelButtonColor: "red",
+  })
+    .then(async (result) => {
+      if (result.isConfirmed) {
+        const res = await axios.delete(
+          `delete-diary-entry?entryId=${content[0]._id}&sectionName=${sectionName}&diaryId=${currentDiaryId}`
+        );
+        if (res.data.success) {
+          Swal.fire({
+            icon: "success",
+            title: "Deleted!",
+            text: "Your entry has been deleted.",
+            confirmButtonColor: "#00152a",
+          });
+          diaryRefresh();
+        }
+      }
+    })
+    .catch((error) => {
+      console.error("Error deleting diary entry:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error!",
+        text: "There was an error deleting your entry.",
+        confirmButtonColor: "#00152a",
+      });
+    });
+};
+
 export const MealsEntry = ({
   diaryLoading,
   content = [],
@@ -80,6 +120,8 @@ export const MealsEntry = ({
   user,
   setOpenFeedbackModal,
   groupedFeedback,
+  currentDiaryId,
+  diaryRefresh,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const [show, setShow] = useState(false);
@@ -104,7 +146,13 @@ export const MealsEntry = ({
       />
     </Tooltip>,
     <Tooltip title="Delete this entry" key="delete">
-      <Button danger icon={<DeleteOutlined />} />
+      <Button
+        danger
+        icon={<DeleteOutlined />}
+        onClick={() =>
+          handleDelete(content, "mealLogs", currentDiaryId, diaryRefresh)
+        }
+      />
     </Tooltip>,
     <Tooltip
       title={`${
@@ -259,6 +307,8 @@ export const MedicationsEntry = ({
   setSectionName,
   setOpenFeedbackModal,
   groupedFeedback,
+  currentDiaryId,
+  diaryRefresh,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const currentMedication = content[currentIndex - 1];
@@ -283,7 +333,13 @@ export const MedicationsEntry = ({
       />
     </Tooltip>,
     <Tooltip title="Delete this entry" key="delete">
-      <Button danger icon={<DeleteOutlined />} />
+      <Button
+        danger
+        icon={<DeleteOutlined />}
+        onClick={() =>
+          handleDelete(content, "medicationsLogs", currentDiaryId, diaryRefresh)
+        }
+      />
     </Tooltip>,
     <Tooltip
       title={`${
@@ -446,6 +502,8 @@ export const BloodSugarEntry = ({
   setSectionName,
   setOpenFeedbackModal,
   groupedFeedback,
+  currentDiaryId,
+  diaryRefresh,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const currentEntry = content[currentIndex - 1];
@@ -470,7 +528,13 @@ export const BloodSugarEntry = ({
       />
     </Tooltip>,
     <Tooltip title="Delete this entry" key="delete">
-      <Button danger icon={<DeleteOutlined />} />
+      <Button
+        danger
+        icon={<DeleteOutlined />}
+        onClick={() =>
+          handleDelete(content, "bloodSugarLogs", currentDiaryId, diaryRefresh)
+        }
+      />
     </Tooltip>,
     <Tooltip
       title={`${
@@ -627,6 +691,8 @@ export const PhysicalActivityEntry = ({
   user,
   setOpenFeedbackModal,
   groupedFeedback,
+  currentDiaryId,
+  diaryRefresh,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const currentContent = content[currentIndex - 1];
@@ -651,7 +717,18 @@ export const PhysicalActivityEntry = ({
       />
     </Tooltip>,
     <Tooltip title="Delete this entry" key="delete">
-      <Button danger icon={<DeleteOutlined />} />
+      <Button
+        danger
+        icon={<DeleteOutlined />}
+        onClick={() =>
+          handleDelete(
+            content,
+            "physicalActivityLogs",
+            currentDiaryId,
+            diaryRefresh
+          )
+        }
+      />
     </Tooltip>,
     <Tooltip
       title={`${
@@ -789,6 +866,8 @@ export const SymptomsEntry = ({
   user,
   setOpenFeedbackModal,
   groupedFeedback,
+  currentDiaryId,
+  diaryRefresh,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const currentEntry = content[currentIndex - 1];
@@ -813,7 +892,13 @@ export const SymptomsEntry = ({
       />
     </Tooltip>,
     <Tooltip title="Delete this entry" key="delete">
-      <Button danger icon={<DeleteOutlined />} />
+      <Button
+        danger
+        icon={<DeleteOutlined />}
+        onClick={() =>
+          handleDelete(content, "symptomsLogs", currentDiaryId, diaryRefresh)
+        }
+      />
     </Tooltip>,
     <Tooltip
       title={`${
@@ -934,6 +1019,8 @@ export const MoodsEntry = ({
   setSectionName,
   setOpenFeedbackModal,
   groupedFeedback,
+  currentDiaryId,
+  diaryRefresh,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const [show, setShow] = useState(false);
@@ -958,7 +1045,13 @@ export const MoodsEntry = ({
       />
     </Tooltip>,
     <Tooltip title="Delete this entry" key="delete">
-      <Button danger icon={<DeleteOutlined />} />
+      <Button
+        danger
+        icon={<DeleteOutlined />}
+        onClick={() =>
+          handleDelete(content, "moodLogs", currentDiaryId, diaryRefresh)
+        }
+      />
     </Tooltip>,
     <Tooltip
       title={`${

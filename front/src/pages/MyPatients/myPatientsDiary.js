@@ -29,7 +29,7 @@ const colStyle = { margin: "15px 0px" };
 function MyPatientsDiary() {
   const { date, id } = useParams();
   const navigate = useNavigate();
-  const { diaryData, diaryLoading } = useFetchDiaryData(id);
+  const { diaryData, diaryLoading, diaryRefresh } = useFetchDiaryData(id);
   const [openFeedbackModal, setOpenFeedbackModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [sectionName, setSectionName] = useState("");
@@ -96,6 +96,8 @@ function MyPatientsDiary() {
               setSectionName={setSectionName}
               setLoading={setLoading}
               groupedFeedback={groupedFeedback}
+              currentDiaryId={diaryId}
+              diaryRefresh={diaryRefresh}
             />
           </Col>
           <Col span={12} style={colStyle}>
@@ -108,6 +110,8 @@ function MyPatientsDiary() {
               setSectionName={setSectionName}
               setLoading={setLoading}
               groupedFeedback={groupedFeedback}
+              currentDiaryId={diaryId}
+              diaryRefresh={diaryRefresh}
             />
           </Col>
           <Col span={12} style={colStyle}>
@@ -120,6 +124,8 @@ function MyPatientsDiary() {
               setSectionName={setSectionName}
               setLoading={setLoading}
               groupedFeedback={groupedFeedback}
+              currentDiaryId={diaryId}
+              diaryRefresh={diaryRefresh}
             />
           </Col>
           <Col span={12} style={colStyle}>
@@ -132,6 +138,8 @@ function MyPatientsDiary() {
               setSectionName={setSectionName}
               setLoading={setLoading}
               groupedFeedback={groupedFeedback}
+              currentDiaryId={diaryId}
+              diaryRefresh={diaryRefresh}
             />
           </Col>
           <Col span={12} style={colStyle}>
@@ -144,6 +152,8 @@ function MyPatientsDiary() {
               setSectionName={setSectionName}
               setLoading={setLoading}
               groupedFeedback={groupedFeedback}
+              currentDiaryId={diaryId}
+              diaryRefresh={diaryRefresh}
             />
           </Col>
           <Col span={12} style={colStyle}>
@@ -156,6 +166,8 @@ function MyPatientsDiary() {
               setSectionName={setSectionName}
               setLoading={setLoading}
               groupedFeedback={groupedFeedback}
+              currentDiaryId={diaryId}
+              diaryRefresh={diaryRefresh}
             />
           </Col>
         </Row>

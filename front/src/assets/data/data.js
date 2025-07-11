@@ -114,6 +114,7 @@ export const moodAfter = [
 ];
 
 export const medicationType = [
+  { value: "No Medication", label: "No Medication" },
   { value: "Analgesics", label: "Analgesics (Pain Relievers)" },
   { value: "Antibiotics", label: "Antibiotics (Infection Fighters)" },
   { value: "Antihistamines", label: "Antihistamines (Allergy Relief)" },

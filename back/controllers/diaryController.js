@@ -92,12 +92,34 @@ const diaryWithNoFeedback = async (req, res) => {
 };
 
 const deleteDiaryEntry = async (req, res) => {
+  const { entryId, sectionName, diaryId } = req.query;
+  if (!diaryId) return res.status(400).json({ error: "No diary ID specified" });
+  if (!sectionName)
+    return res.status(400).json({ error: "No Section Name specified" });
+  if (!entryId) return res.status(400).json({ error: "No entry ID specified" });
   try {
+    const updatedDiary = await DiaryModel.findByIdAndUpdate(
+      diaryId,
+      {
+        $pull: {
+          [sectionName]: { _id: entryId }, // remove the subdocument with this _id
+        },
+      },
+      { new: true } // return the modified document
+    );
+
+    if (!updatedDiary) {
+      return res
+        .status(404)
+        .json({ error: "Diary not found or entry not deleted" });
+    }
+    return res.status(200).json({ success: true, deletedEntry: updatedDiary });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
 export {
   createDiaryEntry,
   fetchDiaryEntries,

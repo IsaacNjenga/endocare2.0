@@ -39,7 +39,8 @@ import GaugeDisplay from "./gauge";
 
 const { Title, Text } = Typography;
 
-const PanelItems = ({ entryData, user }) => {
+const PanelItems = ({ entryData, user, diaryRefresh }) => {
+  const diaryId = entryData?._id;
   const [openFeedbackModal, setOpenFeedbackModal] = useState(false);
   const [modalContent, setModalContent] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -78,6 +79,8 @@ const PanelItems = ({ entryData, user }) => {
           setSectionName={setSectionName}
           user={user}
           setLoading={setLoading}
+          currentDiaryId={diaryId}
+          diaryRefresh={diaryRefresh}
         />
       ),
     },
@@ -98,6 +101,8 @@ const PanelItems = ({ entryData, user }) => {
           setSectionName={setSectionName}
           user={user}
           setLoading={setLoading}
+          currentDiaryId={diaryId}
+          diaryRefresh={diaryRefresh}
         />
       ),
     },
@@ -118,6 +123,8 @@ const PanelItems = ({ entryData, user }) => {
           setSectionName={setSectionName}
           user={user}
           setLoading={setLoading}
+          currentDiaryId={diaryId}
+          diaryRefresh={diaryRefresh}
         />
       ),
     },
@@ -138,6 +145,8 @@ const PanelItems = ({ entryData, user }) => {
           setSectionName={setSectionName}
           user={user}
           setLoading={setLoading}
+          currentDiaryId={diaryId}
+          diaryRefresh={diaryRefresh}
         />
       ),
     },
@@ -158,6 +167,8 @@ const PanelItems = ({ entryData, user }) => {
           setSectionName={setSectionName}
           user={user}
           setLoading={setLoading}
+          currentDiaryId={diaryId}
+          diaryRefresh={diaryRefresh}
         />
       ),
     },
@@ -178,6 +189,8 @@ const PanelItems = ({ entryData, user }) => {
           setSectionName={setSectionName}
           user={user}
           setLoading={setLoading}
+          currentDiaryId={diaryId}
+          diaryRefresh={diaryRefresh}
         />
       ),
     },
@@ -214,7 +227,7 @@ const PatientDashboard = ({ markerStyle, cardStyle, user }) => {
   const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState(null);
   const userId = user?._id;
-  const { diaryData, diaryLoading } = useFetchDiaryData(userId);
+  const { diaryData, diaryLoading, diaryRefresh } = useFetchDiaryData(userId);
   const [entryData, setEntryData] = useState(null);
 
   const handleDateSelect = (date) => {
@@ -334,7 +347,11 @@ const PatientDashboard = ({ markerStyle, cardStyle, user }) => {
                 📝 Entry Details for {selectedDate.format("MMM D, YYYY")}
               </Title>
               {entryData ? (
-                <PanelItems entryData={entryData} user={user} />
+                <PanelItems
+                  entryData={entryData}
+                  user={user}
+                  diaryRefresh={diaryRefresh}
+                />
               ) : (
                 <p style={{ color: "#999" }}>No data for this date.</p>
               )}

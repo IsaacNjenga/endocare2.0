@@ -324,7 +324,7 @@ export const MedicationsLog = () => {
                         >
                           {[
                             "Oral",
-                            "Intravenous (IV)",
+                            "Intravenous Injection (IV)",
                             "Inhaled",
                             "Topical (Skin)",
                             "Sublingual (Underneath tongue)",

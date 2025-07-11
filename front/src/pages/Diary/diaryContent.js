@@ -82,6 +82,8 @@ function DiaryContent() {
                 user={user}
                 groupedFeedback={groupedFeedback}
                 setOpenFeedbackModal={setOpenFeedbackModal}
+                currentDiaryId={currentDiaryId}
+                diaryRefresh={diaryRefresh}
               />
             </Col>
 
@@ -96,6 +98,8 @@ function DiaryContent() {
                 user={user}
                 groupedFeedback={groupedFeedback}
                 setOpenFeedbackModal={setOpenFeedbackModal}
+                currentDiaryId={currentDiaryId}
+                diaryRefresh={diaryRefresh}
               />
             </Col>
 
@@ -110,6 +114,8 @@ function DiaryContent() {
                 user={user}
                 groupedFeedback={groupedFeedback}
                 setOpenFeedbackModal={setOpenFeedbackModal}
+                currentDiaryId={currentDiaryId}
+                diaryRefresh={diaryRefresh}
               />
             </Col>
 
@@ -124,6 +130,8 @@ function DiaryContent() {
                 user={user}
                 groupedFeedback={groupedFeedback}
                 setOpenFeedbackModal={setOpenFeedbackModal}
+                currentDiaryId={currentDiaryId}
+                diaryRefresh={diaryRefresh}
               />
             </Col>
 
@@ -138,6 +146,8 @@ function DiaryContent() {
                 user={user}
                 groupedFeedback={groupedFeedback}
                 setOpenFeedbackModal={setOpenFeedbackModal}
+                currentDiaryId={currentDiaryId}
+                diaryRefresh={diaryRefresh}
               />
             </Col>
 
@@ -152,6 +162,8 @@ function DiaryContent() {
                 user={user}
                 groupedFeedback={groupedFeedback}
                 setOpenFeedbackModal={setOpenFeedbackModal}
+                currentDiaryId={currentDiaryId}
+                diaryRefresh={diaryRefresh}
               />
             </Col>
           </Row>
