@@ -28,8 +28,8 @@ import EditReport from "./pages/patientReports/editReport.js";
 const cookies = new Cookies();
 export const UserContext = createContext();
 
-//axios.defaults.baseURL = "http://localhost:3001/EndoCare";
-axios.defaults.baseURL = "https://endocare-back.vercel.app/EndoCare";
+axios.defaults.baseURL = "http://localhost:3001/EndoCare";
+//axios.defaults.baseURL = "https://endocare-back.vercel.app/EndoCare";
 axios.defaults.withCredentials = true;
 
 const authToken = cookies.get("token");

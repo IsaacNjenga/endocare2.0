@@ -21,7 +21,7 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { formatDistanceToNowStrict } from "date-fns";
-import PatientModal from "./patientModal";
+import PatientModal from "../patientReports/patientModal";
 import useFetchPatientById from "../../hooks/fetchPatientById";
 import { useNavigate } from "react-router-dom";
 // import { myPatients } from "../../assets/data/data";

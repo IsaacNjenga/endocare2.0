@@ -15,9 +15,10 @@ import {
   Drawer,
 } from "antd";
 import { formatDistanceToNowStrict } from "date-fns";
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import Swal from "sweetalert2";
 import { UserContext } from "../../App";
+import axios from "axios";
 
 const { Title, Text } = Typography;
 
@@ -38,20 +39,59 @@ const cardStyle = {
   boxShadow: "0 4px 8px rgba(21, 61, 238, 0.61)",
 };
 
-const RenderReportForm = ({ patientInfo, user }) => {
+const RenderReportForm = ({
+  patientInfo,
+  user,
+  setReportFormVisible,
+  patientReport,
+}) => {
   const [formLoading, setFormLoading] = useState(false);
+  const [value, setValue] = useState("");
   const [form] = Form.useForm();
+
+  const reportValue = patientReport?.report;
+
+  React.useEffect(() => {
+    if (reportValue && patientReport !== null) {
+      setValue({ report: reportValue });
+      form.setFieldsValue({ report: reportValue });
+    } else {
+      setValue({ report: "" });
+      form.setFieldsValue({ report: "" });
+    }
+  }, [form, patientReport, reportValue]);
 
   const handleFormSubmit = async () => {
     setFormLoading(true);
     try {
       const values = await form.validateFields();
-      const allValues = {
+      const existingValue = patientReport?.report;
+
+      const payload = {
         ...values,
         createdBy: user._id,
         patientId: patientInfo?._id,
       };
-      console.log(allValues);
+
+      let res;
+      if (existingValue) {
+        res = await axios.put(
+          `update-patient-report?id=${patientReport?._id}`,
+          payload
+        );
+      } else {
+        res = await axios.post("create-patient-report", payload);
+      }
+      if (res.data.success) {
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: existingValue
+            ? "Report updated successfully!"
+            : "Report submitted successfully!",
+        });
+        setReportFormVisible(false);
+      }
     } catch (error) {
       console.log(error);
       const errorMessage =
@@ -68,7 +108,12 @@ const RenderReportForm = ({ patientInfo, user }) => {
   };
   return (
     <div>
-      <Form form={form} onFinish={handleFormSubmit} layout="vertical">
+      <Form
+        form={form}
+        onFinish={handleFormSubmit}
+        layout="vertical"
+        initialValues={value}
+      >
         <Form.Item
           label={
             <span
@@ -92,10 +137,16 @@ function PatientModal({
   patientData,
   setOpenPatientModal,
   loading,
+  patientReport,
+  reportLoading,
 }) {
   const [reportFormVisible, setReportFormVisible] = useState(false);
   const { user } = useContext(UserContext);
 
+  if (reportLoading)
+    return <Spin fullscreen tip="Report Loading. Please wait..." />;
+
+  const existingReport = patientReport?.report;
   if (!patientData) return null;
 
   const info = patientData[0];
@@ -119,8 +170,7 @@ function PatientModal({
               display: "flex",
               flexDirection: "row",
               justifyContent: "space-between",
-              margin: "0px 15px",
-              gap: 10,
+              margin: "0px 20px",
             }}
           >
             <div>
@@ -136,7 +186,9 @@ function PatientModal({
                   setReportFormVisible(true);
                 }}
               >
-                Generate Report
+                {existingReport
+                  ? "View Patient Report"
+                  : "Generate Patient Report"}
               </Button>
             </div>
           </div>
@@ -161,7 +213,7 @@ function PatientModal({
                       }}
                     >
                       <Avatar
-                        src={info.createdBy?.avatar}
+                        src={info?.createdBy?.avatar}
                         size={84}
                         style={{ border: "2px solid #00152a" }}
                       />
@@ -169,17 +221,17 @@ function PatientModal({
                         level={3}
                         style={{ marginTop: 8, fontFamily: "Raleway" }}
                       >
-                        {`${info.createdBy?.firstName} ${
-                          info.createdBy?.middleName ?? ""
+                        {`${info?.createdBy?.firstName} ${
+                          info?.createdBy?.middleName ?? ""
                         } ${info.createdBy?.lastName}`}
                       </Title>
                       <Text
                         type="secondary"
                         style={{ fontSize: 14, fontFamily: "Raleway" }}
                       >
-                        {info.createdBy?.gender},{" "}
+                        {info?.createdBy?.gender},{" "}
                         {formatDistanceToNowStrict(
-                          new Date(info.createdBy?.dob)
+                          new Date(info?.createdBy?.dob)
                         )}{" "}
                         old
                       </Text>
@@ -199,11 +251,11 @@ function PatientModal({
                           </Text>
                           <br />
                           <Text style={{ fontFamily: "Raleway" }}>
-                            📞 Phone: {info.createdBy?.phoneNumber}
+                            📞 Phone: {info?.createdBy?.phoneNumber}
                           </Text>
                           <br />
                           <Text style={{ fontFamily: "Raleway" }}>
-                            📧 Email: {info.createdBy?.email}
+                            📧 Email: {info?.createdBy?.email}
                           </Text>
                         </Col>
 
@@ -220,9 +272,9 @@ function PatientModal({
                           </Text>
                           <br />
                           <Text style={{ fontFamily: "Raleway" }}>
-                            👤 {info.createdBy?.emergencyName} <br />
-                            📞 {info.createdBy?.emergencyPhoneNumber} <br />
-                            📧 {info.createdBy?.emergencyEmail}
+                            👤 {info?.createdBy?.emergencyName} <br />
+                            📞 {info?.createdBy?.emergencyPhoneNumber} <br />
+                            📧 {info?.createdBy?.emergencyEmail}
                           </Text>
                         </Col>
                       </Row>
@@ -241,8 +293,10 @@ function PatientModal({
                   bordered
                   column={1}
                   size="middle"
-                  labelStyle={{ fontWeight: 600, fontFamily: "Raleway" }}
-                  contentStyle={{ fontFamily: "Roboto" }}
+                  styles={{
+                    contentStyle: { fontFamily: "Roboto" },
+                    labelStyle: { fontWeight: 600, fontFamily: "Raleway" },
+                  }}
                 >
                   <Descriptions.Item label="Diagnosis">
                     {info?.patientInformation?.[0]?.diagnosis || "N/A"}
@@ -271,16 +325,16 @@ function PatientModal({
                 </Divider>
                 <List
                   itemLayout="vertical"
-                  dataSource={info.currentMedications}
+                  dataSource={info?.currentMedications}
                   renderItem={(item) => (
                     <List.Item>
                       <Text strong style={{ fontFamily: "Raleway" }}>
-                        {item.name}
+                        {item?.name}
                       </Text>{" "}
-                      — {item.dosage}, {item.frequency}
+                      — {item?.dosage}, {item?.frequency}
                       <br />
                       <Text type="secondary" style={{ fontSize: 13 }}>
-                        Started: {new Date(item.startDate).toDateString()}
+                        Started: {new Date(item?.startDate).toDateString()}
                       </Text>
                     </List.Item>
                   )}
@@ -295,7 +349,7 @@ function PatientModal({
                 </Divider>
                 <List
                   itemLayout="vertical"
-                  dataSource={info.treatmentHistory}
+                  dataSource={info?.treatmentHistory}
                   renderItem={(item) => (
                     <List.Item>
                       <Text strong style={{ fontFamily: "Raleway" }}>
@@ -320,7 +374,7 @@ function PatientModal({
                 </Divider>{" "}
                 <List
                   itemLayout="vertical"
-                  dataSource={info.medicalProcedures}
+                  dataSource={info?.medicalProcedures}
                   renderItem={(item) => (
                     <List.Item>
                       <Text strong style={{ fontFamily: "Raleway" }}>
@@ -344,16 +398,16 @@ function PatientModal({
                 </Divider>
                 <List
                   itemLayout="vertical"
-                  dataSource={info.familyHistory}
+                  dataSource={info?.familyHistory}
                   renderItem={(item) => (
                     <List.Item>
                       <Text strong style={{ fontFamily: "Raleway" }}>
-                        {item.relation}
+                        {item?.relation}
                       </Text>{" "}
-                      — {item.condition}
+                      — {item?.condition}
                       <br />
                       <Text type="secondary" style={{ fontSize: 13 }}>
-                        {item.notes}
+                        {item?.notes}
                       </Text>
                     </List.Item>
                   )}
@@ -368,7 +422,7 @@ function PatientModal({
                 </Divider>
                 <List
                   itemLayout="vertical"
-                  dataSource={info.previousProviders}
+                  dataSource={info?.previousProviders}
                   renderItem={(item) => (
                     <List.Item>
                       <Text strong style={{ fontFamily: "Raleway" }}>
@@ -392,7 +446,7 @@ function PatientModal({
                 </Divider>
                 <List
                   itemLayout="vertical"
-                  dataSource={info.lifestyle}
+                  dataSource={info?.lifestyle}
                   renderItem={(item) => (
                     <List.Item>
                       <Text style={{ fontFamily: "Roboto" }}>
@@ -423,12 +477,17 @@ function PatientModal({
       <Drawer
         title="Patient Report"
         placement="right"
-        width={680}
+        width={700}
         onClose={() => setReportFormVisible(false)}
         open={reportFormVisible}
         bodyStyle={{ padding: "24px" }}
       >
-        <RenderReportForm patientInfo={patientInfo} user={user} />
+        <RenderReportForm
+          patientInfo={patientInfo}
+          user={user}
+          setReportFormVisible={setReportFormVisible}
+          patientReport={patientReport}
+        />
       </Drawer>
     </Modal>
   );

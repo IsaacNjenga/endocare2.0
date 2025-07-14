@@ -66,6 +66,7 @@ import {
   fetchResponses,
   updateResponse,
 } from "../controllers/responseController.js";
+import { createReport, fetchReports, updateReport } from "../controllers/reportController.js";
 
 const router = express.Router();
 
@@ -142,4 +143,9 @@ router.post("/create-response", createResponse);
 router.get("/fetch-responses", fetchResponses);
 router.get("/fetch-doctor-responses", fetchDoctorResponses);
 router.put("/update-response", updateResponse);
+
+//report routes
+router.post("/create-patient-report", createReport);
+router.get("/fetch-patient-report", fetchReports);
+router.put("/update-patient-report", updateReport);
 export { router as Router };

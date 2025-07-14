@@ -21,8 +21,9 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { formatDistanceToNowStrict } from "date-fns";
-import PatientModal from "../MyPatients/patientModal";
+import PatientModal from "./patientModal";
 import useFetchPatientById from "../../hooks/fetchPatientById";
+import useFetchPatientReports from "../../hooks/fetchPatientReports";
 
 const { Title, Text } = Typography;
 
@@ -64,6 +65,8 @@ function PatientReports() {
   const { myPatients, myPatientsLoading } = useFetchMyPatients(userId);
   const { patientData, patientLoading, fetchPatientById } =
     useFetchPatientById();
+  const { patientReport, reportLoading, fetchReports } =
+    useFetchPatientReports();
   const [listView, setListView] = useState(true);
   const [openPatientModal, setOpenPatientModal] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -71,6 +74,7 @@ function PatientReports() {
   const handleView = async (id) => {
     setLoading(true);
     await fetchPatientById(id);
+    await fetchReports(id);
     //navigate(`/my-patients/${id}`);
     setOpenPatientModal(true);
     setTimeout(() => {
@@ -196,23 +200,23 @@ function PatientReports() {
     return <Spin tip="Loading. Please wait..." size="large" fullscreen />;
   }
 
-//   const gridIconStyle = {
-//     background: !listView ? "#1377fd" : "#fff0f0",
-//     color: !listView ? "white" : "black",
-//     fontSize: "1.4rem",
-//     padding: 8,
-//     borderRadius: "20%",
-//     border: listView ? "1px solid grey" : "1px solid rgba(0,0,0,0)",
-//   };
+  //   const gridIconStyle = {
+  //     background: !listView ? "#1377fd" : "#fff0f0",
+  //     color: !listView ? "white" : "black",
+  //     fontSize: "1.4rem",
+  //     padding: 8,
+  //     borderRadius: "20%",
+  //     border: listView ? "1px solid grey" : "1px solid rgba(0,0,0,0)",
+  //   };
 
-//   const listIconStyle = {
-//     background: listView ? "#1377fd" : "#fff0f0",
-//     color: listView ? "white" : "black",
-//     fontSize: "1.4rem",
-//     padding: 8,
-//     borderRadius: "20%",
-//     border: !listView ? "1px solid grey" : "1px solid rgba(0,0,0,0)",
-//   };
+  //   const listIconStyle = {
+  //     background: listView ? "#1377fd" : "#fff0f0",
+  //     color: listView ? "white" : "black",
+  //     fontSize: "1.4rem",
+  //     padding: 8,
+  //     borderRadius: "20%",
+  //     border: !listView ? "1px solid grey" : "1px solid rgba(0,0,0,0)",
+  //   };
 
   return (
     <div style={{ padding: 18 }}>
@@ -263,6 +267,8 @@ function PatientReports() {
         loading={loading}
         setOpenPatientModal={setOpenPatientModal}
         patientData={patientData}
+        patientReport={patientReport}
+        reportLoading={reportLoading}
       />
     </div>
   );

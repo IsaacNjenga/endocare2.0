@@ -50,7 +50,7 @@ function useFetchDoctorById() {
       console.log(error);
       const errorMessage =
         error.response?.data?.error ??
-        "An unexpected error occurred. Please try again later.";
+        "An unexpected error has occurred. Please try again later.";
       Swal.fire({
         icon: "warning",
         title: "Error",
