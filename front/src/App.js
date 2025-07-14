@@ -23,6 +23,7 @@ import MyPatientsDiary from "./pages/MyPatients/myPatientsDiary.js";
 import Endoai from "./pages/EndoAI/endoai.js";
 import Reviews from "./pages/Reviews/reviews.js";
 import PatientReports from "./pages/patientReports/patientReports.js";
+import EditReport from "./pages/patientReports/editReport.js";
 
 const cookies = new Cookies();
 export const UserContext = createContext();
@@ -93,6 +94,7 @@ function App() {
               path="my-patients/:id/date/:date"
               element={<MyPatientsDiary />}
             />
+            <Route path="edit-report/:id" element={<EditReport />} />
           </Route>
         </Routes>
       </UserContext.Provider>

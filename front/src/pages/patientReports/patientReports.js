@@ -23,7 +23,6 @@ import {
 import { formatDistanceToNowStrict } from "date-fns";
 import PatientModal from "../MyPatients/patientModal";
 import useFetchPatientById from "../../hooks/fetchPatientById";
-import { useNavigate } from "react-router-dom";
 
 const { Title, Text } = Typography;
 
@@ -160,7 +159,6 @@ function PatientReports() {
   const renderPatientListItem = (patient) => {
     const user = patient?.createdBy;
     const info = patient.patientInformation?.[0];
-    console.log(patient);
     return (
       <List.Item key={patient._id}>
         <List.Item.Meta
@@ -187,7 +185,7 @@ function PatientReports() {
         />
         <div>
           <Button type="primary" onClick={() => handleView(user._id)}>
-            View More
+            View Patient
           </Button>
         </div>
       </List.Item>
@@ -195,7 +193,7 @@ function PatientReports() {
   };
 
   if (myPatientsLoading || patientLoading) {
-    return <Spin tip="Loading..." size="large" fullscreen />;
+    return <Spin tip="Loading. Please wait..." size="large" fullscreen />;
   }
 
 //   const gridIconStyle = {

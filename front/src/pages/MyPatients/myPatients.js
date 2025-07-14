@@ -167,7 +167,7 @@ function MyPatients() {
         <List.Item.Meta
           avatar={
             <Avatar
-              size={42}
+              size={62}
               src={user.avatar}
               icon={!user.avatar && <UserOutlined />}
               style={{

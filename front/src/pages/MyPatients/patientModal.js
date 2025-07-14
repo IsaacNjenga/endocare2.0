@@ -9,8 +9,15 @@ import {
   Card,
   Row,
   Col,
+  Button,
+  Form,
+  Input,
+  Drawer,
 } from "antd";
 import { formatDistanceToNowStrict } from "date-fns";
+import { useContext, useState } from "react";
+import Swal from "sweetalert2";
+import { UserContext } from "../../App";
 
 const { Title, Text } = Typography;
 
@@ -31,27 +38,68 @@ const cardStyle = {
   boxShadow: "0 4px 8px rgba(21, 61, 238, 0.61)",
 };
 
+const RenderReportForm = ({ patientInfo, user }) => {
+  const [formLoading, setFormLoading] = useState(false);
+  const [form] = Form.useForm();
+
+  const handleFormSubmit = async () => {
+    setFormLoading(true);
+    try {
+      const values = await form.validateFields();
+      const allValues = {
+        ...values,
+        createdBy: user._id,
+        patientId: patientInfo?._id,
+      };
+      console.log(allValues);
+    } catch (error) {
+      console.log(error);
+      const errorMessage =
+        error.response?.data?.error ??
+        "An unexpected error occurred. Please try again later.";
+      Swal.fire({
+        icon: "warning",
+        title: "Error",
+        text: errorMessage,
+      });
+    } finally {
+      setFormLoading(false);
+    }
+  };
+  return (
+    <div>
+      <Form form={form} onFinish={handleFormSubmit} layout="vertical">
+        <Form.Item
+          label={
+            <span
+              style={{ fontFamily: "Raleway", fontWeight: "bold" }}
+            >{`Patient Report on ${patientInfo?.firstName} ${patientInfo?.lastName}`}</span>
+          }
+          name="report"
+        >
+          <Input.TextArea rows={20} />
+        </Form.Item>
+        <Button block htmlType="submit" loading={formLoading} type="primary">
+          {formLoading ? "Submitting report..." : "Submit Report"}
+        </Button>
+      </Form>
+    </div>
+  );
+};
+
 function PatientModal({
   openPatientModal,
   patientData,
   setOpenPatientModal,
   loading,
 }) {
+  const [reportFormVisible, setReportFormVisible] = useState(false);
+  const { user } = useContext(UserContext);
+
   if (!patientData) return null;
 
   const info = patientData[0];
-
-  const renderList = (title, data, renderItem) => (
-    <>
-      <List
-        dataSource={data}
-        bordered
-        renderItem={renderItem}
-        locale={{ emptyText: "No data available" }}
-        style={{ marginBottom: "1rem" }}
-      />
-    </>
-  );
+  const patientInfo = info.createdBy;
 
   return (
     <Modal
@@ -66,9 +114,34 @@ function PatientModal({
         <Spin fullscreen tip="Loading. Please wait..." />
       ) : (
         <div>
-          <Title level={2} style={{ fontFamily: "Raleway" }}>
-            Patient Overview
-          </Title>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              margin: "0px 15px",
+              gap: 10,
+            }}
+          >
+            <div>
+              <Title level={2} style={{ fontFamily: "Raleway", margin: 0 }}>
+                Patient Overview
+              </Title>
+            </div>
+            <div>
+              <Button
+                type="primary"
+                onClick={() => {
+                  //navigate(`/edit-report/${info.createdBy?._id}`);
+                  setReportFormVisible(true);
+                }}
+              >
+                Generate Report
+              </Button>
+            </div>
+          </div>
+
+          <Divider dashed size="large" style={{ borderColor: "#00152a" }} />
           <Row gutter={[36, 36]}>
             <Col lg={12}>
               <Card style={cardStyle}>
@@ -164,20 +237,28 @@ function PatientModal({
                 <Divider orientation="left" style={{ borderColor: "#00152a" }}>
                   <span style={dividerStyle}>Diagnosis Info</span>
                 </Divider>
-                <Descriptions bordered column={1} size="small">
+                <Descriptions
+                  bordered
+                  column={1}
+                  size="middle"
+                  labelStyle={{ fontWeight: 600, fontFamily: "Raleway" }}
+                  contentStyle={{ fontFamily: "Roboto" }}
+                >
                   <Descriptions.Item label="Diagnosis">
-                    {info?.patientInformation?.[0]?.diagnosis}
+                    {info?.patientInformation?.[0]?.diagnosis || "N/A"}
                   </Descriptions.Item>
                   <Descriptions.Item label="Blood Type">
-                    {info?.patientInformation?.[0]?.bloodType}
+                    {info?.patientInformation?.[0]?.bloodType || "N/A"}
                   </Descriptions.Item>
                   <Descriptions.Item label="Chronic Conditions">
-                    {info?.patientInformation?.[0]?.chronicConditions?.join(
-                      ", "
-                    )}
+                    {(
+                      info?.patientInformation?.[0]?.chronicConditions || []
+                    ).join(", ") || "None"}
                   </Descriptions.Item>
                   <Descriptions.Item label="Allergies">
-                    {info?.patientInformation?.[0]?.allergies?.join(", ")}
+                    {(info?.patientInformation?.[0]?.allergies || []).join(
+                      ", "
+                    ) || "None"}
                   </Descriptions.Item>
                 </Descriptions>
               </Card>
@@ -188,19 +269,22 @@ function PatientModal({
                 <Divider orientation="left" style={{ borderColor: "#00152a" }}>
                   <span style={dividerStyle}>Current Medications</span>
                 </Divider>
-                {renderList(
-                  "Current Medications",
-                  info.currentMedications,
-                  (item) => (
+                <List
+                  itemLayout="vertical"
+                  dataSource={info.currentMedications}
+                  renderItem={(item) => (
                     <List.Item>
-                      <Text strong>{item.name}</Text> — {item.dosage},{" "}
-                      {item.frequency} <br />
-                      <Text type="secondary">
-                        Start: {new Date(item.startDate).toDateString()}
+                      <Text strong style={{ fontFamily: "Raleway" }}>
+                        {item.name}
+                      </Text>{" "}
+                      — {item.dosage}, {item.frequency}
+                      <br />
+                      <Text type="secondary" style={{ fontSize: 13 }}>
+                        Started: {new Date(item.startDate).toDateString()}
                       </Text>
                     </List.Item>
-                  )
-                )}
+                  )}
+                />
               </Card>
 
               <Divider />
@@ -209,20 +293,23 @@ function PatientModal({
                 <Divider orientation="left" style={{ borderColor: "#00152a" }}>
                   <span style={dividerStyle}>Treatment History</span>
                 </Divider>
-                {renderList(
-                  "Treatment History",
-                  info.treatmentHistory,
-                  (item) => (
+                <List
+                  itemLayout="vertical"
+                  dataSource={info.treatmentHistory}
+                  renderItem={(item) => (
                     <List.Item>
-                      <Text strong>{item.condition}</Text> —{" "}
-                      {item.treatmentDescription} <br />
-                      <Text type="secondary">
+                      <Text strong style={{ fontFamily: "Raleway" }}>
+                        {item.condition}
+                      </Text>{" "}
+                      — {item.treatmentDescription}
+                      <br />
+                      <Text type="secondary" style={{ fontSize: 13 }}>
                         Date: {new Date(item.diagnosisDate).toDateString()} |
                         Outcome: {item.outcome}
                       </Text>
                     </List.Item>
-                  )
-                )}
+                  )}
+                />
               </Card>
             </Col>
 
@@ -230,20 +317,23 @@ function PatientModal({
               <Card style={cardStyle}>
                 <Divider orientation="right" style={{ borderColor: "#00152a" }}>
                   <span style={dividerStyle}>Medical Procedures</span>
-                </Divider>
-                {renderList(
-                  "Medical Procedures",
-                  info.medicalProcedures,
-                  (item) => (
+                </Divider>{" "}
+                <List
+                  itemLayout="vertical"
+                  dataSource={info.medicalProcedures}
+                  renderItem={(item) => (
                     <List.Item>
-                      <Text strong>{item.procedureName}</Text> — {item.notes}{" "}
+                      <Text strong style={{ fontFamily: "Raleway" }}>
+                        {item.procedureName}
+                      </Text>{" "}
+                      — {item.notes}
                       <br />
-                      <Text type="secondary">
+                      <Text type="secondary" style={{ fontSize: 13 }}>
                         Date: {new Date(item.dateOfProcedure).toDateString()}
                       </Text>
                     </List.Item>
-                  )
-                )}
+                  )}
+                />
               </Card>
 
               <Divider />
@@ -252,13 +342,22 @@ function PatientModal({
                 <Divider orientation="right" style={{ borderColor: "#00152a" }}>
                   <span style={dividerStyle}>Family History</span>
                 </Divider>
-                {renderList("Family History", info.familyHistory, (item) => (
-                  <List.Item>
-                    <Text strong>{item.relation}</Text> — {item.condition}{" "}
-                    <br />
-                    <Text type="secondary">{item.notes}</Text>
-                  </List.Item>
-                ))}
+                <List
+                  itemLayout="vertical"
+                  dataSource={info.familyHistory}
+                  renderItem={(item) => (
+                    <List.Item>
+                      <Text strong style={{ fontFamily: "Raleway" }}>
+                        {item.relation}
+                      </Text>{" "}
+                      — {item.condition}
+                      <br />
+                      <Text type="secondary" style={{ fontSize: 13 }}>
+                        {item.notes}
+                      </Text>
+                    </List.Item>
+                  )}
+                />
               </Card>
 
               <Divider />
@@ -267,17 +366,22 @@ function PatientModal({
                 <Divider orientation="right" style={{ borderColor: "#00152a" }}>
                   <span style={dividerStyle}>Previous Providers</span>
                 </Divider>
-                {renderList(
-                  "Previous Providers",
-                  info.previousProviders,
-                  (item) => (
+                <List
+                  itemLayout="vertical"
+                  dataSource={info.previousProviders}
+                  renderItem={(item) => (
                     <List.Item>
-                      <Text strong>{item.name}</Text> — {item.contactInfo}{" "}
+                      <Text strong style={{ fontFamily: "Raleway" }}>
+                        {item.name}
+                      </Text>{" "}
+                      — {item.contactInfo}
                       <br />
-                      <Text type="secondary">Period: {item.period}</Text>
+                      <Text type="secondary" style={{ fontSize: 13 }}>
+                        Period: {item.period}
+                      </Text>
                     </List.Item>
-                  )
-                )}
+                  )}
+                />
               </Card>
 
               <Divider />
@@ -286,22 +390,46 @@ function PatientModal({
                 <Divider orientation="right" style={{ borderColor: "#00152a" }}>
                   <span style={dividerStyle}>Patient's Lifestyle</span>
                 </Divider>
-                {renderList("Lifestyle", info.lifestyle, (item) => (
-                  <List.Item>
-                    <Text>Smoking: {item.smoking}</Text>
-                    <br />
-                    <Text>Alcohol: {item.alcoholUse}</Text>
-                    <br />
-                    <Text>Exercise: {item.exerciseFrequency}</Text>
-                    <br />
-                    <Text>Diet: {item.dietDescription}</Text>
-                  </List.Item>
-                ))}
+                <List
+                  itemLayout="vertical"
+                  dataSource={info.lifestyle}
+                  renderItem={(item) => (
+                    <List.Item>
+                      <Text style={{ fontFamily: "Roboto" }}>
+                        <strong>Smoking:</strong> {item.smoking}
+                      </Text>
+                      <br />
+                      <Text>
+                        <strong>Alcohol Use:</strong> {item.alcoholUse}
+                      </Text>
+                      <br />
+                      <Text>
+                        <strong>Exercise Frequency:</strong>{" "}
+                        {item.exerciseFrequency}
+                      </Text>
+                      <br />
+                      <Text>
+                        <strong>Diet:</strong> {item.dietDescription}
+                      </Text>
+                    </List.Item>
+                  )}
+                />
               </Card>
             </Col>
           </Row>
         </div>
       )}
+
+      <Drawer
+        title="Patient Report"
+        placement="right"
+        width={680}
+        onClose={() => setReportFormVisible(false)}
+        open={reportFormVisible}
+        bodyStyle={{ padding: "24px" }}
+      >
+        <RenderReportForm patientInfo={patientInfo} user={user} />
+      </Drawer>
     </Modal>
   );
 }
