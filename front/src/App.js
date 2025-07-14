@@ -22,6 +22,7 @@ import MyPatientsPage from "./pages/MyPatients/myPatientsPage.js";
 import MyPatientsDiary from "./pages/MyPatients/myPatientsDiary.js";
 import Endoai from "./pages/EndoAI/endoai.js";
 import Reviews from "./pages/Reviews/reviews.js";
+import PatientReports from "./pages/patientReports/patientReports.js";
 
 const cookies = new Cookies();
 export const UserContext = createContext();
@@ -72,6 +73,7 @@ function App() {
             <Route path="endo-ai" element={<Endoai />} />
             <Route path="my-patients" element={<MyPatients />} />
             <Route path="reviews" element={<Reviews />} />
+            <Route path="patient-reports" element={<PatientReports />} />
             <Route
               path="profile/create-medical-info"
               element={<CreateMedicalInfo />}

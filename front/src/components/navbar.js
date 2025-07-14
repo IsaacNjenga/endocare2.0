@@ -9,8 +9,8 @@ import {
   MenuUnfoldOutlined,
   PoweroffOutlined,
   RobotOutlined,
+  SolutionOutlined,
   TeamOutlined,
-  //UploadOutlined,
   UserOutlined,
   VideoCameraOutlined,
 } from "@ant-design/icons";
@@ -97,6 +97,11 @@ function Navbar() {
     { label: "My Patients", path: "/my-patients", icon: TeamOutlined },
     { label: "Appointments", path: "/appointments", icon: CalendarOutlined },
     { label: "EndoAI Reviews", path: "/reviews", icon: RobotOutlined },
+    {
+      label: "Patient Reports",
+      path: "/patient-reports",
+      icon: SolutionOutlined,
+    },
   ];
 
   const patientNavItems = [
