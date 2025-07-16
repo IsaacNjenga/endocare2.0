@@ -1,7 +1,7 @@
 import {
   CloseOutlined,
   FrownOutlined,
-  PlusOutlined,
+  PlusCircleOutlined,
   SmileOutlined,
 } from "@ant-design/icons";
 import {
@@ -15,9 +15,7 @@ import {
   TimePicker,
   Slider,
   Typography,
-  Divider,
 } from "antd";
-import React from "react";
 import {
   exerciseExperiences,
   exerciseType,
@@ -31,13 +29,14 @@ import {
 import dayjs from "dayjs";
 
 const { Text } = Typography;
+
 const sectionHeaderStyle = {
   fontFamily: "Raleway",
-  background: "#eef2ff",
-  padding: "6px 16px",
-  borderRadius: "30px",
+  background: "#b4b7c36e",
+  padding: "8px 16px",
+  borderRadius: "35px",
   fontWeight: 700,
-  fontSize: 22,
+  fontSize: 24,
   color: "#4f46e5",
 };
 
@@ -57,16 +56,56 @@ const inputStyle = {
   height: 40,
 };
 
+const cardStyle = {
+  padding: 16,
+  margin: 20,
+  marginBottom: 20,
+  background: "rgba(0,0,0,0)",
+  borderRadius: 16,
+  boxShadow: "0 4px 16px rgba(79,70,229,0.5)",
+  border: "1px solid #00152a",
+};
+
+const closeBtn = {
+  background: "red",
+  color: "white",
+};
+
+const formDiv = {
+  marginBottom: 16,
+  padding: 20,
+  border: "1px solid rgba(0, 0, 0, 0.1)",
+  borderRadius: 16,
+  background: "#f8fafc",
+  boxShadow: "0 4px 16px rgba(0, 0, 0, 0.1)",
+};
+
+const addBtn = {
+  background: "rgba(8, 125, 41, 0.96)",
+  color: "white",
+  height: 40,
+  fontFamily: "Roboto",
+  fontSize: 18,
+};
+
+const RemoveButton = (remove, name) => {
+  return (
+    <Button
+      type="text"
+      danger
+      icon={<CloseOutlined />}
+      style={closeBtn}
+      onClick={() => remove(name)}
+      aria-label="Remove meal log"
+    />
+  );
+};
+
 export const MealsLog = () => {
   return (
     <Card
       title={<span style={sectionHeaderStyle}>Meals Log</span>}
-      style={{
-        padding: 5,
-        margin: 20,
-        marginBottom: 20,
-        background: "linear-gradient(to right, #eef2ff 30%, #eae9e7 100%)",
-      }}
+      style={cardStyle}
     >
       <Form.List name="mealLogs">
         {(fields, { add, remove }) => {
@@ -75,30 +114,16 @@ export const MealsLog = () => {
           return (
             <>
               {fields.map(({ key, name }) => (
-                <div
-                  key={key}
-                  style={{
-                    marginBottom: 10,
-                    padding: 12,
-                    border: "1px solid rgba(0,0,0,0)",
-                    borderRadius: 8,
-                  }}
-                >
+                <div key={key} style={formDiv}>
                   <div style={{ textAlign: "right", marginBottom: 2 }}>
-                    <Button
-                      type="text"
-                      danger
-                      icon={<CloseOutlined />}
-                      onClick={() => remove(name)}
-                      aria-label="Remove meal log"
-                    />
+                    {RemoveButton(remove, name)}
                   </div>
 
                   <Row gutter={20}>
                     <Col span={12}>
                       <Form.Item
                         name={[name, "meal"]}
-                        label={<span style={labelStyle}>Meal description</span>}
+                        label={<span style={labelStyle}>Meal</span>}
                       >
                         <Input
                           placeholder="E.g. Chicken Salad"
@@ -112,7 +137,10 @@ export const MealsLog = () => {
                         name={[name, "mealType"]}
                         label={<span style={labelStyle}>Type Of Meal</span>}
                       >
-                        <Select placeholder="Select type" style={inputStyle}>
+                        <Select
+                          placeholder="Breakfast, Lunch, ..."
+                          style={{ ...inputStyle }}
+                        >
                           {mealType.map((type) => (
                             <Select.Option key={type.value} value={type.value}>
                               {type.label}
@@ -133,7 +161,10 @@ export const MealsLog = () => {
                           value: value ? dayjs(value, "HH:mm") : null,
                         })}
                       >
-                        <TimePicker format="HH:mm" style={inputStyle} />
+                        <TimePicker
+                          format="HH:mm"
+                          style={{ ...inputStyle, width: "100%" }}
+                        />
                       </Form.Item>
                     </Col>
 
@@ -190,7 +221,10 @@ export const MealsLog = () => {
                         name={[name, "moodAfter"]}
                         label={<span style={labelStyle}>Mood After Meal</span>}
                       >
-                        <Select placeholder="" style={inputStyle}>
+                        <Select
+                          placeholder="Happy, Content, ..."
+                          style={inputStyle}
+                        >
                           {moodAfter.map((mood) => (
                             <Select.Option value={mood.value}>
                               {mood.label}
@@ -200,15 +234,14 @@ export const MealsLog = () => {
                       </Form.Item>
                     </Col>
                   </Row>
-                  <Divider />
                 </div>
               ))}
 
               <Form.Item>
                 <Button
-                  type="dashed"
                   onClick={() => add()}
-                  icon={<PlusOutlined />}
+                  style={addBtn}
+                  icon={<PlusCircleOutlined />}
                   block
                 >
                   Add a Meal entry
@@ -226,12 +259,7 @@ export const MedicationsLog = () => {
   return (
     <Card
       title={<span style={sectionHeaderStyle}>Medications Log</span>}
-      style={{
-        padding: 5,
-        margin: 20,
-        marginBottom: 20,
-        background: "linear-gradient(to right, #eef2ff 20%, #eae9e7 90%)",
-      }}
+      style={cardStyle}
     >
       <Form.List name="medicationsLogs">
         {(fields, { add, remove }) => {
@@ -240,27 +268,13 @@ export const MedicationsLog = () => {
           return (
             <>
               {fields.map(({ key, name }) => (
-                <div
-                  key={key}
-                  style={{
-                    marginBottom: 10,
-                    padding: 12,
-                    border: "1px solid rgba(0,0,0,0)",
-                    borderRadius: 8,
-                  }}
-                >
+                <div key={key} style={formDiv}>
                   <div style={{ textAlign: "right", marginBottom: 2 }}>
-                    <Button
-                      type="text"
-                      danger
-                      icon={<CloseOutlined />}
-                      onClick={() => remove(name)}
-                      aria-label="Remove medication log"
-                    />
+                    {RemoveButton(remove, name)}
                   </div>
 
                   <Row gutter={20}>
-                    <Col span={10}>
+                    <Col span={12}>
                       <Form.Item
                         name={[name, "medicationName"]}
                         label={<span style={labelStyle}>Medication Name</span>}
@@ -269,7 +283,7 @@ export const MedicationsLog = () => {
                       </Form.Item>
                     </Col>
 
-                    <Col span={10}>
+                    <Col span={12}>
                       <Form.Item
                         name={[name, "medicationType"]}
                         label={<span style={labelStyle}>Medication Type</span>}
@@ -284,7 +298,7 @@ export const MedicationsLog = () => {
                       </Form.Item>
                     </Col>
 
-                    <Col span={10}>
+                    <Col span={12}>
                       <Form.Item
                         name={[name, "timeOfMedication"]}
                         label={
@@ -297,11 +311,14 @@ export const MedicationsLog = () => {
                           value: value ? dayjs(value, "HH:mm") : null,
                         })}
                       >
-                        <TimePicker format="HH:mm" style={inputStyle} />
+                        <TimePicker
+                          format="HH:mm"
+                          style={{ ...inputStyle, width: "100%" }}
+                        />
                       </Form.Item>
                     </Col>
 
-                    <Col span={10}>
+                    <Col span={12}>
                       <Form.Item
                         name={[name, "dosage"]}
                         label={<span style={labelStyle}>Dosage</span>}
@@ -313,7 +330,7 @@ export const MedicationsLog = () => {
                       </Form.Item>
                     </Col>
 
-                    <Col span={10}>
+                    <Col span={12}>
                       <Form.Item
                         name={[name, "route"]}
                         label={<span style={labelStyle}>Route</span>}
@@ -337,7 +354,7 @@ export const MedicationsLog = () => {
                       </Form.Item>
                     </Col>
 
-                    <Col span={10}>
+                    <Col span={12}>
                       <Form.Item
                         name={[name, "purpose"]}
                         label={<span style={labelStyle}>Purpose</span>}
@@ -349,25 +366,26 @@ export const MedicationsLog = () => {
                       </Form.Item>
                     </Col>
 
-                    <Col span={24}>
+                    <Col span={12}>
                       <Form.Item
                         name={[name, "sideEffects"]}
                         label={<span style={labelStyle}>Side Effects</span>}
                       >
                         <Input.TextArea
-                          rows={2}
-                          placeholder="Describe any side effects"
-                          style={inputStyle}
+                          rows={6}
+                          placeholder="Describe any side effects you may have had"
+                          style={{ ...inputStyle, height: "auto" }}
                         />
                       </Form.Item>
                     </Col>
 
-                    <Col span={8}>
+                    <Col span={12}>
                       <Form.Item
                         name={[name, "compliance"]}
                         label={
                           <span style={labelStyle}>Taken as Prescribed?</span>
                         }
+                        extra="Be as honest as you can"
                       >
                         <Select placeholder="Select" style={inputStyle}>
                           <Select.Option value="Yes">Yes</Select.Option>
@@ -384,9 +402,9 @@ export const MedicationsLog = () => {
 
               <Form.Item>
                 <Button
-                  type="dashed"
                   onClick={() => add()}
-                  icon={<PlusOutlined />}
+                  style={addBtn}
+                  icon={<PlusCircleOutlined />}
                   block
                 >
                   Add a Medication entry
@@ -404,12 +422,7 @@ export const BloodSugarLevelsLog = () => {
   return (
     <Card
       title={<span style={sectionHeaderStyle}>Blood Sugar Levels Log</span>}
-      style={{
-        padding: 5,
-        margin: 20,
-        marginBottom: 20,
-        background: "linear-gradient(to right, #eef2ff 30%, #eae9e7 100%)",
-      }}
+      style={cardStyle}
     >
       <Form.List name="bloodSugarLogs">
         {(fields, { add, remove }) => {
@@ -432,23 +445,9 @@ export const BloodSugarLevelsLog = () => {
                 occasionally overnight if you're on basal insulin.{" "}
               </Text>
               {fields.map(({ key, name }) => (
-                <div
-                  key={key}
-                  style={{
-                    marginBottom: 10,
-                    padding: 12,
-                    border: "1px solid rgba(0,0,0,0)",
-                    borderRadius: 8,
-                  }}
-                >
+                <div key={key} style={{ ...formDiv, marginTop: 10 }}>
                   <div style={{ textAlign: "right", marginBottom: 2 }}>
-                    <Button
-                      type="text"
-                      danger
-                      icon={<CloseOutlined />}
-                      onClick={() => remove(name)}
-                      aria-label="Remove log"
-                    />
+                    {RemoveButton(remove, name)}
                   </div>
 
                   <Row gutter={20}>
@@ -482,7 +481,10 @@ export const BloodSugarLevelsLog = () => {
                           value: value ? dayjs(value, "HH:mm") : null,
                         })}
                       >
-                        <TimePicker format="HH:mm" style={inputStyle} />
+                        <TimePicker
+                          format="HH:mm"
+                          style={{ ...inputStyle, width: "100%" }}
+                        />
                       </Form.Item>
                     </Col>
                     <Col span={12}>
@@ -512,6 +514,7 @@ export const BloodSugarLevelsLog = () => {
                         label={
                           <span style={labelStyle}>Activity Before Test</span>
                         }
+                        extra="This can help with the context"
                       >
                         <Select
                           placeholder="Select activity"
@@ -527,7 +530,7 @@ export const BloodSugarLevelsLog = () => {
                         </Select>
                       </Form.Item>
                     </Col>
-                    <Col span={24}>
+                    <Col span={12}>
                       <Form.Item
                         name={[name, "symptoms"]}
                         label={
@@ -546,21 +549,20 @@ export const BloodSugarLevelsLog = () => {
                         label={<span style={labelStyle}>Notes</span>}
                       >
                         <Input.TextArea
-                          rows={2}
-                          placeholder="Any additional details..."
+                          rows={4}
+                          placeholder="Any additional details to note..."
                         />
                       </Form.Item>
                     </Col>
                   </Row>
-                  <Divider />
                 </div>
               ))}
 
               <Form.Item>
                 <Button
-                  type="dashed"
                   onClick={() => add()}
-                  icon={<PlusOutlined />}
+                  style={addBtn}
+                  icon={<PlusCircleOutlined />}
                   block
                 >
                   Add an entry
@@ -578,12 +580,7 @@ export const PhysicalActivityLog = () => {
   return (
     <Card
       title={<span style={sectionHeaderStyle}>Physical Activity Log</span>}
-      style={{
-        padding: 5,
-        margin: 20,
-        marginBottom: 20,
-        background: "linear-gradient(to right, #eef2ff 30%, #eae9e7 100%)",
-      }}
+      style={cardStyle}
     >
       <Form.List name="physicalActivityLogs">
         {(fields, { add, remove }) => {
@@ -592,23 +589,9 @@ export const PhysicalActivityLog = () => {
           return (
             <>
               {fields.map(({ key, name }) => (
-                <div
-                  key={key}
-                  style={{
-                    marginBottom: 10,
-                    padding: 12,
-                    border: "1px solid rgba(0,0,0,0)",
-                    borderRadius: 8,
-                  }}
-                >
+                <div key={key} style={formDiv}>
                   <div style={{ textAlign: "right", marginBottom: 2 }}>
-                    <Button
-                      type="text"
-                      danger
-                      icon={<CloseOutlined />}
-                      onClick={() => remove(name)}
-                      aria-label="Remove log"
-                    />
+                    {RemoveButton(remove, name)}
                   </div>
 
                   <Row gutter={20}>
@@ -638,7 +621,7 @@ export const PhysicalActivityLog = () => {
                       </Form.Item>
                     </Col>
 
-                    <Col span={7}>
+                    <Col span={12}>
                       <Form.Item
                         name={[name, "durationOfActivity"]}
                         label={
@@ -667,12 +650,12 @@ export const PhysicalActivityLog = () => {
                       >
                         <TimePicker.RangePicker
                           format="HH:mm"
-                          style={inputStyle}
+                          style={{ ...inputStyle, width: "100%" }}
                         />
                       </Form.Item>
                     </Col>
 
-                    <Col span={7}>
+                    <Col span={12}>
                       <Form.Item
                         name={[name, "moodAfter"]}
                         label={
@@ -688,7 +671,7 @@ export const PhysicalActivityLog = () => {
                         </Select>
                       </Form.Item>
                     </Col>
-                    <Col span={7}>
+                    <Col span={12}>
                       <Form.Item
                         name={[name, "activityExperience"]}
                         label={
@@ -708,16 +691,15 @@ export const PhysicalActivityLog = () => {
                       </Form.Item>
                     </Col>
                   </Row>
-                  <Divider />
                 </div>
               ))}
 
               <Form.Item>
                 <Button
-                  type="dashed"
                   onClick={() => add()}
-                  icon={<PlusOutlined />}
+                  icon={<PlusCircleOutlined />}
                   block
+                  style={addBtn}
                 >
                   Add an entry
                 </Button>
@@ -734,12 +716,7 @@ export const SymptomsLog = () => {
   return (
     <Card
       title={<span style={sectionHeaderStyle}>Symptoms Today</span>}
-      style={{
-        padding: 5,
-        margin: 20,
-        marginBottom: 20,
-        background: "linear-gradient(to right, #eef2ff 30%, #eae9e7 100%)",
-      }}
+      style={cardStyle}
     >
       <Form.List name="symptomsLogs">
         {(fields, { add, remove }) => {
@@ -748,23 +725,9 @@ export const SymptomsLog = () => {
           return (
             <>
               {fields.map(({ key, name }) => (
-                <div
-                  key={key}
-                  style={{
-                    marginBottom: 10,
-                    padding: 12,
-                    border: "1px solid rgba(0,0,0,0)",
-                    borderRadius: 8,
-                  }}
-                >
+                <div key={key} style={formDiv}>
                   <div style={{ textAlign: "right", marginBottom: 2 }}>
-                    <Button
-                      type="text"
-                      danger
-                      icon={<CloseOutlined />}
-                      onClick={() => remove(name)}
-                      aria-label="Remove log"
-                    />
+                    {RemoveButton(remove, name)}
                   </div>
 
                   <Row gutter={20}>
@@ -812,23 +775,22 @@ export const SymptomsLog = () => {
                         }
                       >
                         <Input.TextArea
-                          rows={2}
+                          rows={6}
                           placeholder="E.g. Took painkiller, rested, drank water..."
-                          style={inputStyle}
+                          style={{ ...inputStyle, height: "auto" }}
                         />
                       </Form.Item>
                     </Col>
                   </Row>
-                  <Divider />
                 </div>
               ))}
 
               <Form.Item>
                 <Button
-                  type="dashed"
                   onClick={() => add()}
-                  icon={<PlusOutlined />}
+                  icon={<PlusCircleOutlined />}
                   block
+                  style={addBtn}
                 >
                   Add an entry
                 </Button>
@@ -845,12 +807,7 @@ export const MoodsLog = () => {
   return (
     <Card
       title={<span style={sectionHeaderStyle}>Mood Today</span>}
-      style={{
-        padding: 5,
-        margin: 20,
-        marginBottom: 20,
-        background: "linear-gradient(to right, #eef2ff 30%, #eae9e7 100%)",
-      }}
+      style={cardStyle}
     >
       <Form.List name="moodLogs">
         {(fields, { add, remove }) => {
@@ -859,23 +816,9 @@ export const MoodsLog = () => {
           return (
             <>
               {fields.map(({ key, name }) => (
-                <div
-                  key={key}
-                  style={{
-                    marginBottom: 10,
-                    padding: 12,
-                    border: "1px solid rgba(0,0,0,0)",
-                    borderRadius: 8,
-                  }}
-                >
+                <div key={key} style={formDiv}>
                   <div style={{ textAlign: "right", marginBottom: 2 }}>
-                    <Button
-                      type="text"
-                      danger
-                      icon={<CloseOutlined />}
-                      onClick={() => remove(name)}
-                      aria-label="Remove log"
-                    />
+                    {RemoveButton(remove, name)}
                   </div>
 
                   <Row gutter={20}>
@@ -925,7 +868,10 @@ export const MoodsLog = () => {
                           value: value ? dayjs(value, "HH:mm") : null,
                         })}
                       >
-                        <TimePicker format="HH:mm" style={inputStyle} />
+                        <TimePicker
+                          format="HH:mm"
+                          style={{ ...inputStyle, width: "100%" }}
+                        />
                       </Form.Item>
                     </Col>
 
@@ -944,38 +890,40 @@ export const MoodsLog = () => {
                       </Form.Item>
                     </Col>
 
-                    <Col span={24}>
+                    <Col span={12}>
                       <Form.Item
                         name={[name, "notes"]}
                         label={<span style={labelStyle}>Notes</span>}
                       >
-                        <Input.TextArea rows={3} style={inputStyle} />
+                        <Input.TextArea
+                          rows={5}
+                          style={{ ...inputStyle, height: "auto" }}
+                        />
                       </Form.Item>
                     </Col>
 
-                    <Col span={24}>
+                    <Col span={12}>
                       <Form.Item
                         name={[name, "reliefMeasures"]}
                         label={<span style={labelStyle}>Measures Taken</span>}
                       >
                         <Input.TextArea
-                          rows={2}
+                          rows={5}
                           placeholder="E.g. Took a walk, Journalled..."
-                          style={inputStyle}
+                          style={{ ...inputStyle, height: "auto" }}
                         />
                       </Form.Item>
                     </Col>
                   </Row>
-                  <Divider />
                 </div>
               ))}
 
               <Form.Item>
                 <Button
-                  type="dashed"
                   onClick={() => add()}
-                  icon={<PlusOutlined />}
+                  icon={<PlusCircleOutlined />}
                   block
+                  style={addBtn}
                 >
                   Add an entry
                 </Button>

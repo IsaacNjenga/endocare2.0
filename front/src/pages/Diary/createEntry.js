@@ -16,6 +16,29 @@ import { UserContext } from "../../App";
 
 const { Step } = Steps;
 
+const inputStyle = {
+  fontFamily: "Roboto",
+  fontSize: "1rem",
+  lineHeight: 1.6,
+  fontWeight: 500,
+  borderRadius: 8,
+  height: 40,
+};
+
+const labelStyle = {
+  fontFamily: "Raleway",
+  lineHeight: 1.6,
+  fontWeight: 500,
+  fontSize: "1.1rem",
+};
+
+const btnStyle = {
+  width: "40%",
+  height: 40,
+  fontFamily: "Raleway",
+  fontSize: 18,
+};
+
 function CreateEntry() {
   const navigate = useNavigate();
   const [form] = Form.useForm();
@@ -82,7 +105,7 @@ function CreateEntry() {
         });
         setTimeout(() => {
           navigate(`/diary/date/${format(new Date(), "yyyy-MM-dd")}`);
-        }, 2000);
+        }, 1500);
       }
     } catch (error) {
       console.log(error);
@@ -113,12 +136,13 @@ function CreateEntry() {
             ))}
           </Steps>
           <Form.Item
-            layout="horizontal"
-            label="Select the date"
+            layout="vertical"
+            label={<span style={{ ...labelStyle }}>Select the date</span>}
             name="entryDate"
             rules={[{ required: true, message: "This field is required" }]}
+            style={{ padding: "0px 18px" }}
           >
-            <Input type="date" />
+            <Input type="date" style={{ ...inputStyle }} />
           </Form.Item>
 
           {steps.map((step, index) => (
@@ -132,24 +156,29 @@ function CreateEntry() {
 
           <div
             style={{
-              margin: "10px 10px",
+              margin: "15px 10px",
               display: "flex",
               flexDirection: "row",
               justifyContent: "center",
             }}
           >
             {current > 0 && (
-              <Button style={{ marginRight: 8 }} onClick={prev}>
+              <Button style={{ ...btnStyle, marginRight: 12 }} onClick={prev}>
                 Previous
               </Button>
             )}
             {current < steps.length - 1 && (
-              <Button type="primary" onClick={next}>
+              <Button type="primary" onClick={next} style={btnStyle}>
                 Next
               </Button>
             )}
             {current === steps.length - 1 && (
-              <Button type="primary" htmlType="submit" loading={loading}>
+              <Button
+                type="primary"
+                htmlType="submit"
+                loading={loading}
+                style={btnStyle}
+              >
                 Submit
               </Button>
             )}
