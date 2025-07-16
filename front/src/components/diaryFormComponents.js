@@ -58,7 +58,7 @@ const inputStyle = {
 
 const cardStyle = {
   padding: 16,
-  margin: 20,
+  margin: 6,
   marginBottom: 20,
   background: "rgba(0,0,0,0)",
   borderRadius: 16,

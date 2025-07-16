@@ -48,27 +48,27 @@ function CreateEntry() {
 
   const steps = [
     {
-      title: "Meals",
+      title: <span style={{ fontSize: 14 }}>Meals</span>,
       content: <MealsLog />,
     },
     {
-      title: "Medications",
+      title: <span style={{ fontSize: 14 }}>Medications</span>,
       content: <MedicationsLog />,
     },
     {
-      title: "Blood Sugar",
+      title: <span style={{ fontSize: 14 }}>Blood Sugar</span>,
       content: <BloodSugarLevelsLog />,
     },
     {
-      title: "Phys. Activity",
+      title: <span style={{ fontSize: 14 }}>Phys. Activity</span>,
       content: <PhysicalActivityLog />,
     },
     {
-      title: "Symptoms",
+      title: <span style={{ fontSize: 14 }}>Symptoms</span>,
       content: <SymptomsLog />,
     },
     {
-      title: "Mood",
+      title: <span style={{ fontSize: 14 }}>Mood</span>,
       content: <MoodsLog />,
     },
   ];
@@ -117,20 +117,65 @@ function CreateEntry() {
 
   return (
     <>
-      <div style={{ margin: "5px 12px" }}>
-        <Typography.Title
+      <div style={{ margin: "5px 8px" }}>
+        <div
           style={{
-            fontFamily: "Raleway",
             display: "flex",
-            justifyContent: "right",
-            marginBottom: 24,
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
           }}
         >
-          {format(new Date(), "EEEE, do MMMM yyyy")}
-        </Typography.Title>
+          <div>
+            <Button
+              type="primary"
+              onClick={() => navigate("/diary")}
+              style={{ background: "red", color: "white" }}
+            >
+              Cancel
+            </Button>
+          </div>
+          <div>
+            <Typography.Title
+              style={{
+                fontFamily: "Raleway",
+                display: "flex",
+                justifyContent: "right",
+                marginBottom: 12,
+              }}
+            >
+              {format(new Date(), "EEEE, do MMMM yyyy")}
+            </Typography.Title>
+          </div>
+        </div>
         <Divider style={{ borderColor: "#00152a" }} dashed size="large" />
-        <Form form={form} layout="vertical" onFinish={handleSubmit}>
-          <Steps current={current} style={{ margin: "45px 1px" }}>
+        <Form
+          form={form}
+          layout="vertical"
+          onFinish={handleSubmit}
+          style={{
+            background: "linear-gradient(90deg, #eef2ff 0%, #f8fafc 100%)",
+            padding: 24,
+            margin: "24px auto",
+            borderRadius: 16,
+            boxShadow: "0 2px 12px rgba(79,70,229,0.10)",
+            border: "1px solid #e0e7ff",
+            border: "1px solid #00152a",
+          }}
+        >
+          <Steps
+            current={current}
+            style={{
+              margin: "40px 0px",
+              padding: "18px 10px",
+              borderRadius: 24,
+              background: "rgba(0,0,0,0)",
+              boxShadow: "0 2px 12px rgba(79,70,229,0.20)",
+              border: "1px solid #00152a",
+              marginLeft: "auto",
+              marginRight: "auto",
+            }}
+          >
             {steps.map((item) => (
               <Step key={item.title} title={item.title} />
             ))}
@@ -148,7 +193,9 @@ function CreateEntry() {
           {steps.map((step, index) => (
             <div
               key={step.title}
-              style={{ display: index === current ? "block" : "none" }}
+              style={{
+                display: index === current ? "block" : "none",
+              }}
             >
               {step.content}
             </div>
@@ -184,17 +231,6 @@ function CreateEntry() {
             )}
           </div>
         </Form>{" "}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "right",
-            alignItems: "center",
-          }}
-        >
-          <Button danger onClick={() => navigate("/diary")}>
-            Cancel
-          </Button>
-        </div>
       </div>
     </>
   );
