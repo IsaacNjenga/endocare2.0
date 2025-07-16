@@ -159,7 +159,6 @@ function CreateEntry() {
             margin: "24px auto",
             borderRadius: 16,
             boxShadow: "0 2px 12px rgba(79,70,229,0.10)",
-            border: "1px solid #e0e7ff",
             border: "1px solid #00152a",
           }}
         >
