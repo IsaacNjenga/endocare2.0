@@ -36,7 +36,41 @@ const otpRequest = async (req, res) => {
       from: user,
       to,
       subject: "Your OTP Code",
-      text: `Your OTP is: ${otp}. It expires in 2 minutes.`,
+      text: `Your One-Time Password is: ${otp}. It expires in 2 minutes.`,
+      html: ` <div
+      style="
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+      "
+    >
+      <h2 style="color: #333">Your One-Time Password</h2>
+      <p>Hi there,</p>
+      <p>Your OTP is:</p>
+      <div
+        style="
+          font-size: 24px;
+          font-weight: bold;
+          background-color: #f2f2f2;
+          padding: 10px;
+          display: inline-block;
+          border-radius: 5px;
+        "
+      >
+        ${otp}
+      </div>
+      <p style="margin-top: 10px">
+        This code will expire in <strong>2 minutes</strong>.
+      </p>
+      <p>If you didn't request this, please ignore this email.</p>
+      <hr />
+      <small style="color: #999"
+        >This is an automated message, please do not reply.</small
+      >
+    </div>`,
     };
     const otpInfo = await transporter.sendMail(mailOptions);
     console.log("OTP sent: " + otpInfo.response);
