@@ -41,8 +41,6 @@ const otpRequest = async (req, res) => {
       style="
         font-family: Arial, sans-serif;
         line-height: 1.6;
-        display: flex;
-        flex-direction: column;
         justify-content: center;
         text-align: center;
       "
