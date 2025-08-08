@@ -4,7 +4,7 @@ import AIpage from "./AIpage";
 import Responses from "./responses";
 import { RobotOutlined, SafetyCertificateOutlined } from "@ant-design/icons";
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 const iconStyle = {
   fontSize: "1.54rem",
@@ -36,11 +36,13 @@ const tabItems = [
 ];
 function Endoai() {
   return (
-    <div style={{ padding: 8, margin: "14px 0px" }}>
-      {" "}
-      <Title level={1} style={{ fontFamily: "Raleway" }}>
+    <div style={{ padding: "20px", margin: "20px 0" }}>
+      <Title level={1} style={{ fontFamily: "Raleway", marginBottom: 0 }}>
         EndoAI Medical Assistant
       </Title>
+      <Text type="secondary" style={{ fontSize: 16 }}>
+        Get tailored recommendations powered by our AI model
+      </Text>
       <Divider style={{ borderColor: "#333" }} dashed size="large" />
       <div>
         <Tabs

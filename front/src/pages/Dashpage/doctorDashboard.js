@@ -214,10 +214,13 @@ function DoctorDashboard({ cardStyle, user }) {
         <Col>
           <Title level={1} style={{ fontFamily: "Raleway", marginBottom: 0 }}>
             Dashboard
-          </Title>
+          </Title>{" "}
+          <Text type="secondary" style={{ fontSize: 16 }}>
+            Your dashboard at a glance
+          </Text>
         </Col>
       </Row>
-      <Divider />
+      <Divider style={{ borderColor: "#333" }} dashed size="large" />
       {/* Today’s Overview */}
       <Row gutter={[20, 20]}>
         <Col xs={24} sm={24} md={12}>
