@@ -4,10 +4,10 @@ import UserAccount from "../userAccount/userAccount";
 import PersonalInfo from "../personalInfo/personalInfo";
 import MedicalInfo from "./medicalInfo/medicalInfo";
 //import AIInsight from "./AIInsight";
-import Reports from "./reports";
+//import Reports from "./reports";
 //import Logs from "./logs";
 import {
-  BarChartOutlined,
+  //BarChartOutlined,
   //FileDoneOutlined,
   InfoCircleOutlined,
   LockOutlined,
@@ -131,21 +131,21 @@ const PatientProfile = ({
     //   ),
     //   icon: <RobotOutlined style={iconStyle} />,
     // },
-    {
-      key: 5,
-      name: "Document & Reports",
-      childPage: (
-        <Reports
-          user={user}
-          labelStyle={labelStyle}
-          contentStyle={contentStyle}
-          sectionCardStyle={sectionCardStyle}
-          sectionHeaderStyle={sectionHeaderStyle}
-          refresh={refresh}
-        />
-      ),
-      icon: <BarChartOutlined style={iconStyle} />,
-    },
+    // {
+    //   key: 5,
+    //   name: "Document & Reports",
+    //   childPage: (
+    //     <Reports
+    //       user={user}
+    //       labelStyle={labelStyle}
+    //       contentStyle={contentStyle}
+    //       sectionCardStyle={sectionCardStyle}
+    //       sectionHeaderStyle={sectionHeaderStyle}
+    //       refresh={refresh}
+    //     />
+    //   ),
+    //   icon: <BarChartOutlined style={iconStyle} />,
+    // },
     // {
     //   key: 6,
     //   name: "Health Diary / Logs",

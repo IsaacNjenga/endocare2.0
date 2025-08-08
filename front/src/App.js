@@ -24,6 +24,7 @@ import Endoai from "./pages/EndoAI/endoai.js";
 import Reviews from "./pages/Reviews/reviews.js";
 import PatientReports from "./pages/patientReports/patientReports.js";
 import EditReport from "./pages/patientReports/editReport.js";
+import AIUploads from "./pages/AIUploads/AIUploads.js";
 
 const cookies = new Cookies();
 export const UserContext = createContext();
@@ -75,6 +76,7 @@ function App() {
             <Route path="my-patients" element={<MyPatients />} />
             <Route path="reviews" element={<Reviews />} />
             <Route path="patient-reports" element={<PatientReports />} />
+            <Route path="ai-uploads" element={<AIUploads />} />
             <Route
               path="profile/create-medical-info"
               element={<CreateMedicalInfo />}

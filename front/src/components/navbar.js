@@ -4,6 +4,7 @@ import {
   AppstoreOutlined,
   BookOutlined,
   CalendarOutlined,
+  CameraOutlined,
   MedicineBoxOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -122,6 +123,7 @@ function Navbar() {
     },
     { label: "Appointments", path: "/appointments", icon: CalendarOutlined },
     { label: "EndoAI Assistant", path: "/endo-ai", icon: RobotOutlined },
+    { label: "AI Uploads", path: "/ai-uploads", icon: CameraOutlined },
   ];
 
   const navItems = userRole === "patient" ? patientNavItems : doctorNavItems;
